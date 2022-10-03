@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'Vacancy name is required' => 'Vacancy name is required',
+    'Vacancy name must be at least 3 characters' => 'Vacancy name must be at least 3 characters',
+    'Vacancy name must be at most 50 characters' => 'Vacancy name must be at most 50 characters',
+    'Category is required' => 'Category is required',
+    'Category must be integer' => 'Category must be integer',
+    'Category does not exist' => 'Category does not exist',
+    'Vacancy description is required' => 'Vacancy description is required',
+    'Vacancy description must be at least 10 characters' => 'Vacancy description must be at least 10 characters',
+    'Company user is required' => 'Company user is required',
+    'Company user does not exist' => 'Company user does not exist',
+    'Person name is required' => 'Person name is required',
+    'Person name must be at least 3 characters' => 'Person name must be at least 3 characters',
+    'Person phone is required' => 'Person phone is required',
+    'Person phone must be in +994xxxxxxxxx format' => 'Person phone must be in +994xxxxxxxxx format',
+    'Vacancy salary is required' => 'Vacancy salary is required',
+    'Vacancy salary must be numeric' => 'Vacancy salary must be numeric',
+    'Email is required' => 'Email is required',
+    'Email must be valid' => 'Email must be valid',
+    'Status is required' => 'Status is required',
+    'Status must be integer' => 'Status must be integer',
+    'Status must be at least 0' => 'Status must be at least 0',
+    'Status must be at most 1' => 'Status must be at most 1',
+    'Category Name is required' => 'Category Name is required',
+];

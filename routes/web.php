@@ -1,0 +1,92 @@
+<?php
+
+use App\Http\Controllers\AdminPanelController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Route;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+Route::group(['prefix' => '{language}'], function () {
+
+    Route::get('/home', [HomeController::class, 'index'])->name('User');
+    Route::get('/home/company', [HomeController::class, 'Company'])->name('CompanyUser');
+    Route::post('/home/registerUser', [HomeController::class, 'registerUser'])->name('RegisterUser');
+    Route::post('/home/registerCompany', [HomeController::class, 'registerCompany'])->name('RegisterCompany');
+    
+    
+
+    Route::get('/', [HomeController::class, 'Hom'])->name('Hom');
+
+    
+    //route admin group
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/', [AdminPanelController::class, 'Login'])->name('Login');
+        Route::get('/login', [AdminPanelController::class, 'Login'])->name('Login');
+        Route::get('/logout', [AdminPanelController::class, 'Logout'])->name('AdminLogout');
+
+        Route::get('/index', [AdminPanelController::class, 'index'])->name('Panel');
+
+        Route::get('/category', [AdminPanelController::class, 'category'])->name('Category');
+        Route::get('/category/delete/{id}', [AdminPanelController::class, 'DeleteCategory'])->name('DeleteCategory');
+        Route::get('/category/edit/{id}', [AdminPanelController::class, 'EditCategory'])->name('EditCategory');
+        
+        Route::get('/languages', [AdminPanelController::class, 'languages'])->name('language');
+        Route::get('/languages/delete/{id}', [AdminPanelController::class, 'DeleteLanguage'])->name('DeleteLanguage');
+        Route::get('/languages/edit/{id}', [AdminPanelController::class, 'EditLanguage'])->name('EditLanguage');
+        
+        Route::get('/City', [AdminPanelController::class, 'City'])->name('City');
+        Route::get('/City/delete/{id}', [AdminPanelController::class, 'DeleteCity'])->name('DeleteCity');
+        Route::get('/City/edit/{id}', [AdminPanelController::class, 'EditCity'])->name('EditCity');
+        
+        Route::get('/educationlevel', [AdminPanelController::class, 'Educationlevel'])->name('Educationlevel');
+        Route::get('/educationlevel/delete/{id}', [AdminPanelController::class, 'DeleteEducationLevel'])->name('DeleteEducationLevel');
+        Route::get('/educationlevel/edit/{id}', [AdminPanelController::class, 'EditEducationLevel'])->name('EditEducationLevel');
+        
+        Route::get('/MultiLanguage', [AdminPanelController::class, 'MultiLanguage'])->name('MultiLanguage');
+        Route::get('/MultiLanguage/delete/{id}', [AdminPanelController::class, 'DeleteMultiLanguage'])->name('DeleteMultiLanguage');
+        Route::get('/MultiLanguage/edit/{id}', [AdminPanelController::class, 'EditMultiLanguage'])->name('EditMultiLanguage');
+
+        
+        Route::get('/CompanyUser', [AdminPanelController::class, 'CompanyUser'])->name('CompanyUser');
+        Route::get('/User', [AdminPanelController::class, 'User'])->name('User');
+        Route::get('/Vacancy', [AdminPanelController::class, 'Vacancy'])->name('Vacancy');
+        Route::get('/Vacancy/edit/{id}', [AdminPanelController::class, 'EditVacancy'])->name('EditVacancy');
+        Route::post('/Vacancy/UpdateVacancy', [AdminPanelController::class, 'UpdateVacancy'])->name('UpdateVacancy');
+
+        // Route::get('/index', [AdminPanelController::class, 'index'])->name('City');
+        // Route::get('/index', [AdminPanelController::class, 'index'])->name('Education Level');
+        // Route::get('/index', [AdminPanelController::class, 'index'])->name('Company User');
+        // Route::get('/index', [AdminPanelController::class, 'index'])->name('Vacancy');
+        // Route::get('/index', [AdminPanelController::class, 'index'])->name('Users');
+        Route::post('/Vacancy/Status', [AdminPanelController::class, 'ChangeStatusOfVacancy'])->name('ChangeStatusOfVacancy');
+        Route::post('/CompanyUser/Status', [AdminPanelController::class, 'ChangeStatusOfCompany'])->name('ChangeStatusOfCompany');
+        Route::post('/User/Status', [AdminPanelController::class, 'ChangeStatusOfUser'])->name('ChangeStatusOfUser');
+        
+        Route::post('/MultiLanguage/add', [AdminPanelController::class, 'AddMultiLanguage'])->name('AddMultiLanguage');
+        Route::post('/MultiLanguage/UpdateMultiLanguage', [AdminPanelController::class, 'UpdateMultiLanguage'])->name('UpdateMultiLanguage');
+
+        Route::post('/educationlevel/add', [AdminPanelController::class, 'AddEducationLevel'])->name('AddEducationLevel');
+        Route::post('/educationlevel/UpdateEducationLevel', [AdminPanelController::class, 'UpdateEducationLevel'])->name('UpdateEducationLevel');
+        
+        Route::post('/City/add', [AdminPanelController::class, 'AddCity'])->name('AddCity');
+        Route::post('/City/UpdateCity', [AdminPanelController::class, 'UpdateCity'])->name('UpdateCity');
+        
+        Route::post('/languages/add', [AdminPanelController::class, 'AddLanguage'])->name('AddLanguage');
+        Route::post('/languages/Updatelanguage', [AdminPanelController::class, 'UpdateLanguage'])->name('UpdateLanguage');
+        
+        Route::post('/category/add', [AdminPanelController::class, 'AddCategory'])->name('AddCategory');
+        Route::post('/category/UpdateCategory', [AdminPanelController::class, 'UpdateCategory'])->name('UpdateCategory');
+
+        Route::post('/CheckLogin', [AdminPanelController::class, 'LoginAdminPanel'])->name('LoginAdmin');
+    });
+});
