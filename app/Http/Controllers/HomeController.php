@@ -56,7 +56,27 @@ class HomeController extends Controller
         });
 
 
-        return view('Frontend/Index')->with('Vacancies', $Vacancies);
+
+        //get top 10 categories
+        $Categories = Category::orderBy('SortOrder', 'desc')->take(10)->get();
+        //merge categories with category_langs
+        $Categories = $Categories->map(function ($Category)use ($lang_id) {
+            $Category->Category_lang = $Category->category_langs()->where('lang_id', $lang_id)->first();
+            return $Category;
+        });
+
+        //count vacancies in each category
+        $Categories = $Categories->map(function ($Category) {
+            $Category->VacanciesCount = Vacancy::where('Category_id', $Category->id)->where('status', 1)->count();
+            return $Category;
+        });
+
+
+        //get all langs
+        $Langs = lang::all();
+
+
+        return view('Frontend/Index')->with(['Categories'=>$Categories,'Vacancies'=>$Vacancies,"Langs"=>$Langs]);
     }
     public function index()
     {

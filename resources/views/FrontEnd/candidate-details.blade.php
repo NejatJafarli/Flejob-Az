@@ -1,13 +1,12 @@
 <!doctype html>
 <html lang="zxx">
     <head>
-        @include('FrontEnd.cdn')
+        @include('FrontEnd.Component.cdn')
     </head>
 
     <body>
         
-        @include('FrontEnd.PreLoader')
-        @include('FrontEnd.NavBar')
+        @include('FrontEnd.Component.PreLoader')
         <!-- Page Title Start -->
         <section class="page-title title-bg8">
             <div class="d-table">

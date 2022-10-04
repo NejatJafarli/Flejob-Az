@@ -22,4 +22,5 @@ class Category extends Model
     {
         return $this->hasMany(category_lang::class);
     }
+
 }

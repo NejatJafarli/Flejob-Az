@@ -3,151 +3,152 @@
 
 <head>
 
-    @include('FrontEnd.cdn')
+    @include('FrontEnd.Component.cdn')
 </head>
 
 <body>
-    @include('FrontEnd.PreLoader')
-          <!-- Navbar Area Start -->
-		  <div class="navbar-area">
-			<!-- Menu For Mobile Device -->
-			<div class="mobile-nav">
-				<a href="index.html" class="logo">
-					<img src="assets/img/logo.png" alt="logo">
-				</a>
-			</div>
-		
-			<!-- Menu For Desktop Device -->
-			<div class="main-nav">
-				<div class="container">
-					<nav class="navbar navbar-expand-lg navbar-light">
-						<a class="navbar-brand" href="index.html">
-							<img src="assets/img/logo.png" alt="logo">
-						</a>
-						<div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-							<ul class="navbar-nav m-auto">
-								<li class="nav-item">
-									<a {{ route('Hom', app()->getLocale()) }} class="nav-link active">Home</a>
-								</li>
-								<li class="nav-item">
-									<a href="about.html" class="nav-link ">About</a>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Jobs</a>
-	
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="find-job.html" class="nav-link">Find A Job</a>
-										</li>
-										<li class="nav-item">
-											<a href="post-job.html" class="nav-link">Post A Job</a>
-										</li>
-										<li class="nav-item">
-											<a href="job-list.html" class="nav-link">Job List</a>
-										</li>
-										<li class="nav-item">
-											<a href="job-grid.html" class="nav-link">Job Grid</a>
-										</li>
-										<li class="nav-item">
-											<a href="job-details.html" class="nav-link">Job Details</a>
-										</li>
-									</ul>
-								</li>                
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Candidates</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="candidate.html" class="nav-link">Candidates</a>
-										</li>
-										<li class="nav-item">
-											<a href="candidate-details.html" class="nav-link">Candidates Details</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Pages</a>
-										<ul class="dropdown-menu">
-											<li class="nav-item">
-												<a href="company.html" class="nav-link">Company</a>
-											</li>
-											<li class="nav-item">
-												<a href="pricing.html" class="nav-link">Pricing</a>
-											</li>
-											<li class="nav-item">
-												<a href="#" class="nav-link dropdown-toggle">Profile</a>
-												<ul class="dropdown-menu">
-													<li class="nav-item">
-														<a href="account.html" class="nav-link">Account</a>
-													</li>
-													<li class="nav-item">
-														<a href="#" class="nav-link dropdown-toggle">Member</a>
-	
-														<ul class="dropdown-menu">
-															<li class="nav-item">
-																<a href="sign-in.html" class="nav-link">Sign In</a>
-															</li>
-															<li class="nav-item">
-																<a href="sign-up.html" class="nav-link">Sign Up</a>
-															</li>
-															<li class="nav-item">
-																<a href="reset-password.html" class="nav-link">Reset Password</a>
-															</li>
-														</ul>
-													<li>
-													<li class="nav-item">
-														<a href="resume.html" class="nav-link">Resume</a>
-													</li>
-												</ul>
-											</li>
-										<li class="nav-item">
-											<a href="404.html" class="nav-link">404 Page</a>
-										</li>
-										<li class="nav-item">
-											<a href="testimonial.html" class="nav-link">Testimonials</a>
-										</li>
-										<li class="nav-item">
-											<a href="faq.html" class="nav-link">FAQ</a>
-										</li>
-										<li class="nav-item">
-											<a href="catagories.html" class="nav-link">Catagories</a>
-										</li>
-										<li class="nav-item">
-											<a href="privacy-policy.html" class="nav-link">Privacy & Policy</a>
-										</li>
-										<li class="nav-item">
-											<a href="terms-condition.html" class="nav-link">Terms & Conditions</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link dropdown-toggle">Blog</a>
-									<ul class="dropdown-menu">
-										<li class="nav-item">
-											<a href="blog.html" class="nav-link">Blog</a>
-										</li>
-										<li class="nav-item">
-											<a href="blog-two.html" class="nav-link">Blog Two</a>
-										</li>
-										<li class="nav-item">
-											<a href="blog-details.html" class="nav-link">Blog Details</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a href="contact.html" class="nav-link">Contact Us</a>
-								</li>
-							</ul>
-	
-							<div class="other-option">
-								<a href="sign-up.html" class="signup-btn">Sign Up</a>
-								<a href="sign-in.html" class="signin-btn">Sign In</a>
-							</div>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-		<!-- Navbar Area End -->
+    @include('FrontEnd.Component.PreLoader')
+    <!-- Navbar Area Start -->
+    <div class="navbar-area">
+        <!-- Menu For Mobile Device -->
+        <div class="mobile-nav">
+            <a href="index.html" class="logo">
+                <img src="assets2/img/logo.png" alt="logo">
+            </a>
+        </div>
+
+        <!-- Menu For Desktop Device -->
+        <div class="main-nav">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="assets2/img/logo.png" alt="logo">
+                    </a>
+                    <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                        <ul class="navbar-nav m-auto">
+                            <li class="nav-item">
+                                <a {{ route('Hom', app()->getLocale()) }} class="nav-link active">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="about.html" class="nav-link ">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">Jobs</a>
+
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="find-job.html" class="nav-link">Find A Job</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="post-job.html" class="nav-link">Post A Job</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="job-list.html" class="nav-link">Job List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="job-grid.html" class="nav-link">Job Grid</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="job-details.html" class="nav-link">Job Details</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">Candidates</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="candidate.html" class="nav-link">Candidates</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="candidate-details.html" class="nav-link">Candidates Details</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">Pages</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="company.html" class="nav-link">Company</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="pricing.html" class="nav-link">Pricing</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link dropdown-toggle">Profile</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a href="account.html" class="nav-link">Account</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link dropdown-toggle">Member</a>
+
+                                                <ul class="dropdown-menu">
+                                                    <li class="nav-item">
+                                                        <a href="sign-in.html" class="nav-link">Sign In</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="sign-up.html" class="nav-link">Sign Up</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="reset-password.html" class="nav-link">Reset
+                                                            Password</a>
+                                                    </li>
+                                                </ul>
+                                            <li>
+                                            <li class="nav-item">
+                                                <a href="resume.html" class="nav-link">Resume</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="404.html" class="nav-link">404 Page</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="testimonial.html" class="nav-link">Testimonials</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="faq.html" class="nav-link">FAQ</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="catagories.html" class="nav-link">Catagories</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="privacy-policy.html" class="nav-link">Privacy & Policy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="terms-condition.html" class="nav-link">Terms & Conditions</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">Blog</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="blog.html" class="nav-link">Blog</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="blog-two.html" class="nav-link">Blog Two</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="blog-details.html" class="nav-link">Blog Details</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="contact.html" class="nav-link">Contact Us</a>
+                            </li>
+                        </ul>
+                        <div class="other-option">
+                            <a href="sign-up.html" class="signup-btn">Sign Up</a>
+                            <a href="sign-in.html" class="signin-btn">Sign In</a>
+                        </div>
+                        @include('FrontEnd.Component.MultiLang')
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar Area End -->
     <!-- Banner Section Start -->
     <div class="banner-section">
         <div class="d-table">
@@ -178,7 +179,10 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <select class="category">
-                                                {{-- category --}}
+                                                @foreach ($Categories as $cat)
+                                                    <option value="{{ $cat->id }}">
+                                                        {{ $cat->Category_lang->CategoryName }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="col-lg-3">
@@ -209,15 +213,19 @@
 
             <div class="row">
                 {{-- categories --}}
-                {{-- <div class="col-lg-3 col-md-4 col-sm-6">
-                    <a href="job-list.html">
-                        <div class="category-card">
-                            <i class='flaticon-accounting'></i>
-                            <h3>Accountancy</h3>
-                            <p>301 open position</p>
-                        </div>
-                    </a>
-                </div> --}}
+                @foreach ($Categories as $cat)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <a href="job-list.html">
+                            <div class="category-card">
+                                @php
+                                    echo $cat->StyleClass;
+                                @endphp
+                                <h3>{{ $cat->Category_lang->CategoryName }}</h3>
+                                <p>{{ $cat->VacanciesCount }} Open position</p>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -232,8 +240,8 @@
                     et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
             </div>
 
-            @foreach ($Vacancies as $vac)
-                <div class="row">
+            <div class="row">
+                @foreach ($Vacancies as $vac)
                     <div class="col-sm-6">
                         <div class="job-card">
                             <div class="row align-items-center">
@@ -244,7 +252,6 @@
                                         </a>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <div class="job-info">
                                         <h3>
@@ -254,7 +261,7 @@
                                             <li>Via <a href="#">{{ $vac->Owner->CompanyName }}</a></li>
                                             <li>
                                                 <i class='bx bx-location-plus'></i>
-												{{ $vac->City->CityName }}
+                                                {{ $vac->City->CityName }}
                                             </li>
                                             <li>
                                                 <i class='bx bx-filter-alt'></i>
@@ -263,23 +270,23 @@
                                         </ul>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-3">
                                     <div class="job-save">
                                         <a href="#">
                                             <i class='bx bx-heart'></i>
-											Apply
+                                            Apply
                                         </a>
                                         <p>
                                             <i class='bx bx-stopwatch'></i>
-											{{ $vac->created_at->diffForHumans() }}
+                                            {{ $vac->created_at->diffForHumans() }}
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </section>
     <!-- Jobs Section End -->
