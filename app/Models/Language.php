@@ -11,5 +11,12 @@ class Language extends Model
     //fill
     protected $fillable = ['id','LanguageName'];
     
+
+    //relations
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     
 }

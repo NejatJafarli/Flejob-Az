@@ -27,7 +27,7 @@
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item">
-                                <a {{ route('Hom', app()->getLocale()) }} class="nav-link active">Home</a>
+                                <a href="{{ route('Hom', app()->getLocale()) }}" class="nav-link active">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a href="about.html" class="nav-link ">About</a>
@@ -137,12 +137,41 @@
                             <li class="nav-item">
                                 <a href="contact.html" class="nav-link">Contact Us</a>
                             </li>
+                            @if (session()->has('user'))
+                                <div class="px-5">
+                                    @include('FrontEnd.Component.MultiLang')
+                                </div>
+                                <div class="option-item">
+                                    <img src="/CandidatesPicture/{{ session()->get('user')->image }}"
+                                        alt="profile picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                                </div>
+
+                                <li class="nav-item">
+                                    <a href="{{ route('Hom', app()->getLocale()) }}"
+                                        class="nav-link dropdown-toggle">{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a href="{{ route('Account', app()->getLocale()) }}" class="nav-link">Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">Settings</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{{ route('Logout', app()->getLocale()) }}"
+                                                class="nav-link">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
                         </ul>
+                    @else
+                        </ul>
+
                         <div class="other-option">
-                            <a href="sign-up.html" class="signup-btn">Sign Up</a>
-                            <a href="sign-in.html" class="signin-btn">Sign In</a>
+                            <a href="{{ route('Signup', app()->getLocale()) }}" class="signup-btn">Sign Up</a>
+                            <a href="{{ route('Signin', app()->getLocale()) }}" class="signin-btn">Sign In</a>
                         </div>
                         @include('FrontEnd.Component.MultiLang')
+                        @endif
                     </div>
                 </nav>
             </div>
@@ -298,29 +327,34 @@
                 <h2>Top Companies</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
+
+
             </div>
 
             <div class="row">
                 {{-- company Users List With Vacancy Count Top  Four --}}
-                {{-- <div class="col-lg-3 col-sm-6">
-                    <div class="company-card">
-                        <div class="company-logo">
-                            <a href="job-grid.html">
-                                <img src="/assets2/img/top-company/1.png" alt="company logo">
-                            </a>
-                        </div>
-                        <div class="company-text">
-                            <h3>Trophy & Sans</h3>
-                            <p>
-                                <i class='bx bx-location-plus'></i>
-                                Green Lanes, London
-                            </p>
-                            <a href="job-grid.html" class="company-btn">
-                                25 Open Position
-                            </a>
+                @php
+                    
+                    //sort companyUsers With Vacancy Count
+                    $MyCompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
+                @endphp
+                @foreach ($MyCompanyUsers as $user)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="company-card">
+                            <div class="thumb-img">
+                                <a href="company-details.html">
+                                    <img src="{{ $user->CompanyLogo }}" alt="company logo">
+                                </a>
+                            </div>
+                            <div class="company-info">
+                                <h3>
+                                    <a href="company-details.html">{{ $user->CompanyName }}</a>
+                                </h3>
+                                <p>{{ $user->VacanciesCount }} Open position</p>
+                            </div>
                         </div>
                     </div>
-                </div> --}}
+                @endforeach
             </div>
         </div>
     </section>
@@ -532,7 +566,7 @@
         </div>
     </section>
     <!-- Pricing Section End -->
-
+    {{-- 
     <!-- Candidate Section Start -->
     <section class="candidate-section pb-100">
         <div class="container">
@@ -543,15 +577,44 @@
             </div>
 
             <div class="condidate-slider owl-carousel owl-theme">
-                {{-- condidate --}}
-                {{-- <div class="condidate-item">
+                @php
+                    $MyUsers = $Users->sortByDesc('id');
+                @endphp
+
+                @foreach ($MyUsers as $user)
+                    <div class="condidate-item">
+                        <div class="candidate-img">
+                            <img class="img-fluid" src="/CandidatesPicture/{{ $user->image }}" alt="Image">
+                        </div>
+                        <div class="candidate-text">
+                            <h3><a href="candidate-details.html">{{ $user->FirstName . $user->LastName }}</a></h3>
+                            <ul>
+                                @foreach ($user->Categories as $cat)
+                                    <li>
+                                        <i class='bx bx-filter-alt'></i>
+                                        {{ $cat->Category_lang->CategoryName }}
+                                    </li>
+                                @endforeach
+                                <li>
+                                    <i class='bx bx-location-plus'></i>
+                                    {{ $user->City->CityLang->CityName }}
+                                </li>
+                            </ul>
+                            <div class="bottom-text">
+                                <p>
+                                    <i class='bx bx-stopwatch'></i>
+                                    {{ $user->created_at->DiffForHumans() }}
+                                </p>
+                                <a href="#">
+                                    <i class='bx bx-heart'></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="condidate-item">
                     <div class="candidate-img">
                         <img src="/assets2/img/candidate/1.jpg" alt="candidate image">
-                    </div>
-                    <div class="candidate-social">
-                        <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
-                        <a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
-                        <a href="#" target="_blank"><i class='bx bxl-instagram'></i></a>
                     </div>
                     <div class="candidate-text">
                         <h3><a href="candidate-details.html">Mibraj Alex</a></h3>
@@ -576,10 +639,10 @@
                             </a>
                         </div>
                     </div>
-                </div> --}}
+                </div>  
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Candidate Section End -->
 
 

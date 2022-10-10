@@ -18,16 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => '{language}'], function () {
 
-    Route::get('/home', [HomeController::class, 'index'])->name('User');
-    Route::get('/home/company', [HomeController::class, 'Company'])->name('CompanyUser');
-    Route::post('/home/registerUser', [HomeController::class, 'registerUser'])->name('RegisterUser');
-    Route::post('/home/registerCompany', [HomeController::class, 'registerCompany'])->name('RegisterCompany');
-    
-    
+    Route::post('/registerUser', [HomeController::class, 'registerUser'])->name('RegisterUser');
+    Route::post('/registerCompany', [HomeController::class, 'registerCompany'])->name('RegisterCompany');
+    Route::post('/Signin', [HomeController::class, 'Signin'])->name('Signin');
 
+    
+    
+    Route::get('/Logout', [HomeController::class, 'Logout'])->name('Logout');
     Route::get('/', [HomeController::class, 'Hom'])->name('Hom');
-
+    Route::get('/Signup', [HomeController::class, 'Signup'])->name('Signup');
     
+    Route::get('/Signin', [HomeController::class, 'SigninPage'])->name('Signin');
+    
+    Route::get('/Account', [HomeController::class, 'Account'])->name('Account');
     //route admin group
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AdminPanelController::class, 'Login'])->name('Login');
@@ -55,7 +58,6 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/MultiLanguage', [AdminPanelController::class, 'MultiLanguage'])->name('MultiLanguage');
         Route::get('/MultiLanguage/delete/{id}', [AdminPanelController::class, 'DeleteMultiLanguage'])->name('DeleteMultiLanguage');
         Route::get('/MultiLanguage/edit/{id}', [AdminPanelController::class, 'EditMultiLanguage'])->name('EditMultiLanguage');
-
         
         Route::get('/CompanyUser', [AdminPanelController::class, 'CompanyUser'])->name('CompanyUser');
         Route::get('/User', [AdminPanelController::class, 'User'])->name('User');
@@ -88,5 +90,7 @@ Route::group(['prefix' => '{language}'], function () {
         Route::post('/category/UpdateCategory', [AdminPanelController::class, 'UpdateCategory'])->name('UpdateCategory');
 
         Route::post('/CheckLogin', [AdminPanelController::class, 'LoginAdminPanel'])->name('LoginAdmin');
+        
+        Route::post('/SignUpControllerAjax', [HomeController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');
     });
 });

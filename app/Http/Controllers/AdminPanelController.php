@@ -132,7 +132,7 @@ class AdminPanelController extends Controller
             return redirect()->route('Login', app()->getLocale());
 
         $vacancies = Vacancy::all();
-
+        
         return  view('AdminPanel/Vacancy/AdminVacancy')->with(['Vacancies' => $vacancies]);
     }
 

@@ -68,5 +68,7 @@ return[
     'Enter your company logo in correct size' => 'Enter your company logo in correct size',
     'Enter your company categories' => 'Enter your company categories',
     'Enter your company link' => 'Enter your company link',
-    
+    'Enter your company date and rank correctly' => 'Enter your company date and rank correctly' ,
+    'Enter your link name and link correctly' => 'Enter your link name and link correctly',
+
 ];

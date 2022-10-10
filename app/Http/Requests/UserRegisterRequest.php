@@ -30,18 +30,20 @@ class UserRegisterRequest extends FormRequest
             'BirthDate' => 'required',
             'City' => 'required',
             'Married' => 'required',
-            'Username' => 'required | min:6 unique:users', //unique for users
+            'Username' => 'required | min:6 | unique:users', //unique for users
             'Password' => 'required | min:6',
             'Password_confirmation' => 'required | same:Password',
-            'email' => 'required | email ',
-            'phone' => 'required | regex:/^\+994\d{9}$/',
-            'companyname' => 'required_if:companyrank ,!=, null | array',
+            'email' => 'required | email  | unique:users', //unique for users
+            'phone' => 'required | regex:/^\+994\d{9}$/ | unique:users', //unique for users' ,
+            'companyname' => 'array',
             'companyrank' => 'required_if:companyname ,!=, null | array',
             'companydate' => 'required_if:companyname ,!=, null | array',
             'image' => 'required | image | mimes:jpeg,png,jpg,gif,svg | max:2048',
-            'educationName' => 'required_if:educationLevel ,!=, null ',
-            'educationYear' => 'required_if:educationName  ,!=, null ',
-            'educationLevel' => 'required_if:educationName ,!=, null ',
+            'educationName' =>  'array',
+            //Year regex:
+            
+            'educationYear' => 'required_if:educationName  ,!=, null | array',
+            'educationLevel' => 'required_if:educationName ,!=, null  | array',
 
             'Languages' => 'required | array | min:1 ',
             'Categories' => 'array',

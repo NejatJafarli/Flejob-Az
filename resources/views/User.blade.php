@@ -52,6 +52,19 @@
         <input type="email" name="email" placeholder="email">
         <input type="text" name="phone" placeholder="phone">
         <p>format +944558448831</p>
+        <textarea name="Skills" cols="30" rows="10"></textarea>
+        <select name="Languages[]" multiple>
+            @foreach ($languages as $language)
+                <option value="{{$language->id}}">{{$language->LanguageName}}</option>
+            @endforeach
+        </select>
+        <select name="Categories[]" multiple>
+            @foreach ($categories as $category)
+                <option value="{{$category->id}}">{{$category->CategoryName}}</option>
+            @endforeach
+        </select>
+
+
         <input type="text" name="companyname[]" placeholder="company name">
         <input type="text" name="companyrank[]" placeholder="company name">
         <input type="date" name="companydate[]">
@@ -60,17 +73,6 @@
         <select name="educationLevel[]">
             @foreach ($education_levels as $education_level)
                 <option value="{{$education_level->id}}">{{$education_level->education_level_name}}</option>
-            @endforeach
-        </select>
-        <select name="Languages[]" multiple>
-            @foreach ($languages as $language)
-                <option value="{{$language->id}}">{{$language->LanguageName}}</option>
-            @endforeach
-        </select>
-        <textarea name="Skills" cols="30" rows="10"></textarea>
-        <select name="Categories[]" multiple>
-            @foreach ($categories as $category)
-                <option value="{{$category->id}}">{{$category->CategoryName}}</option>
             @endforeach
         </select>
         <input type="number" name="MinSalary" placeholder="MinSalary">
