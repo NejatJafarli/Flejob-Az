@@ -61,6 +61,7 @@ return[
     'Enter your company link' => 'Enter your company link',
     'This username is already taken' => 'This username is already taken',
     'This email is already taken' => 'This email is already taken',
+    'This Phone is already taken' => 'This Phone is already taken',
     'Password must be at least 6 characters' => 'Password must be at least 6 characters',
     'Password confirmation must be same as password' => 'Password confirmation must be same as password',
     'Enter your company phone in correct format' => 'Enter your company phone in correct format',

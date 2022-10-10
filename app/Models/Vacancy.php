@@ -17,7 +17,8 @@ class Vacancy extends Model
         "PersonName",
         "PersonPhone",
         "VacancySalary",
-        "Email"
+        "Email",
+        "EndDate",
     ];
     public function category()
     {

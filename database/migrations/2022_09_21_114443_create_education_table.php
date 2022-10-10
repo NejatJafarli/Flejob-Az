@@ -16,7 +16,8 @@ class CreateEducationTable extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
             $table->string('EducationName');
-            $table->smallInteger('Year');
+            $table->smallInteger('YearStart');
+            $table->smallInteger('YearEnd');
             $table->unsignedBigInteger('EducationLevel_Id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

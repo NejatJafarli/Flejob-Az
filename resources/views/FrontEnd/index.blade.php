@@ -7,7 +7,6 @@
 </head>
 
 <body>
-    @include('FrontEnd.Component.PreLoader')
     <!-- Navbar Area Start -->
     <div class="navbar-area">
         <!-- Menu For Mobile Device -->

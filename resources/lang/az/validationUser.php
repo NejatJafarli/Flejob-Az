@@ -64,6 +64,7 @@ return [
     "Enter your company link" => "Şirkətinizin linkini daxil edin",
     "This username is already taken" => "Bu istifadəçi adı artıq alınmışdır",
     "This email is already taken" => "Bu email artıq alınmışdır",
+    'This Phone is already taken' =>'Bu telefon nömrəsi artıq alınmışdır',
     "Password must be at least 6 characters" => "Şifrə ən azı 6 simvol olmalıdır",
     "Password confirmation must be same as password" => "Şifrə təsdiqləmə şifrə ilə eyni olmalıdır",
     "Enter your company phone in correct format" => "Şirkətinizin telefon nömrəsini düzgün formatda daxil edin",

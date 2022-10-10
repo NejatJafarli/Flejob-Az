@@ -69,16 +69,19 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
     let div = document.getElementById('Education')
     // get educationName ,  educationYear , educationLevel named form elements
     let educationName = document.getElementsByName('educationName[]')
-    let educationYear = document.getElementsByName('educationYear[]')
+    let educationYearStart = document.getElementsByName('educationYearStart[]')
+    let educationYearEnd = document.getElementsByName('educationYearEnd[]')
     let educationLevel = document.getElementsByName('educationLevel[]')
 
     let names = []
-    let years = []
+    let yearsStart = []
+    let yearsEnd = []
     let levels = []
-    if (educationName.length && educationYear.length && educationLevel.length) {
+    if (educationName.length && educationYearStart.length && educationLevel.length && educationYearEnd.length) {
         for (let i = 0; i < educationName.length; i++) {
             names.push(educationName[i].value)
-            years.push(educationYear[i].value)
+            yearsStart.push(educationYearStart[i].value)
+            yearsEnd.push(educationYearEnd[i].value)
             levels.push(educationLevel[i].value)
         }
     }
@@ -89,7 +92,8 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
     for (let i = 0; i < educationName.length; i++)
         if (
             educationName[i].value == '' ||
-            educationYear[i].value == '' ||
+            educationYearStart[i].value == '' ||
+            educationYearEnd[i].value == '' ||
             educationLevel[i].value == ''
         ) {
             isTrue = false
@@ -111,9 +115,12 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
         </div>
         <div class="form-group">
 
-            <label>Education Year</label>
-            <input name="educationYear[]" type="number" maxlength="4" class="form-control"
-                placeholder="Enter Education Year" required>
+            <label>Education Year Start</label>
+            <input name="educationYearStart[]" type="number" maxlength="4" class="form-control"
+            placeholder="Enter Education Start Year" required>
+            <label>Education Year End</label>
+                <input name="educationYearEnd[]" type="number" maxlength="4" class="form-control"
+                placeholder="Enter Education End Year" required>
         </div>
         <div class="form-group">
             <label>Education Level</label>
@@ -130,10 +137,11 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
 
     //append variable to div
     div.innerHTML += str
-    if (names.length && years.length && levels.length) {
+    if (names.length && yearsStart.length && levels.length && yearsEnd.length) {
         for (let i = 0; i < names.length; i++) {
             educationName[i].value = names[i]
-            educationYear[i].value = years[i]
+            educationYearStart[i].value = yearsStart[i]
+            educationYearEnd[i].value = yearsEnd[i]
             educationLevel[i].value = levels[i]
         }
     }

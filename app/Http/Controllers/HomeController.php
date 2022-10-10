@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRegisterRequest;
+use App\Http\Requests\EditAccount;
 use App\Http\Requests\UserRegisterRequest;
 use App\Models\Category;
 use App\Models\Language;
@@ -28,6 +29,72 @@ class HomeController extends Controller
     {
         return "Welcome to our homepage";
     }
+
+    protected function MergeUsersTable($user)
+    {
+        //update session
+        $user->temp = UsersAndCategories::where('User_id', $user->id)->get();
+
+        //get lang id
+        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
+
+        $user->temp = $user->temp->map(function ($UserCategory) use ($lang_id) {
+            $UserCategory->Category = Category::where('id', $UserCategory->category_id)->first();
+            $UserCategory->Category->Category_lang = $UserCategory->Category->category_langs()->where('lang_id', $lang_id)->first();
+            return $UserCategory;
+        });
+
+        $user->Categories = $user->temp->Pluck('Category');
+        //unset temp
+
+        //merge users with languages and users
+        $user->temp = UsersAndLanguages::where('User_id', $user->id)->get();
+
+        $user->temp = $user->temp->map(function ($UserLanguage) {
+            $UserLanguage->Language = Language::where('id', $UserLanguage->language_id)->first();
+            return $UserLanguage;
+        });
+
+        $user->Languages = $user->temp->Pluck('Language');
+
+
+        //merge users with city
+        $user->City = City::where('id', $user->City_id)->first();
+        $user->City->CityLang = $user->City->cityLang()->where('lang_id', $lang_id)->first();
+
+
+        //merge users with educations
+        $user->temp = Education::where('User_id', $user->id)->get();
+
+        $user->temp = $user->temp->map(function ($UserEducation) use ($lang_id) {
+            $UserEducation->Education = $UserEducation;
+            $UserEducation->Education->EducationLevel = EducationLevel::where('id', $UserEducation->EducationLevel_Id)->first();
+            $UserEducation->Education->EducationLevel->EducationLevelLang = $UserEducation->EducationLevel->education_level_langs()->where('lang_id', $lang_id)->first();
+            return $UserEducation;
+        });
+
+        $user->Educations = $user->temp->Pluck('Education');
+        //merge users with Companies
+        $user->Companies = Company::where('user_id', $user->id)->get();
+
+
+
+        //merger users with links
+        $user->Links = Link::where('User_id', $user->id)->get();
+
+        unset($user->temp);
+
+        return $user;
+    }
+
+
+
+
+
+
+
+
+
     public function Hom($lang)
     {
 
@@ -136,22 +203,7 @@ class HomeController extends Controller
             'education_levels' => $education_level
         ]);
     }
-    public function index2()
-    {
-        $categories = Category::all();
-        return view("test")->with([
-            'categories' => $categories
-        ]);
-    }
-    public function Company()
-    {
-        // get all categories
-        $categories = Category::all();
 
-        return view("CompanyUser")->with([
-            'categories' => $categories
-        ]);
-    }
     public function Account($lang)
     {
 
@@ -171,10 +223,50 @@ class HomeController extends Controller
         // get all Langs
         $langs = lang::all();
 
+        //get all categories
+        $categories = Category::all();
+        //merge categories with category langs
+        $categories = $categories->map(function ($category) use ($lang) {
+            $category->CategoryLang = $category->category_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $category;
+        });
+
+        // set selected to categories from session user 
+        $categories = $categories->map(function ($category) {
+            $category->Selected = false;
+            if (session()->get('user')->Categories->contains('id', $category->id))
+                $category->Selected = true;
+            return $category;
+        });
+
+        //get all education level name
+        $education_level = EducationLevel::All();
+        //merge education level with education level langs
+        $education_level = $education_level->map(function ($education) use ($lang) {
+            $education->EducationLevelLang = $education->education_level_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $education;
+        });
+
+
+
+        //get all languages
+        $languages = Language::all();
+        // set selected to Languages from session user 
+        $languages = $languages->map(function ($language) {
+            $language->Selected = false;
+            if (session()->get('user')->Languages->contains('id', $language->id))
+                $language->Selected = true;
+            return $language;
+        });
+
+
 
         return view("FrontEnd/account")->with([
             'cities' => $cities,
-            'Langs' => $langs
+            'Langs' => $langs,
+            'categories' => $categories,
+            'languages' => $languages,
+            'education_levels' => $education_level
         ]);
     }
 
@@ -261,40 +353,7 @@ class HomeController extends Controller
                 //check if user status is active
                 if ($user->Status == 1) {
 
-                    // get users
-                    // //merge users with categories and users
-                    $user->temp = UsersAndCategories::where('User_id', $user->id)->get();
-
-                    //get lang id
-                    $lang_id = lang::where('LanguageCode', $lang)->first()->id;
-
-                    $user->temp = $user->temp->map(function ($UserCategory) use ($lang_id) {
-                        $UserCategory->Category = Category::where('id', $UserCategory->category_id)->first();
-                        $UserCategory->Category->Category_lang = $UserCategory->Category->category_langs()->where('lang_id', $lang_id)->first();
-                        return $UserCategory;
-                    });
-
-                    $user->Categories = $user->temp->Pluck('Category');
-                    //unset temp
-
-                    //merge users with languages and users
-                    $user->temp = UsersAndLanguages::where('User_id', $user->id)->get();
-
-                    $user->temp = $user->temp->map(function ($UserLanguage) {
-                        $UserLanguage->Language = Language::where('id', $UserLanguage->language_id)->first();
-                        return $UserLanguage;
-                    });
-
-                    $user->Languages = $user->temp->Pluck('Language');
-
-
-                    //merge users with city
-                    $user->City = City::where('id', $user->City_id)->first();
-                    $user->City->CityLang = $user->City->cityLang()->where('lang_id', $lang_id)->first();
-
-
-                    unset($user->temp);
-
+                    $user = $this->MergeUsersTable($user);
 
                     session()->put('user', $user);
                     return redirect()->route('Hom', ['language' => $lang]);
@@ -315,14 +374,27 @@ class HomeController extends Controller
         if (session()->has('user'))
             return redirect()->route('Hom', ['language' => $lang]);
 
-        $data = $req->validated();
+        $data = $req->all();
 
-        //check EducationYear is valid
-
+        //check EducationYear is valid with regex
         $regex = '/^\d{4}$/';
         $IsMatch = false;
-        if (isset($data['educationYear'])) {
-            foreach ($data['educationYear'] as $item) {
+        if (isset($data['educationYearStart'])) {
+            foreach ($data['educationYearStart'] as $item) {
+                if (preg_match($regex, $item))
+                    $IsMatch = true;
+                else {
+                    $IsMatch = false;
+                    break;
+                }
+            }
+            if (!$IsMatch)
+                return response()->json(['errors' => [__("validationUser.Enter your year correctly")]]);
+        }
+        if (isset($data['educationYearEnd'])) {
+
+            $IsMatch = false;
+            foreach ($data['educationYearEnd'] as $item) {
                 if (preg_match($regex, $item))
                     $IsMatch = true;
                 else {
@@ -334,62 +406,71 @@ class HomeController extends Controller
                 return response()->json(['errors' => [__("validationUser.Enter your year correctly")]]);
         }
         // if LinkName is empty send error to view
-        if (isset($data['LinkName']))
+        if (isset($data['LinkName'])) {
             foreach ($data['LinkName'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your link name correctly")]]);
+            if (isset($data['Link'])) {
+                foreach ($data['LinkName'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your link name correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your link correctly")]]);
+        }
         // If Link is empty send error to view  
-        if (isset($data['Link']))
-            foreach ($data['Link'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your link correctly")]]);
-        // if CompanyName is empty send error to view
-        if (isset($data['companyname']))
+
+        if (isset($data['companyname'])) {
             foreach ($data['companyname'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your company name correctly")]]);
-        // if CompanyRank is empty send error to view
-        if (isset($data['companyrank']))
-            foreach ($data['CompanyRank'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
-        // if companydate is empty send error to view
-        if (isset($data['companydate']))
-            foreach ($data['companydate'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            if (isset($data['companyrank'])) {
+                foreach ($data['companyrank'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
+            if (isset($data['companydate'])) {
+                foreach ($data['companydate'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+        }
         // if educationName is empty send error to view
-        if (isset($data['educationName']))
+        if (isset($data['educationName'])) {
             foreach ($data['educationName'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your education name correctly")]]);
-        // if educationLevel is empty send error to view
-        if (isset($data['educationLevel']))
-            foreach ($data['educationLevel'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
-
-
-
+            if (isset($data['educationYearStart'])) {
+                foreach ($data['educationYearStart'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            if (isset($data['educationYearEnd'])) {
+                foreach ($data['educationYearEnd'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            if (isset($data['educationLevel'])) {
+                foreach ($data['educationLevel'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
+        }
 
         $data['Password'] = md5(md5($data['Password']));
         $data['Password_confirmation'] = md5(md5($data['Password_confirmation']));
-
-        //dowload request image
-        $image = $req->file('image');
-        $imageName = time() . '.' . $image->extension();
-        $image->move(public_path('CandidatesPicture'), $imageName);
-        $data['image'] = $imageName;
-
-
-
 
         $data['City_id'] = $data['City'];
 
         // $user->City_Id = $data['City'];
 
         $data['EducationName'] = isset($data['educationName']) ? $data['educationName'] : null;
-        $data['Year'] = isset($data['educationYear']) ? $data['educationYear'] : null;
+        $data['YearStart'] = isset($data['educationYearStart']) ? $data['educationYearStart'] : null;
+        $data['YearEnd'] = isset($data['educationYearEnd']) ? $data['educationYearEnd'] : null;
         $data['EducationLevel_Id'] = isset($data['educationLevel']) ? $data['educationLevel'] : null;
 
 
@@ -398,9 +479,16 @@ class HomeController extends Controller
         $data['MinSalary'] = isset($req->MinSalary) ? $req->MinSalary : null;
         $data['MaxSalary'] = isset($req->MaxSalary) ? $req->MaxSalary : null;
 
+        $image = $req->file('image');
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('CandidatesPicture'), $imageName);
+        $data['image'] = $imageName;
+
+
         $user = User::create($data);
         unset($data['educationName']);
-        unset($data['educationYear']);
+        unset($data['educationYearStart']);
+        unset($data['educationYearEnd']);
         unset($data['educationLevel']);
 
         $user->save();
@@ -411,11 +499,11 @@ class HomeController extends Controller
                 $education = new Education();
                 $education->EducationName = $data['EducationName'][$i];
                 $education->EducationLevel_id = $data['EducationLevel_Id'][$i];
-                $education->Year = $data['Year'][$i];
+                $education->YearStart = $data['YearStart'][$i];
+                $education->YearEnd = $data['YearEnd'][$i];
                 $education->user_id = $user->id;
                 $education->save();
             }
-
         if (isset($data['LinkName']))
             for ($i = 0; $i < count($data['LinkName']); $i++) {
                 $link = new Link();
@@ -424,8 +512,6 @@ class HomeController extends Controller
                 $link->user_id = $user->id;
                 $link->save();
             }
-
-
         if (isset($data['companyname']))
             for ($i = 0; $i < count($data['companyname']); $i++) {
                 $company = new Company();
@@ -438,7 +524,6 @@ class HomeController extends Controller
 
         $user->usersAndCategories()->attach($data['Categories']);
         $user->usersAndLanguages()->attach($data['Languages']);
-
 
 
         $Vacancies = Vacancy::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
@@ -465,8 +550,6 @@ class HomeController extends Controller
             $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
             return $Vacancy;
         });
-
-
 
         //get top 10 categories
         $Categories = Category::orderBy('SortOrder', 'desc')->take(10)->get();
@@ -587,19 +670,128 @@ class HomeController extends Controller
     }
 
 
+    public function UpdateUser(EditAccount $req)
+    {
+        //check username is unique in users table
+        $data = $req->validated();
+        if (session()->get('user')->Username != $data['Username']) {
+            $user = User::where('Username', $data['Username'])->first();
+            if ($user != null)
+                return redirect()->back()->withErrors(['Username' => __("validationUser.This username is already taken")]);
+        }
+        if (session()->get('user')->email != $data['email']) {
+            $user = User::where('email', $data['email'])->first();
+            if ($user != null)
+                return redirect()->back()->withErrors(['email' => __("validationUser.This email is already taken")]);
+        }
+        if (session()->get('user')->phone != $data['phone']) {
+            $user = User::where('phone', $data['phone'])->first();
+            if ($user != null)
+                return redirect()->back()->withErrors(['phone' => __("validationUser.This Phone is already taken")]);
+        }
 
+        $user = User::where('id', session()->get('user')->id)->first();
+        $data = $req->all();
+        //dowload request image
+        if ($req->hasFile('image')) {
+            $image = $req->file('image');
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('CandidatesPicture'), $imageName);
+            $data['image'] = $imageName;
+
+            //renive old image
+            $oldImage = public_path('CandidatesPicture/' . $user->image);
+            if (file_exists($oldImage))
+                unlink($oldImage);
+        } else {
+            $data['image'] = session()->get('user')->image;
+        }
+
+
+        //get req->GetAll
+
+
+        // FirstName LastName FatherName Username email City phone maried Description Skills MinSalary MaxSalary
+        $user->FirstName = $data['FirstName'];
+        $user->LastName = $data['LastName'];
+        $user->FatherName = $data['FatherName'];
+        $user->Username = $data['Username'];
+        $user->email = $data['email'];
+        $user->City_id = $data['City'];
+        $user->phone = $data['phone'];
+        $user->image = $data['image'];
+        $user->Married = $data['Married'];
+        $user->Description = $data['Description'];
+        ////////////////////////////////////////////////////BUNU AC /////////////////////////////////////////////////////////////////////////
+        // $user->Skills = $data['Skills'];
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $user->MinSalary = $data['MinSalary'];
+        $user->MaxSalary = $data['MaxSalary'];
+
+
+        $user->save();
+
+        $user->UsersAndCategories()->detach();
+        $user->UsersAndCategories()->attach($data['Categories']);
+
+        $user->UsersAndLanguages()->detach();
+        $user->UsersAndLanguages()->attach($data['Languages']);
+
+
+
+        $user = $this->MergeUsersTable($user);
+        // dd($user);
+
+        session()->put('user', $user);
+
+        return redirect()->back();
+    }
+
+    public function UpdateUserEducation(Request $req)
+    {
+
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+
+
+        for ($i = 0; $i < count($data['EducationName']); $i++) {
+            //check EducationYear Is Match Regex /^\d{4}$/
+            $regex = '/^\d{4}$/';
+            if (!preg_match($regex, $data['YearStart'][$i]))
+                return redirect()->back()->withErrors(['EducationYear' => __("validationUser.Enter your Education Year correctly")]);
+            if (!preg_match($regex, $data['YearEnd'][$i]))
+                return redirect()->back()->withErrors(['EducationYear' => __("validationUser.Enter your Education Year correctly")]);
+            if ($data['EducationName'][$i] == null)
+                return redirect()->back()->withErrors(['EducationName' => __("validationUser.Enter your Education Name correctly")]);
+                // EducationId Find Education
+            $Education = Education::where('user_id',$user->id)->where('id',$data['EducationId'][$i])->first();
+            if($Education == null)
+                return redirect()->back()->withErrors(['EducationName' => __("validationUser.Enter your Education Name correctly")]);
+
+            $Education->EducationName = $data['EducationName'][$i];
+            $Education->YearStart = $data['YearStart'][$i];
+            $Education->YearEnd = $data['YearEnd'][$i];
+            $Education->EducationLevel_Id=$data['EducationLevel'][$i];
+            $Education->save();
+        }
+
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+
+        return redirect()->back();
+    }
 
     public function SignUpControllerAjax(UserRegisterRequest $req)
     {
         if (session()->has('user'))
             return redirect()->route('Hom', ['language' => app()->getLocale()]);
-        $data = $req->validated();
+        $data = $req->all();
 
         //check EducationYear is valid with regex
         $regex = '/^\d{4}$/';
-        $IsMatch = false;
-        if (isset($data['educationYear'])) {
-            foreach ($data['educationYear'] as $item) {
+        if (isset($data['educationYearStart'])) {
+            $IsMatch = false;
+            foreach ($data['educationYearStart'] as $item) {
                 if (preg_match($regex, $item))
                     $IsMatch = true;
                 else {
@@ -610,42 +802,76 @@ class HomeController extends Controller
             if (!$IsMatch)
                 return response()->json(['errors' => [__("validationUser.Enter your year correctly")]]);
         }
+        if (isset($data['educationYearEnd'])) {
 
+            $IsMatch = false;
+            foreach ($data['educationYearEnd'] as $item) {
+                if (preg_match($regex, $item))
+                    $IsMatch = true;
+                else {
+                    $IsMatch = false;
+                    break;
+                }
+            }
+            if (!$IsMatch)
+                return response()->json(['errors' => [__("validationUser.Enter your year correctly")]]);
+        }
         // if LinkName is empty send error to view
-        if (isset($data['LinkName']))
+        if (isset($data['LinkName'])) {
             foreach ($data['LinkName'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your link name correctly")]]);
+            if (isset($data['Link'])) {
+                foreach ($data['LinkName'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your link name correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your link correctly")]]);
+        }
         // If Link is empty send error to view  
-        if (isset($data['Link']))
-            foreach ($data['Link'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your link correctly")]]);
-        // if CompanyName is empty send error to view
-        if (isset($data['companyname']))
+
+        if (isset($data['companyname'])) {
             foreach ($data['companyname'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your company name correctly")]]);
-        // if CompanyRank is empty send error to view
-        if (isset($data['companyrank']))
-            foreach ($data['CompanyRank'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
-        // if companydate is empty send error to view
-        if (isset($data['companydate']))
-            foreach ($data['companydate'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            if (isset($data['companyrank'])) {
+                foreach ($data['companyrank'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
+            if (isset($data['companydate'])) {
+                foreach ($data['companydate'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+        }
         // if educationName is empty send error to view
-        if (isset($data['educationName']))
+        if (isset($data['educationName'])) {
             foreach ($data['educationName'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your education name correctly")]]);
-        // if educationLevel is empty send error to view
-        if (isset($data['educationLevel']))
-            foreach ($data['educationLevel'] as $item)
-                if ($item == null)
-                    return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
+
+            if (isset($data['educationYearStart'])) {
+                foreach ($data['educationYearStart'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            if (isset($data['educationYearEnd'])) {
+                foreach ($data['educationYearEnd'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your education year correctly")]]);
+            if (isset($data['educationLevel'])) {
+                foreach ($data['educationLevel'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
+        }
         return response()->json(['success' => 'Success ']);
     }
 }

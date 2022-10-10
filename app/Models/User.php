@@ -30,7 +30,7 @@ class User extends Model
 
     public function education()
     {
-        return $this->hasMany(Education::class, 'user_id', 'EducationName','EducationLevel_id','Year');
+        return $this->hasMany(Education::class, 'user_id', 'EducationName','EducationLevel_id','YearStart','YearEnd');
     }
     public function Links()
     {

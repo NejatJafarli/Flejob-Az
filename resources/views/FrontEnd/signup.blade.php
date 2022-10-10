@@ -462,7 +462,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Profile Picture (Types jpeg,png,jpg,gif,svg Max 2Mb) </label>
-                                    <input name="image" type="file" style="padding: 5px 20px; height: 50px;"
+                                    <input class="form-control" name="image" type="file" style="padding: 5px 20px; height: 50px;"
                                         placeholder="Enter Profile Picture" required>
                                 </div>
                             </div>
@@ -479,14 +479,14 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <textarea name="Description" style="height: 250px;" cols="30" rows="10" class="form-control"
-                                        placeholder="Enter Description" required></textarea>
+                                        placeholder="Enter Description" ></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Skills</label>
                                     <textarea name="Skills" style="height: 250px;" cols="30" rows="10" class="form-control"
-                                        placeholder="Enter Skills" required></textarea>
+                                        placeholder="Enter Skills" ></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">

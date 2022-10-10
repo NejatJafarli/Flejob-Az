@@ -9,7 +9,7 @@ class Education extends Model
 {
     use HasFactory;
     //fill
-    protected $fillable = ['id','EducationLevel_id','EducationName','Year','user_id'];
+    protected $fillable = ['id','EducationLevel_id','EducationName','YearStart','YearEnd','user_id'];
 
     public function user()
     {

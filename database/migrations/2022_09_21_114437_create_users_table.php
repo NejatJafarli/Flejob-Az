@@ -23,14 +23,14 @@ class CreateUsersTable extends Migration
             $table->string('Description')->nullable();
             $table->string('Skills')->nullable();
             $table->boolean('Married');
-            $table->string('Username') -> unique();
+            $table->string('Username')->unique();
             $table->string('Password');
             $table->unsignedBigInteger('City_id');
-            $table->string('email') -> unique();
-            $table->string('phone') -> unique();
+            $table->string('email')->unique();
+            $table->string('phone')->unique();
             $table->unsignedInteger('MinSalary')->nullable();
             $table->unsignedInteger('MaxSalary')->nullable();
-            $table->integer('Status');
+            $table->integer('Status')->default(1);
             $table->timestamps();
 
             $table->foreign('City_id')->references('id')->on('cities')->onDelete('cascade');

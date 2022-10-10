@@ -21,6 +21,8 @@ Route::group(['prefix' => '{language}'], function () {
     Route::post('/registerUser', [HomeController::class, 'registerUser'])->name('RegisterUser');
     Route::post('/registerCompany', [HomeController::class, 'registerCompany'])->name('RegisterCompany');
     Route::post('/Signin', [HomeController::class, 'Signin'])->name('Signin');
+    Route::post('/Account/Edit/User', [HomeController::class, 'UpdateUser'])->name('UpdateUser');
+    Route::post('/Account/Edit/Educations', [HomeController::class, 'UpdateUserEducation'])->name('UpdateUserEducation');
 
     
     

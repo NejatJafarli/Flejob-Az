@@ -21,6 +21,7 @@ class CreateVacanciesTable extends Migration
             $table->text('VacancyRequirements');
             $table->unsignedBigInteger('CompanyUser_id');
             $table->unsignedBigInteger('City_id');
+            $table->date('EndDate');
             $table->string('PersonName');
             $table->string('PersonPhone');
             $table->string('VacancySalary');

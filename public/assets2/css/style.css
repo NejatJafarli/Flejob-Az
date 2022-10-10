@@ -3409,8 +3409,9 @@ h3 {
 }
 
 .account-information .profile-thumb img {
-  border-radius: 50%;
+  /* border-radius: 50%; */
   margin-bottom: 15px;
+  max-width: 200px;
 }
 
 .account-information .profile-thumb h3 {
