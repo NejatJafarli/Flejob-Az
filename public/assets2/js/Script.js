@@ -4,16 +4,24 @@ function MyFunc1 () {
     let div = document.getElementById('CompanyExp')
     let companyname = document.getElementsByName('companyname[]')
     let companyrank = document.getElementsByName('companyrank[]')
-    let companydate = document.getElementsByName('companydate[]')
+    let companyStartdate = document.getElementsByName('companyEnddate[]')
+    let companyEnddate = document.getElementsByName('companyStartdate[]')
 
     let names = []
     let ranks = []
-    let dates = []
-    if (companyname.length && companyrank.length && companydate.length) {
+    let datesStart = []
+    let datesEnd = []
+    if (
+        companyname.length &&
+        companyrank.length &&
+        companyStartdate.length &&
+        companyEnddate.length
+    ) {
         for (let i = 0; i < companyname.length; i++) {
             names.push(companyname[i].value)
             ranks.push(companyrank[i].value)
-            dates.push(companydate[i].value)
+            datesStart.push(companyStartdate[i].value)
+            datesEnd.push(companyEnddate[i].value)
         }
     }
 
@@ -24,7 +32,8 @@ function MyFunc1 () {
         if (
             companyname[i].value == '' ||
             companyrank[i].value == '' ||
-            companydate[i].value == ''
+            companyEnddate[i].value == '' ||
+            companyStartdate[i].value == ''
         ) {
             isTrue = false
             break
@@ -41,24 +50,30 @@ function MyFunc1 () {
             placeholder="Enter Company Name" required>
     </div>
     <div class="form-group">
-        <label>Company Rank</label>
+        <label>Employer Rank</label>
         <input name="companyrank[]" type="text" class="form-control"
             placeholder="Enter Company Rank" required>
     </div>
     <div class="form-group">
-        <label>Company End Date</label>
-        <input name="companydate[]" type="date" class="form-control"
+        <label>Company Start Date</label>
+        <input name="companyStartdate[]" type="date" class="form-control"
             placeholder="Enter Company End Date" required>
     </div>
+    <div class="form-group">
+    <label>Company End Date</label>
+    <input name="companyEnddate[]" type="date" class="form-control"
+        placeholder="Enter Company End Date" required>
+</div>
 `
     //append variable to div
     div.innerHTML += str
 
-    if (names.length && ranks.length && dates.length) {
+    if (names.length && ranks.length && datesStart.length && datesEnd.length) {
         for (let i = 0; i < names.length; i++) {
             companyname[i].value = names[i]
             companyrank[i].value = ranks[i]
-            companydate[i].value = dates[i]
+            companyStartdate[i].value = datesStart[i]
+            companyEnddate[i].value = datesEnd[i]
         }
     }
 }
@@ -77,7 +92,12 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
     let yearsStart = []
     let yearsEnd = []
     let levels = []
-    if (educationName.length && educationYearStart.length && educationLevel.length && educationYearEnd.length) {
+    if (
+        educationName.length &&
+        educationYearStart.length &&
+        educationLevel.length &&
+        educationYearEnd.length
+    ) {
         for (let i = 0; i < educationName.length; i++) {
             names.push(educationName[i].value)
             yearsStart.push(educationYearStart[i].value)
@@ -114,14 +134,17 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
                 placeholder="Enter Education Name" required>
         </div>
         <div class="form-group">
-
             <label>Education Year Start</label>
             <input name="educationYearStart[]" type="number" maxlength="4" class="form-control"
             placeholder="Enter Education Start Year" required>
-            <label>Education Year End</label>
-                <input name="educationYearEnd[]" type="number" maxlength="4" class="form-control"
-                placeholder="Enter Education End Year" required>
         </div>
+
+        <div class="form-group">
+            <label>Education Year End</label>
+            <input name="educationYearEnd[]" type="number" maxlength="4" class="form-control"
+            placeholder="Enter Education End Year" required>
+        </div>
+                
         <div class="form-group">
             <label>Education Level</label>
             <select name="educationLevel[]" class="form-control">

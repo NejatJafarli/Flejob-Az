@@ -16,6 +16,7 @@ use App\Models\CompanyUser;
 use App\Models\Education;
 use App\Models\lang;
 use App\Models\Link;
+use App\Models\subscribe_vacancy;
 use App\Models\UsersAndCategories;
 use App\Models\UsersAndCities;
 use App\Models\UsersAndLanguages;
@@ -30,7 +31,7 @@ class HomeController extends Controller
         return "Welcome to our homepage";
     }
 
-    protected function MergeUsersTable($user)
+    static function MergeUsersTable($user)
     {
         //update session
         $user->temp = UsersAndCategories::where('User_id', $user->id)->get();
@@ -79,8 +80,18 @@ class HomeController extends Controller
 
 
 
+
         //merger users with links
         $user->Links = Link::where('User_id', $user->id)->get();
+
+
+
+        //merge users with subscribed vacancies
+        $user->AppliedVacancies = subscribe_vacancy::where('User_id', $user->id)->get();
+
+
+
+
 
         unset($user->temp);
 
@@ -94,11 +105,55 @@ class HomeController extends Controller
 
 
 
+    public function JobDetails($lang, $id)
+    {
+    
+        $vac=Vacancy::where('id', $id)->where('Status',1)->first();
+        if($vac==null)
+            return redirect()->route('Hom');
 
+        $langs = lang::all();
+
+        //merge vacancy with city   
+        $lang_id=$langs->where('LanguageCode', $lang)->first()->id;
+        $vac->City = City::where('id', $vac->City_id)->first();
+        $vac->City->CityLang = $vac->City->cityLang()->where('lang_id',$lang_id )->first();
+
+        //merge vac with category
+        $vac->Category = Category::where('id', $vac->Category_id)->first();
+        $vac->Category->Category_lang = $vac->Category->category_langs()->where('lang_id', $lang_id)->first();
+
+        //merge vac with CompanyUser 
+        $vac->CompanyUser = CompanyUser::where('id', $vac->CompanyUser_id)->first();
+
+        
+
+        return view('FrontEnd/job-Details')->with(['vac' => $vac,'Langs' => $langs ]);
+    }
+    public function MyResume($lang)
+    {
+        //check session
+        if (session()->has('user')) {
+            $user = session()->get('user');
+            $user = $this->MergeUsersTable($user);
+
+            $langs = lang::all();
+
+            return view('FrontEnd/Resume', ['Langs' => $langs]);
+        } else {
+            return redirect()->route('login');
+        }
+    }
     public function Hom($lang)
     {
 
-        $Vacancies = Vacancy::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
+        //check session
+        if (session()->has('user')) {
+            $user = $this->mergeUsersTable(session()->get('user'));
+            session()->put('user', $user);
+        }
+
+        $Vacancies = Vacancy::where('status', 1)->orderBy('id', 'desc')->take(20)->get();
         //Merge Vacancies with Owner Company User
         $Vacancies = $Vacancies->map(function ($Vacancy) {
             $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
@@ -335,6 +390,17 @@ class HomeController extends Controller
         return view("FrontEnd/signin", ["Langs" => $Langs]);
     }
 
+
+    public function ChangePass($lang)
+    {
+        if (!session()->has('user'))
+            return redirect()->route('Signin', ['language' => $lang]);
+
+        $Langs = lang::all();
+
+        return view("FrontEnd/changePassword", ["Langs" => $Langs]);
+    }
+
     public function Signin($lang, Request $req)
     {
         if (session()->has('user'))
@@ -370,7 +436,6 @@ class HomeController extends Controller
 
     public function registerUser($lang, UserRegisterRequest $req)
     {
-
         if (session()->has('user'))
             return redirect()->route('Hom', ['language' => $lang]);
 
@@ -378,8 +443,8 @@ class HomeController extends Controller
 
         //check EducationYear is valid with regex
         $regex = '/^\d{4}$/';
-        $IsMatch = false;
         if (isset($data['educationYearStart'])) {
+            $IsMatch = false;
             foreach ($data['educationYearStart'] as $item) {
                 if (preg_match($regex, $item))
                     $IsMatch = true;
@@ -418,7 +483,6 @@ class HomeController extends Controller
                 return response()->json(['errors' => [__("validationUser.Enter your link correctly")]]);
         }
         // If Link is empty send error to view  
-
         if (isset($data['companyname'])) {
             foreach ($data['companyname'] as $item)
                 if ($item == null)
@@ -429,8 +493,14 @@ class HomeController extends Controller
                         return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
             } else
                 return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
-            if (isset($data['companydate'])) {
-                foreach ($data['companydate'] as $item)
+            if (isset($data['companyStartdate'])) {
+                foreach ($data['companyStartdate'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            if (isset($data['companyEnddate'])) {
+                foreach ($data['companyEnddate'] as $item)
                     if ($item == null)
                         return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
             } else
@@ -441,6 +511,7 @@ class HomeController extends Controller
             foreach ($data['educationName'] as $item)
                 if ($item == null)
                     return response()->json(['errors' => [__("validationUser.Enter your education name correctly")]]);
+
             if (isset($data['educationYearStart'])) {
                 foreach ($data['educationYearStart'] as $item)
                     if ($item == null)
@@ -484,7 +555,6 @@ class HomeController extends Controller
         $image->move(public_path('CandidatesPicture'), $imageName);
         $data['image'] = $imageName;
 
-
         $user = User::create($data);
         unset($data['educationName']);
         unset($data['educationYearStart']);
@@ -517,7 +587,8 @@ class HomeController extends Controller
                 $company = new Company();
                 $company->CompanyName = $data['companyname'][$i];
                 $company->Rank = $data['companyrank'][$i];
-                $company->Date = $data['companydate'][$i];
+                $company->DateEnd = $data['companyEnddate'][$i];
+                $company->DateStart = $data['companyStartdate'][$i];
                 $company->user_id = $user->id;
                 $company->save();
             }
@@ -749,37 +820,237 @@ class HomeController extends Controller
 
     public function UpdateUserEducation(Request $req)
     {
-
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
 
-
-        for ($i = 0; $i < count($data['EducationName']); $i++) {
-            //check EducationYear Is Match Regex /^\d{4}$/
-            $regex = '/^\d{4}$/';
-            if (!preg_match($regex, $data['YearStart'][$i]))
-                return redirect()->back()->withErrors(['EducationYear' => __("validationUser.Enter your Education Year correctly")]);
-            if (!preg_match($regex, $data['YearEnd'][$i]))
-                return redirect()->back()->withErrors(['EducationYear' => __("validationUser.Enter your Education Year correctly")]);
-            if ($data['EducationName'][$i] == null)
-                return redirect()->back()->withErrors(['EducationName' => __("validationUser.Enter your Education Name correctly")]);
+        if (isset($data['EducationName']))
+            for ($i = 0; $i < count($data['EducationName']); $i++) {
+                //check EducationYear Is Match Regex /^\d{4}$/
+                $regex = '/^\d{4}$/';
+                if (!preg_match($regex, $data['YearStart'][$i]))
+                    return redirect()->back()->withErrors(['EducationYear' => __("validationUser.Enter your Education Year correctly")]);
+                if (!preg_match($regex, $data['YearEnd'][$i]))
+                    return redirect()->back()->withErrors(['EducationYear' => __("validationUser.Enter your Education Year correctly")]);
+                if ($data['EducationName'][$i] == null)
+                    return redirect()->back()->withErrors(['EducationName' => __("validationUser.Enter your Education Name correctly")]);
                 // EducationId Find Education
-            $Education = Education::where('user_id',$user->id)->where('id',$data['EducationId'][$i])->first();
-            if($Education == null)
-                return redirect()->back()->withErrors(['EducationName' => __("validationUser.Enter your Education Name correctly")]);
+                $Education = Education::where('user_id', $user->id)->where('id', $data['EducationId'][$i])->first();
+                if ($Education == null)
+                    return redirect()->back()->withErrors(['EducationName' => __("validationUser.Enter your Education Name correctly")]);
 
-            $Education->EducationName = $data['EducationName'][$i];
-            $Education->YearStart = $data['YearStart'][$i];
-            $Education->YearEnd = $data['YearEnd'][$i];
-            $Education->EducationLevel_Id=$data['EducationLevel'][$i];
-            $Education->save();
-        }
+                $Education->EducationName = $data['EducationName'][$i];
+                $Education->YearStart = $data['YearStart'][$i];
+                $Education->YearEnd = $data['YearEnd'][$i];
+                $Education->EducationLevel_Id = $data['EducationLevel'][$i];
+                $Education->save();
+            }
+
+        if (isset($data['NewEducationName']))
+            for ($i = 0; $i < count($data['NewEducationName']); $i++) {
+                //check EducationYear Is Match Regex /^\d{4}$/
+                $regex = '/^\d{4}$/';
+                if (!preg_match($regex, $data['NewYearStart'][$i]))
+                    return redirect()->back()->withErrors(['NewEducationYear' => __("validationUser.Enter your New Education Year correctly")]);
+                if (!preg_match($regex, $data['NewYearEnd'][$i]))
+                    return redirect()->back()->withErrors(['NewEducationYear' => __("validationUser.Enter your New Education Year correctly")]);
+                if ($data['NewEducationName'][$i] == null)
+                    return redirect()->back()->withErrors(['NewEducationName' => __("validationUser.Enter your New Education Name correctly")]);
+
+                $Education = new Education();
+                $Education->EducationName = $data['NewEducationName'][$i];
+                $Education->YearStart = $data['NewYearStart'][$i];
+                $Education->YearEnd = $data['NewYearEnd'][$i];
+                $Education->EducationLevel_Id = $data['NewEducationLevel'][$i];
+                $Education->user_id = $user->id;
+                $Education->save();
+
+                $user = $this->MergeUsersTable($user);
+                session()->put('user', $user);
+            }
+
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+
+
+        return redirect()->back();
+    }
+    public function UpdateUserCompany(Request $req)
+    {
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+        if (isset($data['companyname']))
+            for ($i = 0; $i < count($data['companyname']); $i++) {
+                if ($data['companyname'][$i] == null)
+                    return redirect()->back()->withErrors(['companyname' => __("validationUser.Enter your Company Name correctly")]);
+                if ($data['companyrank'][$i] == null)
+                    return redirect()->back()->withErrors(['companyrank' => __("validationUser.Enter your Company Rank correctly")]);
+                if ($data['companyStartdate'][$i] == null)
+                    return redirect()->back()->withErrors(['companyStartdate' => __("validationUser.Enter your Company Start Date correctly")]);
+                if ($data['companyEnddate'][$i] == null)
+                    return redirect()->back()->withErrors(['companyEnddate' => __("validationUser.Enter your Company End Date correctly")]);
+
+                $Company = Company::where('user_id', $user->id)->where('id', $data['CompanyId'][$i])->first();
+
+                if ($Company == null)
+                    return redirect()->back()->withErrors(['companyname' => __("validationUser.You have not this Company")]);
+
+                $Company->CompanyName = $data['companyname'][$i];
+                $Company->rank = $data['companyrank'][$i];
+                $Company->DateStart = $data['companyStartdate'][$i];
+                $Company->DateEnd = $data['companyEnddate'][$i];
+                $Company->save();
+            }
+
+        if (isset($data['Newcompanyname']))
+            for ($i = 0; $i < count($data['Newcompanyname']); $i++) {
+
+                if ($data['Newcompanyname'][$i] == null)
+                    return redirect()->back()->withErrors(['Newcompanyname' => __("validationUser.Enter your New Company Name correctly")]);
+                if ($data['Newcompanyrank'][$i] == null)
+                    return redirect()->back()->withErrors(['Newcompanyrank' => __("validationUser.Enter your New Company Rank correctly")]);
+                if ($data['NewcompanyStartdate'][$i] == null)
+                    return redirect()->back()->withErrors(['NewcompanyStartdate' => __("validationUser.Enter your New Company Start Date correctly")]);
+                if ($data['NewcompanyEnddate'][$i] == null)
+                    return redirect()->back()->withErrors(['NewcompanyEnddate' => __("validationUser.Enter your New Company End Date correctly")]);
+
+                $Company = new Company();
+                $Company->CompanyName = $data['Newcompanyname'][$i];
+                $Company->rank = $data['Newcompanyrank'][$i];
+                $Company->DateStart = $data['NewcompanyStartdate'][$i];
+                $Company->DateEnd = $data['NewcompanyEnddate'][$i];
+                $Company->user_id = $user->id;
+                $Company->save();
+
+                $user = $this->MergeUsersTable($user);
+                session()->put('user', $user);
+            }
+
 
         $user = $this->MergeUsersTable($user);
         session()->put('user', $user);
 
         return redirect()->back();
     }
+    public function UpdateUserlink(Request $req)
+    {
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+        if (isset($data['linkname']))
+            for ($i = 0; $i < count($data['linkname']); $i++) {
+                if ($data['linkname'][$i] == null)
+                    return redirect()->back()->withErrors(['linkname' => __("validationUser.Enter your Link Name correctly")]);
+                if ($data['link'][$i] == null)
+                    return redirect()->back()->withErrors(['link' => __("validationUser.Enter your Link Url correctly")]);
+
+                $Link = Link::where('user_id', $user->id)->where('id', $data['LinkId'][$i])->first();
+
+                if ($Link == null)
+                    return redirect()->back()->withErrors(['linkname' => __("validationUser.You have not this Link")]);
+
+                $Link->LinkName = $data['linkname'][$i];
+                $Link->Link = $data['link'][$i];
+                $Link->save();
+            }
+
+        if (isset($data['Newlinkname']))
+            for ($i = 0; $i < count($data['Newlinkname']); $i++) {
+
+                if ($data['Newlinkname'][$i] == null)
+                    return redirect()->back()->withErrors(['Newlinkname' => __("validationUser.Enter your New Link Name correctly")]);
+                if ($data['Newlink'][$i] == null)
+                    return redirect()->back()->withErrors(['Newlink' => __("validationUser.Enter your New Link Url correctly")]);
+
+                $Link = new Link();
+                $Link->LinkName = $data['Newlinkname'][$i];
+                $Link->Link = $data['Newlink'][$i];
+                $Link->user_id = $user->id;
+                $Link->save();
+
+                $user = $this->MergeUsersTable($user);
+                session()->put('user', $user);
+            }
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+
+        return redirect()->back();
+    }
+
+    public function UpdateUserPassword(Request $req)
+    {
+
+        //message error
+        $messages = [
+            'password.required' => __('validationUser.Password is required'),
+            'password.min' => __('validationUser.Password must be at least 6 characters'),
+            'newpassword.required' => __('validationUser.New Password is required'),
+            'newpassword.min' => __('validationUser.New Password must be at least 6 characters'),
+            'confirmpassword.required' => __('validationUser.Confirm Password is required'),
+            'confirmpassword.same' => __('validationUser.Confirm Password must be same New Password'),
+        ];
+        //validate request Password Required
+        $req->validate([
+            'password' => 'required | min:6',
+            'newpassword' => 'required | min:6',
+            'confirmpassword' => 'required | same:newpassword',
+        ], $messages);
+
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+
+        $Pass = md5(md5($data['password']));
+        if ($user->Password != $Pass)
+            return redirect()->back()->withErrors(['password' => __("validationUser.Password is not correct")]);
+
+        $user->Password = md5(md5($data['newpassword']));
+        $user->save();
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+        return redirect()->back();
+    }
+
+
+    public function DeleteUserEducation(Request $req)
+    {
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+        $Education = Education::where('user_id', $user->id)->where('id', $data['EducationId'])->first();
+        if ($Education == null)
+            return redirect()->back()->withErrors(['EducationName' => __("validationUser.You have not this Education")]);
+        $Education->delete();
+
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+
+        return redirect()->back();
+    }
+    public function DeleteUserCompany(Request $req)
+    {
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+        $Company = Company::where('user_id', $user->id)->where('id', $data['CompanyId'])->first();
+        if ($Company == null)
+            return redirect()->back()->withErrors(['companyname' => __("validationUser.You have not this Company")]);
+        $Company->delete();
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+        return redirect()->back();
+    }
+    public function DeleteUserLink(Request $req)
+    {
+        $data = $req->all();
+        $user = User::where('id', session()->get('user')->id)->first();
+        $Link = Link::where('user_id', $user->id)->where('id', $data['LinkId'])->first();
+        if ($Link == null)
+            return redirect()->back()->withErrors(['Link' => __("validationUser.You have not this Link")]);
+        $Link->delete();
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+        return redirect()->back();
+    }
+
+
+
+
 
     public function SignUpControllerAjax(UserRegisterRequest $req)
     {
@@ -829,7 +1100,6 @@ class HomeController extends Controller
                 return response()->json(['errors' => [__("validationUser.Enter your link correctly")]]);
         }
         // If Link is empty send error to view  
-
         if (isset($data['companyname'])) {
             foreach ($data['companyname'] as $item)
                 if ($item == null)
@@ -840,8 +1110,14 @@ class HomeController extends Controller
                         return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
             } else
                 return response()->json(['errors' => [__("validationUser.Enter your company rank correctly")]]);
-            if (isset($data['companydate'])) {
-                foreach ($data['companydate'] as $item)
+            if (isset($data['companyStartdate'])) {
+                foreach ($data['companyStartdate'] as $item)
+                    if ($item == null)
+                        return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            } else
+                return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
+            if (isset($data['companyEnddate'])) {
+                foreach ($data['companyEnddate'] as $item)
                     if ($item == null)
                         return response()->json(['errors' => [__("validationUser.Enter your company date correctly")]]);
             } else
@@ -873,5 +1149,40 @@ class HomeController extends Controller
                 return response()->json(['errors' => [__("validationUser.Enter your education level correctly")]]);
         }
         return response()->json(['success' => 'Success ']);
+    }
+    public function ApplyVacancy($lang, $id)
+    {
+
+        if (!session()->has('user'))
+            return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
+        $user = User::where('id', session()->get('user')->id)->first();
+        $vacancy = Vacancy::where('id', $id)->where('Status', 1)->first();
+        if ($vacancy == null)
+            return response()->json(['errors' => [__("validationUser.This vacancy is not exist")]]);
+
+
+        $vacUser = subscribe_vacancy::where('user_id', $user->id)->where('vacancy_id', $vacancy->id)->first();
+        if ($vacUser != null) {
+            $vacUser->delete();
+            $user = $this->MergeUsersTable($user);
+            session()->put('user', $user);
+            return response()->json(['success' => "UnApplied Successfully"]);
+        } else {
+            //check vacancy end date
+            $vacancyEndDate = $vacancy->EndDate;
+            $vacancyEndDate = strtotime($vacancyEndDate);
+            $today = strtotime(date('Y-m-d'));
+            if ($vacancyEndDate < $today)
+                return response()->json(['errors' => [__("validationUser.This vacancy is expired")]]);
+            //add new subscribe
+            $subscribe = new subscribe_vacancy();
+            $subscribe->user_id = $user->id;
+            $subscribe->vacancy_id = $id;
+            $subscribe->save();
+
+            $user = $this->MergeUsersTable($user);
+            session()->put('user', $user);
+            return response()->json(['success' => 'Applied Successfully']);
+        }
     }
 }

@@ -17,9 +17,9 @@ class CreateSubscribeVacanciesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('Vacancy_id');
             $table->unsignedBigInteger('User_id');
-            $table->string('MetaTitle')->nullable();
-            $table->string('MetaDescription')->nullable();
-            $table->string('MetaKeywords')->nullable();
+            //$table->string('MetaTitle')->nullable();
+            //$table->string('MetaDescription')->nullable();
+            //$table->string('MetaKeywords')->nullable();
             $table->timestamps();
 
             $table->foreign('Vacancy_id')->references('id')->on('vacancies')->onDelete('cascade');

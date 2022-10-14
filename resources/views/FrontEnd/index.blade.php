@@ -26,7 +26,7 @@
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item">
-                                <a href="{{ route('Hom', app()->getLocale()) }}" class="nav-link active">Home</a>
+                                <a href="{{ route('Hom', app()->getLocale()) }}" class="nav-link active"></a>
                             </li>
                             <li class="nav-item">
                                 <a href="about.html" class="nav-link ">About</a>
@@ -150,7 +150,8 @@
                                         class="nav-link dropdown-toggle">{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
-                                            <a href="{{ route('Account', app()->getLocale()) }}" class="nav-link">Profile</a>
+                                            <a href="{{ route('Account', app()->getLocale()) }}"
+                                                class="nav-link">Profile</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#" class="nav-link">Settings</a>
@@ -263,6 +264,11 @@
     <section class="job-section pb-70">
         <div class="container">
             <div class="section-title text-center">
+                <div>
+                    <div class="MyAlert-box Mysuccess">Successful Alert !!!</div>
+                    <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
+                    <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
+                </div>
                 <h2>Jobs You May Be Interested In</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
@@ -275,7 +281,8 @@
                             <div class="row align-items-center">
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
-                                        <a href="job-details.html">
+                                        <a
+                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
                                             <img src="{{ $vac->Owner->CompanyLogo }}" alt="company logo">
                                         </a>
                                     </div>
@@ -283,7 +290,8 @@
                                 <div class="col-lg-6">
                                     <div class="job-info">
                                         <h3>
-                                            <a href="job-details.html">{{ $vac->VacancyName }}</a>
+                                            <a
+                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
                                         </h3>
                                         <ul>
                                             <li>Via <a href="#">{{ $vac->Owner->CompanyName }}</a></li>
@@ -300,10 +308,22 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="job-save">
-                                        <a href="#">
-                                            <i class='bx bx-heart'></i>
-                                            Apply
-                                        </a>
+                                        @php
+                                            $userApplied = false;
+                                            if (session()->get('user')) {
+                                                foreach (session()->get('user')->AppliedVacancies as $UserVac) {
+                                                    if ($UserVac->Vacancy_id == $vac->id) {
+                                                        $userApplied = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            
+                                        @endphp
+                                        <button
+                                            onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
+                                            type="button" class="btn btn-primary" data-toggle="modal">
+                                            {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
                                         <p>
                                             <i class='bx bx-stopwatch'></i>
                                             {{ $vac->created_at->diffForHumans() }}
@@ -370,7 +390,6 @@
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                                 ut labore et dolorei.</p>
                         </div>
-
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="media">
@@ -381,7 +400,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-sm-6">
                                 <div class="media">
                                     <i class="flaticon-research align-self-center mr-3"></i>
@@ -848,6 +866,81 @@
         <p>Copyright @2021 Jovie. All Rights Reserved By <a href="https://hibootstrap.com/"
                 target="_blank">HiBootstrp.com</a></p>
     </div>
+
+    <script>
+        //document ready
+        $(document).ready(function() {
+
+        });
+
+        function ApplyVac(event, url) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data) {
+                    if (data.success == "Applied Successfully") {
+                        event.innerHTML = "UnApply Now";
+                        $('div.Mysuccess').html(data.success)
+                        $('div.Mysuccess')
+                            .fadeIn(300)
+                            .delay(5000)
+                            .fadeOut(400)
+                        $('html, body').animate({
+                                scrollTop: $('div.Mysuccess').offset().top - 250
+                            },
+                            100
+                        )
+                    } else if (data.success == "UnApplied Successfully") {
+                        //data have a redirect property
+
+                        //change element value to Apply
+                        event.innerHTML = "Apply Now";
+                        $('div.Mysuccess').html(data.success)
+                        $('div.Mysuccess')
+                            .fadeIn(300)
+                            .delay(5000)
+                            .fadeOut(400)
+                        $('html, body').animate({
+                                scrollTop: $('div.Mysuccess').offset().top - 250
+                            },
+                            100
+                        )
+                    } else if (data.hasOwnProperty("errors")) {
+                        $('div.Myfailure').html(data.errors)
+                        $('div.Myfailure')
+                            .fadeIn(300)
+                            .delay(5000)
+                            .fadeOut(400)
+                        $('html, body').animate({
+                                scrollTop: $('div.Myfailure').offset().top - 250
+                            },
+                            100
+                        )
+                    } else if (data.hasOwnProperty('redirect'))
+                        window.location.href = data.redirect;
+
+                },
+                error: function(data) {
+                    $('div.Myfailure').html(data.errors)
+                    $('div.Myfailure')
+                        .fadeIn(300)
+                        .delay(5000)
+                        .fadeOut(400)
+                    $('html, body').animate({
+                            scrollTop: $('div.Myfailure').offset().top - 250
+                        },
+                        100
+                    )
+                }
+            });
+        }
+    </script>
     <!-- Footer Section End -->
 
     <!-- Back To Top Start -->

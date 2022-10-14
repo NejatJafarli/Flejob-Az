@@ -34,6 +34,7 @@ class EditAccount extends FormRequest
             'phone' => 'required | regex:/^\+994\d{9}$/ ', //unique for users' ,
             'Languages' => 'required | array | min:1 ',
             'Categories' => 'array',
+            'image'=>'image | mimes:jpeg,png,jpg,gif,svg | max:2048',
         ];
     }
     //messages
@@ -54,6 +55,9 @@ class EditAccount extends FormRequest
             'Languages.required' => __('validationUser.Enter your languages'),
             'Languages.array' => __('validationUser.Enter your languages'),
             'Languages.min' => __('validationUser.Enter your languages'),
+            'image.image' => __('validationUser.Enter your image'),
+            'image.mimes' => __('validationUser.image must be jpg, png, jpeg, gif, svg'),
+            'image.max' => __('validationUser.image must be less than 2MB'),
         ];
     }
 }

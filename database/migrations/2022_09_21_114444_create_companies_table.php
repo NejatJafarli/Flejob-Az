@@ -17,7 +17,8 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('CompanyName');
             $table->string('Rank');
-            $table->date('Date');
+            $table->date('DateStart');
+            $table->date('DateEnd');
             $table->unsignedBigInteger('user_id');
 
             $table->timestamps();

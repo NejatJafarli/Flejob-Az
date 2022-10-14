@@ -26,6 +26,7 @@ class CreateVacanciesTable extends Migration
             $table->string('PersonPhone');
             $table->string('VacancySalary');
             $table->string('Email');
+            $table->string('Photo');
             $table->integer('Status');
             $table->timestamps();
             
