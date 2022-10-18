@@ -20,11 +20,13 @@ class CreateCompanyUsersTable extends Migration
             $table->string('CompanyEmail');
             $table->string('CompanyPassword');
             $table->string('CompanyWebSiteLink');
-            $table->string('CompanyDescription');
+            $table->text('CompanyDescription');
             $table->string('CompanyLogo');
             $table->string('CompanyAddress');
-            $table->integer('Status');
+            $table->integer('Status')->default(1);
             $table->timestamps();
+
+            
             
         });
     }

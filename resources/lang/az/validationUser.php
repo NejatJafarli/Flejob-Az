@@ -72,4 +72,5 @@ return [
     "Enter your company logo in correct size" => "Şirkətinizin logo ölçüsünü düzgün daxil edin",
     "Enter your company categories" => "Şirkətinizin kateqoriyalarını düzgün daxil edin",
     'Enter your link name and link correctly' => 'Linkin adını və linkini düzgün daxil edin',
+    'This vacancy is expired'=>'Bu elanın müddəti bitmişdir',
 ];

@@ -71,5 +71,5 @@ return[
     'Enter your company link' => 'Enter your company link',
     'Enter your company date and rank correctly' => 'Enter your company date and rank correctly' ,
     'Enter your link name and link correctly' => 'Enter your link name and link correctly',
-
+    'This vacancy is expired'=>' This vacancy is expired',
 ];

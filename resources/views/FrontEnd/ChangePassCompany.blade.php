@@ -14,8 +14,10 @@
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {
-            var Hom = document.getElementById('Account');
-            Hom.classList.add('active');
+            var Hom = document.getElementsByClassName('account');
+            for (let index = 0; index < Hom.length; index++) {
+                Hom[index].classList.add('active');
+            }
         });
     </script>
     <!-- Navbar Area End -->
@@ -48,16 +50,16 @@
                 <div class="col-md-3">
                     <div class="account-information">
                         <div class="profile-thumb">
-                            <img class="img-fluid" src="/CandidatesPicture/{{ session()->get('user')->image }}"
+                            <img class="img-fluid" src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}"
                                 alt="account holder image"
                                 style="max-width: 200px; height:200px;border-radius: 0; width:100%;object-fit:cover">
-                            <h3>{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</h3>
+                            <h3>{{ session()->get('CompanyUser')->CompnayName }}</h3>
                             {{-- category List --}}
-                            @foreach (session()->get('user')->Categories as $category)
+                            @foreach (session()->get('CompanyUser')->Categories as $category)
                                 <p>{{ $category->Category_lang->CategoryName }}</p>
                             @endforeach
                         </div>
-                        @include('FrontEnd.Component.AccountSideBar')
+                        @include('FrontEnd.Component.AccountSideBarCompany')
                         <script>
                             $(document).ready(function() {
                                 var account = document.getElementById('ChangePass');
@@ -80,7 +82,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form method="POST" action="{{ route('UpdateUserPassword', app()->getLocale()) }}"
+                        <form method="POST" action="{{ route('UpdateCompanyUserPassword', app()->getLocale()) }}"
                             enctype="multipart/form-data" class="basic-info" id="EditAccountForm">
                             @csrf
                             <div class="row">

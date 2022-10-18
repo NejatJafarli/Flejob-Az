@@ -21,7 +21,7 @@ class CreateCompanyAndCategoriesTable extends Migration
             $table->timestamps();
 
             $table->foreign("category_id")->references("id")->on("categories");
-            $table->foreign("CompanyUser_Id")->references("id")->on("users");
+            $table->foreign("CompanyUser_Id")->references("id")->on("company_users");
         });
     }
 

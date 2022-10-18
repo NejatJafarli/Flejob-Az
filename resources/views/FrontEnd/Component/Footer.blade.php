@@ -167,6 +167,7 @@
     <!-- Owl Carousel JS -->
     <script src="/assets2/js/owl.carousel.min.js"></script>
     <script src="/assets2/js/vendor/ion.rangeSlider.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <!-- Nice Select JS -->
     {{-- <script src="/assets2/js/jquery.nice-select.min.js"></script> --}}
     <!-- Magnific Popup JS -->

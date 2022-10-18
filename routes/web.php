@@ -25,6 +25,7 @@ Route::group(['prefix' => '{language}'], function () {
     Route::post('/registerUser', [HomeController::class, 'registerUser'])->name('RegisterUser');
     Route::post('/registerCompany', [HomeController::class, 'registerCompany'])->name('RegisterCompany');
     Route::post('/Signin', [HomeController::class, 'Signin'])->name('Signin');
+    Route::post('/SigninCompany', [HomeController::class, 'SigninCompany'])->name('SigninCompany');
 
     Route::post('/Account/Edit/User', [HomeController::class, 'UpdateUser'])->name('UpdateUser');
 
@@ -37,8 +38,19 @@ Route::group(['prefix' => '{language}'], function () {
     Route::post('/Account/Delete/Companies', [HomeController::class, 'DeleteUserCompany'])->name('DeleteUserCompany');
     Route::post('/Account/Delete/Link', [HomeController::class, 'DeleteUserLink'])->name('DeleteUserLink');
 
-    
+
+    Route::post('/AccountCompany/Edit/User', [HomeController::class, 'UpdateCompanyUser'])->name('UpdateCompanyUser');
+    Route::post('/AccountCompany/Edit/Phones', [HomeController::class, 'UpdateCompanyUserPhones'])->name('UpdateCompanyUserPhones');
+
+    Route::get('/AccountCompany/Delete/Phones/{id}', [HomeController::class, 'DeletePhoneNumber'])->name('DeletePhoneNumber');
+    Route::get('/AccountCompany/Edit/Password', [HomeController::class, 'UpdateCompanyUserPassword'])->name('UpdateCompanyUserPassword');
+
+
+
+    Route::get('/LogoutCompany', [HomeController::class, 'LogoutCompany'])->name('LogoutCompany');
     Route::get('/Logout', [HomeController::class, 'Logout'])->name('Logout');
+
+
     Route::get('/', [HomeController::class, 'Hom'])->name('Hom');
     Route::get('/ApplyVacancy/{id}', [HomeController::class, 'ApplyVacancy'])->name('ApplyVacancy');
     Route::get('/Signup', [HomeController::class, 'Signup'])->name('Signup');
@@ -48,11 +60,21 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Account', [HomeController::class, 'Account'])->name('Account');
     Route::get('/Account/Change/Password', [HomeController::class, 'ChangePass'])->name('ChangePass');
     Route::get('/Account/MyResume', [HomeController::class, 'MyResume'])->name('MyResume');
+    Route::get('/Account/AppliedJobs', [HomeController::class, 'AppliedJobs'])->name('AppliedJobs');
     
+    
+    Route::get('/AccountCompany/Change/Password', [HomeController::class, 'ChangePassCompany'])->name('ChangePassCompany');
+    Route::get('/AccountCompany', [HomeController::class, 'AccountCompany'])->name('AccountCompany');
+
+
+
+
     Route::get('/Job-Details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');
 
-    
-    
+    Route::post('/SignUpControllerAjax', [HomeController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');
+    Route::post('/SignUpCompanyControllerAjax', [HomeController::class, 'SignUpCompanyControllerAjax'])->name('SignUpCompanyControllerAjax');
+
+
     //route admin group
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AdminPanelController::class, 'Login'])->name('Login');
@@ -112,7 +134,5 @@ Route::group(['prefix' => '{language}'], function () {
         Route::post('/category/UpdateCategory', [AdminPanelController::class, 'UpdateCategory'])->name('UpdateCategory');
 
         Route::post('/CheckLogin', [AdminPanelController::class, 'LoginAdminPanel'])->name('LoginAdmin');
-
-        Route::post('/SignUpControllerAjax', [HomeController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');
     });
 });

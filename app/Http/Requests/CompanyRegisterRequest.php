@@ -25,16 +25,15 @@ class CompanyRegisterRequest extends FormRequest
     {
         return [
             'CompanyName' => 'required',
-            'CompanyUsername' => 'required | min:6 unique:company_users', //unique for company_users
+            'CompanyUsername' => 'required | min:6 | unique:company_users ', //unique for users
             'CompanyEmail' => 'required | email | unique:company_users',
             'CompanyPassword' => 'required | min:6',
-            'CompanyPassword_confirmation' => 'required | same:CompanyPassword',
-            'CompanyAdress' => 'required',
+            'CompanyAddress' => 'required',
             'CompanyLogo' => 'required | image | mimes:jpeg,png,jpg,gif,svg | max:2048',
             'CompanyDescription' => 'required',
-            'Categories' => ' required | array | min:1 ',
+            'CompanyCategories' => ' required | array | min:1 ',
             'CompanyPhone' =>'required | array | min:1',
-            'CompanyLink' => 'required',
+            'CompanyWebSiteLink' => 'required',
         ];
     }
 

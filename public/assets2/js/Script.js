@@ -52,7 +52,7 @@ function MyFunc1 () {
     <div class="form-group">
         <label>Employer Rank</label>
         <input name="companyrank[]" type="text" class="form-control"
-            placeholder="Enter Company Rank" required>
+            placeholder="Enter Employer Rank" required>
     </div>
     <div class="form-group">
         <label>Company Start Date</label>
@@ -221,6 +221,48 @@ function MyFunc3 () {
         }
     }
 }
+
+//create function
+function MyFunc4 () {
+    //create variable
+    let div = document.getElementById('Phones')
+    let CompanyPhone = document.getElementsByName('CompanyPhone[]')
+
+    let Phones = []
+    if (CompanyPhone.length) {
+        for (let i = 0; i < CompanyPhone.length; i++) {
+            Phones.push(CompanyPhone[i].value)
+        }
+    }
+
+    // set div all child elements value linkName , linkUrl
+    let isTrue = true
+    for (let i = 0; i < CompanyPhone.length; i++)
+        if (CompanyPhone[i].value == '') {
+            isTrue = false
+            break
+        }
+
+    if (!isTrue) {
+        alert('Please fill all fields')
+        return
+    }
+    let str = `<div class="form-group pt-3">
+    <label>Company Phone  Format: +994xxxxxxxxx</label>
+    <input type="text" name="CompanyPhone[]" class="form-control"
+        placeholder="Enter Company Phone" value="+994" >
+</div>`
+    //append variable to div
+    div.innerHTML += str
+    if (Phones.length) {
+        for (let i = 0; i < Phones.length; i++) {
+            CompanyPhone[i].value = Phones[i]
+        }
+    }
+
+    
+
+}
 function Signup (url) {
     FData = new FormData(document.getElementById('SignupForm'))
 
@@ -295,3 +337,78 @@ function Signup (url) {
         }
     })
 }
+function SignupCompany (url) {
+    FData = new FormData(document.getElementById('SignupFormCompany'))
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    })
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: FData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            console.log(data)
+            if (data.hasOwnProperty('errors')) {
+                let errValues = Object.values(data.errors)
+                let errStr = ''
+
+                for (let i = 0; i < data.errors.length; i++)
+                    errStr += errValues[i] + '<br>'
+
+                $('div.Myfailure').html(errStr)
+                $('div.Myfailure')
+                    .fadeIn(300)
+                    .delay(5000)
+                    .fadeOut(400)
+                $('html, body').animate(
+                    {
+                        scrollTop: $('div.Myfailure').offset().top - 250
+                    },
+                    100
+                )
+            } else if (data.hasOwnProperty('success')) {
+                $('div.Mysuccess').html(data.success)
+                $('div.Mysuccess')
+                    .fadeIn(300)
+                    .delay(5000)
+                    .fadeOut(400)
+                $('html, body').animate(
+                    {
+                        scrollTop: $('div.Mysuccess').offset().top - 250
+                    },
+                    100
+                )
+                //submit form
+                document.getElementById('SignupFormCompany').submit()
+            }
+        },
+        error: function (data) {
+            console.log(data)
+            let errKeys = Object.keys(data.responseJSON.errors)
+            let errValues = Object.values(data.responseJSON.errors)
+            let errStr = ''
+            for (let i = 0; i < errKeys.length; i++) {
+                errStr += errKeys[i] + ' : ' + errValues[i][0] + '<br>'
+            }
+            $('div.Myfailure').html(errStr)
+            $('div.Myfailure')
+                .fadeIn(300)
+                .delay(5000)
+                .fadeOut(400)
+            //center page scroll to div.Myfailure position
+            $('html, body').animate(
+                {
+                    scrollTop: $('div.Myfailure').offset().top - 250
+                },
+                100
+            )
+        }
+    })
+}
+
