@@ -6,12 +6,14 @@
             $Langs = lang::all();
             
             $route = Route::current()->getName();
+
             $locale = app()->getLocale();
             
             //UpperCase First Char of LangCode
             $langCode = strtoupper($locale);
             
         @endphp
+        <h1>{{ $route }}</h1>
         @foreach ($Langs as $lang)
             <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
                 value="{{ route($route, ['language' => $lang->LanguageCode]) }}">

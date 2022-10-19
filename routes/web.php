@@ -54,7 +54,10 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/', [HomeController::class, 'Hom'])->name('Hom');
     Route::get('/ApplyVacancy/{id}', [HomeController::class, 'ApplyVacancy'])->name('ApplyVacancy');
     Route::get('/Signup', [HomeController::class, 'Signup'])->name('Signup');
+    Route::get('/CandidateDetails/{id}', [HomeController::class, 'CandidateDetails'])->name('CandidateDetails');
+    Route::get('/Companies', [HomeController::class, 'Companies'])->name('Companies');
 
+    
     Route::get('/Signin', [HomeController::class, 'SigninPage'])->name('Signin');
 
     Route::get('/Account', [HomeController::class, 'Account'])->name('Account');
@@ -65,10 +68,12 @@ Route::group(['prefix' => '{language}'], function () {
     
     Route::get('/AccountCompany/Change/Password', [HomeController::class, 'ChangePassCompany'])->name('ChangePassCompany');
     Route::get('/AccountCompany', [HomeController::class, 'AccountCompany'])->name('AccountCompany');
+    Route::get('/AccountCompany/Vacancies', [HomeController::class, 'AccountCompanyVacancies'])->name('AccountCompanyVacancies');
 
 
 
 
+    Route::get('/AppliedCandidates/{id}', [HomeController::class, 'AppliedCandidates'])->name('AppliedCandidates');
     Route::get('/Job-Details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');
 
     Route::post('/SignUpControllerAjax', [HomeController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');

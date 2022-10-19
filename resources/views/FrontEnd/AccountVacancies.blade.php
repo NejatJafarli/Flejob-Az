@@ -49,19 +49,19 @@
                 <div class="col-md-3">
                     <div class="account-information">
                         <div class="profile-thumb">
-                            <img class="img-fluid" src="/CandidatesPicture/{{ session()->get('user')->image }}"
+                            <img class="img-fluid" src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}"
                                 alt="account holder image"
                                 style="max-width: 200px; height:200px;border-radius: 0; width:100%;object-fit:cover">
-                            <h3>{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</h3>
+                            <h3>{{ session()->get('CompanyUser')->CompanyName }}</h3>
                             {{-- category List --}}
-                            @foreach (session()->get('user')->Categories as $category)
+                            @foreach (session()->get('CompanyUser')->Categories as $category)
                                 <p>{{ $category->Category_lang->CategoryName }}</p>
                             @endforeach
                         </div>
-                        @include('FrontEnd.Component.AccountSideBar')
+                        @include('FrontEnd.Component.AccountSideBarCompany')
                         <script>
                             $(document).ready(function() {
-                                var account = document.getElementById('AppliedJobs');
+                                var account = document.getElementById('Vacancies');
                                 account.classList.add('active');
                             });
                         </script>
@@ -82,8 +82,8 @@
                         use App\Models\City;
                         
                         $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
-                        $MyAppliedVacancies = $AppliedVacancies->map(function ($AppliedVacancy) use ($lang_id) {
-                            $AppliedVacancy->Vacancy = Vacancy::where('id', $AppliedVacancy->Vacancy_id)->first();
+                        $MyAppliedVacancies = $Vacancies->map(function ($AppliedVacancy) use ($lang_id) {
+                            $AppliedVacancy->Vacancy = Vacancy::where('id', $AppliedVacancy->id)->first();
                             $AppliedVacancy->Vacancy->Category = Category::where('id', $AppliedVacancy->Vacancy->Category_id)->first();
                             $AppliedVacancy->Vacancy->Category->CategoryLang = $AppliedVacancy->Vacancy->Category
                                 ->category_langs()
@@ -96,12 +96,14 @@
                                 ->first();
                             return $AppliedVacancy;
                         });
+                        
                     @endphp
                     @foreach ($MyAppliedVacancies as $temp)
                         @php
                             $vac = $temp->Vacancy;
                         @endphp
-                        <div class="col-lg-12">
+
+                        <div class="col-lg-12 " style="border: 1px solid black">
                             <div class="job-card-two">
                                 <div class="row align-items-center">
                                     <div class="col-md-1">
@@ -137,27 +139,19 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        @php
-                                            $userApplied = false;
-                                            foreach ($AppliedVacancies as $temp2) {
-                                                if ($temp2->User_id == session()->get('user')->id) {
-                                                    $userApplied = true;
-                                                    break;
-                                                }
-                                            }
-                                        @endphp
                                         <div class="theme-btn text-end">
-                                            <button
-                                                onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
-                                                type="button" class="btn btn-primary" data-toggle="modal">
-                                                {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                            <a href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                class="btn btn-primary">Show Applied Users</a>
+                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                class="btn btn-primary mx-5 my-3">View</a>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                    {{ $AppliedVacancies->links() }}
+                    {{ $Vacancies->links() }}
                 </div>
             </div>
         </div>

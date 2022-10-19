@@ -6,13 +6,7 @@
         </a>
     </li>
     <li>
-        <a id="AppliedJobs" href="{{ route('AppliedJobs', app()->getLocale()) }}">
-            <i class='bx bx-briefcase'></i>
-            Applied Job
-        </a>
-    </li>
-    <li>                       
-        <a id="Messages" href="###">
+        <a id="Vacancies" href="{{ route('AccountCompanyVacancies', app()->getLocale()) }}">
             <i class='bx bx-envelope'></i>
             Vacancies
         </a>

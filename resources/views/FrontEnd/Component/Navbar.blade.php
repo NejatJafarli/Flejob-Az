@@ -23,7 +23,7 @@
                             <a id="About" href="about.html" class="nav-link ">About</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle">Jobs</a>
+                            <a href="#" class="nav-link dropdown-toggle JobDetails">Jobs</a>
 
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
@@ -39,7 +39,7 @@
                                     <a href="job-grid.html" class="nav-link">Job Grid</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id="JobDetails" href="job-details.html" class="nav-link">Job Details</a>
+                                    <a class="nav-link JobDetails">Job Details</a>
                                 </li>
                             </ul>
                         </li>
@@ -56,10 +56,10 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle">Pages</a>
+                            <a href="#" class="nav-link dropdown-toggle Company">Pages</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a id="Companies" href="company.html" class="nav-link">Company</a>
+                                    <a href="{{route('Companies',app()->getLocale())}}" class="nav-link Company">Company</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pricing.html" class="nav-link">Pricing</a>
@@ -111,11 +111,11 @@
                             </div>
 
                             <li class="nav-item">
-                                <a  href="{{ route('Account', app()->getLocale()) }}"
+                                <a href="{{ route('Account', app()->getLocale()) }}"
                                     class="nav-link dropdown-toggle account">{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item account">
-                                        <a  href="{{ route('Account', app()->getLocale()) }}"
+                                        <a href="{{ route('Account', app()->getLocale()) }}"
                                             class="nav-link">Profile</a>
                                     </li>
                                     <li class="nav-item">
@@ -133,8 +133,8 @@
                         @include('FrontEnd.Component.MultiLang')
                     </div>
                     <div class="option-item">
-                        <img src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}" alt="profile picture"
-                            style="width: 50px; height: 50px; border-radius: 50%;">
+                        <img src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}"
+                            alt="profile picture" style="width: 50px; height: 50px; border-radius: 50%;">
                     </div>
 
                     <li class="nav-item">
@@ -142,20 +142,20 @@
                             class="nav-link dropdown-toggle account">{{ session()->get('CompanyUser')->CompanyName }}</a>
                         <ul class="dropdown-menu">
                             <li class="nav-item">
-                                <a  href="{{ route('AccountCompany', app()->getLocale()) }}"
+                                <a href="{{ route('AccountCompany', app()->getLocale()) }}"
                                     class="nav-link account">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a id="Settings" href="#" class="nav-link">Settings</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('LogoutCompany', app()->getLocale()) }}" class="nav-link">Logout</a>
+                                <a href="{{ route('LogoutCompany', app()->getLocale()) }}"
+                                    class="nav-link">Logout</a>
                             </li>
                         </ul>
                     </li>
                 @else
                     </ul>
-
                     <div class="other-option">
                         <a href="{{ route('Signup', app()->getLocale()) }}" class="signup-btn">Sign Up</a>
                         <a href="{{ route('Signin', app()->getLocale()) }}" class="signin-btn">Sign In</a>

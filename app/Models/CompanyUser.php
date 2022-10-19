@@ -31,5 +31,9 @@ class CompanyUser extends Model
     public function CompanyPhones(){
         return $this->hasMany(CompanyPhones::class,'CompanyUser_Id','CompanyPhone');
     }
+
+    public function Vacancies(){
+        return $this->hasMany(Vacancy::class,'CompanyUser_Id','id');
+    }
     
 }

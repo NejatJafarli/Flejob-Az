@@ -6,8 +6,7 @@
 </head>
 
 <body>
-
-    <!-- Navbar Area Start -->
+    <!-- Pre-loader End -->
     @php
         use App\Models\lang;
         
@@ -69,13 +68,14 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link dropdown-toggle CandidateDetails">Candidates</a>
+                                <a href="#" class="nav-link dropdown-toggle">Candidates</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="candidate.html" class="nav-link ">Candidates</a>
+                                        <a id="Candidates" href="candidate.html" class="nav-link">Candidates</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link CandidateDetails">Candidates
+                                        <a id="CandidatesDetails" href="candidate-details.html"
+                                            class="nav-link">Candidates
                                             Details</a>
                                     </li>
                                 </ul>
@@ -132,7 +132,7 @@
                                         <select class="form-control" onchange="window.location.href=this.value">
                                             @foreach ($Langs as $lang)
                                                 <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
-                                                    value="{{ route($route, ['language' => $lang->LanguageCode, 'id' => $can->id]) }}">
+                                                    value="{{ route($route, ['language' => $lang->LanguageCode, 'id' => $vac->id]) }}">
                                                     {{ strtoupper($lang->LanguageCode) }}</a>
                                             @endforeach
                                         </select>
@@ -167,7 +167,7 @@
                                 <select class="form-control" onchange="window.location.href=this.value">
                                     @foreach ($Langs as $lang)
                                         <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
-                                            value="{{ route($route, ['language' => $lang->LanguageCode, 'id' => $can->id]) }}">
+                                            value="{{ route($route, ['language' => $lang->LanguageCode, 'id' => $vac->id]) }}">
                                             {{ strtoupper($lang->LanguageCode) }}</a>
                                     @endforeach
                                 </select>
@@ -206,7 +206,7 @@
                             <select class="form-control" onchange="window.location.href=this.value">
                                 @foreach ($Langs as $lang)
                                     <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
-                                        value="{{ route($route, ['language' => $lang->LanguageCode, 'id' => $can->id]) }}">
+                                        value="{{ route($route, ['language' => $lang->LanguageCode, 'id' => $vac->id]) }}">
                                         {{ strtoupper($lang->LanguageCode) }}</a>
                                 @endforeach
                             </select>
@@ -219,28 +219,26 @@
         </div>
     </div>
     <!-- Navbar Area End -->
+
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {
-            var Hom = document.getElementsByClassName('CandidateDetails');
-            for (let index = 0; index < Hom.length; index++) {
-                Hom[index].classList.add('active');
-            }
+            var Hom = document.getElementById('JobDetails');
+            Hom.classList.add('active');
         });
     </script>
     <!-- Navbar Area End -->
 
-
     <!-- Page Title Start -->
-    <section class="page-title title-bg8">
+    <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Candidates Details</h2>
+                <h2>Account</h2>
                 <ul>
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
                     </li>
-                    <li>Candidates Details</li>
+                    <li>Account</li>
                 </ul>
             </div>
         </div>
@@ -252,90 +250,66 @@
     </section>
     <!-- Page Title End -->
 
-    <!-- Candidate Details Start -->
-    <section class="candidate-details pt-100 pb-100">
-        <div class="container">
+    <!-- Account Area Start -->
+    <section class="account-section ptb-100">
+        <div class="container" style="">
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="candidate-profile">
-                        <img style="width: 250px;height:250px" src="/CandidatesPicture/{{ $can->image }}"
-                            alt="candidate image">
-                        <h3> {{ $can->FirstName . ' ' . $can->LastName }}</h3>
-                        @foreach ($can->Categories as $Category)
-                            <span>{{ $Category->Category_lang->CategoryName }}</span>
-                            <br />
-                        @endforeach
-                        <ul>
-                            <li class="pt-2">
-                                <a href="tel:+100230342">
-                                    <i class='bx bxs-phone'></i>
-                                    {{ $can->phone }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="mailto: {{ $can->email }}">
-                                    <i class='bx bxs-location-plus'></i>
-                                    {{ $can->email }}
-                                </a>
-                            </li>
-                        </ul>
-                        {{-- show user linknames and links --}}
-                        <ul>
-                            @foreach ($can->Links as $link)
-                                <li class="pt-2">
-                                    <a href="{{ $link->Link }}">
-                                        {{ $link->LinkName }}
-                                    </a>
-                                </li>
+                <div class="col-md-3">
+                    <div class="account-information">
+                        <div class="profile-thumb">
+                            <img class="img-fluid"
+                                src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}"
+                                alt="account holder image"
+                                style="max-width: 200px; height:200px;border-radius: 0; width:100%;object-fit:cover">
+                            <h3>{{ session()->get('CompanyUser')->CompanyName }}</h3>
+                            {{-- category List --}}
+                            @foreach (session()->get('CompanyUser')->Categories as $category)
+                                <p>{{ $category->Category_lang->CategoryName }}</p>
                             @endforeach
-                        </ul>
+                        </div>
+                        @include('FrontEnd.Component.AccountSideBarCompany')
+                        <script>
+                            $(document).ready(function() {
+                                var account = document.getElementById('Vacancies');
+                                account.classList.add('active');
+                            });
+                        </script>
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <div class="candidate-info-text">
-                        <h3>About Me</h3>
-                        <p>{{ $can->Description }}</p>
-                    </div>
-                    <div class="candidate-info-text candidate-education">
-                        <h3>Educations</h3>
-                        @foreach ($can->Educations as $Education)
-                            <div class="education-info">
-                                <h4>{{ $Education->EducationName }}</h4>
-                                <p>{{ $Education->EducationLevel->EducationLevelLang->EducationLevelName }}</p>
-                                <span>{{ $Education->YearStart . '-' . $Education->YearEnd }}</span>
+
+                <div class="col-md-9 account-details row">
+                    @foreach ($myCandidates as $can)
+                        <div class="col-md-4">
+                            <div class="candidate-card">
+                                <div class="candidate-img">
+                                    <img src="/CandidatesPicture/{{ $can->image }}" class="img-fluid"
+                                        alt="candidate image ">
+                                </div>
+                                <div class="candidate-text m-0">
+                                    <h3>
+                                        <a
+                                            href="{{route('CandidateDetails',['language'=>app()->getLocale(),'id'=>$can->id])}}">{{ $can->FirstName . ' ' . $can->LastName }}</a>
+                                    </h3>
+                                    <ul>
+                                        @foreach ($can->Categories as $category)
+                                            <li>{{ $category->Category_lang->CategoryName }}</li>
+                                        @endforeach
+                                        <li>
+                                            {{-- <a href="{{ route('SendMessageCandidate', ['language' => app()->getLocale(), 'id' => $can->id]) }}" --}}
+                                                {{-- class="btn btn-primary">Send Message</a> --}}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        @endforeach
-                    </div>
-                    <div class="candidate-info-text candidate-education">
-                        <h3>Experiance</h3>
-                        @foreach ($can->Companies as $Companies)
-                            <div class="education-info">
-                                <h4>{{ $Companies->CompanyName }}</h4>
-                                @php
-                                    $DateStart = date_create($Companies->DateStart);
-                                    $DateEnd = date_create($Companies->DateEnd);
-                                    
-                                    $DateStart = date_format($DateStart, 'Y');
-                                    $DateEnd = date_format($DateEnd, 'Y');
-                                @endphp
-                                <span>{{ $DateStart . '-' . $DateEnd }}</span>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="candidate-info-text">
-                        <h3>Skills</h3>
-                        <p>{{ $can->Skills }}</p>
-                    </div>
-                    <div class="candidate-info-text text-center">
-                        <div class="theme-btn">
-                            <a href="#" class="default-btn">Download CV</a>
                         </div>
-                    </div>
+                    @endforeach
+                    {{ $Candidates->links() }}
                 </div>
             </div>
         </div>
     </section>
-    <!-- Candidate Details End -->
+    <!-- Account Area End -->
+    <script></script>
     @include('FrontEnd.Component.Footer')
 
 </html>

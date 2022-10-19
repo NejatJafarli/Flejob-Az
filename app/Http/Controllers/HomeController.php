@@ -24,13 +24,17 @@ use App\Models\UsersAndLanguages;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 
+//use invervation image
+use Intervention\Image\Facades\Image;
+
+
 class HomeController extends Controller
 {
     public function __invoke(Request $request)
     {
         return "Welcome to our homepage";
     }
-
+    //STATIC FUNCTIONS
     static function MergeUsersTable($user)
     {
         //update session
@@ -119,7 +123,7 @@ class HomeController extends Controller
         $CompanyUser->CompanyPhones = CompanyPhones::where('CompanyUser_Id', $CompanyUser->id)->get();
 
         //merge CompanyUser with Vacancies
-        $CompanyUser->Vacancies = Vacancy::where('CompanyUser_Id', $CompanyUser->id)->get();
+        $CompanyUser->Vacancies = Vacancy::where('CompanyUser_Id', $CompanyUser->id)->where('Status', 1)->get();
 
 
 
@@ -127,171 +131,127 @@ class HomeController extends Controller
         return $CompanyUser;
     }
 
-    public function UpdateCompanyUser(Request $req)
+    //PAGES INVOKER
+    public function CandidateDetails($lang, $id)
+    {
+        $user = User::where('id', $id)->first();
+        $user = HomeController::MergeUsersTable($user);
+
+        return view('FrontEnd/candidate-details', ['can' => $user]);
+    }
+    public function AccountCompanyVacancies($lang)
+    {
+        if (!session()->has('CompanyUser'))
+            return redirect()->route('Signin', app()->getLocale());
+
+        $user = session()->get('CompanyUser');
+        $user = $this->MergeCompanyUsersTable($user);
+        session()->put('CompanyUser', $user);
+
+        // get User Vacancies with pagination
+        $Vacancies = $user->Vacancies()->paginate(4);
+
+
+        return view('FrontEnd/AccountVacancies')->with(['Vacancies' => $Vacancies]);
+    }
+    public function AccountCompany($lang)
     {
 
+        if (!session()->has('CompanyUser'))
+            return redirect()->route('Signin', ['language' => $lang]);
 
-        $messages = [
-            'CompanyName.required' => __('messages.Company Name Required'),
-            'CompanyUsername.required' => __('messages.Company Username Required'),
-            'CompanyEmail.required' => __('messages.Company Email Required'),
-            'CompanyEmail.email' => __('messages.Company Email Email'),
-            'CompanyWebSiteLink.required' => __('messages.Company Website Link Required'),
-            'CompanyAddress.required' => __('messages.Company Address Required'),
-            'CompanyLogo.image' => __('messages.Company Logo Image'),
-            'CompanyLogo.mimes' => __('messages.Company logo must be jpeg,png,jpg,gif,svg'),
-            'CompanyLogo.max' => __('messages.Company Logo  max 2048'),
-            'CompanyDescription.required' => __('messages.Company Description Required'),
-        ];
-        $req->validate([
-            'CompanyName' => 'required',
-            'CompanyUsername' => 'required',
-            'CompanyEmail' => 'required | email',
-            'CompanyWebSiteLink' => 'required',
-            'CompanyAddress' => 'required',
-            'CompanyLogo' => 'image | mimes:jpeg,png,jpg,gif,svg | max:2048',
-            'CompanyDescription' => 'required',
-        ], $messages);
+        $CompanyUser = $this->MergeCompanyUsersTable(session()->get('CompanyUser'));
+        session()->put('CompanyUser', $CompanyUser);
+
+        //get all categories
+        $Categories = Category::all();
+        // $languages = $languages->map(function ($language) {
+        //     $language->Selected = false;
+        //     if (session()->get('user')->Languages->contains('id', $language->id))
+        //         $language->Selected = true;
+        //     return $language;
+        // });
+        //get selected categories
+        $Categories = $Categories->map(function ($Category) {
+            if (session()->get('CompanyUser')->Categories->contains('id', $Category->id))
+                $Category->Selected = true;
+            return $Category;
+        });
 
         //get lang id
-        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
-
-        //get company user
-        $CompanyUser = CompanyUser::where('id', session('CompanyUser')->id)->first();
-
-
-        // delete image from CompanyLogos folder if exists\\
-        if ($req->hasFile('CompanyLogo')) {
-            $image = $req->file('CompanyLogo');
-            $imageName = time() . '.' . $image->extension();
-            $image->move(public_path('CompanyLogos'), $imageName);
-            $req->CompanyLogo = $imageName;
-
-            //renive old image
-            $oldImage = public_path('CandidatesPicture/' . $CompanyUser->CompanyLogo);
-            if (file_exists($oldImage))
-                unlink($oldImage);
-        } else {
-            $req->CompanyLogo = $CompanyUser->CompanyLogo;
-        }
-
-
-
-        //update company user
-        $CompanyUser->CompanyName = $req->CompanyName;
-        $CompanyUser->CompanyUsername = $req->CompanyUsername;
-        $CompanyUser->CompanyEmail = $req->CompanyEmail;
-        $CompanyUser->CompanyLogo = $req->CompanyLogo;
-        $CompanyUser->CompanyWebSiteLink = $req->CompanyWebSiteLink;
-        $CompanyUser->CompanyAddress = $req->CompanyAddress;
-        $CompanyUser->CompanyDescription = $req->CompanyDescription;
-
-        $CompanyUser->save();
-
-        //update company user categories
-        
-        // $user->UsersAndCategories()->detach();
-        // $user->UsersAndCategories()->attach($data['Categories']);
-
-        // $user->UsersAndLanguages()->detach();
-        // $user->UsersAndLanguages()->attach($data['Languages']);
-        
-
-        $CompanyUser->CompanyAndCategories()->detach();
-        $CompanyUser->CompanyAndCategories()->attach($req['CompanyCategories']);
-
-        
-        //update session
-        $CompanyUser = $this->MergeCompanyUsersTable($CompanyUser);
-        session()->put('CompanyUser', $CompanyUser);
-
-        return redirect()->back()->with('success', __('messages.Company Updated Successfully'));
+        $lang_id = lang::where('LanguageCode', $lang)->first()->id;
+        //merge categories with category_langs
+        $Categories = $Categories->map(function ($Category) use ($lang_id) {
+            //get category_langs
+            $Category->CategoryLang = $Category->category_langs()->where('lang_id', $lang_id)->first();
+            return $Category;
+        });
+        return view('FrontEnd/AccountCompany', ['categories' => $Categories]);
     }
-
-    public function UpdateCompanyUserPhones(Request $req)
+    public function Account($lang)
     {
-        $messages = [
-            'CompanyPhone.required' => __('messages.Company Phone Required'),
-        ];
-        $req->validate([
-            'CompanyPhone' => 'required | array',
-        ], $messages);
 
-        if (isset($req->CompanyPhone))
-            for ($i = 0; $i < count($req->CompanyPhone); $i++) {
-                $companyPhone = CompanyPhones::where('id', $req->PhoneId)->first();
-                $companyPhone->CompanyPhone = $req->CompanyPhone[$i];
-            }
-        if (isset($req->NewCompanyPhone)) {
-            for ($i = 0; $i < count($req->NewCompanyPhone); $i++) {
-                $companyPhone = new CompanyPhones();
-                $companyPhone->CompanyPhone = $req->NewCompanyPhone[$i];
-                $companyPhone->CompanyUser_Id = session('CompanyUser')->id;
-                $companyPhone->save();
-            }
-        }
-        //update session
-        $CompanyUser = $this->MergeCompanyUsersTable(session('CompanyUser'));
-        session()->put('CompanyUser', $CompanyUser);
-
-        return redirect()->back()->with('success', __('messages.Company Phone Added Successfully'));
-    }
-
-
-    public function AppliedJobs($lang)
-    {
-        //check if session
+        //check session
         if (!session()->has('user'))
-            return redirect()->route('login', app()->getLocale());
+            return redirect()->route('Signin', ['language' => $lang]);
+        // get all city
+        $cities = City::all();
+        //merge cities with city langs
+        $cities = $cities->map(function ($city) use ($lang) {
+            $city->CityLang = $city->cityLang()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $city;
+        });
 
 
-        $user = session()->get('user');
-        $user = $this->MergeUsersTable($user);
-        session()->put('user', $user);
 
-        $AppliedVacancies = subscribe_vacancy::where('User_id', $user->id)->paginate(4);
-
-        $Langs = lang::all();
-        return view('FrontEnd/AppliedJobs')->with(['Langs' => $Langs, 'AppliedVacancies' => $AppliedVacancies]);
-    }
-    public function JobDetails($lang, $id)
-    {
-
-        $vac = Vacancy::where('id', $id)->where('Status', 1)->first();
-        if ($vac == null)
-            return redirect()->route('Hom');
-
+        // get all Langs
         $langs = lang::all();
 
-        //merge vacancy with city   
-        $lang_id = $langs->where('LanguageCode', $lang)->first()->id;
-        $vac->City = City::where('id', $vac->City_id)->first();
-        $vac->City->CityLang = $vac->City->cityLang()->where('lang_id', $lang_id)->first();
+        //get all categories
+        $categories = Category::all();
+        //merge categories with category langs
+        $categories = $categories->map(function ($category) use ($lang) {
+            $category->CategoryLang = $category->category_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $category;
+        });
 
-        //merge vac with category
-        $vac->Category = Category::where('id', $vac->Category_id)->first();
-        $vac->Category->Category_lang = $vac->Category->category_langs()->where('lang_id', $lang_id)->first();
+        // set selected to categories from session user 
+        $categories = $categories->map(function ($category) {
+            $category->Selected = false;
+            if (session()->get('user')->Categories->contains('id', $category->id))
+                $category->Selected = true;
+            return $category;
+        });
 
-        //merge vac with CompanyUser 
-        $vac->CompanyUser = CompanyUser::where('id', $vac->CompanyUser_id)->first();
+        //get all education level name
+        $education_level = EducationLevel::All();
+        //merge education level with education level langs
+        $education_level = $education_level->map(function ($education) use ($lang) {
+            $education->EducationLevelLang = $education->education_level_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $education;
+        });
 
 
 
-        return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs]);
-    }
-    public function MyResume($lang)
-    {
-        //check session
-        if (session()->has('user')) {
-            $user = session()->get('user');
-            $user = $this->MergeUsersTable($user);
+        //get all languages
+        $languages = Language::all();
+        // set selected to Languages from session user 
+        $languages = $languages->map(function ($language) {
+            $language->Selected = false;
+            if (session()->get('user')->Languages->contains('id', $language->id))
+                $language->Selected = true;
+            return $language;
+        });
 
-            $langs = lang::all();
 
-            return view('FrontEnd/Resume', ['Langs' => $langs]);
-        } else {
-            return redirect()->route('login');
-        }
+
+        return view("FrontEnd/account")->with([
+            'cities' => $cities,
+            'Langs' => $langs,
+            'categories' => $categories,
+            'languages' => $languages,
+            'education_levels' => $education_level
+        ]);
     }
     public function Hom($lang)
     {
@@ -390,178 +350,82 @@ class HomeController extends Controller
 
         return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
     }
-    public function ChangePassCompany($lang)
+    public function Companies($lang)
     {
-        //check session
-        if (session()->has('CompanyUser')) {
-            $user = session()->get('CompanyUser');
-            $user = $this->MergeCompanyUsersTable($user);
-            session()->put('CompanyUser', $user);
-
-            return view('FrontEnd/ChangePassCompany');
-        } else {
-            return redirect()->route('Signin', app()->getLocale());
-        }
-    }
-
-    public function UpdateCompanyUserPassword(Request $req)
-    {
-        //message error
-        $messages = [
-            'password.required' => __('validationUser.Password is required'),
-            'password.min' => __('validationUser.Password must be at least 6 characters'),
-            'newpassword.required' => __('validationUser.New Password is required'),
-            'newpassword.min' => __('validationUser.New Password must be at least 6 characters'),
-            'confirmpassword.required' => __('validationUser.Confirm Password is required'),
-            'confirmpassword.same' => __('validationUser.Confirm Password must be same New Password'),
-        ];
-        //validate request Password Required
-        $req->validate([
-            'password' => 'required | min:6',
-            'newpassword' => 'required | min:6',
-            'confirmpassword' => 'required | same:newpassword',
-        ], $messages);
-
-        $data = $req->all();
-        $user = CompanyUser::where('id', session()->get('CompanyUser')->id)->first();
-
-        $Pass = md5(md5($data['password']));
-        if ($user->Password != $Pass)
-            return redirect()->back()->withErrors(['password' => __("validationUser.Password is not correct")]);
-
-        $user->Password = md5(md5($data['newpassword']));
-        $user->save();
-        $user = $this->MergeCompanyUsersTable($user);
-        session()->put('CompanyUser', $user);
-        return redirect()->back();
-    }
-    public function DeletePhoneNumber($lang, $id)
-    {
-        if (!session()->has('CompanyUser'))
-            return redirect()->route('Signin', app()->getLocale());
-
-        $user = CompanyUser::where('id', session()->get('CompanyUser')->id)->first();
-        $Link = CompanyPhones::where('CompanyUser_Id', $user->id)->where('id', $id)->first();
-        if ($Link == null)
-            return redirect()->back()->withErrors(['Link' => __("validationUser.You have not this Phone")]);
-        $Link->delete();
-        $user = $this->MergeCompanyUsersTable($user);
-        session()->put('CompanyUser', $user);
-        return redirect()->back();
-    }
-    public function AccountCompany($lang)
-    {
-
-        if (!session()->has('CompanyUser'))
-            return redirect()->route('Signin', ['language' => $lang]);
-
-        $CompanyUser = $this->MergeCompanyUsersTable(session()->get('CompanyUser'));
-
-        //get all categories
-        $Categories = Category::all();
-        // $languages = $languages->map(function ($language) {
-        //     $language->Selected = false;
-        //     if (session()->get('user')->Languages->contains('id', $language->id))
-        //         $language->Selected = true;
-        //     return $language;
-        // });
-        //get selected categories
-        $Categories = $Categories->map(function ($Category) {
-            if (session()->get('CompanyUser')->Categories->contains('id', $Category->id))
-                $Category->Selected = true;
-            return $Category;
+        //get company users and sort by Vacancies count
+        $Companies = CompanyUser::where('status', 1)->orderBy('id', 'desc')->paginate(4);
+        //merge company users with vacancies
+        $CompanyUsers = $Companies->map(function ($CompanyUser) {
+            $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('status', 1)->get();
+            $CompanyUser->Vacancies = $vac;
+            $CompanyUser->VacanciesCount = $vac->count();
+            return $CompanyUser;
         });
+        //sort by vacancies count
+        $CompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
 
-        //get lang id
-        $lang_id = lang::where('LanguageCode', $lang)->first()->id;
-        //merge categories with category_langs
-        $Categories = $Categories->map(function ($Category) use ($lang_id) {
-            //get category_langs
-            $Category->CategoryLang = $Category->category_langs()->where('lang_id', $lang_id)->first();
-            return $Category;
-        });
         
-    
-
-
-
-
-
-
-        return view('FrontEnd/AccountCompany', ['categories' => $Categories]);
+        return view('Frontend/Company')->with(['Companies' => $Companies,'CompanyUsers' => $CompanyUsers]);
     }
+    public function AppliedJobs($lang)
+    {
+        //check if session
+        if (!session()->has('user'))
+            return redirect()->route('Signin', app()->getLocale());
 
-    public function Account($lang)
+
+        $user = session()->get('user');
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
+
+        $AppliedVacancies = subscribe_vacancy::where('User_id', $user->id)->paginate(4);
+
+        $Langs = lang::all();
+        return view('FrontEnd/AppliedJobs')->with(['Langs' => $Langs, 'AppliedVacancies' => $AppliedVacancies]);
+    }
+    public function JobDetails($lang, $id)
     {
 
-        //check session
-        if (!session()->has('user'))
-            return redirect()->route('Signin', ['language' => $lang]);
-        // get all city
-        $cities = City::all();
-        //merge cities with city langs
-        $cities = $cities->map(function ($city) use ($lang) {
-            $city->CityLang = $city->cityLang()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
-            return $city;
-        });
+        $vac = Vacancy::where('id', $id)->where('Status', 1)->first();
+        if ($vac == null)
+            return redirect()->route('Hom');
 
-
-
-        // get all Langs
         $langs = lang::all();
 
-        //get all categories
-        $categories = Category::all();
-        //merge categories with category langs
-        $categories = $categories->map(function ($category) use ($lang) {
-            $category->CategoryLang = $category->category_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
-            return $category;
-        });
+        //merge vacancy with city   
+        $lang_id = $langs->where('LanguageCode', $lang)->first()->id;
+        $vac->City = City::where('id', $vac->City_id)->first();
+        $vac->City->CityLang = $vac->City->cityLang()->where('lang_id', $lang_id)->first();
 
-        // set selected to categories from session user 
-        $categories = $categories->map(function ($category) {
-            $category->Selected = false;
-            if (session()->get('user')->Categories->contains('id', $category->id))
-                $category->Selected = true;
-            return $category;
-        });
+        //merge vac with category
+        $vac->Category = Category::where('id', $vac->Category_id)->first();
+        $vac->Category->Category_lang = $vac->Category->category_langs()->where('lang_id', $lang_id)->first();
 
-        //get all education level name
-        $education_level = EducationLevel::All();
-        //merge education level with education level langs
-        $education_level = $education_level->map(function ($education) use ($lang) {
-            $education->EducationLevelLang = $education->education_level_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
-            return $education;
-        });
+        //merge vac with CompanyUser 
+        $vac->CompanyUser = CompanyUser::where('id', $vac->CompanyUser_id)->first();
 
 
 
-        //get all languages
-        $languages = Language::all();
-        // set selected to Languages from session user 
-        $languages = $languages->map(function ($language) {
-            $language->Selected = false;
-            if (session()->get('user')->Languages->contains('id', $language->id))
-                $language->Selected = true;
-            return $language;
-        });
-
-
-
-        return view("FrontEnd/account")->with([
-            'cities' => $cities,
-            'Langs' => $langs,
-            'categories' => $categories,
-            'languages' => $languages,
-            'education_levels' => $education_level
-        ]);
+        return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs]);
     }
+    public function MyResume($lang)
+    {
+        //check session
+        if (session()->has('user')) {
+            $user = session()->get('user');
+            $user = $this->MergeUsersTable($user);
 
+            $langs = lang::all();
+
+            return view('FrontEnd/Resume', ['Langs' => $langs]);
+        } else {
+            return redirect()->route('login');
+        }
+    }
     public function Signup($lang)
     {
-
         //check session
-        if (session()->has('user'))
+        if (session()->has('user') || session()->has('CompanyUser'))
             return redirect()->route('Hom', ['language' => $lang]);
 
         $Langs = lang::all();
@@ -602,33 +466,16 @@ class HomeController extends Controller
             'Langs' => $Langs
         ]);
     }
-    public function Logout($lang)
-    {
-        //remove user from session
-        session()->forget('user');
-
-        return redirect()->route('Hom', ['language' => $lang]);
-    }
-    public function LogoutCompany($lang)
-    {
-        //remove user from session
-        session()->forget('CompanyUser');
-
-        return redirect()->route('Hom', ['language' => $lang]);
-    }
-
     public function SigninPage($lang)
     {
-
         // user session have redirect to home page
-        if (session()->has('user'))
+        if (session()->has('user') || session()->has('CompanyUser'))
             return redirect()->route('Hom', ['language' => $lang]);
 
         $Langs = lang::all();
 
         return view("FrontEnd/signin", ["Langs" => $Langs]);
     }
-
     public function ChangePass($lang)
     {
         if (!session()->has('user'))
@@ -639,10 +486,78 @@ class HomeController extends Controller
 
         return view("FrontEnd/changePassword", ["Langs" => $Langs]);
     }
+    public function ChangePassCompany($lang)
+    {
+        //check session
+        if (session()->has('CompanyUser')) {
+            $user = session()->get('CompanyUser');
+            $user = $this->MergeCompanyUsersTable($user);
+            session()->put('CompanyUser', $user);
 
+            return view('FrontEnd/ChangePassCompany');
+        } else {
+            return redirect()->route('Signin', app()->getLocale());
+        }
+    }
+    public function AppliedCandidates($lang, $VacId)
+    {
+        //check session
+        if (session()->has('CompanyUser')) {
+            $user = session()->get('CompanyUser');
+            $user = $this->MergeCompanyUsersTable($user);
+            session()->put('CompanyUser', $user);
+
+            // find VacId Id ed vacancies from session
+            $vac = Vacancy::where('id', $VacId)->where('CompanyUser_id', $user->id)->where('Status', 1)->first();
+            if ($vac == null)
+                return redirect()->back();
+
+            $UserIds = subscribe_vacancy::where('Vacancy_id', $VacId)->get()->pluck('User_id');
+            // $Candidates = User::whereIn('id',$UserIds)->get();
+            //paginate
+            $Candidates = User::whereIn('id', $UserIds)->paginate(6);
+            $myCandidates = [];
+
+            foreach ($Candidates as $can) {
+                $myCandidates[] = $this->MergeUsersTable($can);
+            }
+
+            foreach ($myCandidates as $can) {
+
+                $path = public_path('/CandidatesPicture/' . $can->image);
+                //resize image 500x600 from path
+                //if file is exits in path 
+
+                if (file_exists(pathinfo($path, PATHINFO_FILENAME) . "_150x150.webp"))
+                    $can->image = pathinfo($path, PATHINFO_FILENAME) . "_150x150.webp";
+                else {
+                    $img = Image::make($path)->resize(150, 150);
+                    //save image to path
+
+                    // get extension
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    // fullname without extension
+                    $fullname = pathinfo($path, PATHINFO_FILENAME);
+                    $imgName = $fullname . '_150x150.webp';
+
+                    $img->save(public_path('/CandidatesPicture/' . $imgName), 85, 'webp');
+
+                    $can->image = $imgName;
+                }
+            }
+            return view('FrontEnd/AppliedCandidates')->with(['myCandidates' => $myCandidates, 'Candidates' => $Candidates, 'vac' => $vac]);
+        } else {
+            return redirect()->route('Signin', app()->getLocale());
+        }
+    }
+
+
+
+
+    //LOGIN REGISTER
     public function Signin($lang, Request $req)
     {
-        if (session()->has('user'))
+        if (session()->has('user') || session()->has('CompanyUser'))
             return redirect()->route('Hom', ['language' => $lang]);
         //check if user exist
         $user = User::where('email', $req->Email)->first();
@@ -674,7 +589,7 @@ class HomeController extends Controller
 
     public function registerUser($lang, UserRegisterRequest $req)
     {
-        if (session()->has('user'))
+        if (session()->has('user') || session()->has('CompanyUser'))
             return redirect()->route('Hom', ['language' => $lang]);
 
         $data = $req->all();
@@ -920,6 +835,10 @@ class HomeController extends Controller
     }
     public function registerCompany(CompanyRegisterRequest $request)
     {
+
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->route('Hom', ['language' => app()->getLocale()]);
+
         //check CompanyPhone Array Is Match Regex /^\+994\d{9}$/
         $data = $request->validated();
         $regex = '/^\+994\d{9}$/';
@@ -968,9 +887,32 @@ class HomeController extends Controller
         // redirect to hom page
         return redirect()->route('hom', app()->getLocale());
     }
+    public function Logout($lang)
+    {
+        //remove user from session
+        session()->forget('user');
 
+        return redirect()->route('Hom', ['language' => $lang]);
+    }
+    public function LogoutCompany($lang)
+    {
+        //remove user from session
+        session()->forget('CompanyUser');
+
+        return redirect()->route('Hom', ['language' => $lang]);
+    }
+
+
+
+
+
+    //UPDATE ACTIONS
     public function UpdateUser(EditAccount $req)
     {
+
+        if (!session()->has('user'))
+            return redirect()->route('Signin', ['language' => app()->getLocale()]);
+
         //check username is unique in users table
         $data = $req->validated();
         if (session()->get('user')->Username != $data['Username']) {
@@ -1043,9 +985,11 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
-
     public function UpdateUserEducation(Request $req)
     {
+
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
 
@@ -1102,6 +1046,9 @@ class HomeController extends Controller
     }
     public function UpdateUserCompany(Request $req)
     {
+
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
         if (isset($data['companyname']))
@@ -1159,6 +1106,8 @@ class HomeController extends Controller
     }
     public function UpdateUserlink(Request $req)
     {
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
         if (isset($data['linkname']))
@@ -1200,9 +1149,10 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
-
     public function UpdateUserPassword(Request $req)
     {
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         //message error
         $messages = [
             'password.required' => __('validationUser.Password is required'),
@@ -1232,10 +1182,152 @@ class HomeController extends Controller
         session()->put('user', $user);
         return redirect()->back();
     }
+    public function UpdateCompanyUser(Request $req)
+    {
 
 
+        $messages = [
+            'CompanyName.required' => __('messages.Company Name Required'),
+            'CompanyUsername.required' => __('messages.Company Username Required'),
+            'CompanyEmail.required' => __('messages.Company Email Required'),
+            'CompanyEmail.email' => __('messages.Company Email Email'),
+            'CompanyWebSiteLink.required' => __('messages.Company Website Link Required'),
+            'CompanyAddress.required' => __('messages.Company Address Required'),
+            'CompanyLogo.image' => __('messages.Company Logo Image'),
+            'CompanyLogo.mimes' => __('messages.Company logo must be jpeg,png,jpg,gif,svg'),
+            'CompanyLogo.max' => __('messages.Company Logo  max 2048'),
+            'CompanyDescription.required' => __('messages.Company Description Required'),
+        ];
+        $req->validate([
+            'CompanyName' => 'required',
+            'CompanyUsername' => 'required',
+            'CompanyEmail' => 'required | email',
+            'CompanyWebSiteLink' => 'required',
+            'CompanyAddress' => 'required',
+            'CompanyLogo' => 'image | mimes:jpeg,png,jpg,gif,svg | max:2048',
+            'CompanyDescription' => 'required',
+        ], $messages);
+
+        //get lang id
+        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
+
+        //get company user
+        $CompanyUser = CompanyUser::where('id', session('CompanyUser')->id)->first();
+
+
+        // delete image from CompanyLogos folder if exists\\
+        if ($req->hasFile('CompanyLogo')) {
+            $image = $req->file('CompanyLogo');
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('CompanyLogos'), $imageName);
+            $req->CompanyLogo = $imageName;
+
+            //renive old image
+            $oldImage = public_path('CandidatesPicture/' . $CompanyUser->CompanyLogo);
+            if (file_exists($oldImage))
+                unlink($oldImage);
+        } else {
+            $req->CompanyLogo = $CompanyUser->CompanyLogo;
+        }
+
+
+
+        //update company user
+        $CompanyUser->CompanyName = $req->CompanyName;
+        $CompanyUser->CompanyUsername = $req->CompanyUsername;
+        $CompanyUser->CompanyEmail = $req->CompanyEmail;
+        $CompanyUser->CompanyLogo = $req->CompanyLogo;
+        $CompanyUser->CompanyWebSiteLink = $req->CompanyWebSiteLink;
+        $CompanyUser->CompanyAddress = $req->CompanyAddress;
+        $CompanyUser->CompanyDescription = $req->CompanyDescription;
+
+        $CompanyUser->save();
+
+        //update company user categories
+
+        // $user->UsersAndCategories()->detach();
+        // $user->UsersAndCategories()->attach($data['Categories']);
+
+        // $user->UsersAndLanguages()->detach();
+        // $user->UsersAndLanguages()->attach($data['Languages']);
+
+
+        $CompanyUser->CompanyAndCategories()->detach();
+        $CompanyUser->CompanyAndCategories()->attach($req['CompanyCategories']);
+
+
+        //update session
+        $CompanyUser = $this->MergeCompanyUsersTable($CompanyUser);
+        session()->put('CompanyUser', $CompanyUser);
+
+        return redirect()->back()->with('success', __('messages.Company Updated Successfully'));
+    }
+    public function UpdateCompanyUserPhones(Request $req)
+    {
+        $messages = [
+            'CompanyPhone.required' => __('messages.Company Phone Required'),
+        ];
+        $req->validate([
+            'CompanyPhone' => 'required | array',
+        ], $messages);
+
+        if (isset($req->CompanyPhone))
+            for ($i = 0; $i < count($req->CompanyPhone); $i++) {
+                $companyPhone = CompanyPhones::where('id', $req->PhoneId)->first();
+                $companyPhone->CompanyPhone = $req->CompanyPhone[$i];
+            }
+        if (isset($req->NewCompanyPhone)) {
+            for ($i = 0; $i < count($req->NewCompanyPhone); $i++) {
+                $companyPhone = new CompanyPhones();
+                $companyPhone->CompanyPhone = $req->NewCompanyPhone[$i];
+                $companyPhone->CompanyUser_Id = session('CompanyUser')->id;
+                $companyPhone->save();
+            }
+        }
+        //update session
+        $CompanyUser = $this->MergeCompanyUsersTable(session('CompanyUser'));
+        session()->put('CompanyUser', $CompanyUser);
+
+        return redirect()->back()->with('success', __('messages.Company Phone Added Successfully'));
+    }
+    public function UpdateCompanyUserPassword(Request $req)
+    {
+        //message error
+        $messages = [
+            'password.required' => __('validationUser.Password is required'),
+            'password.min' => __('validationUser.Password must be at least 6 characters'),
+            'newpassword.required' => __('validationUser.New Password is required'),
+            'newpassword.min' => __('validationUser.New Password must be at least 6 characters'),
+            'confirmpassword.required' => __('validationUser.Confirm Password is required'),
+            'confirmpassword.same' => __('validationUser.Confirm Password must be same New Password'),
+        ];
+        //validate request Password Required
+        $req->validate([
+            'password' => 'required | min:6',
+            'newpassword' => 'required | min:6',
+            'confirmpassword' => 'required | same:newpassword',
+        ], $messages);
+
+        $data = $req->all();
+        $user = CompanyUser::where('id', session()->get('CompanyUser')->id)->first();
+
+        $Pass = md5(md5($data['password']));
+        if ($user->Password != $Pass)
+            return redirect()->back()->withErrors(['password' => __("validationUser.Password is not correct")]);
+
+        $user->Password = md5(md5($data['newpassword']));
+        $user->save();
+        $user = $this->MergeCompanyUsersTable($user);
+        session()->put('CompanyUser', $user);
+        return redirect()->back();
+    }
+
+
+    //DELETE ACTIONS
     public function DeleteUserEducation(Request $req)
     {
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
         $Education = Education::where('user_id', $user->id)->where('id', $data['EducationId'])->first();
@@ -1250,6 +1342,8 @@ class HomeController extends Controller
     }
     public function DeleteUserCompany(Request $req)
     {
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
         $Company = Company::where('user_id', $user->id)->where('id', $data['CompanyId'])->first();
@@ -1262,6 +1356,8 @@ class HomeController extends Controller
     }
     public function DeleteUserLink(Request $req)
     {
+        if (!session()->has('user'))
+            return redirect()->back()->withErrors(['Redirect' => __("validationUser.You must be logged in to access this page")]);
         $data = $req->all();
         $user = User::where('id', session()->get('user')->id)->first();
         $Link = Link::where('user_id', $user->id)->where('id', $data['LinkId'])->first();
@@ -1275,6 +1371,8 @@ class HomeController extends Controller
 
     public function SigninCompany(Request $req)
     {
+        if (session()->has('user') || session()->has('Compnayuser'))
+            return redirect()->route('Hom', ['language' => app()->getLocale()]);
         $data = $req->all();
         $Company = CompanyUser::where('CompanyEmail', $data['CompanyEmail'])->first();
 
@@ -1289,14 +1387,25 @@ class HomeController extends Controller
         session()->put('CompanyUser', $Company);
         return redirect()->route('Hom', app()->getLocale());
     }
+    public function DeletePhoneNumber($lang, $id)
+    {
+        if (!session()->has('CompanyUser'))
+            return redirect()->route('Signin', app()->getLocale());
+
+        $user = CompanyUser::where('id', session()->get('CompanyUser')->id)->first();
+        $Link = CompanyPhones::where('CompanyUser_Id', $user->id)->where('id', $id)->first();
+        if ($Link == null)
+            return redirect()->back()->withErrors(['Link' => __("validationUser.You have not this Phone")]);
+        $Link->delete();
+        $user = $this->MergeCompanyUsersTable($user);
+        session()->put('CompanyUser', $user);
+        return redirect()->back();
+    }
 
 
-
-
+    //AJAX ACTIONS
     public function SignUpControllerAjax(UserRegisterRequest $req)
     {
-        if (session()->has('user'))
-            return redirect()->route('Hom', ['language' => app()->getLocale()]);
         $data = $req->all();
 
         //check EducationYear is valid with regex
@@ -1391,13 +1500,9 @@ class HomeController extends Controller
         }
         return response()->json(['success' => 'Success ']);
     }
-
-
-
     public function SignUpCompanyControllerAjax(CompanyRegisterRequest $req)
     {
-        if (session()->has('user') || session()->get('CompanyUser'))
-            return redirect()->route('Hom', ['language' => app()->getLocale()]);
+
         $data = $req->all();
 
         //check EducationYear is valid with regex
@@ -1420,7 +1525,6 @@ class HomeController extends Controller
     }
     public function ApplyVacancy($lang, $id)
     {
-
         if (!session()->has('user'))
             return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
         $user = User::where('id', session()->get('user')->id)->first();
