@@ -12,7 +12,6 @@
 <!-- Owl Carousel Theme Default CSS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-
 {{-- //add Jquery Last Version with CDN --}}
 
 <link rel="stylesheet" href="/assets2/css/owl.theme.default.min.css">
@@ -33,7 +32,6 @@
 <link rel="stylesheet" href="/assets2/css/style.css">
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="/assets2/css/responsive.css">
-
 <!-- Title CSS -->
 <title>Rabota Az</title>
 <!-- Favicon -->

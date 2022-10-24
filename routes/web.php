@@ -56,9 +56,11 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Signup', [HomeController::class, 'Signup'])->name('Signup');
     Route::get('/CandidateDetails/{id}', [HomeController::class, 'CandidateDetails'])->name('CandidateDetails');
     Route::get('/Companies', [HomeController::class, 'Companies'])->name('Companies');
-
+    
+    Route::get('/Candidates', [HomeController::class, 'Candidates'])->name('Candidates');
     
     Route::get('/Signin', [HomeController::class, 'SigninPage'])->name('Signin');
+    Route::get('/Categories', [HomeController::class, 'Categories'])->name('Categories');
 
     Route::get('/Account', [HomeController::class, 'Account'])->name('Account');
     Route::get('/Account/Change/Password', [HomeController::class, 'ChangePass'])->name('ChangePass');
@@ -69,8 +71,9 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/AccountCompany/Change/Password', [HomeController::class, 'ChangePassCompany'])->name('ChangePassCompany');
     Route::get('/AccountCompany', [HomeController::class, 'AccountCompany'])->name('AccountCompany');
     Route::get('/AccountCompany/Vacancies', [HomeController::class, 'AccountCompanyVacancies'])->name('AccountCompanyVacancies');
-
-
+    
+    
+    Route::get('/FindAJob', [HomeController::class, 'FindAJob'])->name('FindAJob');
 
 
     Route::get('/AppliedCandidates/{id}', [HomeController::class, 'AppliedCandidates'])->name('AppliedCandidates');

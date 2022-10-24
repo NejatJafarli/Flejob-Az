@@ -25,7 +25,7 @@
         });
     </script>
     <!-- Navbar Area End -->
-    
+
     <!-- Navbar Area End -->
 
     <!-- Page Title Start -->
@@ -144,12 +144,9 @@
                                     <path
                                         d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
                                 </svg>
-                                <box-icon name='category-alt'></box-icon>
+                                Categories
                             </h3>
                             <ul>
-                                <li>
-                                    <span>Categories:</span>
-                                </li>
                                 @foreach (session()->get('user')->Categories as $category)
                                     <li>{{ $category->Category_lang->CategoryName }}</li>
                                 @endforeach
@@ -161,9 +158,6 @@
                                 Languages
                             </h3>
                             <ul>
-                                <li>
-                                    <span>Languages:</span>
-                                </li>
                                 @foreach (session()->get('user')->Languages as $language)
                                     <li>{{ $language->LanguageName }}</li>
                                 @endforeach
@@ -176,12 +170,11 @@
                                 Education Background
                             </h3>
                             @php
-                            $educations=session()->get('user')->Educations;
-
-                            //sort by yearStart Desc without usort
-                            $educations = $educations->sortByDesc('YearStart');
-
-
+                                $educations = session()->get('user')->Educations;
+                                
+                                //sort by yearStart Desc without usort
+                                $educations = $educations->sortByDesc('YearStart');
+                                
                             @endphp
                             {{-- education --}}
                             @foreach ($educations as $Education)

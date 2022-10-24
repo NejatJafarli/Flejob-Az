@@ -120,7 +120,7 @@
                                             </h3>
                                             <ul>
                                                 <li>
-                                                    <i class='bx bx-briefcase'></i>
+                                                    <i class='bx bx-filter-alt'></i>
                                                     {{ $vac->Category->CategoryLang->CategoryName }}
                                                 </li>
                                                 <li>
@@ -140,8 +140,21 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="theme-btn text-end">
+                                            @php
+                                                
+                                                //get count of notifications
+                                                $count = App\Models\NotificationForCompanyUser::where('Vacancy_id', $vac->id)
+                                                    ->where('Status', 0)
+                                                    ->count();
+                                                
+                                                if ($count != 0) {
+                                                    $msg = "($count)";
+                                                } else {
+                                                    $msg = '';
+                                                }
+                                            @endphp
                                             <a href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary">Show Applied Users</a>
+                                                class="btn btn-primary">Show Applied Users {{ $msg }}</a>
                                             <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
                                                 class="btn btn-primary mx-5 my-3">View</a>
                                         </div>

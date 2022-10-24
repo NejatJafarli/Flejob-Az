@@ -22,44 +22,34 @@
                         <li class="nav-item">
                             <a id="About" href="about.html" class="nav-link ">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle JobDetails">Jobs</a>
+                        @if (session()->has('CompanyUser'))
+                            <li class="nav-item">
+                                <a href="#" class="nav-link dropdown-toggle">Jobs</a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a href="post-job.html" class="nav-link">Post A Job</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link">Find A Job</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link">Find A Job</a>
+                            </li>
+                        @endif
 
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a href="find-job.html" class="nav-link">Find A Job</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="post-job.html" class="nav-link">Post A Job</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="job-list.html" class="nav-link">Job List</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="job-grid.html" class="nav-link">Job Grid</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link JobDetails">Job Details</a>
-                                </li>
-                            </ul>
+                        <li class="nav-item">
+                            <a id="Candidate" href="{{route('Candidates',app()->getLocale())}}" class="nav-link">Candidates</a>
+                        </li>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle">Candidates</a>
+                            <a href="#" class="nav-link dropdown-toggle Company Categories">Pages</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a id="Candidates" href="candidate.html" class="nav-link">Candidates</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="CandidatesDetails" href="candidate-details.html" class="nav-link">Candidates
-                                        Details</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle Company">Pages</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a href="{{route('Companies',app()->getLocale())}}" class="nav-link Company">Company</a>
+                                    <a href="{{ route('Companies', app()->getLocale()) }}"
+                                        class="nav-link Company">Company</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="pricing.html" class="nav-link">Pricing</a>
@@ -74,7 +64,8 @@
                                     <a href="faq.html" class="nav-link">FAQ</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id="Categories" href="catagories.html" class="nav-link">Catagories</a>
+                                    <a href="{{ route('Categories', app()->getLocale()) }}"
+                                        class="nav-link Categories">Catagories</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="privacy-policy.html" class="nav-link">Privacy & Policy</a>
@@ -106,8 +97,8 @@
                                 @include('FrontEnd.Component.MultiLang')
                             </div>
                             <div class="option-item">
-                                <img src="/CandidatesPicture/{{ session()->get('user')->image }}"
-                                    alt="profile picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                                <img src="/CandidatesPicture/{{ session()->get('user')->image }}" alt="profile picture"
+                                    style="width: 50px; height: 50px; border-radius: 50%;">
                             </div>
 
                             <li class="nav-item">

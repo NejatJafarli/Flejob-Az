@@ -1,5 +1,5 @@
 <div class="other-option" style="padding: 0 0 0 50px">
-    <select class="form-control" onchange="window.location.href=this.value">
+    <select class="form-control nice-select" onchange="window.location.href=this.value">
         @php
             use App\Models\lang;
             

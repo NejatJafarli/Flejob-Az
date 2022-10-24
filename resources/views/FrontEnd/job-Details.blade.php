@@ -62,7 +62,7 @@
                                         <a href="job-grid.html" class="nav-link">Job Grid</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a  class="nav-link JobDetails">Job Details</a>
+                                        <a class="nav-link JobDetails">Job Details</a>
                                     </li>
                                 </ul>
                             </li>
@@ -328,7 +328,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><span>Person Name :</span></td>
-                                                        <td>{{ $vac->PersonName}}</td>
+                                                        <td>{{ $vac->PersonName }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -346,7 +346,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><span>Phone :</span></td>
-                                                        <td>{{ $vac->PersonPhone}}</td>
+                                                        <td>{{ $vac->PersonPhone }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -439,54 +439,55 @@
 
             <div class="row">
                 {{-- Same categoried Vacancies --}}
-
-                {{-- <div class="col-lg-12">
-                    <div class="job-card-two">
-                        <div class="row align-items-center">
-                            <div class="col-md-1">
-                                <div class="company-logo">
-                                    <a href="job-details.html">
-                                        <img src="assets/img/company-logo/1.png" alt="logo">
-                                    </a>
+                @foreach ($Vacancies as $vacs)
+                    <div class="col-lg-12">
+                        <div class="job-card-two">
+                            <div class="row align-items-center">
+                                <div class="col-md-1">
+                                    <div class="company-logo">
+                                        <a href="{{route('JobDetails',['language'=>app()->getLocale(),'id'=>$vacs->id])}}">
+                                            <img src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}" alt="logo">
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="job-info">
-                                    <h3>
-                                        <a href="#">Web Designer, Graphic Designer, UI/UX Designer </a>
-                                    </h3>
-                                    <ul>
-                                        <li>
-                                            <i class='bx bx-briefcase'></i>
-                                            Graphics Designer
-                                        </li>
-                                        <li>
-                                            <i class='bx bx-briefcase'></i>
-                                            $35000-$38000
-                                        </li>
-                                        <li>
-                                            <i class='bx bx-location-plus'></i>
-                                            Wellesley Rd, London
-                                        </li>
-                                        <li>
-                                            <i class='bx bx-stopwatch'></i>
-                                            9 days ago
-                                        </li>
-                                    </ul>
-
-                                    <span>Full Time</span>
+                                <div class="col-md-8">
+                                    <div class="job-info">
+                                        <h3>
+                                            <a
+                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
+                                        </h3>
+                                        <ul>
+                                            <li>
+                                                <i class='bx bx-briefcase'></i>
+                                                {{ $vacs->Category->CategoryName }}
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-briefcase'></i>
+                                                {{ $vacs->VacansySalary }}
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-location-plus'></i>
+                                                {{ $vacs->City->CityName }}
+                                            </li>
+                                            <li>
+                                                <i class='bx bx-stopwatch'></i>
+                                                {{ $vacs->created_at->diffForHumans() }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="theme-btn text-end">
-                                    <a href="#" class="default-btn">
-                                        Browse Job
-                                    </a>
+                                <div class="col-md-3">
+                                    <div class="theme-btn text-end">
+                                        <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}"
+                                            class="default-btn">
+                                            Browse Job
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                @endforeach
             </div>
         </div>
     </section>

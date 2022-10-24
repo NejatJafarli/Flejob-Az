@@ -55,7 +55,7 @@
                             </div>
                             <div class="company-text">
                                 <h3>{{ $com->CompanyName }}</h3>
-                                <a href="job-list.html" class="company-btn">
+                                <a href="{{route('FindAJob',app()->getLocale())}}?Company={{$com->id}}" class="company-btn">
                                     {{ $com->VacanciesCount }} Open Position
                                 </a>
                             </div>

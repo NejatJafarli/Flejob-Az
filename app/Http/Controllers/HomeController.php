@@ -17,13 +17,20 @@ use App\Models\CompanyUser;
 use App\Models\Education;
 use App\Models\lang;
 use App\Models\Link;
+use App\Models\NotificationForCompanyUser;
 use App\Models\subscribe_vacancy;
 use App\Models\UsersAndCategories;
 use App\Models\UsersAndCities;
 use App\Models\UsersAndLanguages;
 use App\Models\Vacancy;
+use App\QueryFilters\Category as QueryFiltersCategory;
+use App\QueryFilters\City as QueryFiltersCity;
+use App\QueryFilters\Company as QueryFiltersCompany;
+use App\QueryFilters\MaxSalary as MaxSalaryFilter;
+use App\QueryFilters\MinSalary as MinSalaryFilter;
+use App\QueryFilters\VacancyName as VacancyNameFilter;
 use Illuminate\Http\Request;
-
+use Illuminate\Pipeline\Pipeline;
 //use invervation image
 use Intervention\Image\Facades\Image;
 
@@ -139,6 +146,12 @@ class HomeController extends Controller
 
         return view('FrontEnd/candidate-details', ['can' => $user]);
     }
+    public function Candidates($lang)
+    {
+        //get last 8 users and paginate
+        $users = User::orderBy('id', 'desc')->paginate(8);
+        return view('FrontEnd/candidate', ['users' => $users]);
+    }
     public function AccountCompanyVacancies($lang)
     {
         if (!session()->has('CompanyUser'))
@@ -190,7 +203,6 @@ class HomeController extends Controller
     }
     public function Account($lang)
     {
-
         //check session
         if (!session()->has('user'))
             return redirect()->route('Signin', ['language' => $lang]);
@@ -243,7 +255,9 @@ class HomeController extends Controller
             return $language;
         });
 
-
+        $user = session()->get('user');
+        $user = $this->MergeUsersTable($user);
+        session()->put('user', $user);
 
         return view("FrontEnd/account")->with([
             'cities' => $cities,
@@ -252,6 +266,48 @@ class HomeController extends Controller
             'languages' => $languages,
             'education_levels' => $education_level
         ]);
+    }
+    public function FindAJob($lang)
+    {
+        $jobs = Vacancy::where('Status', 1);
+
+
+
+        $jobs = app(Pipeline::class)->send($jobs)
+            ->through([
+                VacancyNameFilter::class,
+                QueryFiltersCategory::class,
+                QueryFiltersCity::class,
+                MinSalaryFilter::class,
+                MaxSalaryFilter::class,
+                QueryFiltersCompany::class
+            ])
+            ->thenReturn();
+
+
+        $jobs = $jobs->paginate(10);
+
+        //get all cities
+        $cities = City::all();
+        //merge cities with city langs
+        $cities = $cities->map(function ($city) use ($lang) {
+            $city->CityLang = $city->cityLang()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $city;
+        });
+
+
+        //get all categories
+        $categories = Category::all();
+        //merge categories with category langs
+        $categories = $categories->map(function ($category) use ($lang) {
+            $category->CategoryLang = $category->category_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
+            return $category;
+        });
+
+
+
+
+        return view('FrontEnd/find-job', ['Jobs' => $jobs, 'Cities' => $cities, 'Categories' => $categories]);
     }
     public function Hom($lang)
     {
@@ -307,7 +363,7 @@ class HomeController extends Controller
         $CompanyUsers = CompanyUser::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
         //merge company users with vacancies
         $CompanyUsers = $CompanyUsers->map(function ($CompanyUser) {
-            $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('status', 1)->get();
+            $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('Status', 1)->get();
             $CompanyUser->Vacancies = $vac;
             $CompanyUser->VacanciesCount = $vac->count();
             return $CompanyUser;
@@ -347,8 +403,15 @@ class HomeController extends Controller
         //get all langs
         $Langs = lang::all();
 
+        //get all cities 
+        $Cities = City::all();
+        //merge cities with city_langs
+        $Cities = $Cities->map(function ($City) use ($lang_id) {
+            $City->CityLang = $City->cityLang()->where('lang_id', $lang_id)->first();
+            return $City;
+        });
 
-        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
+        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
     }
     public function Companies($lang)
     {
@@ -364,8 +427,8 @@ class HomeController extends Controller
         //sort by vacancies count
         $CompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
 
-        
-        return view('Frontend/Company')->with(['Companies' => $Companies,'CompanyUsers' => $CompanyUsers]);
+
+        return view('Frontend/Company')->with(['Companies' => $Companies, 'CompanyUsers' => $CompanyUsers]);
     }
     public function AppliedJobs($lang)
     {
@@ -404,9 +467,34 @@ class HomeController extends Controller
         //merge vac with CompanyUser 
         $vac->CompanyUser = CompanyUser::where('id', $vac->CompanyUser_id)->first();
 
+        //get vacancis same category last 15
+        $Vacancies = Vacancy::where('Category_id', $vac->Category_id)->where('id', '!=', $vac->id)->where('Status', 1)->orderBy('id', 'desc')->take(10)->get();
+        // $Vacancies = Vacancy::where('Category_id', $vac->Category_id)->where('id', '!=', $vac->id)->where('Status', 1)->get();
 
+        $Vacancies = $Vacancies->map(function ($Vacancy) {
+            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+            return $Vacancy;
+        });
+        $lang_id = lang::where('LanguageCode', $lang)->first()->id;
 
-        return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs]);
+        //merge vacancies with category
+        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+            $cat = Category::where('id', $Vacancy->Category_id)->first();
+            $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
+            $Vacancy->Category->StyleClass = $cat->StyleClass;
+            $Vacancy->Category->SortOrder = $cat->SortOrder;
+
+            return $Vacancy;
+        });
+
+        // merge vacancies with city
+        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+            $city = City::where('id', $Vacancy->City_id)->first();
+            $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
+            return $Vacancy;
+        });
+
+        return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs, 'Vacancies' => $Vacancies]);
     }
     public function MyResume($lang)
     {
@@ -545,13 +633,26 @@ class HomeController extends Controller
                     $can->image = $imgName;
                 }
             }
+
+            //make all notifications status 1
+            $nots = NotificationForCompanyUser::where('Vacancy_id', $VacId)->where('Status', 0)->get();
+            foreach ($nots as $not) {
+                $not->Status = 1;
+                $not->save();
+            }
+
             return view('FrontEnd/AppliedCandidates')->with(['myCandidates' => $myCandidates, 'Candidates' => $Candidates, 'vac' => $vac]);
         } else {
             return redirect()->route('Signin', app()->getLocale());
         }
     }
+    public function Categories($lang)
+    {
 
-
+        //get top 10 categories paginate
+        $Categories = Category::orderBy('SortOrder', 'desc')->paginate(8);
+        return view('FrontEnd/catagories')->with(['Categories' => $Categories]);
+    }
 
 
     //LOGIN REGISTER
@@ -586,7 +687,6 @@ class HomeController extends Controller
 
         return view("FrontEnd/signin");
     }
-
     public function registerUser($lang, UserRegisterRequest $req)
     {
         if (session()->has('user') || session()->has('CompanyUser'))
@@ -901,9 +1001,24 @@ class HomeController extends Controller
 
         return redirect()->route('Hom', ['language' => $lang]);
     }
+    public function SigninCompany(Request $req)
+    {
+        if (session()->has('user') || session()->has('Compnayuser'))
+            return redirect()->route('Hom', ['language' => app()->getLocale()]);
+        $data = $req->all();
+        $Company = CompanyUser::where('CompanyEmail', $data['CompanyEmail'])->first();
 
+        if ($Company == null)
+            $Company = CompanyUser::where('CompanyUsername', $data['CompanyEmail'])->first();
+        if ($Company == null)
+            return redirect()->back()->withErrors(['CompanyEmail' => __("validationCompany.Email or Username is not correct")]);
+        $Pass = md5(md5($data['CompanyPassword']));
+        if ($Company->CompanyPassword != $Pass)
+            return redirect()->back()->withErrors(['CompanyPassword' => __("validationCompany.Password is not correct")]);
 
-
+        session()->put('CompanyUser', $Company);
+        return redirect()->route('Hom', app()->getLocale());
+    }
 
 
     //UPDATE ACTIONS
@@ -1368,25 +1483,6 @@ class HomeController extends Controller
         session()->put('user', $user);
         return redirect()->back();
     }
-
-    public function SigninCompany(Request $req)
-    {
-        if (session()->has('user') || session()->has('Compnayuser'))
-            return redirect()->route('Hom', ['language' => app()->getLocale()]);
-        $data = $req->all();
-        $Company = CompanyUser::where('CompanyEmail', $data['CompanyEmail'])->first();
-
-        if ($Company == null)
-            $Company = CompanyUser::where('CompanyUsername', $data['CompanyEmail'])->first();
-        if ($Company == null)
-            return redirect()->back()->withErrors(['CompanyEmail' => __("validationCompany.Email or Username is not correct")]);
-        $Pass = md5(md5($data['CompanyPassword']));
-        if ($Company->CompanyPassword != $Pass)
-            return redirect()->back()->withErrors(['CompanyPassword' => __("validationCompany.Password is not correct")]);
-
-        session()->put('CompanyUser', $Company);
-        return redirect()->route('Hom', app()->getLocale());
-    }
     public function DeletePhoneNumber($lang, $id)
     {
         if (!session()->has('CompanyUser'))
@@ -1536,6 +1632,7 @@ class HomeController extends Controller
         $vacUser = subscribe_vacancy::where('user_id', $user->id)->where('vacancy_id', $vacancy->id)->first();
         if ($vacUser != null) {
             $vacUser->delete();
+            $notification = NotificationForCompanyUser::where('user_id', $user->id)->where('vacancy_id', $vacancy->id)->delete();
             $user = $this->MergeUsersTable($user);
             session()->put('user', $user);
             return response()->json(['success' => "UnApplied Successfully"]);
@@ -1546,11 +1643,20 @@ class HomeController extends Controller
             $today = strtotime(date('Y-m-d'));
             if ($vacancyEndDate < $today)
                 return response()->json(['errors' => [__("validationUser.This vacancy is expired")]]);
-            //add new subscribe
+
+
+
             $subscribe = new subscribe_vacancy();
             $subscribe->user_id = $user->id;
             $subscribe->vacancy_id = $id;
             $subscribe->save();
+
+            $notification = new NotificationForCompanyUser();
+            $notification->user_id = $user->id;
+            $notification->vacancy_id = $id;
+            $notification->body = "User Applied to your vacancy";
+            $notification->Status = 0;
+            $notification->save();
 
             $user = $this->MergeUsersTable($user);
             session()->put('user', $user);

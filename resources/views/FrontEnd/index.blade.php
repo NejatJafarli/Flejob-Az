@@ -30,29 +30,59 @@
                                     @csrf
                                     <div class="row">
                                         <div class="col-lg-3">
+                                            <label>Job Title <i class="bx bx-search-alt"></i></label>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="exampleInputEmail1"
                                                     placeholder="Job Title or Keyword">
-                                                <i class="bx bx-search-alt"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="exampleInputEmail2"
-                                                    placeholder="Location">
-                                                <i class="bx bx-location-plus"></i>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <select class="category">
+                                            <label>Cities <i class="bx bx-location-plus"></i></label>
+                                            <select name="City" class="form-select" id="City">
+                                                <option value="0">All Cities</option>
+                                                @foreach ($Cities as $city)
+                                                    <option value="{{ $city->id }}">
+                                                        {{ $city->CityLang->CityName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label>Categories <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                    height="20" viewBox="0 0 25 25">
+                                                    <path
+                                                        d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
+                                                </svg></label>
+                                            <select class="category form-select">
+                                                <option value="0">All Categories</option>
                                                 @foreach ($Categories as $cat)
                                                     <option value="{{ $cat->id }}">
                                                         {{ $cat->Category_lang->CategoryName }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <div class="tofrom col-md-6 my-5">
+                                            <span>Min Salary ₼</span>
+                                            <div class="form-group">
+                                                <label></label>
+                                                <input name="MinSalary" type="number" class="form-control"
+                                                    placeholder="Enter Min Salary" id="flefilter_price_min">
+                                            </div>
+                                        </div>
+                                        <div class="from col-md-6 my-5">
+                                            <span>Max Salary ₼</span>
+                                            <div class="form-group">
+                                                <label></label>
+                                                <input name="MaxSalary" type="number" class="form-control"
+                                                    placeholder="Enter Max Salary" id="flefilter_price_max">
+                                            </div>
+                                        </div>
+                                        <div class="price-filter">
+                                            <input type="text" class="js-range-slider" value="" min-price="1"
+                                                current-min-price="1" current-max-price="29999" max-price="29999" />
+                                        </div>
                                         <div class="col-lg-3">
+                                            <label> </label>
                                             <button type="submit" class="find-btn">
                                                 Find A Job
                                                 <i class='bx bx-search'></i>
@@ -146,22 +176,23 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="job-save">
-                                        @php
-                                            $userApplied = false;
-                                            if (session()->get('user')) {
-                                                foreach (session()->get('user')->AppliedVacancies as $UserVac) {
-                                                    if ($UserVac->Vacancy_id == $vac->id) {
-                                                        $userApplied = true;
-                                                        break;
+                                        @if (session()->get('user'))
+                                            @php
+                                                $userApplied = false;
+                                                if (session()->get('user')) {
+                                                    foreach (session()->get('user')->AppliedVacancies as $UserVac) {
+                                                        if ($UserVac->Vacancy_id == $vac->id) {
+                                                            $userApplied = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            
-                                        @endphp
-                                        <button
-                                            onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
-                                            type="button" class="btn btn-primary" data-toggle="modal">
-                                            {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                            @endphp
+                                            <button
+                                                onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
+                                                type="button" class="btn btn-primary" data-toggle="modal">
+                                                {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                        @endif
                                         <p>
                                             <i class='bx bx-stopwatch'></i>
                                             {{ $vac->created_at->diffForHumans() }}
@@ -199,13 +230,11 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="company-card">
                             <div class="thumb-img">
-                                <a href="company-details.html">
-                                    <img src="{{ $user->CompanyLogo }}" alt="company logo">
-                                </a>
+                                <img src="/CompanyLogos/{{ $user->CompanyLogo }}" alt="company logo">
                             </div>
                             <div class="company-info">
                                 <h3>
-                                    <a href="company-details.html">{{ $user->CompanyName }}</a>
+                                    <span>{{ $user->CompanyName }}</span>
                                 </h3>
                                 <p>{{ $user->VacanciesCount }} Open position</p>
                             </div>
@@ -216,7 +245,7 @@
         </div>
     </section>
     <!-- Companies Section End -->
-
+{{-- 
     <!-- Why Choose Section Start -->
     <section class="why-choose">
         <div class="container-fluid">
@@ -307,10 +336,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Why Choose Section End -->
 
-
+{{-- 
     <!-- Pricing Section Start -->
     <section class="pricing-section pb-70">
         <div class="container">
@@ -419,8 +448,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Pricing Section End -->
+    
     {{-- 
     <!-- Candidate Section Start -->
     <section class="candidate-section pb-100">
@@ -552,159 +582,68 @@
     </section>
     <!-- Blog Section End -->
 
-    <!-- Footer Section Start -->
-    <footer class="footer-area pt-100 pb-70">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6">
-                    <div class="footer-widget">
-                        <div class="footer-logo">
-                            <a href="index.html">
-                                <img src="/assets2/img/logo.png" alt="logo">
-                            </a>
-                        </div>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut
-                            labore et dolore magna. Sed eiusmod tempor incididunt ut.</p>
+            if ($(".js-range-slider").length > 0) {
+                let currentMinPrice = $(".js-range-slider").attr("current-min-price");
+                let maxPrice = $(".js-range-slider").attr("max-price");
+                let minPrice = $(".js-range-slider").attr("min-price");
+                let currentMaxPrice = $(".js-range-slider").attr("current-max-price");
+                $(".js-range-slider").ionRangeSlider({
+                    type: "double",
+                    min: minPrice,
+                    max: maxPrice,
+                    from: currentMinPrice,
+                    to: currentMaxPrice,
+                    grid: 0,
 
-                        <div class="footer-social">
-                            <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
-                            <a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
-                            <a href="#" target="_blank"><i class='bx bxl-pinterest-alt'></i></a>
-                            <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                        </div>
-                    </div>
-                </div>
+                    onStart: function(data) {
+                        $("#flefilter_price_min").val(data.from);
+                        $("#flefilter_price_max").val(data.to);
+                    },
+                    onChange: function(data) {
+                        $("#flefilter_price_min").val(data.from);
+                        $("#flefilter_price_max").val(data.to);
+                    },
+                });
+                $("#flefilter_price_min").on("change", function() {
+                    let value = $(this).val();
+                    let maxPrice = $("#flefilter_price_max").val();
+                    value = parseInt(value);
+                    minPrice = parseInt(minPrice);
+                    if (value > maxPrice) {
+                        value = maxPrice;
+                        $(this).val(value);
+                    }
+                    $(".js-range-slider").data("ionRangeSlider").update({
+                        from: value,
+                    });
+                });
+                $("#flefilter_price_max").on("change", function() {
+                    let value = $(this).val();
+                    let minPrice = $("#flefilter_price_min").val();
+                    value = parseInt(value);
+                    minPrice = parseInt(minPrice);
+                    if (value < minPrice) {
+                        value = minPrice;
+                        $(this).val(value);
+                    }
+                    $(".js-range-slider").data("ionRangeSlider").update({
+                        to: value,
+                    });
+                });
+                $("#module-flefilter input,#module-flefilter select").on(
+                    "change",
+                    function() {
+                        $("#module-flefilter-submit").removeClass("d-none");
+                    }
+                );
+            }
 
-                <div class="col-lg-3 col-sm-6">
-                    <div class="footer-widget pl-60">
-                        <h3>For Candidate</h3>
-                        <ul>
-                            <li>
-                                <a href="job-grid.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Browse Jobs
-                                </a>
-                            </li>
-                            <li>
-                                <a href="account.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Account
-                                </a>
-                            </li>
-                            <li>
-                                <a href="catagories.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Browse Categories
-                                </a>
-                            </li>
-                            <li>
-                                <a href="resume.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Resume
-                                </a>
-                            </li>
-                            <li>
-                                <a href="job-list.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Job List
-                                </a>
-                            </li>
-                            <li>
-                                <a href="sign-up.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Sign Up
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="footer-widget pl-60">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li>
-                                <a href="index.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="about.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    About
-                                </a>
-                            </li>
-                            <li>
-                                <a href="faq.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    FAQ
-                                </a>
-                            </li>
-                            <li>
-                                <a href="pricing.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Pricing
-                                </a>
-                            </li>
-                            <li>
-                                <a href="privacy.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Privacy
-                                </a>
-                            </li>
-                            <li>
-                                <a href="contact.html">
-                                    <i class='bx bx-chevrons-right bx-tada'></i>
-                                    Contact
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-sm-6">
-                    <div class="footer-widget footer-info">
-                        <h3>Information</h3>
-                        <ul>
-                            <li>
-                                <span>
-                                    <i class='bx bxs-phone'></i>
-                                    Phone:
-                                </span>
-                                <a href="tel:882569756">
-                                    +101 984 754
-                                </a>
-                            </li>
-
-                            <li>
-                                <span>
-                                    <i class='bx bxs-envelope'></i>
-                                    Email:
-                                </span>
-                                <a href="mailto:info@jovie.com">
-                                    info@jovie.com
-                                </a>
-                            </li>
-
-                            <li>
-                                <span>
-                                    <i class='bx bx-location-plus'></i>
-                                    Address:
-                                </span>
-                                123, Denver, USA
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <div class="copyright-text text-center">
-        <p>Copyright @2021 Jovie. All Rights Reserved By <a href="https://hibootstrap.com/"
-                target="_blank">HiBootstrp.com</a></p>
-    </div>
-
+        });
+    </script>
     <script>
         //document ready
         $(document).ready(function() {
@@ -779,33 +718,6 @@
             });
         }
     </script>
-    <!-- Footer Section End -->
-
-    <!-- Back To Top Start -->
-    <div class="top-btn">
-        <i class='bx bx-chevrons-up bx-fade-up'></i>
-    </div>
-    <!-- Back To Top End -->
-
-    <!-- jQuery first, then Bootstrap JS -->
-    <script src="/assets2/js/jquery.min.js"></script>
-    <script src="/assets2/js/bootstrap.bundle.min.js"></script>
-    <!-- Owl Carousel JS -->
-    <script src="/assets2/js/owl.carousel.min.js"></script>
-    <!-- Nice Select JS -->
-    <script src="/assets2/js/jquery.nice-select.min.js"></script>
-    <!-- Magnific Popup JS -->
-    <script src="/assets2/js/jquery.magnific-popup.min.js"></script>
-    <!-- Subscriber Form JS -->
-    <script src="/assets2/js/jquery.ajaxchimp.min.js"></script>
-    <!-- Form Velidation JS -->
-    <script src="/assets2/js/form-validator.min.js"></script>
-    <!-- Contact Form -->
-    <script src="/assets2/js/contact-form-script.js"></script>
-    <!-- Meanmenu JS -->
-    <script src="/assets2/js/meanmenu.js"></script>
-    <!-- Custom JS -->
-    <script src="/assets2/js/custom.js"></script>
-</body>
+    @include('FrontEnd.Component.Footer')
 
 </html>
