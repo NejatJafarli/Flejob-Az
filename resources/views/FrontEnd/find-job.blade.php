@@ -7,6 +7,15 @@
 
 <body>
     @include('FrontEnd.Component.Navbar')
+
+    <script>
+        $(document).ready(function() {
+            var Hom = document.getElementsByClassName('FindAJob');
+            for (let index = 0; index < Hom.length; index++) {
+                Hom[index].classList.add('active');
+            }
+        });
+    </script>
     <!-- Page Title Start -->
     <section class="page-title title-bg2">
         <div class="d-table">

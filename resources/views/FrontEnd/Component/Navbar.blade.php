@@ -20,23 +20,23 @@
                             <a id="Hom" href="{{ route('Hom', app()->getLocale()) }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a id="About" href="about.html" class="nav-link ">About</a>
+                            <a id="About" href="{{ route('About', app()->getLocale()) }}" class="nav-link ">About</a>
                         </li>
                         @if (session()->has('CompanyUser'))
                             <li class="nav-item">
-                                <a href="#" class="nav-link dropdown-toggle">Jobs</a>
+                                <a href="#" class="nav-link dropdown-toggle FindAJob">Jobs</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
                                         <a href="post-job.html" class="nav-link">Post A Job</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link">Find A Job</a>
+                                        <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link FindAJob">Find A Job</a>
                                     </li>
                                 </ul>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link">Find A Job</a>
+                                <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link FindAJob">Find A Job</a>
                             </li>
                         @endif
 
@@ -51,12 +51,12 @@
                                     <a href="{{ route('Companies', app()->getLocale()) }}"
                                         class="nav-link Company">Company</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="pricing.html" class="nav-link">Pricing</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="404.html" class="nav-link">404 Page</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="testimonial.html" class="nav-link">Testimonials</a>
                                 </li>
@@ -76,18 +76,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle">Blog</a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a href="blog.html" class="nav-link">Blog</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="blog-two.html" class="nav-link">Blog Two</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a id="BlogDetails" href="blog-details.html" class="nav-link">Blog Details</a>
-                                </li>
-                            </ul>
+                            <a href="#" class="nav-link">Blog</a>
                         </li>
                         <li class="nav-item">
                             <a id="Contact" href="contact.html" class="nav-link">Contact Us</a>
@@ -108,9 +97,6 @@
                                     <li class="nav-item account">
                                         <a href="{{ route('Account', app()->getLocale()) }}"
                                             class="nav-link">Profile</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a id="Settings" href="#" class="nav-link">Settings</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('Logout', app()->getLocale()) }}"

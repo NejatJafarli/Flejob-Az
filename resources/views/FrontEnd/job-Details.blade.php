@@ -384,7 +384,8 @@
                     <div class="job-sidebar">
                         <h3>Posted By</h3>
                         <div class="posted-by">
-                            <img src="/CompanyLogos/{{ $vac->CompanyUser->CompanyLogo }}" alt="client image">
+                            <img style="height:100px; widht:100px;"
+                                src="/CompanyLogos/{{ $vac->CompanyUser->CompanyLogo }}" alt="client image">
                             <h4>{{ $vac->CompanyUser->CompanyName }}</h4>
                         </div>
                     </div>
@@ -445,8 +446,10 @@
                             <div class="row align-items-center">
                                 <div class="col-md-1">
                                     <div class="company-logo">
-                                        <a href="{{route('JobDetails',['language'=>app()->getLocale(),'id'=>$vacs->id])}}">
-                                            <img src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}" alt="logo">
+                                        <a
+                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">
+                                            <img style="height:50px; widht:50px;"
+                                                src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}" alt="logo">
                                         </a>
                                     </div>
                                 </div>

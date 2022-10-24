@@ -26,67 +26,91 @@
                         <h1>Drop Resume & Get Your Desire Job!</h1>
                         <div class="find-section pb-100 py-5">
                             <div class="container">
-                                <form class="find-form" method="POST">
+                                <form class="find-form" action="{{ route('FindAJob', app()->getLocale()) }}"
+                                    method="GET">
                                     @csrf
-                                    <div class="row">
-                                        <div class="col-lg-3">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-4">
                                             <label>Job Title <i class="bx bx-search-alt"></i></label>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
+                                                <input name="VacancyName"
+                                                    value="{{ request()->get('VacancyName') ? request()->get('VacancyName') : '' }}"
+                                                    type="text" class="form-control" id="exampleInputEmail1"
                                                     placeholder="Job Title or Keyword">
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <label>Cities <i class="bx bx-location-plus"></i></label>
-                                            <select name="City" class="form-select" id="City">
-                                                <option value="0">All Cities</option>
+                                            <select name="City" class="form-select" id="City"
+                                                style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
+                                                <option value="All">All Cities</option>
                                                 @foreach ($Cities as $city)
-                                                    <option value="{{ $city->id }}">
+                                                    @php
+                                                        $selected = '';
+                                                        if ($city->id == request()->get('City')) {
+                                                            $selected = 'selected';
+                                                        }
+                                                    @endphp
+                                                    <option value="{{ $city->id }}" {{ $selected }}>
                                                         {{ $city->CityLang->CityName }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <label>Categories <svg xmlns="http://www.w3.org/2000/svg" width="20"
                                                     height="20" viewBox="0 0 25 25">
                                                     <path
                                                         d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
                                                 </svg></label>
-                                            <select class="category form-select">
-                                                <option value="0">All Categories</option>
+                                            <select name="Category" class="category form-select"
+                                                style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
+                                                <option value="All">All Categories</option>
                                                 @foreach ($Categories as $cat)
-                                                    <option value="{{ $cat->id }}">
+                                                    @php
+                                                        $selected = '';
+                                                        if ($cat->id == request()->get('Category')) {
+                                                            $selected = 'selected';
+                                                        }
+                                                    @endphp
+                                                    <option value="{{ $cat->id }}" {{ $selected }}>
                                                         {{ $cat->Category_lang->CategoryName }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="tofrom col-md-6 my-5">
+                                        <div class="tofrom col-md-2 my-5">
                                             <span>Min Salary ₼</span>
                                             <div class="form-group">
+
                                                 <label></label>
                                                 <input name="MinSalary" type="number" class="form-control"
                                                     placeholder="Enter Min Salary" id="flefilter_price_min">
                                             </div>
                                         </div>
-                                        <div class="from col-md-6 my-5">
+                                        <div class="from col-md-2 my-5">
                                             <span>Max Salary ₼</span>
                                             <div class="form-group">
                                                 <label></label>
                                                 <input name="MaxSalary" type="number" class="form-control"
-                                                    placeholder="Enter Max Salary" id="flefilter_price_max">
+                                                    placeholder="Enter Max Salary" {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}}
+                                                    id="flefilter_price_max">
                                             </div>
                                         </div>
-                                        <div class="price-filter">
+                                        <div class="price-filter col-md-8 my-5">
                                             <input type="text" class="js-range-slider" value="" min-price="1"
-                                                current-min-price="1" current-max-price="29999" max-price="29999" />
+                                                current-min-price="{{ request()->get('MinSalary') ? request()->get('MinSalary') : 1 }}"
+                                                current-max-price="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : 29999 }}"
+                                                max-price="29999" />
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-12">
                                             <label> </label>
-                                            <button type="submit" class="find-btn">
-                                                Find A Job
-                                                <i class='bx bx-search'></i>
-                                            </button>
+                                            <div class="jobs-btn" style="text-align: right">
+                                                <button type="submit" class="find-btn"
+                                                    style="width: auto; padding:16px 100px">
+                                                    Find A Job
+                                                    <i class='bx bx-search'></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -112,7 +136,7 @@
                 {{-- categories --}}
                 @foreach ($Categories as $cat)
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <a href="job-list.html">
+                        <a href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">
                             <div class="category-card">
                                 @php
                                     echo $cat->StyleClass;
@@ -151,7 +175,8 @@
                                     <div class="thumb-img">
                                         <a
                                             href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
-                                            <img src="{{ $vac->Owner->CompanyLogo }}" alt="company logo">
+                                            <img style="height: 50px; width:50px"
+                                                src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                         </a>
                                     </div>
                                 </div>
@@ -230,13 +255,17 @@
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <div class="company-card">
                             <div class="thumb-img">
-                                <img src="/CompanyLogos/{{ $user->CompanyLogo }}" alt="company logo">
+                                <img style="height: 70px; width:70px" src="/CompanyLogos/{{ $user->CompanyLogo }}"
+                                    alt="company logo">
                             </div>
-                            <div class="company-info">
+                            <div class="company-text">
                                 <h3>
                                     <span>{{ $user->CompanyName }}</span>
                                 </h3>
-                                <p>{{ $user->VacanciesCount }} Open position</p>
+                                <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $user->id }}"
+                                    class="company-btn">
+                                    {{ $user->VacanciesCount }} Open Position
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -245,7 +274,7 @@
         </div>
     </section>
     <!-- Companies Section End -->
-{{-- 
+    {{-- 
     <!-- Why Choose Section Start -->
     <section class="why-choose">
         <div class="container-fluid">
@@ -339,7 +368,7 @@
     </section> --}}
     <!-- Why Choose Section End -->
 
-{{-- 
+    {{-- 
     <!-- Pricing Section Start -->
     <section class="pricing-section pb-70">
         <div class="container">
@@ -450,7 +479,7 @@
         </div>
     </section> --}}
     <!-- Pricing Section End -->
-    
+
     {{-- 
     <!-- Candidate Section Start -->
     <section class="candidate-section pb-100">

@@ -74,6 +74,7 @@ Route::group(['prefix' => '{language}'], function () {
     
     
     Route::get('/FindAJob', [HomeController::class, 'FindAJob'])->name('FindAJob');
+    Route::get('/About', [HomeController::class, 'About'])->name('About');
 
 
     Route::get('/AppliedCandidates/{id}', [HomeController::class, 'AppliedCandidates'])->name('AppliedCandidates');

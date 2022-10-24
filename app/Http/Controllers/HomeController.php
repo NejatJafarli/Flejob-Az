@@ -413,6 +413,10 @@ class HomeController extends Controller
 
         return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
     }
+    public function About($lang){
+
+        return view('Frontend/About');
+    }
     public function Companies($lang)
     {
         //get company users and sort by Vacancies count
