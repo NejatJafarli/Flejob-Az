@@ -56,9 +56,9 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Signup', [HomeController::class, 'Signup'])->name('Signup');
     Route::get('/CandidateDetails/{id}', [HomeController::class, 'CandidateDetails'])->name('CandidateDetails');
     Route::get('/Companies', [HomeController::class, 'Companies'])->name('Companies');
-    
+
     Route::get('/Candidates', [HomeController::class, 'Candidates'])->name('Candidates');
-    
+
     Route::get('/Signin', [HomeController::class, 'SigninPage'])->name('Signin');
     Route::get('/Categories', [HomeController::class, 'Categories'])->name('Categories');
 
@@ -66,16 +66,23 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Account/Change/Password', [HomeController::class, 'ChangePass'])->name('ChangePass');
     Route::get('/Account/MyResume', [HomeController::class, 'MyResume'])->name('MyResume');
     Route::get('/Account/AppliedJobs', [HomeController::class, 'AppliedJobs'])->name('AppliedJobs');
-    
-    
+
+
     Route::get('/AccountCompany/Change/Password', [HomeController::class, 'ChangePassCompany'])->name('ChangePassCompany');
     Route::get('/AccountCompany', [HomeController::class, 'AccountCompany'])->name('AccountCompany');
     Route::get('/AccountCompany/Vacancies', [HomeController::class, 'AccountCompanyVacancies'])->name('AccountCompanyVacancies');
-    
-    
+
+    Route::get('/Contact', [HomeController::class, 'Contact'])->name('Contact');
+    Route::post('/ContactUs', [HomeController::class, 'ContactUs'])->name('ContactUs');
+
     Route::get('/FindAJob', [HomeController::class, 'FindAJob'])->name('FindAJob');
     Route::get('/About', [HomeController::class, 'About'])->name('About');
 
+    Route::get('/terms-condition', [HomeController::class, 'terms'])->name('terms');
+    Route::get('/Faq', [HomeController::class, 'Faq'])->name('Faq');
+    Route::get('/Privacy-Policy', [HomeController::class, 'Privacy'])->name('Privacy');
+    Route::get('/PostAJob', [HomeController::class, 'PostAJob'])->name('PostAJob');
+    Route::get('/404', [HomeController::class, 'NotFound'])->name('NotFound');
 
     Route::get('/AppliedCandidates/{id}', [HomeController::class, 'AppliedCandidates'])->name('AppliedCandidates');
     Route::get('/Job-Details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');

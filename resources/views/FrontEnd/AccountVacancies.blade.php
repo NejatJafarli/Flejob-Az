@@ -10,6 +10,7 @@
 
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {
@@ -148,13 +149,13 @@
                                                     ->count();
                                                 
                                                 if ($count != 0) {
-                                                    $msg = "($count)";
+                                                    $msg = "$count";
                                                 } else {
                                                     $msg = '';
                                                 }
                                             @endphp
-                                            <a href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary">Show Applied Users {{ $msg }}</a>
+                                            <a style="width: max-content" href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                class="btn btn-primary">Show Applied Users  <span class="badge bg-danger" style="font-size: 15px;">{{ $msg }}</span></a>
                                             <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
                                                 class="btn btn-primary mx-5 my-3">View</a>
                                         </div>

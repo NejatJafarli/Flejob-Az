@@ -16,6 +16,7 @@
 
 <link rel="stylesheet" href="/assets2/css/owl.theme.default.min.css">
 <!-- Box Icon CSS-->
+<link rel="stylesheet" href="/assets2/css/boxicon.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- Flaticon CSS-->
@@ -25,9 +26,8 @@
 <!-- Meanmenu CSS -->
 <link rel="stylesheet" href="/assets2/css/meanmenu.css">
 <!-- Nice Select CSS -->
-<link rel="stylesheet" href="/assets2/css/nice-select.css">
+{{-- <link rel="stylesheet" href="/assets2/css/nice-select.css"> --}}
 <link rel="stylesheet" href="/assets2/js/vendor/ion.rangeSlider.min.css">
-<link rel="stylesheet" href="/assets2/css/boxicon.min.css">
 <!-- Style CSS -->
 <link rel="stylesheet" href="/assets2/css/style.css">
 <!-- Responsive CSS -->
@@ -41,3 +41,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .select2-container span{
+        }
+    </style>

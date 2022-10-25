@@ -15,8 +15,8 @@ class CreateContactMessagesTable extends Migration
     {
         Schema::create('contact_messages', function (Blueprint $table) {
             $table->id();
-            $table->string('FirstName');
-            $table->string('LastName');
+            $table->string('FullName');
+            $table->string('Phone');
             $table->string('Email');
             $table->string('Subject');
             $table->string('Message');

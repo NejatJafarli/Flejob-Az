@@ -11,6 +11,7 @@
 
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {
@@ -148,10 +149,10 @@
                                         <select style="width:100%" class="js-example-basic-multiple form-control"
                                             name="CompanyCategories[]" multiple="multiple">
                                             @foreach ($categories as $Category)
-                                            <option value="{{ $Category->id }}"
-                                                {{ $Category->Selected ? 'Selected' : '' }}>
-                                                {{ $Category->CategoryLang->CategoryName }}</option>
-                                        @endforeach
+                                                <option value="{{ $Category->id }}"
+                                                    {{ $Category->Selected ? 'Selected' : '' }}>
+                                                    {{ $Category->CategoryLang->CategoryName }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -209,12 +210,13 @@
         </div>
     </section>
     <script>
-        let NumberCounter = 1;
+        var NumberCounter = 1;
 
         function AddNewNumber() {
 
             let div = document.getElementById('Phones')
-            let CompanyPhone = document.getElementsByName('CompanyPhone[]')
+            let CompanyPhone = document.getElementsByName('NewCompanyPhone[]')
+            let ComPhone = document.getElementsByName('CompanyPhone[]')
 
             let Phones = []
             if (CompanyPhone.length) {
@@ -225,13 +227,23 @@
 
             // set div all child elements value linkName , linkUrl
             let isTrue = true
-            for (let i = 0; i < CompanyPhone.length; i++)
-                if (CompanyPhone[i].value == '+994' || CompanyPhone[i].value == '+99' || CompanyPhone[i].value == '+9' ||
-                    CompanyPhone[i].value == '+' || CompanyPhone[i].value == '') {
+            for (let i = 0; i < CompanyPhone.length; i++) {
+                if (CompanyPhone[i].length != 13) {
                     isTrue = false
                     break
                 }
+            }
 
+            if (!isTrue) {
+                alert('Please fill all fields')
+                return
+            }
+            for (let i = 0; i < ComPhone.length; i++) {
+                if (ComPhone[i].length != 13) {
+                    isTrue = false
+                    break
+                }
+            }
             if (!isTrue) {
                 alert('Please fill all fields')
                 return

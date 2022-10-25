@@ -7,6 +7,7 @@
 
 <body>
     @include('FrontEnd.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
 
     <script>
         $(document).ready(function() {

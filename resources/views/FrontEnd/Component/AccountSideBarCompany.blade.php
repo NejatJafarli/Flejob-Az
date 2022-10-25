@@ -1,3 +1,33 @@
+@php
+    
+    use App\Models\NotificationForCompanyUser;
+    use App\Models\Vacancy;
+    if (session()->has('CompanyUser')) {
+        // NotificationForCompanyUser count
+    
+        // NotificationForCompanyUser count
+        $NotificationForCompanyUser = NotificationForCompanyUser::where('status', 0)->get();
+    
+        $CompanyUserVacancy = Vacancy::where('CompanyUser_id', session()->get('CompanyUser')->id)->get();
+    
+        $count = 0;
+    
+        foreach ($NotificationForCompanyUser as $value) {
+            foreach ($CompanyUserVacancy as $value2) {
+                if ($value->vacancy_id == $value2->id) {
+                    $count++;
+                }
+            }
+        }
+        $empty = null;
+        if ($count == 0) {
+            $empty = 'empty';
+        }
+    }
+    
+@endphp
+
+
 <ul>
     <li>
         <a id="Profile" href="{{ route('AccountCompany', app()->getLocale()) }}">
@@ -6,9 +36,18 @@
         </a>
     </li>
     <li>
-        <a id="Vacancies" href="{{ route('AccountCompanyVacancies', app()->getLocale()) }}">
-            <i class='bx bx-envelope'></i>
-            Vacancies
+        <a style="display: flex;
+        align-items: center;
+        justify-content: space-between;" id="Vacancies"
+            href="{{ route('AccountCompanyVacancies', app()->getLocale()) }}">
+            <div>
+
+                <i class='bx bx-envelope'></i>
+                Vacancies
+            </div>
+            @if ($empty == null)
+                <span class="badge bg-danger" style="float:right;size: 17px;">{{ $count }}</span>
+            @endif
         </a>
     </li>
     <li>

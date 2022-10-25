@@ -13,6 +13,7 @@
 
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {

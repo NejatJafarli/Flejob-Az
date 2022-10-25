@@ -9,6 +9,7 @@
 <body>
 
     @include('FrontEnd.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {
@@ -262,6 +263,10 @@
                                 <h3>
                                     <span>{{ $user->CompanyName }}</span>
                                 </h3>
+                                <p>
+                                    <i class="bx bx-location-plus"></i>
+                                    {{ $user->CompanyAddress }}
+                                </p>
                                 <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $user->id }}"
                                     class="company-btn">
                                     {{ $user->VacanciesCount }} Open Position

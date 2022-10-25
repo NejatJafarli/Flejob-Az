@@ -159,7 +159,6 @@
 <!-- Back To Top End -->
 
 <!-- jQuery first, then Bootstrap JS -->
-{{-- <script src="/assets2/js/jquery.min.js"></script> --}}
 <script src="/assets2/js/bootstrap.bundle.min.js"></script>
 
 <!-- Owl Carousel JS -->
@@ -167,7 +166,7 @@
 <script src="/assets2/js/vendor/ion.rangeSlider.min.js"></script>
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
 <!-- Nice Select JS -->
-<script src="/assets2/js/jquery.nice-select.min.js"></script>
+{{-- <script src="/assets2/js/jquery.nice-select.min.js"></script> --}}
 <!-- Magnific Popup JS -->
 <script src="/assets2/js/jquery.magnific-popup.min.js"></script>
 <!-- Subscriber Form JS -->
@@ -179,7 +178,7 @@
 <!-- Meanmenu JS -->
 <script src="/assets2/js/meanmenu.js"></script>
 <!-- Custom JS -->
-{{-- <script src="/assets2/js/custom.js"></script> --}}
+<script src="/assets2/js/custom.js"></script>
 
 </body>
 

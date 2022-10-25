@@ -7,6 +7,36 @@
         </a>
     </div>
 
+
+    @php
+        
+        use App\Models\NotificationForCompanyUser;
+        use App\Models\Vacancy;
+        if (session()->has('CompanyUser')) {
+            // NotificationForCompanyUser count
+        
+            // NotificationForCompanyUser count
+            $NotificationForCompanyUser = NotificationForCompanyUser::where('status', 0)->get();
+        
+            $CompanyUserVacancy = Vacancy::where('CompanyUser_id', session()->get('CompanyUser')->id)->get();
+        
+            $count = 0;
+        
+            foreach ($NotificationForCompanyUser as $value) {
+                foreach ($CompanyUserVacancy as $value2) {
+                    if ($value->vacancy_id == $value2->id) {
+                        $count++;
+                    }
+                }
+            }
+            $empty = null;
+            if ($count == 0) {
+                $empty = 'empty';
+            }
+        }
+        
+    @endphp
+
     <!-- Menu For Desktop Device -->
     <div class="main-nav">
         <div class="container">
@@ -20,32 +50,38 @@
                             <a id="Hom" href="{{ route('Hom', app()->getLocale()) }}" class="nav-link">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a id="About" href="{{ route('About', app()->getLocale()) }}" class="nav-link ">About</a>
+                            <a id="About" href="{{ route('About', app()->getLocale()) }}"
+                                class="nav-link ">About</a>
                         </li>
                         @if (session()->has('CompanyUser'))
                             <li class="nav-item">
                                 <a href="#" class="nav-link dropdown-toggle FindAJob">Jobs</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a href="post-job.html" class="nav-link">Post A Job</a>
+                                        <a href="{{ route('PostAJob', app()->getLocale()) }}" class="nav-link">Post A
+                                            Job</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link FindAJob">Find A Job</a>
+                                        <a href="{{ route('FindAJob', app()->getLocale()) }}"
+                                            class="nav-link FindAJob">Find A Job</a>
                                     </li>
                                 </ul>
                             </li>
                         @else
                             <li class="nav-item">
-                                <a href="{{route('FindAJob',app()->getLocale())}}" class="nav-link FindAJob">Find A Job</a>
+                                <a href="{{ route('FindAJob', app()->getLocale()) }}" class="nav-link FindAJob">Find A
+                                    Job</a>
                             </li>
                         @endif
 
                         <li class="nav-item">
-                            <a id="Candidate" href="{{route('Candidates',app()->getLocale())}}" class="nav-link">Candidates</a>
+                            <a id="Candidate" href="{{ route('Candidates', app()->getLocale()) }}"
+                                class="nav-link">Candidates</a>
                         </li>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle Company Categories">Pages</a>
+                            <a href="#"
+                                class="nav-link dropdown-toggle Company Categories term faq Privacy">Pages</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
                                     <a href="{{ route('Companies', app()->getLocale()) }}"
@@ -58,20 +94,20 @@
                                     <a href="404.html" class="nav-link">404 Page</a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a href="testimonial.html" class="nav-link">Testimonials</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="faq.html" class="nav-link">FAQ</a>
+                                    <a href="{{ route('Faq', app()->getLocale()) }}" class="nav-link faq">FAQ</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('Categories', app()->getLocale()) }}"
                                         class="nav-link Categories">Catagories</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="privacy-policy.html" class="nav-link">Privacy & Policy</a>
+                                    <a href="{{ route('Privacy', app()->getLocale()) }}"
+                                        class="nav-link Privacy">Privacy
+                                        & Policy</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="terms-condition.html" class="nav-link">Terms & Conditions</a>
+                                    <a href="{{ route('terms', app()->getLocale()) }}" class="nav-link term">Terms &
+                                        Conditions</a>
                                 </li>
                             </ul>
                         </li>
@@ -79,7 +115,9 @@
                             <a href="#" class="nav-link">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a id="Contact" href="contact.html" class="nav-link">Contact Us</a>
+                            <a id="Contact" href="{{ route('Contact', app()->getLocale()) }}"
+                                class="nav-link">Contact
+                                Us</a>
                         </li>
                         @if (session()->has('user'))
                             <div class="px-5">
@@ -99,8 +137,7 @@
                                             class="nav-link">Profile</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="{{ route('Logout', app()->getLocale()) }}"
-                                            class="nav-link">Logout</a>
+                                        <a href="{{ route('Logout', app()->getLocale()) }}" class="nav-link">Logout</a>
                                     </li>
                                 </ul>
                             </li>
@@ -109,21 +146,36 @@
                     <div class="px-5">
                         @include('FrontEnd.Component.MultiLang')
                     </div>
+
+
                     <div class="option-item">
-                        <img src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}"
-                            alt="profile picture" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <img src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}" alt="profile picture"
+                            style="width: 50px; height: 50px; border-radius: 50%;">
                     </div>
 
                     <li class="nav-item">
                         <a href="{{ route('AccountCompany', app()->getLocale()) }}"
-                            class="nav-link dropdown-toggle account">{{ session()->get('CompanyUser')->CompanyName }}</a>
+                            class="nav-link dropdown-toggle account">{{ session()->get('CompanyUser')->CompanyName }}
+                            @if ($empty == null)
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $count }}
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                            @endif
+                        </a>
                         <ul class="dropdown-menu">
                             <li class="nav-item">
-                                <a href="{{ route('AccountCompany', app()->getLocale()) }}"
-                                    class="nav-link account">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="Settings" href="#" class="nav-link">Settings</a>
+                                <a style="display: flex;
+                                align-items: center;
+                                justify-content: space-between;"
+                                    href="{{ route('AccountCompany', app()->getLocale()) }}"
+                                    class="nav-link account">Profile
+                                    @if ($empty == null)
+                                        <span class="badge bg-danger"
+                                            style="font-size: 15px;">{{ $count }}</span>
+                                    @endif
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('LogoutCompany', app()->getLocale()) }}"

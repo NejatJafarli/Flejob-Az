@@ -7,6 +7,7 @@
 
 <body>
     @include('FrontEnd.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
     <script>
         $(document).ready(function() {
             var Hom = document.getElementsByClassName('Company');
@@ -50,12 +51,18 @@
                         <div class="company-card">
                             <div class="company-logo">
                                 <a href="job-list.html">
-                                    <img style="width: 100px; height:100px" src="/CompanyLogos/{{$com->CompanyLogo}}" alt="company logo">
+                                    <img style="width: 100px; height:100px" src="/CompanyLogos/{{ $com->CompanyLogo }}"
+                                        alt="company logo">
                                 </a>
                             </div>
                             <div class="company-text">
                                 <h3>{{ $com->CompanyName }}</h3>
-                                <a href="{{route('FindAJob',app()->getLocale())}}?Company={{$com->id}}" class="company-btn">
+                                <p>
+                                    <i class="bx bx-location-plus"></i>
+                                    {{ $com->CompanyAddress }}
+                                </p>
+                                <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $com->id }}"
+                                    class="company-btn">
                                     {{ $com->VacanciesCount }} Open Position
                                 </a>
                             </div>

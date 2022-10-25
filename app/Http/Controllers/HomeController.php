@@ -14,6 +14,8 @@ use App\Models\Company;
 use App\Models\company_and_categories;
 use App\Models\CompanyPhones;
 use App\Models\CompanyUser;
+use App\Models\contact_message;
+use App\Models\ContactMessage;
 use App\Models\Education;
 use App\Models\lang;
 use App\Models\Link;
@@ -31,6 +33,7 @@ use App\QueryFilters\MinSalary as MinSalaryFilter;
 use App\QueryFilters\VacancyName as VacancyNameFilter;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\Validator;
 //use invervation image
 use Intervention\Image\Facades\Image;
 
@@ -139,8 +142,40 @@ class HomeController extends Controller
     }
 
     //PAGES INVOKER
+    public function NotFound(){
+        return view('FrontEnd/404');
+    }
+    public function PostAJob()
+    {
+        if (!session()->has('CompanyUser'))
+            return redirect()->back();
+
+        $CompanyUser = session()->get('CompanyUser');
+        $CompanyUser = $this->MergeCompanyUsersTable($CompanyUser);
+        return view('FrontEnd/post-job');
+    }
+    public function Privacy()
+    {
+        return view('FrontEnd/privacy-policy');
+    }
+    public function Faq()
+    {
+        return view('FrontEnd/faq');
+    }
+    public function terms()
+    {
+        return view('FrontEnd/terms-condition');
+    }
+    public function Contact()
+    {
+        return view('FrontEnd/contact');
+    }
     public function CandidateDetails($lang, $id)
     {
+
+        if (!session()->has('CompanyUser'))
+            return redirect()->back();
+
         $user = User::where('id', $id)->first();
         $user = HomeController::MergeUsersTable($user);
 
@@ -413,7 +448,8 @@ class HomeController extends Controller
 
         return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
     }
-    public function About($lang){
+    public function About($lang)
+    {
 
         return view('Frontend/About');
     }
@@ -656,6 +692,45 @@ class HomeController extends Controller
         //get top 10 categories paginate
         $Categories = Category::orderBy('SortOrder', 'desc')->paginate(8);
         return view('FrontEnd/catagories')->with(['Categories' => $Categories]);
+    }
+
+
+
+    //POST ACTIONS
+    public function ContactUs(Request $req)
+    {
+
+        $messages =  [
+            'name.required' => __('validation.name is required'),
+            'email.required' => __('validation.email is required'),
+            'email.email' => __('validation.email is not valid'),
+            'message.required' => __('validation.message is required'),
+            'phone.required' => __('validation.phone is required'),
+            'phone.regex' => __('validation.phone is not valid'),
+            'subject.required' => __('validation.subject is required'),
+
+        ];
+        $req->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            //regex for +994xxxxxxxxx
+            'phone' => 'required | regex:/^\+994\d{9}$/',
+            'subject' => 'required',
+            'message' => 'required'
+        ], $messages);
+
+
+        $contact = new contact_message();
+
+        $contact->FullName = $req->name;
+        $contact->Email = $req->email;
+        $contact->Phone = $req->phone;
+        $contact->Subject = $req->subject;
+        $contact->Message = $req->message;
+
+        $contact->save();
+
+        return redirect()->back()->with('success', 'Your Message Has Been Sent Successfully');
     }
 
 

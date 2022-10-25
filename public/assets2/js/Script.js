@@ -238,7 +238,7 @@ function MyFunc4 () {
     // set div all child elements value linkName , linkUrl
     let isTrue = true
     for (let i = 0; i < CompanyPhone.length; i++)
-        if (CompanyPhone[i].value == '') {
+        if (CompanyPhone[i].length != 13) {
             isTrue = false
             break
         }

@@ -218,6 +218,7 @@
             </div>
         </div>
     </div>
+    @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <!-- Navbar Area End -->
     <script>

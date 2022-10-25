@@ -11,6 +11,7 @@
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
     <!-- Navbar Area End -->
+    @include('FrontEnd.Component.Preloader')
     <script>
         $(document).ready(function() {
             var Hom = document.getElementsByClassName('account');

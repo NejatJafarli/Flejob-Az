@@ -206,6 +206,7 @@
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
     <!-- Navbar Area End -->
+    @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
 
     <!-- Page Title Start -->
@@ -371,7 +372,7 @@
                                     <div class="col-md-6">
                                         <label>Languages</label>
                                         <select class="js-example-basic-multiple form-control" name="Languages[]"
-                                            multiple="multiple">
+                                            multiple="multiple" style="width: 100%">
                                             @foreach ($languages as $Language)
                                                 <option value="{{ $Language->id }}">{{ $Language->LanguageName }}
                                                 </option>
@@ -381,7 +382,7 @@
                                     <div class="col-md-6">
                                         <label>Categories</label>
                                         <select class="js-example-basic-multiple form-control" name="Categories[]"
-                                            multiple="multiple">
+                                            multiple="multiple" style="width: 100%">
                                             @foreach ($categories as $Category)
                                                 <option value="{{ $Category->id }}">
                                                     {{ $Category->Category_lang->CategoryName }}</option>
