@@ -14,7 +14,7 @@
     @include('FrontEnd.Component.Preloader')
     <script>
         $(document).ready(function() {
-            var Hom = document.getElementsByClassName('account');
+            var Hom = document.getElementsByClassName('Messages');
             for (let index = 0; index < Hom.length; index++) {
                 Hom[index].classList.add('active');
             }
@@ -69,7 +69,7 @@
                         @include('FrontEnd.Component.AccountSideBar')
                         <script>
                             $(document).ready(function() {
-                                var account = document.getElementById('AppliedJobs');
+                                var account = document.getElementById('Messages');
                                 account.classList.add('active');
                             });
                         </script>

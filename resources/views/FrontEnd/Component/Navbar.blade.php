@@ -130,12 +130,27 @@
 
                             <li class="nav-item">
                                 <a href="{{ route('Account', app()->getLocale()) }}"
-                                    class="nav-link dropdown-toggle account">{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</a>
+                                    class="nav-link dropdown-toggle account Messages MyResume AppliedJobs ChangePass">{{ session()->get('user')->FirstName . ' ' . session()->get('user')->LastName }}</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item account">
+                                    <li class="nav-item ">
                                         <a href="{{ route('Account', app()->getLocale()) }}"
-                                            class="nav-link">Profile</a>
+                                            class="nav-link account">Profile</a>
                                     </li>
+                                    <li class="nav-item ">
+                                        <a href="{{ route('MyResume', app()->getLocale()) }}"
+                                            class="nav-link MyResume">My Resume</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a href="{{ route('AppliedJobs', app()->getLocale()) }}"
+                                            class="nav-link AppliedJobs">Applied Jobs</a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a href="{{ route('Messages', app()->getLocale()) }}"
+                                            class="nav-link Messages">Messages</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('ChangePass', app()->getLocale()) }}"
+                                            class="nav-link ChangePass">Change Password</a>
                                     <li class="nav-item">
                                         <a href="{{ route('Logout', app()->getLocale()) }}" class="nav-link">Logout</a>
                                     </li>
@@ -155,7 +170,7 @@
 
                     <li class="nav-item">
                         <a href="{{ route('AccountCompany', app()->getLocale()) }}"
-                            class="nav-link dropdown-toggle account">{{ session()->get('CompanyUser')->CompanyName }}
+                            class="nav-link dropdown-toggle Vacancies account ChangePass">{{ session()->get('CompanyUser')->CompanyName }}
                             @if ($empty == null)
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -164,7 +179,7 @@
                                 </span>
                             @endif
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu ">
                             <li class="nav-item">
                                 <a style="display: flex;
                                 align-items: center;
@@ -176,6 +191,16 @@
                                             style="font-size: 15px;">{{ $count }}</span>
                                     @endif
                                 </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('AccountCompanyVacancies', app()->getLocale()) }}"
+                                    class="nav-link Vacancies">Vacancies</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('ChangePassCompany', app()->getLocale()) }}"
+                                    class="nav-link ChangePass">Change Password</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('LogoutCompany', app()->getLocale()) }}"

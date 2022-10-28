@@ -34,7 +34,6 @@ use App\QueryFilters\MinSalary as MinSalaryFilter;
 use App\QueryFilters\VacancyName as VacancyNameFilter;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Facades\Validator;
 //use invervation image
 use Intervention\Image\Facades\Image;
 
@@ -146,8 +145,8 @@ class HomeController extends Controller
     public function Messages()
     {
         //check if user is logged in
-        if(!session()->has('user'))
-            return redirect()->route('Signin',app()->getLocale());
+        if (!session()->has('user'))
+            return redirect()->route('Signin', app()->getLocale());
 
         return view('FrontEnd/Messages');
     }
@@ -162,7 +161,27 @@ class HomeController extends Controller
 
         $CompanyUser = session()->get('CompanyUser');
         $CompanyUser = $this->MergeCompanyUsersTable($CompanyUser);
-        return view('FrontEnd/post-job');
+
+        //get all cities
+        $Cities = City::all();
+        //get all categories
+        $Categories = Category::all();
+
+        //get lang id
+        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
+
+        //merge categories with category lang
+        $Categories = $Categories->map(function ($Category) use ($lang_id) {
+            $Category->Category_lang = $Category->category_langs()->where('lang_id', $lang_id)->first();
+            return $Category;
+        });
+        //merge cities with city lang
+        $Cities = $Cities->map(function ($City) use ($lang_id) {
+            $City->CityLang = $City->cityLang()->where('lang_id', $lang_id)->first();
+            return $City;
+        });
+
+        return view('FrontEnd/post-job')->with(['Cities' => $Cities, 'Categories' => $Categories]);
     }
     public function Privacy()
     {
@@ -316,8 +335,6 @@ class HomeController extends Controller
     {
         $jobs = Vacancy::where('Status', 1);
 
-
-
         $jobs = app(Pipeline::class)->send($jobs)
             ->through([
                 VacancyNameFilter::class,
@@ -341,15 +358,13 @@ class HomeController extends Controller
         });
 
 
-        //get all categories
-        $categories = Category::all();
+        //get all categories orderby sort
+        $categories = Category::orderBy('SortOrder', 'desc')->get();
         //merge categories with category langs
         $categories = $categories->map(function ($category) use ($lang) {
             $category->CategoryLang = $category->category_langs()->where('lang_id', lang::where('LanguageCode', $lang)->first()->id)->first();
             return $category;
         });
-
-
 
 
         return view('FrontEnd/find-job', ['Jobs' => $jobs, 'Cities' => $cities, 'Categories' => $categories]);
@@ -501,7 +516,7 @@ class HomeController extends Controller
 
         $vac = Vacancy::where('id', $id)->where('Status', 1)->first();
         if ($vac == null)
-            return redirect()->route('Hom');
+            return redirect()->route('Hom', app()->getLocale());
 
         $langs = lang::all();
 
@@ -557,7 +572,7 @@ class HomeController extends Controller
 
             return view('FrontEnd/Resume', ['Langs' => $langs]);
         } else {
-            return redirect()->route('login');
+            return redirect()->route('Signin', app()->getLocale());
         }
     }
     public function Signup($lang)
@@ -741,6 +756,57 @@ class HomeController extends Controller
         $contact->save();
 
         return redirect()->back()->with('success', 'Your Message Has Been Sent Successfully');
+    }
+    public function PostAJobPost(Request $req)
+    {
+        $messages =  [
+            'VacancyName.required' => __('validation.Job Title is required'),
+            'Email.required' => __('validation.Email is required'),
+            'Email.email' => __('validation.Email is not valid'),
+            'PersonPhone.required' => __('validation.Phone is required'),
+            'PersonPhone.regex' => __('validation.Phone is not valid'),
+            'CompanyUser.required' => __('validation.Company User is required'),
+            'Category.required' => __('validation.Category is required'),
+            'City.required' => __('validation.City is required'),
+            'PersonName.required' => __('validation.Person Name is required'),
+
+        ];
+        $req->validate([
+            'VacancyName' => 'required',
+            'Email' => 'required|email',
+            'PersonPhone' => 'required | regex:/^\+994\d{9}$/',
+            'CompanyUser' => 'required',
+            'Category' => 'required | numeric',
+            'City' => 'required | numeric',
+            'PersonName' => 'required',
+            'VacancyDescription' => 'required',
+            'VacancyRequirements' => 'required',
+            'VacancySalary' => 'required'
+        ], $messages);
+
+
+        //create vacancy with $req
+        $data = $req->all();
+        $data['CompanyUser_id'] = $req->CompanyUser;
+        $data['Category_id'] = $req->Category;
+        $data['City_id'] = $req->City;
+        $data['Status'] = 0;
+        // data['EndDate'] date now + 1 month 
+        $data['EndDate'] = date('Y-m-d', strtotime('+1 month'));
+
+        $data['VacancyDescription'] = $req->VacancyDescription;
+        $data['VacancyRequirements'] = $req->VacancyRequirements;
+        $data['VacancySalary'] = $req->VacancySalary;
+        $data['VacancyName'] = $req->VacancyName;
+        $data['PersonName'] = $req->PersonName;
+        $data['PersonPhone'] = $req->PersonPhone;
+        $data['Email'] = $req->Email;
+
+        $vacancy = Vacancy::create($data);
+
+        $vacancy->save();
+
+        return redirect()->route('AccountCompanyVacancies', ['language' => app()->getLocale()]);
     }
 
 
@@ -938,8 +1004,8 @@ class HomeController extends Controller
         $user->usersAndCategories()->attach($data['Categories']);
         $user->usersAndLanguages()->attach($data['Languages']);
 
-        return redirect()->route('Signin');
-     }
+        return redirect()->route('Signin', app()->getLocale());
+    }
     public function registerCompany(CompanyRegisterRequest $request)
     {
 
@@ -992,7 +1058,7 @@ class HomeController extends Controller
             $phone->save();
         }
         // redirect to hom page
-        return redirect()->route('hom', app()->getLocale());
+        return redirect()->route('Hom', app()->getLocale());
     }
     public function Logout($lang)
     {

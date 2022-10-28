@@ -24,12 +24,6 @@
         </a>
     </li>
     <li>
-        <a id="SavedJobs" href="#">
-            <i class='bx bx-heart'></i>
-            Saved Jobs
-        </a>
-    </li>
-    <li>
         <a id="ChangePass" href="{{ route('ChangePass', app()->getLocale()) }}">
             <i class='bx bx-lock-alt'></i>
             Change Password

@@ -14,7 +14,7 @@
     <!-- Navbar Area End -->
     <script>
         $(document).ready(function() {
-            var Hom = document.getElementsByClassName('account');
+            var Hom = document.getElementsByClassName('Vacancies');
             for (let index = 0; index < Hom.length; index++) {
                 Hom[index].classList.add('active');
             }

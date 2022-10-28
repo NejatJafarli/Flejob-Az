@@ -14,7 +14,7 @@
     @include('FrontEnd.Component.Preloader')
     <script>
         $(document).ready(function() {
-            var Hom = document.getElementsByClassName('account');
+            var Hom = document.getElementsByClassName('AppliedJobs');
             for (let index = 0; index < Hom.length; index++) {
                 Hom[index].classList.add('active');
             }

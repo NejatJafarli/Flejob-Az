@@ -20,9 +20,11 @@
     @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <script>
-        $(document).ready(function() {
-            var Hom = document.getElementById('Account');
-            Hom.classList.add('active');
+          $(document).ready(function() {
+            var Hom = document.getElementsByClassName('MyResume');
+            for (let index = 0; index < Hom.length; index++) {
+                Hom[index].classList.add('active');
+            }
         });
     </script>
     <!-- Navbar Area End -->

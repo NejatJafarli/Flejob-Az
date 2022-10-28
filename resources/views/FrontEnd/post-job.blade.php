@@ -38,7 +38,18 @@
     <!-- Post Job Section Start -->
     <div class="job-post ptb-100">
         <div class="container">
-            <form class="job-post-from">
+            {{-- //show errors --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form class="job-post-from" action="{{ route('PostAJobPost', app()->getLocale()) }}" method="POST">
+                @csrf
                 <h2>Fill Up Your Job information</h2>
                 <div class="row">
                     <div class="col-md-6">
@@ -59,12 +70,10 @@
                         <div class="form-group">
                             <label>Job Category</label>
                             <select name="Category" class="form-control">
-                                <option data-display="Category">Category</option>
-                                <option value="1">Web Development</option>
-                                <option value="2">Graphics Design</option>
-                                <option value="4">Data Entry</option>
-                                <option value="5">Visual Editor</option>
-                                <option value="6">Office Assistant</option>
+                                @foreach ($Categories as $Category)
+                                    <option value="{{ $Category->id }}">{{ $Category->Category_lang->CategoryName }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -73,12 +82,9 @@
                         <div class="form-group">
                             <label>Job City </label>
                             <select name="City" class="form-control">
-                                <option data-display="Category">Category</option>
-                                <option value="1">Web Development</option>
-                                <option value="2">Graphics Design</option>
-                                <option value="4">Data Entry</option>
-                                <option value="5">Visual Editor</option>
-                                <option value="6">Office Assistant</option>
+                                @foreach ($Cities as $City)
+                                    <option value="{{ $City->id }}">{{ $City->CityLang->CityName }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -100,20 +106,20 @@
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Job Description</label>
                             <textarea class="form-control description-area" id="exampleFormControlTextarea1" rows="6"
-                                placeholder="Job Description" required></textarea>
+                                placeholder="Job Description" required name="VacancyDescription"></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Job Requirement</label>
                             <textarea class="form-control description-area" id="exampleFormControlTextarea1" rows="6"
-                                placeholder="Job Requirement" required></textarea>
+                                placeholder="Job Requirement" name="VacancyRequirements" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Vacancy Salary</label>
-                            <input name="Salary" type="number" class="form-control" id="exampleInput1"
+                            <input name="VacancySalary" type="number" class="form-control" id="exampleInput1"
                                 placeholder="Salary" required>
                         </div>
                     </div>
