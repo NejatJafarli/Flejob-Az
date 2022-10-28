@@ -111,7 +111,9 @@
                     </div>
                     <div class="price-filter col-md-8 my-5">
                         <input type="text" class="js-range-slider" value="" min-price="1"
-                            current-min-price="{{request()->get('MinSalary')? request()->get('MinSalary') : 1}}" current-max-price="{{request()->get('MaxSalary')? request()->get('MaxSalary') : 29999}}" max-price="29999" />
+                            current-min-price="{{ request()->get('MinSalary') ? request()->get('MinSalary') : 1 }}"
+                            current-max-price="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : 29999 }}"
+                            max-price="29999" />
                     </div>
                     <div class="col-lg-12">
                         <label> </label>
@@ -188,6 +190,11 @@
     <section class="job-section pb-70">
         <div class="container">
             <div class="section-title text-center">
+                <div>
+                    <div class="MyAlert-box Mysuccess">Successful Alert !!!</div>
+                    <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
+                    <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
+                </div>
                 <h2>Jobs You May Be Interested In</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                     et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
@@ -236,7 +243,8 @@
                                     <div class="thumb-img">
                                         <a
                                             href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
-                                            <img style="height: 50px; width:50px;" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="company logo">
+                                            <img style="height: 50px; width:50px;"
+                                                src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="company logo">
                                         </a>
                                     </div>
                                 </div>

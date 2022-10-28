@@ -11,11 +11,20 @@ class Message extends Model
 
     protected $fillable = [
         'id',
-        'Company_id',
+        'Vacancy_id',
         'Title',
         'message',
-        'User_id'
+        'UserId'
     ];
+    public function VacancyId()
+    {
+        return $this->belongsTo(Vacancy::class);
+    }
+
+    public function UserId()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     
 }

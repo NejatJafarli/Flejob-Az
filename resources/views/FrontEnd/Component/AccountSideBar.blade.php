@@ -18,7 +18,7 @@
         </a>
     </li>
     <li>
-        <a id="Messages" href="#">
+        <a id="Messages" href="{{ route('Messages', app()->getLocale()) }}">
             <i class='bx bx-envelope'></i>
             Messages
         </a>

@@ -80,6 +80,7 @@
                         use App\Models\lang;
                         use App\Models\Vacancy;
                         use App\Models\Category;
+                        use App\Models\CompanyUser;
                         use App\Models\City;
                         
                         $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
@@ -95,6 +96,9 @@
                                 ->cityLang()
                                 ->where('lang_id', $lang_id)
                                 ->first();
+                        
+                            $AppliedVacancy->Vacancy->Company = CompanyUser::where('id', $AppliedVacancy->Vacancy->CompanyUser_id)->first();
+
                             return $AppliedVacancy;
                         });
                         
@@ -109,8 +113,10 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-1">
                                         <div class="company-logo">
-                                            <a href="job-details.html"></a>
-                                            <img style="max-width:87px" src="VacanciesPicture/" alt="logo">
+                                            <a
+                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"></a>
+                                            <img style="max-width:87px"
+                                                src="CompanyLogos/{{ $vac->Company->CompanyLogo }}" alt="logo">
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -154,8 +160,10 @@
                                                     $msg = '';
                                                 }
                                             @endphp
-                                            <a style="width: max-content" href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary">Show Applied Users  <span class="badge bg-danger" style="font-size: 15px;">{{ $msg }}</span></a>
+                                            <a style="width: max-content"
+                                                href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                class="btn btn-primary">Show Applied Users <span class="badge bg-danger"
+                                                    style="font-size: 15px;">{{ $msg }}</span></a>
                                             <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
                                                 class="btn btn-primary mx-5 my-3">View</a>
                                         </div>

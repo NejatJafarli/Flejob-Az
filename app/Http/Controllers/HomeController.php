@@ -19,6 +19,7 @@ use App\Models\ContactMessage;
 use App\Models\Education;
 use App\Models\lang;
 use App\Models\Link;
+use App\Models\Message;
 use App\Models\NotificationForCompanyUser;
 use App\Models\subscribe_vacancy;
 use App\Models\UsersAndCategories;
@@ -141,8 +142,17 @@ class HomeController extends Controller
         return $CompanyUser;
     }
 
-    //PAGES INVOKER
-    public function NotFound(){
+    //PAGES INVOKER\
+    public function Messages()
+    {
+        //check if user is logged in
+        if(!session()->has('user'))
+            return redirect()->route('Signin',app()->getLocale());
+
+        return view('FrontEnd/Messages');
+    }
+    public function NotFound()
+    {
         return view('FrontEnd/404');
     }
     public function PostAJob()
@@ -928,90 +938,8 @@ class HomeController extends Controller
         $user->usersAndCategories()->attach($data['Categories']);
         $user->usersAndLanguages()->attach($data['Languages']);
 
-
-        $Vacancies = Vacancy::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
-        //Merge Vacancies with Owner Company User
-        $Vacancies = $Vacancies->map(function ($Vacancy) {
-            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
-            return $Vacancy;
-        });
-        $lang_id = lang::where('LanguageCode', $lang)->first()->id;
-
-        //merge vacancies with category
-        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
-            $cat = Category::where('id', $Vacancy->Category_id)->first();
-            $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
-            $Vacancy->Category->StyleClass = $cat->StyleClass;
-            $Vacancy->Category->SortOrder = $cat->SortOrder;
-
-            return $Vacancy;
-        });
-
-        // merge vacancies with city
-        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
-            $city = City::where('id', $Vacancy->City_id)->first();
-            $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
-            return $Vacancy;
-        });
-
-        //get top 10 categories
-        $Categories = Category::orderBy('SortOrder', 'desc')->take(10)->get();
-        //merge categories with category_langs
-        $Categories = $Categories->map(function ($Category) use ($lang_id) {
-            $Category->Category_lang = $Category->category_langs()->where('lang_id', $lang_id)->first();
-            return $Category;
-        });
-
-        //count vacancies in each category
-        $Categories = $Categories->map(function ($Category) {
-            $Category->VacanciesCount = Vacancy::where('Category_id', $Category->id)->where('status', 1)->count();
-            return $Category;
-        });
-
-        //get company users
-        $CompanyUsers = CompanyUser::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
-        //merge company users with vacancies
-        $CompanyUsers = $CompanyUsers->map(function ($CompanyUser) {
-            $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('status', 1)->get();
-            $CompanyUser->Vacancies = $vac;
-            $CompanyUser->VacanciesCount = $vac->count();
-            return $CompanyUser;
-        });
-        // get users
-        $Users = User::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
-        //merge users with categories and users
-        $Users = $Users->map(function ($User) use ($lang_id) {
-            $User->temp = UsersAndCategories::where('User_id', $User->id)->get();
-
-            $User->temp = $User->temp->map(function ($UserCategory) use ($lang_id) {
-                $UserCategory->Category = Category::where('id', $UserCategory->category_id)->first();
-                $UserCategory->Category->Category_lang = $UserCategory->Category->category_langs()->where('lang_id', $lang_id)->first();
-                return $UserCategory;
-            });
-
-            $User->Categories = $User->temp->Pluck('Category');
-
-            $User->Languages = UsersAndLanguages::where('User_id', $User->id)->get();
-            $User->Languages = $User->Languages->map(function ($UserLanguage) use ($lang_id) {
-                $UserLanguage->Language = Language::where('id', $UserLanguage->language_id)->first();
-                return $UserLanguage;
-            });
-            $User->Languages = $User->Languages->Pluck('Language');
-            return $User;
-        });
-
-        //merge Users With City
-        $Users = $Users->map(function ($User) use ($lang_id) {
-            $User->City = City::where('id', $User->City_id)->first();
-            $User->City->CityLang = $User->City->cityLang()->where('lang_id', $lang_id)->first();
-            return $User;
-        });
-
-        //get all langs
-        $Langs = lang::all();
-
-        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
-    }
+        return redirect()->route('Signin');
+     }
     public function registerCompany(CompanyRegisterRequest $request)
     {
 
@@ -1741,5 +1669,54 @@ class HomeController extends Controller
             session()->put('user', $user);
             return response()->json(['success' => 'Applied Successfully']);
         }
+    }
+    public function SendMessagePost(Request $req)
+    {
+
+        if (!session()->has('CompanyUser'))
+            return response()->json(['errors' => 'You Most be login with Company User']);
+
+
+        $messages =  [
+            'MessageTitle.required' => __('validation.Message Title is required'),
+            'Message.required' => __('validation.Message is required'),
+            'UserId.required' => __('validation.User Id Is required'),
+            'VacId.required' => __('validation.VacId Id Is required')
+
+        ];
+        $req->validate([
+            'MessageTitle' => 'required',
+            'Message' => 'required',
+            'UserId' => 'required',
+            'VacId' => 'required'
+        ], $messages);
+
+
+        //find VacId ed Vacancy owner id
+        $vac = Vacancy::where('id', $req->VacId)->first();
+        if ($vac == null)
+            return response()->json(['errors' => 'Vacancy Not Found']);
+        //find user
+        $user = User::where('id', $req->UserId)->first();
+        if ($user == null)
+            return response()->json(['errors' => 'User Not Found']);
+        //check if user is subscribed to VacId
+        $sub = subscribe_vacancy::where('User_id', $user->id)->where('Vacancy_id', $vac->id)->first();
+        if ($sub == null)
+            return response()->json(['errors' => 'User is not subscribed to Vacancy']);
+
+        if ($vac->CompanyUser_id != session()->get('CompanyUser')->id)
+            return response()->json(['errors' => 'You are not owner of this Vacancy']);
+
+
+        $msg = new Message();
+        $msg->Title = $req->MessageTitle;
+        $msg->message = $req->Message;
+        $msg->Vacancy_id = $vac->id;
+        $msg->UserId = $req->UserId;
+
+        $msg->save();
+
+        return response()->json(['success' => 'Message Sent Successfully']);
     }
 }

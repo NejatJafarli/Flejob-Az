@@ -83,7 +83,10 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Privacy-Policy', [HomeController::class, 'Privacy'])->name('Privacy');
     Route::get('/PostAJob', [HomeController::class, 'PostAJob'])->name('PostAJob');
     Route::get('/404', [HomeController::class, 'NotFound'])->name('NotFound');
-
+    Route::get('/SendMessage/{id}', [HomeController::class, 'SendMessage'])->name('SendMessage');
+    Route::post('/SendMessage', [HomeController::class, 'SendMessagePost'])->name('SendMessagePost');
+    
+    Route::get('/Messages', [HomeController::class, 'Messages'])->name('Messages');
     Route::get('/AppliedCandidates/{id}', [HomeController::class, 'AppliedCandidates'])->name('AppliedCandidates');
     Route::get('/Job-Details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');
 
