@@ -2,6 +2,32 @@
 <html lang="zxx">
 
 <head>
+
+
+    @php
+        use App\Models\CompanyUser;
+        use App\Models\Category;
+        use App\Models\lang;
+        use App\Models\Vacancy;
+        use App\Models\City;
+        
+        $Category = request()->get('Category');
+        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
+        if (isset($Category)) {
+            $Category = Category::where('id', $Category)->first();
+            //merge with category lang
+        
+            $Category = $Category
+                ->category_langs()
+                ->where('lang_id', $lang_id)
+                ->first();
+        
+            echo "<meta name='Title' content='$Category->MetaTitle'>";
+            echo "<meta name='Description' content='$Category->MetaDescription'>";
+            echo "<meta name='Keywords' content='$Category->MetaKeywords'>";
+        }
+        
+    @endphp
     @include('FrontEnd.Component.cdn')
 </head>
 
@@ -141,12 +167,6 @@
 
             <div class="row">
                 @php
-                    use App\Models\CompanyUser;
-                    use App\Models\Category;
-                    use App\Models\lang;
-                    use App\Models\Vacancy;
-                    use App\Models\City;
-                    $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
                     
                     $MyCategories = Category::orderBy('SortOrder', 'desc')
                         ->take(10)

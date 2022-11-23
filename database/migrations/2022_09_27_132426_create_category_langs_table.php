@@ -16,9 +16,9 @@ class CreateCategoryLangsTable extends Migration
         Schema::create('category_langs', function (Blueprint $table) {
             $table->id();
             $table->string('CategoryName');
-            $table->string('MetaTitle')->nullable();
-            $table->string('MetaDescription')->nullable();
-            $table->string('MetaKeywords')->nullable();
+            $table->text('MetaTitle')->nullable();
+            $table->text('MetaDescription')->nullable();
+            $table->text('MetaKeywords')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('lang_id');
             $table->timestamps();
