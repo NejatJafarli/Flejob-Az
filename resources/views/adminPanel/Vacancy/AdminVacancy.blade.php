@@ -45,14 +45,22 @@
                                                     <form action="{{ route('ChangeStatusOfVacancy', app()->getLocale()) }}"
                                                         method="POST">
                                                         @csrf
-                                                        <div class="checkbox checkbox-success checkbox-single">
-                                                            <input type="hidden" name="id"
-                                                                value="{{ $vac->id }}">
-                                                            <input name="status" type="checkbox"
-                                                                {{ $vac->Status ? 'Checked' : '' }}
-                                                                onChange="this.form.submit()">
-                                                            <label></label>
-                                                        </div>
+                                                        <input type="hidden" name="id" value="{{ $vac->id }}">
+                                                        @if ($vac->Status == 3)
+                                                            <div class="custom-control custom-checkbox mb-3">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="customControlValidation{{ $vac->id }}"
+                                                                    {{ $vac->Status == 3 ? 'Checked' : '' }} disabled>
+                                                                <label class="custom-control-label"
+                                                                    for="customControlValidation{{ $vac->id }}"></label>
+                                                            </div>
+                                                        @else
+                                                            <div class="checkbox checkbox-success checkbox-single">
+                                                                <input name="status" type="checkbox"
+                                                                    {{ $vac->Status == 1 ? 'Checked' : '' }} disabled>
+                                                                <label></label>
+                                                            </div>
+                                                        @endif
                                                     </form>
                                                 </td>
                                                 <td>
@@ -67,6 +75,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-center">
+                                    {{$Vacancies->links()}}
+                                </div>
                             </div>
                         </div>
                         <!--end table-->

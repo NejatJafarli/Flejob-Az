@@ -23,9 +23,10 @@ class CreateCompanyUsersTable extends Migration
             $table->text('CompanyDescription');
             $table->string('CompanyLogo');
             $table->string('CompanyAddress');
+            $table->integer('FreeVacancy')->default(1); // 1 = true, 0 = false
+            $table->integer('Paying')->default(0); // 1 = true, 0 = false 
             $table->integer('Status')->default(1);
             $table->timestamps();
-
             
             
         });

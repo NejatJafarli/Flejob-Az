@@ -66,7 +66,7 @@ class AdminPanelController extends Controller
 
         //get all category from database
         $Langs = ModelsLang::all();
-        $cat_lang = category_lang::all();
+        $cat_lang = category_lang::paginate(10);
 
         return  view('AdminPanel/Category/AdminCategory')->with(['categories' => $cat_lang, 'languages' => $Langs]);
     }
@@ -75,7 +75,7 @@ class AdminPanelController extends Controller
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
-        $languages = Language::all();
+        $languages = Language::paginate(10);
         return view('AdminPanel/Language/AdminLanguage')->with('Languages', $languages);
     }
     public function City()
@@ -84,7 +84,7 @@ class AdminPanelController extends Controller
             return redirect()->route('Login', app()->getLocale());
 
         $Langs = ModelsLang::all();
-        $city_lang = city_lang::all();
+        $city_lang = city_lang::paginate(10);
 
         return  view('AdminPanel/City/AdminCity')->with(['cities' => $city_lang, 'languages' => $Langs]);
     }
@@ -94,7 +94,7 @@ class AdminPanelController extends Controller
             return redirect()->route('Login', app()->getLocale());
 
         $Langs = ModelsLang::all();
-        $edl = education_level_langs::all();
+        $edl = education_level_langs::paginate(10);
 
         return  view('AdminPanel/EducationLevel/AdminEducationLevel')->with(['EducationLevels' => $edl, 'languages' => $Langs]);
     }
@@ -103,7 +103,7 @@ class AdminPanelController extends Controller
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
-        $Langs = ModelsLang::all();
+        $Langs = ModelsLang::paginate(10);
 
         return  view('AdminPanel/MultiLanguage/AdminMultiLanguage')->with(['Languages' => $Langs]);
     }
@@ -113,16 +113,17 @@ class AdminPanelController extends Controller
         //get all company users from database
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
-        $companyUsers = CompanyUser::all();
+        //get all CompanyUser And Paginate 10
+        $CompanyUsers = CompanyUser::paginate(10);
 
-        return  view('AdminPanel/CompanyUser/AdminCompanyUser')->with(['Companies' => $companyUsers]);
+        return  view('AdminPanel/CompanyUser/AdminCompanyUser')->with(['Companies' => $CompanyUsers]);
     }
     public function User()
     {
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
-        $users = User::all();
+        $users = User::paginate(10);
 
         return  view('AdminPanel/User/AdminUser')->with(['Users' => $users]);
     }
@@ -131,8 +132,8 @@ class AdminPanelController extends Controller
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
-        $vacancies = Vacancy::all();
-        
+        $vacancies = Vacancy::paginate(10);
+
         return  view('AdminPanel/Vacancy/AdminVacancy')->with(['Vacancies' => $vacancies]);
     }
 
@@ -364,19 +365,19 @@ class AdminPanelController extends Controller
         //get all city
         $allcity = City::all();
         //merge city_lang with city
-        
+
         //Merge Vacancies with Owner Company User
         $lang_id = ModelsLang::where('LanguageCode', $lang)->first()->id;
 
         //merge vacancies with category
-        $allcity = $allcity->map(function ($city)use ($lang_id) {
-            $cat=City::where('id', $city->id)->first();
+        $allcity = $allcity->map(function ($city) use ($lang_id) {
+            $cat = City::where('id', $city->id)->first();
             $city->CityName = $cat->cityLang()->where('lang_id', $lang_id)->first()->CityName;
             return $city;
         });
-        
 
-        return view('AdminPanel/Vacancy/AdminVacancyEdit')->with(['vac'=>$vacancy,'cities'=>$allcity]);
+
+        return view('AdminPanel/Vacancy/AdminVacancyEdit')->with(['vac' => $vacancy, 'cities' => $allcity]);
     }
 
 
@@ -516,7 +517,7 @@ class AdminPanelController extends Controller
         $vac->Status = $req->Status;
         $vac->City_id = $req->City_id;
         $vac->save();
-        
+
         return redirect()->back()->withErrors(['success' => 'Vacancy Updated Successfully']);
     }
 
@@ -563,9 +564,17 @@ class AdminPanelController extends Controller
 
         $req = $req->all();
         $vacancy = Vacancy::find($req['id']);
-        if (isset($req['status']))
-            $vacancy->Status = 1;
-        else
+        if (isset($req['status'])) {
+
+            $compUser = CompanyUser::find($vacancy->CompanyUser_id)->first();
+            if ($compUser->FreeVacancy == 0) {
+                $vacancy->Status = 3;
+            } else {
+                $vacancy->Status = 1;
+                $compUser->FreeVacancy = 0;
+                $compUser->save();
+            }
+        } else
             $vacancy->Status = 0;
         $vacancy->save();
 

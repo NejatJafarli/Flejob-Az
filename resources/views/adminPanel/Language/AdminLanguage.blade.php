@@ -58,6 +58,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="d-flex justify-content-center">
+                                {{$Languages->links()}}
+                            </div>
                         </div>
                         <!--end table-->
                     </div>

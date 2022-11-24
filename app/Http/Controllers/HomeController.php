@@ -203,6 +203,14 @@ class HomeController extends Controller
     }
     public function Candidates($lang)
     {
+        if (!session()->has('CompanyUser'))
+            return redirect()->back();
+
+        $CompanyUser = session()->get('CompanyUser');
+        if ($CompanyUser->Paying == 0)
+            return redirect()->back();
+
+
         //get last 8 users and paginate
         $users = User::orderBy('id', 'desc')->paginate(8);
         return view('FrontEnd/candidate', ['users' => $users]);
@@ -374,9 +382,9 @@ class HomeController extends Controller
     public function JobDetails($lang, $id)
     {
 
-        $vac = Vacancy::where('id', $id)->where('Status', 1)->first();
-        if ($vac == null)
-            return redirect()->route('Hom', app()->getLocale());
+        $vac = Vacancy::where('id', $id)->first();
+        // if ($vac == null)
+            // return redirect()->route('Hom', app()->getLocale());
 
         $langs = lang::all();
 
@@ -411,6 +419,7 @@ class HomeController extends Controller
 
             return $Vacancy;
         });
+
 
         // merge vacancies with city
         $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {

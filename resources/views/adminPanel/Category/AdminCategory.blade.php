@@ -69,7 +69,7 @@
                                                                 <td>
                                                                     <div class="btn-group btn-group-sm"
                                                                         style="float: none;">
-                                                                        <a href="{{ route('EditCategory',['id' => $category->category_id, 'language' => app()->getLocale()]) }}"
+                                                                        <a href="{{ route('EditCategory', ['id' => $category->category_id, 'language' => app()->getLocale()]) }}"
                                                                             class="tabledit-edit-button btn btn-sm btn-success active"
                                                                             style="float: none; margin: 4px;">
                                                                             <span class="ti-pencil"></span>
@@ -86,6 +86,9 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                            <div class="d-flex justify-content-center">
+                                                {{ $categories->links() }}
+                                            </div>
                                         </div>
                                         {{-- <a href="{{ route('CategoryEdit', ['locale' => app()->getLocale(), 'id' => $category->CategoryID]) }}"
                                                     class="btn btn-primary waves-effect waves-light">Edit</a>
@@ -148,7 +151,7 @@
                                                     <div class="col-md-10">
                                                         <input class="form-control" type="text"
                                                             name="CategoryName[{{ $language->LanguageCode }}]"
-                                                            id="example-text-input" >
+                                                            id="example-text-input">
                                                     </div>
                                                 </div>
 
@@ -158,7 +161,7 @@
                                                     <div class="col-md-10">
                                                         <input class="form-control" type="text"
                                                             name="MetaTitle[{{ $language->LanguageCode }}]"
-                                                            id="example-text-input" >
+                                                            id="example-text-input">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -167,7 +170,7 @@
                                                     <div class="col-md-10">
                                                         <input class="form-control" type="text"
                                                             name="MetaDescription[{{ $language->LanguageCode }}]"
-                                                            id="example-text-input" >
+                                                            id="example-text-input">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -176,7 +179,7 @@
                                                     <div class="col-md-10">
                                                         <input class="form-control" type="text"
                                                             name="MetaKeywords[{{ $language->LanguageCode }}]"
-                                                            id="example-text-input" >
+                                                            id="example-text-input">
                                                     </div>
                                                 </div>
                                             </div>

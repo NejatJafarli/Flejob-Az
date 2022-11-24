@@ -8,6 +8,8 @@
 <body>
     @php
         use App\Models\lang;
+        use App\Models\CompanyUser;
+        use App\Models\config;
         
         $Langs = lang::all();
         
@@ -293,6 +295,33 @@
                                                             <span class="badge badge-danger">Expired</span>
                                                         @endif
                                                     </span>
+                                                    <br>
+
+                                                    {{-- @if (session()->has('User'))
+                                                        @if ($vac->User_id == session()->get('User')->id)
+                                                            <a href="{{ route('EditVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                                class="btn btn-primary">Edit</a>
+                                                    @endif --}}
+
+                                                    @if ($vac->SortOrder == 0)
+                                                        @php
+                                                            $price = config::where('key', 'premium_price')->first()->value;
+                                                        @endphp
+                                                        <div class="account-details"
+                                                            style="padding:0px; box-shadow:0px 0px;">
+                                                            <form>
+                                                                <button type="button"
+                                                                    class="account-btn btn position-relative">Elani
+                                                                    Premium Et
+                                                                    <span style="color: white;font-size: 14px;background-color: #010c29;"
+                                                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                                                        {{ $price }} AZN
+                                                                        <span class="visually-hidden">Price</span>
+                                                                    </span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>
@@ -390,14 +419,16 @@
                             <h4>{{ $vac->CompanyUser->CompanyName }}</h4>
                         </div>
                     </div>
-                    {{-- <div class="job-sidebar">
-                        <h3>Keywords</h3>
-                        <ul>
-                            <li>
-                                <a href="#">Web Design</a>
-                            </li>
-                        </ul>
-                    </div> --}}
+                    @if ($vac->Status == 3)
+                        <div class="job-sidebar">
+                            <h3 style="color:red;font-size:30px;">Aktiv deyil odenis gozlenilir</h3>
+                        </div>
+                    @endif
+                    @if ($vac->Status == 0)
+                        <div class="job-sidebar">
+                            <h3 style="color:red;font-size:30px;">Elan Muddeti Bitib aktiv deyil</h3>
+                        </div>
+                    @endif
                     {{-- 
                         <div class="job-sidebar social-share">
                             <h3>Share In</h3>
@@ -424,7 +455,7 @@
                                 </li>
                             </ul>
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
     </section>
@@ -441,59 +472,60 @@
 
             <div class="row">
                 {{-- Same categoried Vacancies --}}
-                @foreach ($Vacancies as $vacs)
-                    <div class="col-lg-12">
-                        <div class="job-card-two">
-                            <div class="row align-items-center">
-                                <div class="col-md-1">
-                                    <div class="company-logo">
-                                        <a
-                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">
-                                            <img style="height:50px; widht:50px;"
-                                                src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}" alt="logo">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="job-info">
-                                        <h3>
+                    @foreach ($Vacancies as $vacs)
+                        <div class="col-lg-12">
+                            <div class="job-card-two">
+                                <div class="row align-items-center">
+                                    <div class="col-md-1">
+                                        <div class="company-logo">
                                             <a
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
-                                        </h3>
-                                        <ul>
-                                            <li>
-                                                <i class='bx bx-briefcase'></i>
-                                                {{ $vacs->Category->CategoryName }}
-                                            </li>
-                                            <li>
-                                                <i class='bx bx-briefcase'></i>
-                                                {{ $vacs->VacansySalary }}
-                                            </li>
-                                            <li>
-                                                <i class='bx bx-location-plus'></i>
-                                                {{ $vacs->City->CityName }}
-                                            </li>
-                                            <li>
-                                                <i class='bx bx-stopwatch'></i>
-                                                {{ $vacs->created_at->diffForHumans() }}
-                                            </li>
-                                        </ul>
+                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">
+                                                <img style="height:50px; widht:50px;"
+                                                    src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}"
+                                                    alt="logo">
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="theme-btn text-end">
-                                        <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}"
-                                            class="default-btn">
-                                            Browse Job
-                                        </a>
+                                    <div class="col-md-8">
+                                        <div class="job-info">
+                                            <h3>
+                                                <a
+                                                    href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
+                                            </h3>
+                                            <ul>
+                                                <li>
+                                                    <i class='bx bx-briefcase'></i>
+                                                    {{ $vacs->Category->CategoryName }}
+                                                </li>
+                                                <li>
+                                                    <i class='bx bx-briefcase'></i>
+                                                    {{ $vacs->VacansySalary }}
+                                                </li>
+                                                <li>
+                                                    <i class='bx bx-location-plus'></i>
+                                                    {{ $vacs->City->CityName }}
+                                                </li>
+                                                <li>
+                                                    <i class='bx bx-stopwatch'></i>
+                                                    {{ $vacs->created_at->diffForHumans() }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="theme-btn text-end">
+                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}"
+                                                class="default-btn">
+                                                Browse Job
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-        </div>
     </section>
     <!-- Job Section End -->
     <script>

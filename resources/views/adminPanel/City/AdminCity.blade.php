@@ -79,7 +79,11 @@
                                                         @endif
                                                     @endforeach
                                                 </tbody>
+                                                
                                             </table>
+                                            <div class="d-flex justify-content-center">
+                                                {{$cities->links()}}
+                                            </div>
                                         </div>
                                         {{-- <a href="{{ route('CategoryEdit', ['locale' => app()->getLocale(), 'id' => $category->CategoryID]) }}"
                                                     class="btn btn-primary waves-effect waves-light">Edit</a>

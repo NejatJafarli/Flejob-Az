@@ -74,10 +74,17 @@
                             </li>
                         @endif
 
-                        <li class="nav-item">
-                            <a id="Candidate" href="{{ route('Candidates', app()->getLocale()) }}"
-                                class="nav-link">Candidates</a>
-                        </li>
+                        @if (session()->has('CompanyUser'))
+                            @php
+                                $CompanyUser = session()->get('CompanyUser')->Paying;
+                            @endphp
+                            @if ($CompanyUser == 1)
+                                <li class="nav-item">
+                                    <a id="Candidate" href="{{ route('Candidates', app()->getLocale()) }}"
+                                        class="nav-link">Candidates</a>
+                                </li>
+                            @endif
+                        @endif
                         </li>
                         <li class="nav-item">
                             <a href="#"

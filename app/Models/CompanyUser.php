@@ -20,6 +20,8 @@ class CompanyUser extends Model
         'CompanyLogo',
         'CompanyWebsite',
         'Status',
+        'FreeVacancy',
+        'Paying',
     ];
 
     public function CompanyAndCategories()
