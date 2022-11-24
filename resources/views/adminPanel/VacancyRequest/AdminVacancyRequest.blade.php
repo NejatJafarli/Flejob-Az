@@ -28,7 +28,7 @@
                                             <th>Vacancy Person Phone</th>
                                             <th>Vacancy Salary</th>
                                             <th>Vacancy Email</th>
-                                            <th>Vacancy Status</th>
+                                            <th>Vacancy View</th>
                                             <th>Vacancy Action</th>
                                         </tr>
                                     </thead>
@@ -42,32 +42,19 @@
                                                 <td>{{ $vac->VacancySalary }}</td>
                                                 <td>{{ $vac->Email }}</td>
                                                 <td>
-                                                    <form>
-                                                        <input type="hidden" name="id" value="{{ $vac->id }}">
-                                                        @if ($vac->Status == 3)
-                                                            <div class="custom-control custom-checkbox mb-3">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                    id="customControlValidation{{ $vac->id }}"
-                                                                    {{ $vac->Status == 3 ? 'Checked' : '' }} disabled>
-                                                                <label class="custom-control-label"
-                                                                    for="customControlValidation{{ $vac->id }}"></label>
-                                                            </div>
-                                                        @else
-                                                            <div class="checkbox checkbox-success checkbox-single">
-                                                                <input name="status" type="checkbox"
-                                                                    {{ $vac->Status == 1 ? 'Checked' : '' }} disabled>
-                                                                <label></label>
-                                                            </div>
-                                                        @endif
-                                                    </form>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="{{ route('VacancyRequestView', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                            class="btn btn-primary btn-sm ">View</a>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <div class="btn-group btn-group-sm" style="float: none;">
-                                                        <a href="{{ route('EditVacancy', ['id' => $vac->id, 'language' => app()->getLocale()]) }}"
-                                                            class="tabledit-edit-button btn btn-sm btn-success active"
-                                                            style="float: none; margin: 4px;">
-                                                            <span class="ti-pencil"></span>
-                                                        </a>
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('VacancyRequestAccept', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                            class="btn btn-success btn-sm mx-4">Accept</a>
+
+
+                                                        <a href="{{ route('VacancyRequestReject', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                            type="submit" class="btn btn-danger btn-sm">Cancel</a>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -193,6 +193,9 @@
                     <li>
                         <a href="{{ route('Vacancy', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>Vacancy</span></a>
                     </li>
+                    <li>
+                        <a href="{{ route('VacancyRequest', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>new Vacancy Request</span></a>
+                    </li>
                 </ul>
             </div>
             <!-- end left-sidenav-->

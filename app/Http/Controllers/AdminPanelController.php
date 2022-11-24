@@ -70,6 +70,7 @@ class AdminPanelController extends Controller
 
         return  view('AdminPanel/Category/AdminCategory')->with(['categories' => $cat_lang, 'languages' => $Langs]);
     }
+
     public function Languages()
     {
         if (!session()->has('AdminUser'))
@@ -136,6 +137,142 @@ class AdminPanelController extends Controller
 
         return  view('AdminPanel/Vacancy/AdminVacancy')->with(['Vacancies' => $vacancies]);
     }
+    public function VacancyRequest($lang)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $vacancies = Vacancy::where("Status", 4)->paginate(10);
+
+        return  view('AdminPanel/VacancyRequest/AdminVacancyRequest')->with(['Vacancies' => $vacancies]);
+    }
+    public function VacancyRequestView($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $Vacancy = Vacancy::find($id);
+        // dd($Vacancy);
+        if ($Vacancy->Status != 4)
+            return redirect()->back()->withErrors(['fail' => 'Invalid Vacancy']);
+
+        //Merge Vacancies with Owner Company User
+        $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+        $lang_id = ModelsLang::where('LanguageCode', $lang)->first()->id;
+
+        //merge vacancies with category
+        $cat = Category::where('id', $Vacancy->Category_id)->first();
+        $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
+        $Vacancy->Category->StyleClass = $cat->StyleClass;
+        $Vacancy->Category->SortOrder = $cat->SortOrder;
+
+        // merge vacancies with city
+        $city = City::where('id', $Vacancy->City_id)->first();
+        $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
+
+        // dd($Vacancy->Owner->CompanyName);
+
+        return view('AdminPanel/VacancyRequest/AdminVacancyRequestView')->with(['vac' => $Vacancy]);
+    }
+    public function VacancyRequestAccept($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $vacancy = Vacancy::find($id);
+
+        if ($vacancy->Status != 4)
+            return redirect()->back()->withErrors(['fail' => 'Invalid Vacancy']);
+
+        $compUser = CompanyUser::find($vacancy->CompanyUser_id)->first();
+        if ($compUser->FreeVacancy == 0) {
+            $vacancy->Status = 3;
+        } else {
+            $vacancy->Status = 1;
+            $compUser->FreeVacancy = 0;
+            $compUser->save();
+        }
+        $vacancy->save();
+
+        return redirect()->back();
+    }
+
+    public function VacancyRequestReject($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $Vacancy = Vacancy::find($id);
+
+        if ($Vacancy->Status != 4)
+            return redirect()->back()->withErrors(['fail' => 'Invalid Vacancy']);
+
+        $Vacancy->Status = 5;
+        $Vacancy->save();
+
+        return redirect()->back();
+    }
+
+    public function VacancyRequestAcceptView($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+
+        $vacancy = Vacancy::find($id);
+
+        if ($vacancy->Status != 4)
+            return redirect()->back()->withErrors(['fail' => 'Invalid Vacancy']);
+
+        $compUser = CompanyUser::find($vacancy->CompanyUser_id)->first();
+        if ($compUser->FreeVacancy == 0) {
+            $vacancy->Status = 3;
+        } else {
+            $vacancy->Status = 1;
+            $compUser->FreeVacancy = 0;
+            $compUser->save();
+        }
+        $vacancy->save();
+
+        return $this->NextOrPrevius($vacancy);
+    }
+    public function NextOrPrevius($Vacancy)
+    {
+        $id = $Vacancy->id;
+        $vacanciesStatusFour = Vacancy::all()->where("Status", 4)->where('id', '!=', $id);
+
+        $vacancies = $vacanciesStatusFour->where('id', '<', $id)->first();
+        if ($vacancies == null) {
+            $vacancies = $vacanciesStatusFour->where('id', '>', $id)->first();
+            if ($vacancies == null)
+                return redirect()->route('VacancyRequest', app()->getLocale());
+            else
+                return redirect()->route('VacancyRequestView', ['language' => app()->getLocale(), 'id' => $vacancies->id]);
+        } else
+            return redirect()->route('VacancyRequestView', ['language' => app()->getLocale(), 'id' => $vacancies->id]);
+    }
+
+    public function VacancyRequestRejectView($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $Vacancy = Vacancy::find($id);
+
+        if ($Vacancy->Status != 4)
+            return redirect()->back()->withErrors(['fail' => 'Invalid Vacancy']);
+
+
+        $Vacancy->Status = 5;
+        $Vacancy->save();
+
+        return $this->NextOrPrevius($Vacancy);
+    }
+
+
+
+
+
 
 
 
@@ -362,6 +499,7 @@ class AdminPanelController extends Controller
             return redirect()->route('Login', app()->getLocale());
 
         $vacancy = Vacancy::find($id);
+
         //get all city
         $allcity = City::all();
         //merge city_lang with city

@@ -145,6 +145,16 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/Vacancy/edit/{id}', [AdminPanelController::class, 'EditVacancy'])->name('EditVacancy');
         Route::post('/Vacancy/UpdateVacancy', [AdminPanelController::class, 'UpdateVacancy'])->name('UpdateVacancy');
 
+        
+        Route::get('/Vacancy/Requests', [AdminPanelController::class, 'VacancyRequest'])->name('VacancyRequest');
+        Route::get('/Vacancy/View/{id}', [AdminPanelController::class, 'VacancyRequestView'])->name('VacancyRequestView');
+
+        Route::get('/Vacancy/Request/Accept/{id}', [AdminPanelController::class, 'VacancyRequestAccept'])->name('VacancyRequestAccept');
+        Route::get('/Vacancy/Request/Reject/{id}', [AdminPanelController::class, 'VacancyRequestReject'])->name('VacancyRequestReject');
+
+        Route::get('/Vacancy/RequestView/Accept/{id}', [AdminPanelController::class, 'VacancyRequestAcceptView'])->name('VacancyRequestAcceptView');
+        Route::get('/Vacancy/RequestView/Reject/{id}', [AdminPanelController::class, 'VacancyRequestRejectView'])->name('VacancyRequestRejectView');
+
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('City');
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('Education Level');
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('Company User');

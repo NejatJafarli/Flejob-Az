@@ -383,8 +383,9 @@ class HomeController extends Controller
     {
 
         $vac = Vacancy::where('id', $id)->first();
-        // if ($vac == null)
-            // return redirect()->route('Hom', app()->getLocale());
+
+        if ($vac->Status != 1 && !session()->has("CompanyUser"))
+            return redirect()->route('Hom', app()->getLocale());
 
         $langs = lang::all();
 
