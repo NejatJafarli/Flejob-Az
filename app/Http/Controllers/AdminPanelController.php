@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Requests\VacancyAddRequest;
+use App\Models\blog;
 use App\Models\Category;
 use App\Models\category_lang;
 use App\Models\City;
 use App\Models\city_lang;
 use App\Models\CompanyUser;
+use App\Models\config;
 use App\Models\Education;
 use App\Models\education_level_langs;
 use App\Models\EducationLevel;
@@ -110,7 +112,6 @@ class AdminPanelController extends Controller
     }
     public function CompanyUser()
     {
-
         //get all company users from database
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
@@ -136,6 +137,83 @@ class AdminPanelController extends Controller
         $vacancies = Vacancy::paginate(10);
 
         return  view('AdminPanel/Vacancy/AdminVacancy')->with(['Vacancies' => $vacancies]);
+    }
+    public function Blogs($lang)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $blogs = blog::paginate(10);
+
+        return  view('AdminPanel/Blogs/AdminBlog')->with(['Blogs' => $blogs]);
+    }
+    public function AddBlogs(Request $req)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $req->validate([
+            'Title' => 'required',
+            'Description' => 'required',
+            'image' => 'required',
+        ]);
+        $data = $req->all();
+
+        $image = $req->file('image');
+        $imageName = time() . '.' . $image->extension();
+        $image->move(public_path('BlogsPicture'), $imageName);
+        $data['Image'] = $imageName;
+
+        $blog = blog::create($data);
+
+        return redirect()->back();
+    }
+    public function DeleteBlogs($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $blog = blog::find($id);
+        $blog->delete();
+
+        return redirect()->back();
+    }
+    public function EditBlogs($lang, $id)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $blog = blog::find($id);
+
+        return view('AdminPanel/Blogs/AdminBlogEdit')->with(["Blog" => $blog]);
+    }
+    public function UpdateBlogs(Request $req)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $blog = blog::find($req->id);
+
+        if ($req->hasFile('image')) {
+            $image = $req->file('image');
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('BlogsPicture'), $imageName);
+            $data['image'] = $imageName;
+
+            //renive old image
+            $oldImage = public_path('BlogsPicture/' . $blog->Image);
+            if (file_exists($oldImage))
+                unlink($oldImage);
+        }
+        $blog->Title = $req->Title;
+        $blog->Description = $req->Description;
+
+        $blog->MetaTitle = isset($req->MetaTitle) ? $req->MetaTitle : null;
+        $blog->MetaDescription = isset($req->MetaDescription) ? $req->MetaDescription : null;
+        $blog->MetaKeywords = isset($req->MetaKeywords) ? $req->MetaKeywords : null;
+        
+        $blog->save();
+        return redirect()->back();
     }
     public function VacancyRequest($lang)
     {
@@ -250,6 +328,62 @@ class AdminPanelController extends Controller
                 return redirect()->route('VacancyRequestView', ['language' => app()->getLocale(), 'id' => $vacancies->id]);
         } else
             return redirect()->route('VacancyRequestView', ['language' => app()->getLocale(), 'id' => $vacancies->id]);
+    }
+    public function SetPaymentDataAddPost(Request $req)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $req->validate([
+            'key' => 'required',
+            'value' => 'required',
+        ]);
+
+        //config create
+        $config = new Config();
+        $config->key = $req->key;
+        $config->value = $req->value;
+        $config->save();
+
+
+        return redirect()->back();
+    }
+    public function UpdateConfigAjax(Request $request)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+
+        $req = $request->all();
+
+        $config = config::find($req['id']);
+        //delete old config with old key
+        $config->key = $req['key'];
+        $config->value = $req['value'];
+        $config->save();
+
+
+
+        return response()->json(['success' => 'success']);
+    }
+    public function SetPaymentData($lang)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $configs = config::paginate(10);
+
+        return view('AdminPanel/Payment/PaymentValue', compact('configs'));
+    }
+    public function SetPaymentDataPost(Request $req)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $keys = $req->keys;
+        $values = $req->values;
+
+        return redirect()->back();
     }
 
     public function VacancyRequestRejectView($lang, $id)

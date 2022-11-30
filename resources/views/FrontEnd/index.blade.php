@@ -575,41 +575,44 @@
             </div>
 
             <div class="row">
-                {{-- blogs --}}
-                {{-- <div class="col-lg-4 col-sm-6">
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <a href="blog-details.html">
-                                <img src="/assets2/img/blog/1.jpg" alt="blog image">
-                            </a>
-                        </div>
-                        <div class="blog-text">
-                            <ul>
-                                <li>
-                                    <i class='bx bxs-user'></i>
-                                    Admin
-                                </li>
-                                <li>
-                                    <i class='bx bx-calendar'></i>
-                                    7 Feb, 2021
-                                </li>
-                            </ul>
-
-                            <h3>
+                @foreach ($blogs as $blog)
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="blog-card">
+                            <div class="blog-img">
                                 <a href="blog-details.html">
-                                    How to Indroduce in Yourself in Job Interview?
+                                    <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image">
                                 </a>
-                            </h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt.</p>
+                            </div>
+                            <div class="blog-text">
+                                <ul>
+                                    <li>
+                                        <i class='bx bxs-user'></i>
+                                        Admin
+                                    </li>
+                                    <li>
+                                        <i class='bx bx-calendar'></i>
+                                        {{ $blog->created_at->DiffForHumans() }}
+                                    </li>
+                                </ul>
+                                <h3>
+                                    <a href="blog-details.html">
+                                        {{ $blog->Title }}
+                                    </a>
+                                </h3>
+                                @php
+                                    //get first 30 characters
+                                    $str = substr($blog->Description, 0, 40)."...";
+                                @endphp
+                                <p>{{ $str }}</p>
 
-                            <a href="blog-details.html" class="blog-btn">
-                                Read More
-                                <i class='bx bx-plus bx-spin'></i>
-                            </a>
+                                <a href="blog-details.html" class="blog-btn">
+                                    Read More
+                                    <i class='bx bx-plus bx-spin'></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div> --}}
+                @endforeach
 
             </div>
         </div>

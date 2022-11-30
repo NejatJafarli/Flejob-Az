@@ -119,7 +119,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Blog</a>
+                            <a href="{{ route('Blog', app()->getLocale()) }}"class="nav-link">Blog</a>
                         </li>
                         <li class="nav-item">
                             <a id="Contact" href="{{ route('Contact', app()->getLocale()) }}"
@@ -128,7 +128,11 @@
                         </li>
                         @if (session()->has('user'))
                             <div class="px-5">
-                                @include('FrontEnd.Component.MultiLang')
+                                @if (isset($myIdBool))
+                                    @include('FrontEnd.Component.MultiLang', ['id' => $myId])
+                                @else
+                                    @include('FrontEnd.Component.MultiLang')
+                                @endif
                             </div>
                             <div class="option-item">
                                 <img src="/CandidatesPicture/{{ session()->get('user')->image }}" alt="profile picture"
@@ -166,7 +170,11 @@
                     </ul>
                 @elseif (session()->has('CompanyUser'))
                     <div class="px-5">
-                        @include('FrontEnd.Component.MultiLang')
+                        @if (isset($myIdBool))
+                            @include('FrontEnd.Component.MultiLang', ['id' => $myId])
+                        @else
+                            @include('FrontEnd.Component.MultiLang')
+                        @endif
                     </div>
 
 
@@ -221,7 +229,11 @@
                         <a href="{{ route('Signup', app()->getLocale()) }}" class="signup-btn">Sign Up</a>
                         <a href="{{ route('Signin', app()->getLocale()) }}" class="signin-btn">Sign In</a>
                     </div>
-                    @include('FrontEnd.Component.MultiLang')
+                    @if (isset($myIdBool))
+                        @include('FrontEnd.Component.MultiLang', ['id' => $myId])
+                    @else
+                        @include('FrontEnd.Component.MultiLang')
+                    @endif
                     @endif
                 </div>
             </nav>

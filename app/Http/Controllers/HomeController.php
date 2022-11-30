@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyRegisterRequest;
 use App\Http\Requests\EditAccount;
 use App\Http\Requests\UserRegisterRequest;
+use App\Models\blog;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\User;
@@ -186,6 +187,19 @@ class HomeController extends Controller
     {
         return view('FrontEnd/terms-condition');
     }
+    public function Blogs($lang){
+
+        $Blogs = Blog::paginate(6);
+        return view('FrontEnd/blog')->with(['blogs'=>$Blogs]);
+    }
+    public function BlogDetail($lang,$id){
+
+        $blog = Blog::find($id);
+        //take last 5 blogs
+        $LastBlogs = Blog::orderBy('id','desc')->take(5)->get();
+        
+        return view('FrontEnd/blog')->with(['blog'=>$blog,"myIdBool"=>true,"myId"=>$id,'LastBlogs'=>$LastBlogs]);
+    }
     public function Contact()
     {
         return view('FrontEnd/contact');
@@ -199,7 +213,7 @@ class HomeController extends Controller
         $user = User::where('id', $id)->first();
         $user = HomeController::MergeUsersTable($user);
 
-        return view('FrontEnd/candidate-details', ['can' => $user]);
+        return view('FrontEnd/candidate-details', ['can' => $user,"myIdBool"=>true,"myId"=>$id]);
     }
     public function Candidates($lang)
     {
@@ -355,7 +369,10 @@ class HomeController extends Controller
             return $City;
         });
 
-        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs]);
+        $blogs = blog::orderBy('id', 'desc')->take(5)->get();
+
+
+        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs,'blogs'=>$blogs]);
     }
     public function About($lang)
     {
@@ -429,7 +446,7 @@ class HomeController extends Controller
             return $Vacancy;
         });
 
-        return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs, 'Vacancies' => $Vacancies]);
+        return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs, 'Vacancies' => $Vacancies, "myIdBool" => true,"myId"=>$id]);
     }
     public function Categories($lang)
     {

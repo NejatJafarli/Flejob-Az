@@ -68,10 +68,20 @@
                                 <div class="form-group">
                                     <label for="Status">Status</label>
                                     <select class="form-control" id="Status" name="Status">
-                                        <option value="1" @if ($vac->Status == 1) selected @endif>Active
-                                        </option>
                                         <option value="0" @if ($vac->Status == 0) selected @endif>Not Active
                                         </option>
+                                        <option value="1" @if ($vac->Status == 1) selected @endif>Active
+                                        </option>
+                                        <option value="3" @if ($vac->Status == 3) selected @endif>Waiting For Payment
+                                        </option>
+                                        <option value="4" @if ($vac->Status == 4) selected @endif>Waiting For
+                                            Approve</option>
+                                        <option value="5" @if ($vac->Status == 5) selected @endif>Rejected By Admin
+                                        </option>
+
+
+
+
                                     </select>
                                     {{-- //vacancy category id --}}
                                     <div class="form-group">
@@ -83,7 +93,8 @@
                                     <div class="form-group">
                                         <label for="CompanyUser_id">Company User ID</label>
                                         <input type="number" class="form-control" id="CompanyUser_id" name="CompanyUser_id"
-                                            placeholder="Enter CompanyUser_id" required value="{{ $vac->CompanyUser_id }}">
+                                            placeholder="Enter CompanyUser_id" required
+                                            value="{{ $vac->CompanyUser_id }}">
                                     </div>
 
                                     <div class="form-group">
@@ -112,5 +123,3 @@
     </div>
     <!-- end page content -->
 @endsection
-
-

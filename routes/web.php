@@ -23,6 +23,8 @@ Route::group(['prefix' => '{language}'], function () {
     //check if session
     if (session()->has('user'))
         HomeController::MergeUsersTable(session()->get('user'));
+    if (session()->has('CompanyUser'))
+        HomeController::MergeCompanyUsersTable(session()->get('CompanyUser'));
 
     //Singup and Login Controller
 
@@ -90,6 +92,8 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Candidates', [HomeController::class, 'Candidates'])->name('Candidates');
 
     Route::get('/Categories', [HomeController::class, 'Categories'])->name('Categories');
+    Route::get('/Blogs', [HomeController::class, 'Blogs'])->name('Blog');
+    Route::get('/BlogDetails/{id}', [HomeController::class, 'BlogDetail'])->name('BlogDetail');
 
     Route::get('/Contact', [HomeController::class, 'Contact'])->name('Contact');
     Route::post('/ContactUs', [HomeController::class, 'ContactUs'])->name('ContactUs');
@@ -145,7 +149,11 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/Vacancy/edit/{id}', [AdminPanelController::class, 'EditVacancy'])->name('EditVacancy');
         Route::post('/Vacancy/UpdateVacancy', [AdminPanelController::class, 'UpdateVacancy'])->name('UpdateVacancy');
 
-        
+        Route::get('/Config', [AdminPanelController::class, 'SetPaymentData'])->name('SetPaymentData');
+        Route::get('/Config/Set', [AdminPanelController::class, 'SetPaymentDataPost'])->name('SetPaymentDataPost');
+        Route::post('/UpdateConfigAjax', [AdminPanelController::class, 'UpdateConfigAjax'])->name('UpdateConfig');
+        Route::post('/Config/add', [AdminPanelController::class, 'SetPaymentDataAddPost'])->name('SetPaymentDataAddPost');
+
         Route::get('/Vacancy/Requests', [AdminPanelController::class, 'VacancyRequest'])->name('VacancyRequest');
         Route::get('/Vacancy/View/{id}', [AdminPanelController::class, 'VacancyRequestView'])->name('VacancyRequestView');
 
@@ -154,6 +162,13 @@ Route::group(['prefix' => '{language}'], function () {
 
         Route::get('/Vacancy/RequestView/Accept/{id}', [AdminPanelController::class, 'VacancyRequestAcceptView'])->name('VacancyRequestAcceptView');
         Route::get('/Vacancy/RequestView/Reject/{id}', [AdminPanelController::class, 'VacancyRequestRejectView'])->name('VacancyRequestRejectView');
+
+        Route::get('/Blogs', [AdminPanelController::class, 'Blogs'])->name('Blogs');
+        Route::post('/Blogs/Add', [AdminPanelController::class, 'AddBlogs'])->name('AddBlogs');
+        Route::get('/Blogs/Edit/{id}', [AdminPanelController::class, 'EditBlogs'])->name('EditBlogs');
+        Route::get('/Blogs/Delete/{id}', [AdminPanelController::class, 'DeleteBlogs'])->name('DeleteBlogs');
+
+        Route::post('/Blogs/Update', [AdminPanelController::class, 'UpdateBlogs'])->name('UpdateBlogs');
 
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('City');
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('Education Level');

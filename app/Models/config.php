@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class config extends Model
 {
+    public $timestamps = false;
     use HasFactory;
-    protected $fillable = ['key', 'value'];
+    protected $fillable = ['id','key', 'value'];
 }

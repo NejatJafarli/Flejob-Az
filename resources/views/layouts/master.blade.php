@@ -13,7 +13,7 @@
     <link href="/assets/css/icons.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/metismenu.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
-    
+
 </head>
 
 <body>
@@ -89,11 +89,12 @@
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
                         href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="@yield("userLogo")" alt="profile-user" class="rounded-circle" />
+                        <img src="@yield('userLogo')" alt="profile-user" class="rounded-circle" />
                         <span class="ml-1 nav-user-name hidden-sm"> <i class="mdi mdi-chevron-down"></i> </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('AdminLogout', app()->getLocale()) }}"><i class="dripicons-exit text-muted mr-2"></i>
+                        <a class="dropdown-item" href="{{ route('AdminLogout', app()->getLocale()) }}"><i
+                                class="dripicons-exit text-muted mr-2"></i>
                             Logout</a>
                     </div>
                 </li>
@@ -120,13 +121,14 @@
     <div class="page-wrapper-img">
         <div class="page-wrapper-img-inner">
             <div class="sidebar-user media">
-                <img src="@yield("userLogo")" alt="user" class="rounded-circle img-thumbnail mb-1">
+                <img src="@yield('userLogo')" alt="user" class="rounded-circle img-thumbnail mb-1">
                 <span class="online-icon"><i class="mdi mdi-record text-success"></i></span>
                 <div class="media-body align-item-center">
                     <h5>@yield('Username')</h5>
                     <ul class="list-unstyled list-inline mb-0 mt-2">
                         <li class="list-inline-item">
-                            <a href="{{ route('AdminLogout', app()->getLocale()) }}" class=""><i class="mdi mdi-power"></i></a>
+                            <a href="{{ route('AdminLogout', app()->getLocale()) }}" class=""><i
+                                    class="mdi mdi-power"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -135,7 +137,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="page-title-box">
-                        <h4 class="page-title mb-2"><i class="mdi mdi-grid-large mr-2"></i>@yield("contentName")</h4>
+                        <h4 class="page-title mb-2"><i class="mdi mdi-grid-large mr-2"></i>@yield('contentName')</h4>
                         <div class="">
                             <ol class="breadcrumb">
                                 @yield('breadcrumb')
@@ -166,35 +168,53 @@
                     <li class="menu-title">Main</li>
 
                     <li>
-                        <a href="{{ route('Panel', app()->getLocale()) }}" ><i class="mdi mdi-monitor"></i><span>Dashboards</span></a>
+                        <a href="{{ route('Panel', app()->getLocale()) }}"><i
+                                class="mdi mdi-monitor"></i><span>Dashboards</span></a>
                     </li>
 
                     <li>
-                        <a href="{{ route('Category', app()->getLocale()) }}" ><i class="mdi mdi-format-list-bulleted-type"></i><span>Category</span></a>
+                        <a href="{{ route('Category', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Category</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('language', app()->getLocale()) }}" ><i class="mdi mdi-format-list-bulleted-type"></i><span>Language</span></a>
+                        <a href="{{ route('language', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Language</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('MultiLanguage', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>Multi Language System</span></a>
+                        <a href="{{ route('MultiLanguage', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Multi Language System</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('City', app()->getLocale()) }}" ><i class="mdi mdi-format-list-bulleted-type"></i><span>City</span></a>
+                        <a href="{{ route('City', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>City</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('Educationlevel', app()->getLocale()) }}" ><i class="mdi mdi-format-list-bulleted-type"></i><span>Education Level</span></a>
+                        <a href="{{ route('Educationlevel', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Education Level</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('CompanyUser', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>Company User</span></a>
+                        <a href="{{ route('CompanyUser', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Company User</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('User', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>Users</span></a>
+                        <a href="{{ route('User', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Users</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('Vacancy', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>Vacancy</span></a>
+                        <a href="{{ route('Vacancy', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Vacancy</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('VacancyRequest', app()->getLocale()) }}"><i class="mdi mdi-format-list-bulleted-type"></i><span>new Vacancy Request</span></a>
+                        <a href="{{ route('VacancyRequest', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>new Vacancy Request</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('SetPaymentData', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Config</span></a>
+                    </li>
+                    <li>
+                        <a href="{{ route('Blogs', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Blogs</span></a>
                     </li>
                 </ul>
             </div>
@@ -207,6 +227,7 @@
     </div>
     <!-- end page-wrapper -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- jQuery  -->
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
@@ -216,9 +237,9 @@
 
     <script src="/assets/plugins/tiny-editable/mindmup-editabletable.js"></script>
     <script src="/assets/plugins/tiny-editable/numeric-input-example.js"></script>
-    <script src="/assets/plugins/tabledit/jquery.tabledit.js"></script>
-    <script src="/assets/pages/jquery.tabledit.init.js"></script>
-    
+    {{-- <script src="/assets/plugins/tabledit/jquery.tabledit.js"></script> --}}
+    {{-- <script src="/assets/pages/jquery.tabledit.init.js"></script> --}}
+
     <script src="/assets/js/app.js"></script>
 </body>
 
