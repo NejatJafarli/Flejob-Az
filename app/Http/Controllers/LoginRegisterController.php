@@ -14,11 +14,21 @@ use App\Models\Company;
 use App\Models\CompanyPhones;
 use App\Models\CompanyUser;
 use App\Models\Education;
+use App\Models\forgetPasswordRequest;
 use App\Models\lang;
 use App\Models\Link;
+use Illuminate\Support\Facades\Mail;
 
 class LoginRegisterController extends Controller
 {
+
+
+    // generate random 4 digit number
+    public function generateRandomNumber()
+    {
+        $randomNumber = rand(1000, 9999);
+        return $randomNumber;
+    }
     //
     public function Signup($lang)
     {
@@ -67,14 +77,179 @@ class LoginRegisterController extends Controller
     {
         // user session have redirect to home page
         if (session()->has('user') || session()->has('CompanyUser'))
-            return redirect()->route('Hom', ['language' => $lang]);
+            return redirect()->back();
 
         $Langs = lang::all();
 
         return view("FrontEnd/signin", ["Langs" => $Langs]);
     }
+    public function ResetPasswordUser($lang)
+    {
+        // user session have redirect to home page
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->back();
+        return view("FrontEnd/reset-password")->with([
+            'Choice' => "User"
+        ]);
+    }
+    public function ResetPasswordCompany($lang)
+    {
+        // user session have redirect to home page
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->back();
 
 
+        return view("FrontEnd/reset-password")->with([
+            'Choice' => "Company"
+        ]);
+    }
+    public function ResetPasswordPostUser(Request $request)
+    {
+        // user session have redirect to home page
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->back();
+
+        $user = User::where('phone', $request->phone)->first();
+        if ($user) {
+
+            $forgetPasswordRequest = forgetPasswordRequest::where('user_id', $user->id)->where('type', 'User')->orderBy('id', 'desc')->first();
+            if ($forgetPasswordRequest)
+                if ($forgetPasswordRequest->endTime > date('Y-m-d H:i:s'))
+                    return redirect()->back()->withErrors('you have already sent a request wait for' . $forgetPasswordRequest->endTime . ' end time');
+
+            //send http request to sms service
+            $Username = "421group_api";
+            $Api = "w3D0M4hY";
+            $Sendername = "Flegry";
+            $code = $this->generateRandomNumber();
+            $url = "http://gw.soft-line.az/sendsms?user=$Username&password=$Api&gsm=$user->phone&from=$Sendername&text=Your Verification Code is $code";
+            //http://api.msm.az/sendsms?user=421group_api&password=eRblKTsO&gsm=558448831&from=4:21 Group&text=Your Verification Code is code
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $output = curl_exec($ch);
+            curl_close($ch);
+            // errno=100&errtext=OK&message_id=526973&charge=1&balance=123 
+            //get errorno from output
+            $errno = explode('&', $output)[0];
+            $errno = explode('=', $errno)[1];
+            //take hours and minutes from now
+            $now = date("Y-m-d H:i:s");
+            $endTime = date("Y-m-d H:i:s", strtotime($now . ' + 2 minutes'));
+
+            if ($errno == 100) {
+                //save code to database
+                $request = forgetPasswordRequest::create([
+                    'user_id' => $user->id,
+                    'code' => $code,
+                    'type' => 'User',
+                    'endTime' => $endTime
+                ]);
+                return redirect()->route('EnterNewPassword', ['language' => app()->getLocale(), 'id' => $request->id]);
+            } else {
+                return redirect()->back()->with('error', 'Error in sending sms');
+            }
+            return redirect()->route('EnterNewPassword', ['language' => app()->getLocale(), 'id' => $request->id]);
+        } else {
+            return redirect()->back()->with('error', 'User not found');
+        }
+    }
+    public function ResetPasswordPostCompany(Request $request)
+    {
+        // user session have redirect to home page
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->back();
+
+        $email = $request->email;
+        $user = Company::where('email', $email)->first();
+
+        $forgetPasswordRequest = forgetPasswordRequest::where('Company_id', $user->id)->where('type', 'Company')->orderBy('id', 'desc')->first();
+        if ($forgetPasswordRequest)
+            if ($forgetPasswordRequest->endTime > date('Y-m-d H:i:s'))
+                return redirect()->back()->withErrors('you have already sent a request wait for ' . $forgetPasswordRequest->endTime . ' end time');
+
+        if ($user) {
+            $code = $this->generateRandomNumber();
+            //send mail to user
+            Mail::send('emails.forgetPassword', ['code' => $code], function ($m) use ($email) {
+                $m->from(env('MAIL_USERNAME'), 'Roboto Az');
+                $m->to($email)->subject('Reset Your Password');
+            });
+            $now = date("Y-m-d H:i:s");
+            $endTime = date("Y-m-d H:i:s", strtotime($now . ' + 90 seconds'));
+            //save code to database
+            $request = forgetPasswordRequest::create([
+                'Company_id' => $user->id,
+                'code' => $code,
+                'type' => 'Company',
+                "endTime" => $endTime
+            ]);
+            return redirect()->route('EnterNewPassword', ['language' => app()->getLocale(), 'id' => $request->id]);
+        } else {
+            return redirect()->back()->withErrors('User not found');
+        }
+    }
+
+    public function EnterNewPassword($lang, $id)
+    {
+        // user session have redirect to home page
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->route('Hom', ['language' => $lang]);
+
+        $request = forgetPasswordRequest::find($id);
+
+        if ($request) {
+            if ($request->endTime > date('Y-m-d H:i:s')) {
+                return view("FrontEnd/EnterNewPassword")->with([
+                    'id' => $id
+                ]);
+            } else {
+                if ($request->type == 'User')
+                    return redirect()->route('ResetPasswordUser', ['language' => $lang])->withErrors('Your request is expired');
+                else  if ($request->type == 'Company')
+                    return redirect()->route('ResetPasswordCompany', ['language' => $lang])->withErrors('Your request is expired');
+            }
+            //check end time
+        } else {
+            return redirect()->back()->withErrors('Request not found');
+        }
+    }
+    public function EnterNewPasswordPost($lang, Request $req)
+    {
+        // user session have redirect to home page
+        if (session()->has('user') || session()->has('CompanyUser'))
+            return redirect()->route('Hom', ['language' => $lang]);
+
+        $request = forgetPasswordRequest::find($req->reqId);
+
+        //check end time
+        if ($request->endTime < date('Y-m-d H:i:s'))
+            return redirect()->route("Signin", app()->getLocale())->withErrors('Time is over');
+
+        if ($request) {
+            if ($request->code == $req->Code) {
+                if ($req->password == $req->confirmPassword) {
+                    if ($request->type == "User") {
+                        $user = User::find($request->user_id);
+                        $user->password = md5(md5($req->password));
+                        $user->save();
+                        return redirect()->route('Signin', ['language' => $lang])->with('success', 'Password changed successfully');
+                    } else if ($request->type == "Company") {
+                        $user = CompanyUser::find($request->Company_id);
+                        $user->CompanyPassword = md5(md5($req->password));
+                        $user->save();
+                        return redirect()->route('Signin', ['language' => $lang])->with('success', 'Password changed successfully');
+                    }
+                } else
+                    return redirect()->back()->withErrors('Password and confirm password not match');
+            } else {
+                return redirect()->back()->withErrors('Code is not correct');
+            }
+        } else {
+            return redirect()->back()->withErrors('Request not found');
+        }
+        return view("FrontEnd/EnterNewPassword");
+    }
 
     //LOGIN REGISTER
     public function Signin($lang, Request $req)

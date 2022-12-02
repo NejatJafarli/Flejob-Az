@@ -37,9 +37,20 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Signin', [LoginRegisterController::class, 'SigninPage'])->name('Signin');
     Route::get('/LogoutCompany', [LoginRegisterController::class, 'LogoutCompany'])->name('LogoutCompany');
     Route::get('/Logout', [LoginRegisterController::class, 'Logout'])->name('Logout');
+    Route::get('/ResetPasswordUser', [LoginRegisterController::class, 'ResetPasswordUser'])->name('ResetPasswordUser');
+    Route::get('/ResetPasswordCompany', [LoginRegisterController::class, 'ResetPasswordCompany'])->name('ResetPasswordCompany');
+
+    Route::post('/ResetPasswordUserPost', [LoginRegisterController::class, 'ResetPasswordPostUser'])->name('ResetPasswordPostUser');
+    Route::post('/ResetPasswordCompanyPost', [LoginRegisterController::class, 'ResetPasswordPostCompany'])->name('ResetPasswordPostCompany');
+
+    Route::get('/EnterNewPassword/{id}', [LoginRegisterController::class, 'EnterNewPassword'])->name('EnterNewPassword');
+    Route::post('/EnterNewPasswordPost', [LoginRegisterController::class, 'EnterNewPasswordPost'])->name('EnterNewPasswordPost');
 
     Route::post('/SignUpControllerAjax', [LoginRegisterController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');
     Route::post('/SignUpCompanyControllerAjax', [LoginRegisterController::class, 'SignUpCompanyControllerAjax'])->name('SignUpCompanyControllerAjax');
+
+
+    
     ////
 
 
@@ -142,7 +153,7 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/MultiLanguage', [AdminPanelController::class, 'MultiLanguage'])->name('MultiLanguage');
         Route::get('/MultiLanguage/delete/{id}', [AdminPanelController::class, 'DeleteMultiLanguage'])->name('DeleteMultiLanguage');
         Route::get('/MultiLanguage/edit/{id}', [AdminPanelController::class, 'EditMultiLanguage'])->name('EditMultiLanguage');
-
+        
         Route::get('/CompanyUser', [AdminPanelController::class, 'CompanyUser'])->name('CompanyUser');
         Route::get('/User', [AdminPanelController::class, 'User'])->name('User');
         Route::get('/Vacancy', [AdminPanelController::class, 'Vacancy'])->name('Vacancy');
@@ -152,6 +163,7 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/Config', [AdminPanelController::class, 'SetPaymentData'])->name('SetPaymentData');
         Route::get('/Config/Set', [AdminPanelController::class, 'SetPaymentDataPost'])->name('SetPaymentDataPost');
         Route::post('/UpdateConfigAjax', [AdminPanelController::class, 'UpdateConfigAjax'])->name('UpdateConfig');
+        Route::post('/DeleteConfigAjax', [AdminPanelController::class, 'DeleteConfigAjax'])->name('DeleteConfig');
         Route::post('/Config/add', [AdminPanelController::class, 'SetPaymentDataAddPost'])->name('SetPaymentDataAddPost');
 
         Route::get('/Vacancy/Requests', [AdminPanelController::class, 'VacancyRequest'])->name('VacancyRequest');
@@ -162,14 +174,15 @@ Route::group(['prefix' => '{language}'], function () {
 
         Route::get('/Vacancy/RequestView/Accept/{id}', [AdminPanelController::class, 'VacancyRequestAcceptView'])->name('VacancyRequestAcceptView');
         Route::get('/Vacancy/RequestView/Reject/{id}', [AdminPanelController::class, 'VacancyRequestRejectView'])->name('VacancyRequestRejectView');
-
+        
         Route::get('/Blogs', [AdminPanelController::class, 'Blogs'])->name('Blogs');
         Route::post('/Blogs/Add', [AdminPanelController::class, 'AddBlogs'])->name('AddBlogs');
         Route::get('/Blogs/Edit/{id}', [AdminPanelController::class, 'EditBlogs'])->name('EditBlogs');
         Route::get('/Blogs/Delete/{id}', [AdminPanelController::class, 'DeleteBlogs'])->name('DeleteBlogs');
 
         Route::post('/Blogs/Update', [AdminPanelController::class, 'UpdateBlogs'])->name('UpdateBlogs');
-
+        
+        Route::get('/HtmlEditor', [AdminPanelController::class, 'Editor'])->name('HtmlEditor');
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('City');
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('Education Level');
         // Route::get('/index', [AdminPanelController::class, 'index'])->name('Company User');

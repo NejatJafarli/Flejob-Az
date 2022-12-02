@@ -41,7 +41,7 @@
     <div class="main-nav">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{{ route('Hom', app()->getLocale()) }}">
                     <img src="/assets2/img/logo.png" alt="logo">
                 </a>
                 <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
@@ -49,10 +49,7 @@
                         <li class="nav-item">
                             <a id="Hom" href="{{ route('Hom', app()->getLocale()) }}" class="nav-link">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a id="About" href="{{ route('About', app()->getLocale()) }}"
-                                class="nav-link ">About</a>
-                        </li>
+                        
                         @if (session()->has('CompanyUser'))
                             <li class="nav-item">
                                 <a href="#" class="nav-link dropdown-toggle FindAJob">Jobs</a>
@@ -73,6 +70,10 @@
                                     Job</a>
                             </li>
                         @endif
+                        <li class="nav-item">
+                            <a href="{{ route('Categories', app()->getLocale()) }}"
+                                class="nav-link Categories">Catagories</a>
+                        </li>
 
                         @if (session()->has('CompanyUser'))
                             @php
@@ -92,7 +93,7 @@
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
                                     <a href="{{ route('Companies', app()->getLocale()) }}"
-                                        class="nav-link Company">Company</a>
+                                class="nav-link Company">Company</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a href="pricing.html" class="nav-link">Pricing</a>
@@ -100,23 +101,24 @@
                                 <li class="nav-item">
                                     <a href="404.html" class="nav-link">404 Page</a>
                                 </li> --}}
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{ route('Faq', app()->getLocale()) }}" class="nav-link faq">FAQ</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('Categories', app()->getLocale()) }}"
-                                        class="nav-link Categories">Catagories</a>
-                                </li>
+                               
                                 <li class="nav-item">
                                     <a href="{{ route('Privacy', app()->getLocale()) }}"
                                         class="nav-link Privacy">Privacy
                                         & Policy</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{ route('terms', app()->getLocale()) }}" class="nav-link term">Terms &
                                         Conditions</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a id="About" href="{{ route('About', app()->getLocale()) }}"
+                                class="nav-link ">About</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('Blog', app()->getLocale()) }}"class="nav-link">Blog</a>

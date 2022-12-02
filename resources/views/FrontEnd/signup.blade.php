@@ -2,8 +2,12 @@
 <html lang="zxx">
 
 <head>
+
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     @include('FrontEnd.Component.cdn')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"
+        integrity="sha512-jTgBq4+dMYh73dquskmUFEgMY5mptcbqSw2rmhOZZSJjZbD2wMt0H5nhqWtleVkyBEjmzid5nyERPSNBafG4GQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .right-filter {
             background: #FFFFFF;
@@ -334,8 +338,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Phone Format: +994xxxxxxxxx</label>
-                                            <input value="+994" name="phone" type="text" class="form-control"
-                                                placeholder="Enter Phone" required>
+                                            <input value="+994" name="phone" type="text"
+                                                class="form-control MaskPhoneUser" placeholder="Enter Phone" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -566,8 +570,9 @@ $id = implode(',', $id);
                                             <div id='Phones'>
                                                 <div class="form-group pt-3">
                                                     <label>Company Phone Format: +994xxxxxxxxx</label>
-                                                    <input type="text" name="CompanyPhone[]" class="form-control"
-                                                        placeholder="Enter Company Phone" value="+994">
+                                                    <input type="text" name="CompanyPhone[]"
+                                                        class="form-control MaskPhone"
+                                                        placeholder="Enter Company Phone" >
                                                 </div>
                                             </div>
                                             <div class="signup-btn text-center">
@@ -632,6 +637,9 @@ $id = implode(',', $id);
     <script src="/assets2/js/Script.js"></script>
     <script>
         $(document).ready(function() {
+            //input  mask
+            $('.MaskPhoneUser').inputmask("+\\9\\94999999999");
+            $('.MaskPhone').inputmask("+\\9\\94999999999");
             $('.js-example-basic-multiple').select2();
 
             if ($(".js-range-slider").length > 0) {

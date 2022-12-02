@@ -237,11 +237,12 @@ function MyFunc4 () {
 
     // set div all child elements value linkName , linkUrl
     let isTrue = true
-    for (let i = 0; i < CompanyPhone.length; i++)
-        if (CompanyPhone[i].length != 13) {
+    for (let i = 0; i < CompanyPhone.length; i++) {
+        if (CompanyPhone[i].value.includes('_')) {
             isTrue = false
             break
         }
+    }
 
     if (!isTrue) {
         alert('Please fill all fields')
@@ -249,7 +250,7 @@ function MyFunc4 () {
     }
     let str = `<div class="form-group pt-3">
     <label>Company Phone  Format: +994xxxxxxxxx</label>
-    <input type="text" name="CompanyPhone[]" class="form-control"
+    <input type="text" name="CompanyPhone[]" class="form-control MaskPhone"
         placeholder="Enter Company Phone" value="+994" >
 </div>`
     //append variable to div
@@ -260,8 +261,7 @@ function MyFunc4 () {
         }
     }
 
-    
-
+    $('.MaskPhone').inputmask("+\\9\\94999999999");
 }
 function Signup (url) {
     FData = new FormData(document.getElementById('SignupForm'))
@@ -288,10 +288,7 @@ function Signup (url) {
                     errStr += errValues[i] + '<br>'
 
                 $('div.Myfailure').html(errStr)
-                $('div.Myfailure')
-                    .fadeIn(300)
-                    .delay(5000)
-                    .fadeOut(400)
+                $('div.Myfailure').fadeIn(300).delay(5000).fadeOut(400)
                 $('html, body').animate(
                     {
                         scrollTop: $('div.Myfailure').offset().top - 250
@@ -300,10 +297,7 @@ function Signup (url) {
                 )
             } else if (data.hasOwnProperty('success')) {
                 $('div.Mysuccess').html(data.success)
-                $('div.Mysuccess')
-                    .fadeIn(300)
-                    .delay(5000)
-                    .fadeOut(400)
+                $('div.Mysuccess').fadeIn(300).delay(5000).fadeOut(400)
                 $('html, body').animate(
                     {
                         scrollTop: $('div.Mysuccess').offset().top - 250
@@ -323,10 +317,7 @@ function Signup (url) {
                 errStr += errKeys[i] + ' : ' + errValues[i][0] + '<br>'
             }
             $('div.Myfailure').html(errStr)
-            $('div.Myfailure')
-                .fadeIn(300)
-                .delay(5000)
-                .fadeOut(400)
+            $('div.Myfailure').fadeIn(300).delay(5000).fadeOut(400)
             //center page scroll to div.Myfailure position
             $('html, body').animate(
                 {
@@ -362,10 +353,7 @@ function SignupCompany (url) {
                     errStr += errValues[i] + '<br>'
 
                 $('div.Myfailure').html(errStr)
-                $('div.Myfailure')
-                    .fadeIn(300)
-                    .delay(5000)
-                    .fadeOut(400)
+                $('div.Myfailure').fadeIn(300).delay(5000).fadeOut(400)
                 $('html, body').animate(
                     {
                         scrollTop: $('div.Myfailure').offset().top - 250
@@ -374,10 +362,7 @@ function SignupCompany (url) {
                 )
             } else if (data.hasOwnProperty('success')) {
                 $('div.Mysuccess').html(data.success)
-                $('div.Mysuccess')
-                    .fadeIn(300)
-                    .delay(5000)
-                    .fadeOut(400)
+                $('div.Mysuccess').fadeIn(300).delay(5000).fadeOut(400)
                 $('html, body').animate(
                     {
                         scrollTop: $('div.Mysuccess').offset().top - 250
@@ -397,10 +382,7 @@ function SignupCompany (url) {
                 errStr += errKeys[i] + ' : ' + errValues[i][0] + '<br>'
             }
             $('div.Myfailure').html(errStr)
-            $('div.Myfailure')
-                .fadeIn(300)
-                .delay(5000)
-                .fadeOut(400)
+            $('div.Myfailure').fadeIn(300).delay(5000).fadeOut(400)
             //center page scroll to div.Myfailure position
             $('html, body').animate(
                 {
@@ -411,4 +393,3 @@ function SignupCompany (url) {
         }
     })
 }
-

@@ -579,7 +579,7 @@
                     <div class="col-lg-4 col-sm-6">
                         <div class="blog-card">
                             <div class="blog-img">
-                                <a href="blog-details.html">
+                                <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
                                     <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image">
                                 </a>
                             </div>
@@ -595,7 +595,7 @@
                                     </li>
                                 </ul>
                                 <h3>
-                                    <a href="blog-details.html">
+                                    <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
                                         {{ $blog->Title }}
                                     </a>
                                 </h3>
@@ -605,7 +605,7 @@
                                 @endphp
                                 <p>{{ $str }}</p>
 
-                                <a href="blog-details.html" class="blog-btn">
+                                <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}" class="blog-btn">
                                     Read More
                                     <i class='bx bx-plus bx-spin'></i>
                                 </a>

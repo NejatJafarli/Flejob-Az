@@ -216,6 +216,10 @@
                         <a href="{{ route('Blogs', app()->getLocale()) }}"><i
                                 class="mdi mdi-format-list-bulleted-type"></i><span>Blogs</span></a>
                     </li>
+                    <li>
+                        <a href="{{ route('HtmlEditor', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Html Editor</span></a>
+                    </li>
                 </ul>
             </div>
             <!-- end left-sidenav-->
@@ -237,6 +241,11 @@
 
     <script src="/assets/plugins/tiny-editable/mindmup-editabletable.js"></script>
     <script src="/assets/plugins/tiny-editable/numeric-input-example.js"></script>
+
+    <!--Wysiwig js-->
+    <script src="/assets/plugins/tinymce/tinymce.min.js"></script>
+    <script src="/assets/pages/jquery.form-editor.init.js"></script>
+
     {{-- <script src="/assets/plugins/tabledit/jquery.tabledit.js"></script> --}}
     {{-- <script src="/assets/pages/jquery.tabledit.init.js"></script> --}}
 

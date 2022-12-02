@@ -91,6 +91,16 @@
                                         </a>
                                     </p>
                                 </div>
+                                <div class="create-btn text-center">
+                                    <p>you can't remember your password?
+                                        <a href="{{ route('ResetPasswordUser', app()->getLocale()) }}">
+                                            Forget Password
+                                            <i class='bx bx-chevrons-right bx-fade-right'>
+
+                                            </i>
+                                        </a>
+                                    </p>
+                                </div>
                             </form>
                         </div>
                         <div class="tab-pane" id="profile-1" role="tabpanel">
@@ -115,6 +125,16 @@
                                     <p>Not have an account?
                                         <a href="{{ route('Signup', app()->getLocale()) }}">
                                             Create an account
+                                            <i class='bx bx-chevrons-right bx-fade-right'>
+
+                                            </i>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="create-btn text-center">
+                                    <p>you can't remember your password?
+                                        <a href="{{ route('ResetPasswordCompany', app()->getLocale()) }}">
+                                            Forget Password
                                             <i class='bx bx-chevrons-right bx-fade-right'>
 
                                             </i>

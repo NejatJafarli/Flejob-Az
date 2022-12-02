@@ -61,6 +61,13 @@ class AdminPanelController extends Controller
         else
             return redirect()->route('Login', app()->getLocale());
     }
+    public function Editor()
+    {
+        if (session()->has('AdminUser'))
+            return view('adminPanel/Editor/AdminEditor');
+        else
+            return redirect()->route('Login', app()->getLocale());
+    }
     public function category()
     {
         if (!session()->has('AdminUser'))
@@ -211,7 +218,7 @@ class AdminPanelController extends Controller
         $blog->MetaTitle = isset($req->MetaTitle) ? $req->MetaTitle : null;
         $blog->MetaDescription = isset($req->MetaDescription) ? $req->MetaDescription : null;
         $blog->MetaKeywords = isset($req->MetaKeywords) ? $req->MetaKeywords : null;
-        
+
         $blog->save();
         return redirect()->back();
     }
@@ -366,12 +373,29 @@ class AdminPanelController extends Controller
 
         return response()->json(['success' => 'success']);
     }
+    public function DeleteConfigAjax(Request $request)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $req = $request->all();
+
+        $config = config::find($req['id']);
+        $config->delete();
+
+        return response()->json(['success' => 'success']);
+    }
     public function SetPaymentData($lang)
     {
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
-        $configs = config::paginate(10);
+        $keys = request()->get('SearchKey');
+        if ($keys != null)
+            $configs = config::where('key', 'like', '%' . $keys . '%')->paginate(10);
+        else
+            $configs = config::paginate(5);
+
 
         return view('AdminPanel/Payment/PaymentValue', compact('configs'));
     }

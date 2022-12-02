@@ -3,7 +3,14 @@
 
 <head>
     <!-- Required meta tags -->
-    
+    <meta charset="utf-8">
+    {{-- //meta MetaTitle --}}
+    <meta name="Title" content="{{ $blog->MetaTitle }}">
+    {{-- //meta MetaKeywords --}}
+    <meta name="keywords" content="{{ $blog->MetaKeywords }}">
+    {{-- //meta MetaDescription --}}
+    <meta name="description" content="{{ $blog->MetaDescription }}">
+
     @include('Frontend.Component.cdn')
 
 </head>
@@ -40,97 +47,46 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="blog-widget blog-search">
-                        <form>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                                <button>
-                                    <i class='bx bx-search-alt-2'></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
                     <div class="blog-widget">
                         <h3>Popular Post</h3>
-
-                        <article class="popular-post">
-                            <a href="blog-details.html" class="blog-thumb">
-                                <img src="assets/img/blog/popular-post1.jpg" alt="blog image">
-                            </a>
-
-                            <div class="info">
-                                <time datetime="2021-04-08">May 8, 2021</time>
-                                <h4>
-                                    <a href="blog-details.html">Looking for Highly Motivated Product to Build</a>
-                                </h4>
-                            </div>
-                        </article>
-
-                        <article class="popular-post">
-                            <a href="blog-details.html" class="blog-thumb">
-                                <img src="assets/img/blog/popular-post2.jpg" alt="blog image">
-                            </a>
-
-                            <div class="info">
-                                <time datetime="2021-04-08">May 5, 2021</time>
-                                <h4>
-                                    <a href="blog-details.html">
-                                        How to Indroduce in Yourself in Job Interview?
-                                    </a>
-                                </h4>
-                            </div>
-                        </article>
-
-                        <article class="popular-post">
-                            <a href="blog-details.html" class="blog-thumb">
-                                <img src="assets/img/blog/popular-post3.jpg" alt="blog image">
-                            </a>
-
-                            <div class="info">
-                                <time datetime="2021-04-08">April 20, 2021</time>
-                                <h4>
-                                    <a href="blog-details.html">
-                                        Economy Growth is Being Increased by IT Sectors
-                                    </a>
-                                </h4>
-                            </div>
-                        </article>
-
-                        <article class="popular-post">
-                            <a href="blog-details.html" class="blog-thumb">
-                                <img src="assets/img/blog/popular-post4.jpg" alt="blog image">
-                            </a>
-
-                            <div class="info">
-                                <time datetime="2021-04-08">April 28, 2021</time>
-                                <h4>
-                                    <a href="blog-details.html">
-                                        10 Things You Should Know Before Apply
-                                    </a>
-                                </h4>
-                            </div>
-                        </article>
+                        @foreach ($lastBlogs as $item)
+                            <article class="popular-post">
+                                <a href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $item->id]) }}"
+                                    class="blog-thumb">
+                                    <img src="/BlogsPicture/{{ $item->Image }}" alt="blog image">
+                                </a>
+                                <div class="info">
+                                    <time datetime="2021-04-08">{{ $item->created_at->format('d M Y') }}</time>
+                                    <h4>
+                                        <a
+                                            href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $item->id]) }}">{{ $item->Title }}</a>
+                                    </h4>
+                                </div>
+                            </article>
+                        @endforeach
                     </div>
-                    <div class="blog-widget blog-tags">
-                        @php
-                            $tags = explode(' ', $blog->MetaKeywords);
-                        @endphp
-                        <h3>Tags</h3>
-                        <ul>
-                            @foreach ($tags as $tag)
-                                <li>
-                                    <a href="#">{{ $tag }}</a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    @if ($blog->MetaKeywords != null)
+                        <div class="blog-widget blog-tags">
+                            @php
+                                $tags = explode(' ', $blog->MetaKeywords);
+                            @endphp
+                            <h3>Tags</h3>
+                            <ul>
+                                @foreach ($tags as $tag)
+                                    <li>
+                                        <a href="#">{{ $tag }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
 
                 <div class="col-lg-8">
                     <div class="blog-dedails-text">
                         <div class="blog-details-img">
-                            <img src="assets/img/blog/blog-details.jpg" alt="blog details image">
+                            <img style="width: 765px;height:500px;" src="/BlogsPicture/{{ $blog->Image }}"
+                                alt="blog details image">
                         </div>
 
                         <div class="blog-meta">
@@ -141,64 +97,27 @@
                                 </li>
                                 <li>
                                     <i class='bx bx-calendar'></i>
-                                    7 Feb, 2021
+                                    {{ $blog->created_at->format('d M Y') }}
                                 </li>
                             </ul>
                         </div>
 
-                        <h3 class="post-title">Tips for Making Your Resume Stand Out</h3>
+                        <h3 class="post-title">{{ $blog->Title }}</h3>
 
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book. It has survived not only five
-                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                        </p>
-
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form, by injected humour, or randomised words which don't look
-                            even slightly believable.</p>
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <img src="assets/img/blog/blog-details2.jpg" class="details-inner-img"
-                                    alt="blog details image">
+                        <p style="word-break: break-word;">{{ $blog->Description }}</p>
+                        @if ($blog->MetaKeywords != null)
+                            <div class="details-tag">
+                                <ul>
+                                    <li>Tags:</li>
+                                    @foreach ($tags as $tag)
+                                        <li>
+                                            <a href="#">{{ $tag }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            <div class="col-sm-6">
-                                <img src="assets/img/blog/blog-details3.jpg" class="details-inner-img"
-                                    alt="blog details image">
-                            </div>
-                        </div>
-
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                            more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                            here', making it look like readable English.</p>
-
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
-                            classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock.
-                        </p>
-
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book</p>
-
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form, by injected humour, or randomised words which don't look
-                            even slightly believable.</p>
-
-
-                        <div class="details-tag">
-                            <ul>
-                                <li>Tags:</li>
-                                @foreach ($tags as $tag)
-                                    <li>
-                                        <a href="#">{{ $tag }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
-
+                        @endif
+                        {{-- 
                         <form class="comment-form">
                             <h3>Leave a Reply</h3>
 
@@ -228,7 +147,7 @@
                             <button type="submit" class="comment-btn">
                                 Post a Comment
                             </button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>
