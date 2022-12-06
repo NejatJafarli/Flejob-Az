@@ -113,14 +113,24 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget footer-info">
                     <h3>Information</h3>
+                    @php
+                        use App\Models\Config;
+                        
+                        $config = Config::where('key', '=', 'infoPhone')->first();
+                        $phone = $config->value;
+                        $config = Config::where('key', '=', 'infoEmail')->first();
+                        $email = $config->value;
+                        $config = Config::where('key', '=', 'infoAddress')->first();
+                        $address = $config->value;
+                    @endphp
                     <ul>
                         <li>
                             <span>
                                 <i class='bx bxs-phone'></i>
                                 Phone:
                             </span>
-                            <a href="tel:882569756">
-                                +101 984 754
+                            <a href="tel:{{ $phone }}">
+                                {{ $phone }}
                             </a>
                         </li>
 
@@ -129,8 +139,8 @@
                                 <i class='bx bxs-envelope'></i>
                                 Email:
                             </span>
-                            <a href="mailto:info@jovie.com">
-                                info@jovie.com
+                            <a href="mailto:{{ $email }}">
+                                {{ $email }}
                             </a>
                         </li>
 
@@ -139,7 +149,7 @@
                                 <i class='bx bx-location-plus'></i>
                                 Address:
                             </span>
-                            123, Denver, USA
+                            {{ $address }}
                         </li>
                     </ul>
                 </div>

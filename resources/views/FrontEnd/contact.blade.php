@@ -47,16 +47,21 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
                             <div class="contact-card">
+                                @php
+                                    use App\Models\Config;
+                                    
+                                    $config = Config::where('key', '=', 'infoPhone')->first();
+                                    $phone = $config->value;
+                                    $config = Config::where('key', '=', 'infoEmail')->first();
+                                    $email = $config->value;
+                                    $config = Config::where('key', '=', 'infoAddress')->first();
+                                    $address = $config->value;
+                                @endphp
                                 <i class='bx bx-phone-call'></i>
                                 <ul>
                                     <li>
-                                        <a href="tel:+145664474574">
-                                            +1-456-644-7457
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="tel:17459674567">
-                                            +1-745-967-4567
+                                        <a href="tel:{{$phone}}">
+                                            {{$phone}}
                                         </a>
                                     </li>
                                 </ul>
@@ -68,13 +73,8 @@
                                 <i class='bx bx-mail-send'></i>
                                 <ul>
                                     <li>
-                                        <a href="mailto:info@jovie.com">
-                                            info@jovie.com
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="mailto:hello@jovie.com">
-                                            hello@jovie.com
+                                        <a href="mailto:{{ $email }}">
+                                            {{ $email }}
                                         </a>
                                     </li>
                                 </ul>
@@ -86,10 +86,7 @@
                                 <i class='bx bx-location-plus'></i>
                                 <ul>
                                     <li>
-                                        123, Denver, USA
-                                    </li>
-                                    <li>
-                                        Street view 3/B, USA
+                                        {{ $address }}
                                     </li>
                                 </ul>
                             </div>
