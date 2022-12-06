@@ -360,7 +360,6 @@ class AdminPanelController extends Controller
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
-
         $req = $request->all();
 
         $config = config::find($req['id']);
@@ -368,8 +367,6 @@ class AdminPanelController extends Controller
         $config->key = $req['key'];
         $config->value = $req['value'];
         $config->save();
-
-
 
         return response()->json(['success' => 'success']);
     }

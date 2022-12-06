@@ -35,7 +35,7 @@
                                                 <div class="input-group">
                                                     {{-- //search label --}}
                                                     {{-- <label for="search" class="col-1">{{ __('Search') }}</label> --}}
-                                                    <input type="text" name="SearchKey" class="form-control"
+                                                    <input type="text" value="{{request()->get("SearchKey")}}" name="SearchKey" class="form-control"
                                                         placeholder="Search...">
                                                     <div class="input-group-append">
                                                         <button class="btn btn-primary" type="submit"><i
@@ -153,7 +153,6 @@
             FData.append('key', MyKey);
             FData.append('value', MyValue);
             FData.append('_token', tok);
-            console.log(FData);
 
             $.ajaxSetup({
                 headers: {
