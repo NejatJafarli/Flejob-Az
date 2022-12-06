@@ -49,7 +49,7 @@
                         <div class="blog-card">
                             <div class="blog-img">
                                 <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
-                                    <img style="width: 510px; height:410px" src="/BlogsPicture/{{ $blog->Image }}" alt="blog image">
+                                    <img style="width: 510px; height:410px; object-fit:cover;" src="/BlogsPicture/{{ $blog->Image }}" alt="blog image">
                                 </a>
                             </div>
                             <div class="blog-text">

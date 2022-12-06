@@ -2,7 +2,7 @@
 <div class="navbar-area">
     <!-- Menu For Mobile Device -->
     <div class="mobile-nav">
-        <a href="index.html" class="logo">
+        <a href="{{ route('Hom', app()->getLocale()) }}" class="logo">
             <img src="/assets2/img/logo.png" alt="logo">
         </a>
     </div>
@@ -35,6 +35,9 @@
             }
         }
         
+       
+
+
     @endphp
 
     <!-- Menu For Desktop Device -->

@@ -578,9 +578,10 @@
                 @foreach ($blogs as $blog)
                     <div class="col-lg-4 col-sm-6">
                         <div class="blog-card">
-                            <div class="blog-img">
+                            <div class="blog-img" >
                                 <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
-                                    <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image">
+                                    <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image" style="object-fit:cover;
+                                    ">
                                 </a>
                             </div>
                             <div class="blog-text">
