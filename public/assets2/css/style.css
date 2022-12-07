@@ -1491,7 +1491,7 @@ h3 {
   background: #ffffff;
   height: 2px;
   width: 50px;
-  left: 0;
+  /* left: 0; */
   bottom: -15px;
 }
 
@@ -1831,15 +1831,15 @@ h3 {
 }
 
 .job-card-two .company-logo {
-  background: #fddcd4;
+  /* background: #fddcd4;
   width: 100px;
-  height: 100px;
+  height: 100px; */
   text-align: center;
   line-height: 100px;
-  border-radius: 100px;
+  /* border-radius: 100px;
   border: 1px dashed #fd1616;
   position: relative;
-  top: -8px;
+  top: -8px; */
 }
 
 .job-card-two .job-info {
@@ -2943,7 +2943,7 @@ h3 {
 }
 
 .job-details-text .job-card .company-logo {
-  background: #ddd;
+  /* background: #ddd; */
   text-align: center;
   height: 100px;
   line-height: 100px;
@@ -4906,3 +4906,49 @@ h3 {
 
 /* Animation CSS End */
 /*# sourceMappingURL=style.css.map */
+@media only screen and (max-width: 997px) {
+    .profilepic {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    .footer-logo {
+        display: flex;
+        justify-content: center;
+    }
+    .footer-social{
+      display: flex;
+      justify-content: space-around;
+    }
+    .for-candidate-text-mobil{
+      display: flex;
+      justify-content: center;
+    
+    }
+    .quick-links-text-mobile{
+      display: flex;
+      justify-content: center;
+    }
+  .information-text-mobil{
+    display: flex;
+    justify-content: center;
+  }
+    .footer-ul-centre-mobile{
+      text-align: center;
+    }
+
+}
+
+@media only screen and (min-width: 997px) {
+.signin-mobile{
+  display: none;
+}
+
+}
+
+@media only screen and (max-width: 997px) {
+
+  .navbar-img-mobile{
+    display: none;
+  }
+}

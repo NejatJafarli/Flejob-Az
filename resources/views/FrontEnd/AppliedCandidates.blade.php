@@ -128,7 +128,7 @@
                             </li>
                             @if (session()->has('user'))
                                 <div class="px-5">
-                                    <div class="other-option" style="padding: 0 0 0 50px">
+                                    <div class="other-option" style="padding: 0 10px 0 10px">
                                         <select class="form-control" onchange="window.location.href=this.value">
                                             @foreach ($Langs as $lang)
                                                 <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
@@ -163,7 +163,7 @@
                         </ul>
                     @elseif (session()->has('CompanyUser'))
                         <div class="px-5">
-                            <div class="other-option" style="padding: 0 0 0 50px">
+                            <div class="other-option" style="padding: 0 10px 0 10px">
                                 <select class="form-control" onchange="window.location.href=this.value">
                                     @foreach ($Langs as $lang)
                                         <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
@@ -202,7 +202,7 @@
                             <a href="{{ route('Signup', app()->getLocale()) }}" class="signup-btn">Sign Up</a>
                             <a href="{{ route('Signin', app()->getLocale()) }}" class="signin-btn">Sign In</a>
                         </div>
-                        <div class="other-option" style="padding: 0 0 0 50px">
+                        <div class="other-option" style="0 10px 0 10px">
                             <select class="form-control" onchange="window.location.href=this.value">
                                 @foreach ($Langs as $lang)
                                     <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}

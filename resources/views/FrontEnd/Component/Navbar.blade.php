@@ -131,6 +131,16 @@
                                 class="nav-link">Contact
                                 Us</a>
                         </li>
+                        @if (!session()->has('user'))
+                        <li class="nav-item signin-mobile">
+                            <a id="Contact" href="{{ route('Signin', app()->getLocale()) }}"
+                                class="nav-link">Sign in</a>
+                        </li>
+                        <li class="nav-item signin-mobile">
+                            <a id="Contact" href="{{ route('Signup', app()->getLocale()) }}"
+                                class="nav-link">Sign up</a>
+                        </li>
+                        @endif
                         @if (session()->has('user'))
                             <div class="px-5">
                                 @if (isset($myIdBool))
@@ -139,9 +149,9 @@
                                     @include('FrontEnd.Component.MultiLang')
                                 @endif
                             </div>
-                            <div class="option-item">
+                            <div class="option-item ">
                                 <img src="/CandidatesPicture/{{ session()->get('user')->image }}" alt="profile picture"
-                                    style="width: 50px; height: 50px; border-radius: 50%;">
+                                    style="width: 40px; height: 40px; margin:10px; " class="navbar-img-mobile">
                             </div>
 
                             <li class="nav-item">
@@ -174,7 +184,9 @@
                             </li>
                     </ul>
                 @elseif (session()->has('CompanyUser'))
-                    <div class="px-5">
+                    <div style="    display: flex;
+                    justify-content: center;
+                    align-items: center;">
                         @if (isset($myIdBool))
                             @include('FrontEnd.Component.MultiLang', ['id' => $myId])
                         @else
@@ -185,7 +197,7 @@
 
                     <div class="option-item">
                         <img src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}" alt="profile picture"
-                            style="width: 50px; height: 50px; border-radius: 50%;">
+                            style="width: 50px; height: 40px; border-radius: 50%; margin-left:10px;">
                     </div>
 
                     <li class="nav-item">
@@ -230,7 +242,7 @@
                     </li>
                 @else
                     </ul>
-                    <div class="other-option">
+                    <div class="other-option" style="margin-right: 10px;">
                         <a href="{{ route('Signup', app()->getLocale()) }}" class="signup-btn">Sign Up</a>
                         <a href="{{ route('Signin', app()->getLocale()) }}" class="signin-btn">Sign In</a>
                     </div>

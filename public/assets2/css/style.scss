@@ -58,12 +58,11 @@ This files table contents are outlined below>>>>>
 *** - Aniamtion CSS
 */
 
-
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,600|IBM+Plex+Sans:400,500,500i,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Catamaran:400,600|IBM+Plex+Sans:400,500,500i,600,700&display=swap");
 
 /* Font Variables */
-$body-font: 'IBM Plex Sans', sans-serif;
-$navbar-font: 'Catamaran', sans-serif;
+$body-font: "IBM Plex Sans", sans-serif;
+$navbar-font: "Catamaran", sans-serif;
 
 /* Color Variables */
 $body-color: #707070;
@@ -72,10 +71,9 @@ $red-color: #fd1616;
 $white-color: #ffffff;
 
 /* Others Variables */
-$transition: .5s;
+$transition: 0.5s;
 $font-size: 17px;
 $box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-
 
 body {
     font-size: $font-size;
@@ -115,7 +113,12 @@ button {
         outline: 0;
     }
 }
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: $heading-color;
     font-weight: bold;
 }
@@ -211,8 +214,8 @@ h3 {
                         &.dropdown-toggle {
                             &::after {
                                 border: 0;
-                                content: '\ea17';
-                                font-family: 'boxicons';
+                                content: "\ea17";
+                                font-family: "boxicons";
                                 vertical-align: middle;
                                 line-height: 1;
                             }
@@ -231,15 +234,16 @@ h3 {
                         .nav-item {
                             padding: 0;
 
-                            .nav-link {                    
+                            .nav-link {
                                 border-bottom: 1px dashed #4d5877;
                                 background: #061742;
                                 font-size: 15px !important;
 
-                                &.active, &:hover {
+                                &.active,
+                                &:hover {
                                     color: $white-color;
                                     background: #657294 !important;
-                                } 
+                                }
                             }
 
                             &:last-child .nav-link {
@@ -251,7 +255,8 @@ h3 {
             }
 
             .other-option {
-                .signin-btn, .signup-btn {
+                .signin-btn,
+                .signup-btn {
                     color: $white-color;
                     font-family: $navbar-font;
                     font-size: 16px;
@@ -304,10 +309,10 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         width: 100%;
         height: 100%;
-        background: rgba(0,4,44,0.60);
+        background: rgba(0, 4, 44, 0.6);
         top: 0;
         left: 0;
         z-index: -1;
@@ -315,7 +320,7 @@ h3 {
 
     &::after {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/banner/white-shape.png);
         background-position: center center;
         background-size: cover;
@@ -325,7 +330,6 @@ h3 {
         left: 0;
         z-index: -1;
     }
-
 
     .banner-content {
         p {
@@ -345,23 +349,23 @@ h3 {
         }
 
         .banner-form {
-            background: rgba(255, 255, 255, .80);
+            background: rgba(255, 255, 255, 0.8);
             padding: 30px;
             border-radius: 10px;
             margin-bottom: 45px;
-    
+
             .form-group {
                 margin-bottom: 0;
                 line-height: 1;
                 text-align: left;
-    
+
                 label {
                     font-size: 15px;
                     color: #5c5a5a;
                     font-weight: 600;
                     margin-bottom: 10px;
                 }
-    
+
                 .form-control {
                     height: 60px;
                     border-radius: 10px;
@@ -385,7 +389,7 @@ h3 {
                     }
                 }
             }
-    
+
             .find-btn {
                 background: $red-color;
                 font-size: 16px;
@@ -398,11 +402,11 @@ h3 {
                 position: relative;
                 padding: 16px 20px;
                 transition: $transition;
-    
+
                 &:hover {
                     background: $heading-color;
                 }
-    
+
                 i {
                     left: 10px;
                     top: 2px;
@@ -433,7 +437,7 @@ h3 {
             }
         }
     }
-}   
+}
 /* Banner CSS End */
 
 /* Category Section CSS Start */
@@ -490,7 +494,6 @@ h3 {
     }
 
     .job-info {
-
         h3 {
             margin-bottom: 10px;
             font-size: 20px;
@@ -518,7 +521,7 @@ h3 {
                     margin-bottom: 0;
                 }
 
-                a { 
+                a {
                     color: $red-color;
                     font-weight: 500;
                 }
@@ -585,7 +588,7 @@ h3 {
     }
 
     &:hover {
-        box-shadow:$box-shadow;
+        box-shadow: $box-shadow;
         border: 1px dashed $red-color;
     }
 }
@@ -602,8 +605,8 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         height: 100%;
         width: 100%;
         z-index: -1;
@@ -721,7 +724,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/shape/why-choose.png);
         background-size: cover;
         background-position: center center;
@@ -855,7 +858,8 @@ h3 {
                 color: $white-color;
                 font-size: 15px;
 
-                &:hover,  &:hover i {
+                &:hover,
+                &:hover i {
                     color: $heading-color;
                     letter-spacing: 1px;
                 }
@@ -916,7 +920,8 @@ h3 {
                 color: $white-color;
                 font-size: 15px;
 
-                &:hover,  &:hover i {
+                &:hover,
+                &:hover i {
                     color: $red-color;
                     letter-spacing: 1px;
                 }
@@ -950,7 +955,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/shape/price.png);
         background-position: center center;
         background-size: cover;
@@ -982,7 +987,7 @@ h3 {
         h2 {
             font-size: 40px;
             font-weight: 600;
-            
+
             sub {
                 font-size: 14px;
                 color: #969697;
@@ -1056,7 +1061,7 @@ h3 {
         transition: $transition;
 
         a {
-            i { 
+            i {
                 background: $red-color;
                 color: $white-color;
                 width: 35px;
@@ -1119,7 +1124,7 @@ h3 {
                 font-size: 16px;
                 float: left;
 
-                i{ 
+                i {
                     font-size: 18px;
                     top: 3px;
                     position: relative;
@@ -1157,7 +1162,6 @@ h3 {
 }
 
 .condidate-slider {
-
     .owl-dots {
         line-height: 1;
         margin-top: 25px !important;
@@ -1187,8 +1191,8 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         height: 100%;
         width: 100%;
         z-index: -1;
@@ -1209,7 +1213,6 @@ h3 {
 }
 
 .testimonial-items {
-
     .testimonial-img {
         margin-bottom: 20px;
         margin-left: 15px;
@@ -1284,7 +1287,7 @@ h3 {
 
 /* Blog CSS Start */
 .blog-card {
-    box-shadow:$box-shadow;
+    box-shadow: $box-shadow;
     margin-bottom: 30px;
 
     .blog-img {
@@ -1307,7 +1310,7 @@ h3 {
                 display: inline-block;
                 margin-right: 20px;
                 font-size: 14px;
-                
+
                 i {
                     color: $red-color;
                     margin-right: 2px;
@@ -1336,7 +1339,7 @@ h3 {
         .blog-btn {
             color: $red-color;
             font-size: 16px;
-            
+
             &:hover {
                 color: $heading-color;
             }
@@ -1365,7 +1368,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/shape/footer.png);
         background-position: center center;
         background-size: cover;
@@ -1373,7 +1376,7 @@ h3 {
         height: 138px;
         right: 60px;
         top: 70px;
-        opacity: .2;
+        opacity: 0.2;
         animation: rotate 30s infinite linear;
     }
 
@@ -1382,13 +1385,13 @@ h3 {
         .footer-logo {
             margin-bottom: 30px;
         }
-    
+
         p {
             font-size: 16px;
             color: $white-color;
             margin-bottom: 30px;
         }
-    
+
         .footer-social {
             a {
                 i {
@@ -1410,7 +1413,7 @@ h3 {
                 }
             }
         }
-       
+
         h3 {
             color: $white-color;
             position: relative;
@@ -1419,7 +1422,7 @@ h3 {
 
             &::before {
                 position: absolute;
-                content: '';
+                content: "";
                 background: $white-color;
                 height: 2px;
                 width: 50px;
@@ -1427,7 +1430,7 @@ h3 {
                 bottom: -15px;
             }
         }
-    
+
         ul {
             padding-left: 0;
             margin-bottom: 0;
@@ -1527,8 +1530,8 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         width: 100%;
         height: 100%;
         top: 0;
@@ -1567,7 +1570,7 @@ h3 {
         right: 5%;
         max-width: 500px;
 
-        img {   
+        img {
             border-radius: 65% 35% 42% 58% / 55% 48% 52% 45%;
             animation: wrap 5s infinite alternate;
         }
@@ -1584,7 +1587,6 @@ h3 {
     z-index: 1;
     position: relative;
     box-shadow: $box-shadow;
-
 
     .form-group {
         margin-bottom: 0;
@@ -1603,7 +1605,7 @@ h3 {
             height: 60px;
             border-radius: 10px;
             padding: 5px 20px 10px;
-        }   
+        }
 
         ::placeholder {
             font-size: 14px;
@@ -1638,7 +1640,7 @@ h3 {
             font-size: 14px;
             top: 3px;
             position: relative;
-            font-weight: 500;        
+            font-weight: 500;
         }
         .list {
             width: 100%;
@@ -1711,7 +1713,8 @@ h3 {
         border: 1px dashed $white-color;
     }
 
-    &:hover h3, &:hover p {
+    &:hover h3,
+    &:hover p {
         color: $white-color;
     }
 }
@@ -1725,7 +1728,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/shape/job.png);
         background-position: center center;
         background-size: cover;
@@ -1733,7 +1736,7 @@ h3 {
         width: 100%;
         top: 0;
         left: 0;
-        opacity: .02;
+        opacity: 0.02;
         z-index: -1;
     }
 }
@@ -1742,7 +1745,7 @@ h3 {
     background: $white-color;
     margin-bottom: 30px;
     padding: 40px 30px;
-    
+
     .company-logo {
         background: #fddcd4;
         width: 100px;
@@ -1778,7 +1781,7 @@ h3 {
                 font-size: 15px;
                 padding-right: 10px;
 
-                a { 
+                a {
                     color: $red-color;
                     font-weight: 500;
                 }
@@ -1820,8 +1823,8 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         width: 100%;
         height: 100%;
         top: 0;
@@ -1856,14 +1859,14 @@ h3 {
             padding: 50px;
             margin: 0 0 25px 0;
             transition: $transition;
-    
+
             i {
                 color: #fd987f;
                 font-size: 30px;
                 margin-bottom: 20px;
                 transition: $transition;
             }
-    
+
             p {
                 color: $heading-color;
                 font-size: 17px;
@@ -1874,7 +1877,6 @@ h3 {
         }
 
         .testimonial-info-text {
-
             h3 {
                 font-size: 18px;
                 margin-bottom: 5px;
@@ -1892,12 +1894,14 @@ h3 {
             background: $red-color;
         }
 
-        &:hover .testimonial-text i, &:hover .testimonial-text p {
+        &:hover .testimonial-text i,
+        &:hover .testimonial-text p {
             color: $white-color;
         }
     }
 
-    .owl-prev, .owl-next {
+    .owl-prev,
+    .owl-next {
         background: #f8cbc0 !important;
         color: $white-color !important;
         font-size: 22px !important;
@@ -1906,7 +1910,7 @@ h3 {
         border-radius: 50px !important;
         line-height: 42px !important;
         text-align: center;
-        transition: .5s;
+        transition: 0.5s;
 
         &:hover {
             background: $red-color !important;
@@ -2017,7 +2021,8 @@ h3 {
         background: $red-color;
     }
 
-    &:hover h3, &:hover p {
+    &:hover h3,
+    &:hover p {
         color: $white-color;
     }
 }
@@ -2025,11 +2030,10 @@ h3 {
 
 /* Grow Business CSS Start */
 .grow-business {
-
     .grow-text {
         .section-title {
             margin-bottom: 25px;
-    
+
             h2 {
                 margin: 0 0 0 0;
                 line-height: 1.3;
@@ -2045,7 +2049,7 @@ h3 {
         }
     }
 
-    .grow-img { 
+    .grow-img {
         animation: translateY 5s infinite linear;
     }
 }
@@ -2061,8 +2065,8 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         width: 100%;
         height: 100%;
         top: 0;
@@ -2090,7 +2094,7 @@ h3 {
             z-index: 1;
 
             &::before {
-                content: '';
+                content: "";
                 display: block;
                 position: absolute;
                 top: 0;
@@ -2104,7 +2108,7 @@ h3 {
             }
 
             &::after {
-                content: '';
+                content: "";
                 display: block;
                 position: absolute;
                 top: 0;
@@ -2133,7 +2137,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/shape/app.png);
         background-position: center center;
         background-size: cover;
@@ -2144,7 +2148,7 @@ h3 {
     }
 
     .browse-jobs-text {
-        .section-title {       
+        .section-title {
             margin-bottom: 25px;
 
             h2 {
@@ -2161,7 +2165,8 @@ h3 {
         }
 
         .app-btn {
-            .app-store, .play-store {
+            .app-store,
+            .play-store {
                 background: $red-color;
                 color: $white-color;
                 position: relative;
@@ -2188,7 +2193,8 @@ h3 {
                     }
                 }
 
-                &:hover, &.active {
+                &:hover,
+                &.active {
                     background: $heading-color;
                 }
 
@@ -2214,7 +2220,6 @@ h3 {
 
     .section-title {
         margin-bottom: 0;
-        
 
         h2 {
             color: $white-color;
@@ -2277,7 +2282,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/shape/banner.png);
         background-position: center center;
         background-size: cover;
@@ -2361,7 +2366,7 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background-image: url(../img/banner/2.jpg);
         background-position: center center;
         background-size: cover;
@@ -2374,8 +2379,8 @@ h3 {
 
     &::after {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         width: 100%;
         height: 400px;
         top: 0;
@@ -2384,7 +2389,8 @@ h3 {
     }
 
     .section-title {
-        h2, p {
+        h2,
+        p {
             color: $white-color;
         }
     }
@@ -2405,7 +2411,7 @@ h3 {
 /* Banner CSS Start */
 .banner-style-five {
     background-image: url(../img/banner/5.jpg);
-    
+
     &::after {
         display: none;
     }
@@ -2422,7 +2428,6 @@ h3 {
         }
     }
 
-    
     .find-form {
         margin-top: 45px;
     }
@@ -2439,7 +2444,9 @@ h3 {
             border: 1px solid transparent;
         }
 
-        i, h3, p {
+        i,
+        h3,
+        p {
             color: $white-color;
         }
     }
@@ -2455,7 +2462,6 @@ h3 {
     }
 
     .why-choose-text {
-
         .section-title {
             h2 {
                 color: $heading-color;
@@ -2504,13 +2510,13 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
+        content: "";
         background: $heading-color;
         width: 100%;
         height: 100%;
         left: 0;
         top: 0;
-        opacity: .8;
+        opacity: 0.8;
         border-radius: 10px;
     }
 
@@ -2521,7 +2527,6 @@ h3 {
         width: 100%;
         text-align: center;
         height: 100%;
-
 
         h3 {
             color: $white-color;
@@ -2551,8 +2556,8 @@ h3 {
 
     &::before {
         position: absolute;
-        content: '';
-        background: rgba(1,12,41,0.85);
+        content: "";
+        background: rgba(1, 12, 41, 0.85);
         width: 100%;
         height: 100%;
         top: 0;
@@ -2584,10 +2589,10 @@ h3 {
 
             &::before {
                 position: absolute;
-                content: '\ea1d';
+                content: "\ea1d";
                 right: -28px;
                 top: 4px;
-                font-family: 'boxicons';
+                font-family: "boxicons";
                 font-size: 22px;
                 line-height: 1;
             }
@@ -2606,7 +2611,7 @@ h3 {
             }
         }
     }
-    
+
     &.title-bg1 {
         background-image: url(../img/title-bg/1.jpg);
     }
@@ -2624,15 +2629,15 @@ h3 {
             position: absolute;
             width: 2px;
             height: 100%;
-            background: rgba(255,255,255,.1);
+            background: rgba(255, 255, 255, 0.1);
             left: 50%;
             top: 0;
 
             &::after {
                 position: absolute;
-                content: '';
-                width:100%;
-                height:10px;
+                content: "";
+                width: 100%;
+                height: 10px;
                 background: $red-color;
                 left: 0;
                 top: -50%;
@@ -2641,23 +2646,22 @@ h3 {
                 animation: line 6s infinite cubic-bezier(0, 1.11, 1, 1);
             }
         }
-        
+
         :nth-child(1) {
             margin-left: 25%;
         }
 
         :nth-child(2) {
-
             &::after {
-                animation-delay:1s;
+                animation-delay: 1s;
             }
         }
 
         :nth-child(3) {
-            margin-left:-25%;
+            margin-left: -25%;
 
             &::after {
-                animation-delay:2s;
+                animation-delay: 2s;
             }
         }
     }
@@ -2760,7 +2764,7 @@ h3 {
         background: $red-color;
         color: $white-color;
         transition: $transition;
-        margin-top: 30px;;
+        margin-top: 30px;
         border-radius: 10px;
         padding: 10px 45px;
         font-weight: 500;
@@ -2797,10 +2801,11 @@ h3 {
                 color: $red-color;
                 font-weight: 600;
                 font-size: 17px;
-                box-shadow:$box-shadow;
+                box-shadow: $box-shadow;
                 border-radius: 10px;
-                
-                &:hover, &.active {
+
+                &:hover,
+                &.active {
                     background: $heading-color;
                     color: $white-color;
                 }
@@ -2849,8 +2854,9 @@ h3 {
                 font-size: 17px;
                 box-shadow: $box-shadow;
                 border-radius: 10px;
-                
-                &:hover, &.active {
+
+                &:hover,
+                &.active {
                     background: $heading-color;
                     color: $white-color;
                 }
@@ -2879,13 +2885,13 @@ h3 {
     }
 }
 
-.job-details-text{
+.job-details-text {
     .job-card {
         background: $white-color;
         border: 0;
         padding: 0;
         margin-bottom: 50px;
-        
+
         &:hover {
             border: 0;
             box-shadow: 0 0 0 0;
@@ -2899,7 +2905,6 @@ h3 {
         }
 
         .job-info {
-
             h3 {
                 font-size: 25px;
             }
@@ -2930,14 +2935,14 @@ h3 {
         }
     }
 
-    .details-text { 
+    .details-text {
         margin-bottom: 30px;
 
         h3 {
             font-size: 24px;
             margin-bottom: 15px;
         }
-    
+
         p {
             margin-bottom: 10px;
         }
@@ -2945,7 +2950,7 @@ h3 {
         ul {
             padding-left: 0;
             margin-bottom: 0;
-            
+
             li {
                 list-style: none;
                 margin-bottom: 5px;
@@ -2980,7 +2985,7 @@ h3 {
                         color: $body-color;
                     }
                 }
-                                  
+
                 &:last-child td {
                     padding-bottom: 0;
                 }
@@ -3017,13 +3022,12 @@ h3 {
 
     h4 {
         font-size: 18px;
-        margin-bottom: 5px;    
+        margin-bottom: 5px;
     }
 
     span {
         font-size: 15px;
     }
-
 
     iframe {
         height: 400px;
@@ -3031,7 +3035,7 @@ h3 {
         margin-bottom: -10px;
     }
 
-    ul {    
+    ul {
         padding-left: 0;
         margin-bottom: 0;
         text-align: left;
@@ -3083,8 +3087,8 @@ h3 {
                         line-height: 35px;
                         color: red;
                         border-radius: 10px;
-                        transition: .5s;
-                        
+                        transition: 0.5s;
+
                         &:hover {
                             color: $white-color;
                         }
@@ -3148,7 +3152,7 @@ h3 {
     .candidate-social {
         text-align: center;
         padding-top: 15px;
-        padding-bottom: 15px;    
+        padding-bottom: 15px;
 
         a {
             i {
@@ -3157,9 +3161,9 @@ h3 {
                 width: 25px;
                 height: 25px;
                 line-height: 25px;
-                transition: .5s;
+                transition: 0.5s;
 
-                &:hover{
+                &:hover {
                     background: $heading-color;
                     color: $white-color;
                 }
@@ -3190,7 +3194,7 @@ h3 {
     h3 {
         margin-bottom: 5px;
         font-size: 24px;
-    }   
+    }
 
     p {
         font-size: 16px;
@@ -3207,7 +3211,7 @@ h3 {
             &:last-child {
                 margin-bottom: 0;
             }
-            
+
             a {
                 color: $body-color;
                 font-size: 16px;
@@ -3230,7 +3234,7 @@ h3 {
                 height: 30px;
                 line-height: 30px;
                 margin: 0 3px;
-                transition: .5s;
+                transition: 0.5s;
 
                 &:hover {
                     background: $heading-color;
@@ -3257,7 +3261,6 @@ h3 {
     }
 
     &.candidate-education {
-
         .education-info {
             margin-bottom: 20px;
 
@@ -3265,12 +3268,12 @@ h3 {
                 font-size: 20px;
                 margin-bottom: 10px;
             }
-    
+
             p {
                 margin-bottom: 0;
                 font-size: 16px;
             }
-    
+
             span {
                 font-size: 16px;
             }
@@ -3337,8 +3340,9 @@ h3 {
                 font-size: 17px;
                 box-shadow: $box-shadow;
                 border-radius: 10px;
-                
-                &:hover, &.active {
+
+                &:hover,
+                &.active {
                     background: $heading-color;
                     color: $white-color;
                 }
@@ -3381,11 +3385,11 @@ h3 {
             border-radius: 50%;
             margin-bottom: 15px;
         }
-    
+
         h3 {
             margin-bottom: 12px;
         }
-    
+
         p {
             margin-bottom: 0;
             line-height: 1;
@@ -3463,11 +3467,11 @@ h3 {
             transition: $transition;
             border-radius: 5px;
 
-            &:hover{
+            &:hover {
                 background: $heading-color;
             }
         }
-        
+
         &:last-child {
             margin-bottom: 0;
             border-bottom: 0px dashed #ddd;
@@ -3529,7 +3533,7 @@ h3 {
         }
     }
 
-    .resume-content  {
+    .resume-content {
         margin-bottom: 30px;
 
         h3 {
@@ -3548,7 +3552,7 @@ h3 {
             ul {
                 padding-left: 0;
                 margin-bottom: 0;
-    
+
                 li {
                     display: inline-block;
                     width: 45%;
@@ -3556,7 +3560,7 @@ h3 {
                     margin-bottom: 20px;
                     padding: 10px 20px;
                     margin-right: 20px;
-    
+
                     span {
                         font-weight: 600;
                         display: inline-block;
@@ -3584,7 +3588,7 @@ h3 {
 
                     &::before {
                         position: absolute;
-                        content: '';
+                        content: "";
                         background: $red-color;
                         width: 8px;
                         height: 8px;
@@ -3620,7 +3624,7 @@ h3 {
 
                     &::before {
                         position: absolute;
-                        content: '';
+                        content: "";
                         background: $red-color;
                         width: 8px;
                         height: 8px;
@@ -3678,7 +3682,7 @@ h3 {
 .page-title {
     &.title-bg12 {
         background-image: url(../img/title-bg/12.jpg);
-    } 
+    }
 }
 
 .signin-form {
@@ -3713,7 +3717,7 @@ h3 {
             border-radius: 30px;
             background: $heading-color;
             color: $white-color;
-            transition: .8s;
+            transition: 0.8s;
             font-size: 16px;
 
             &:hover {
@@ -3761,7 +3765,7 @@ h3 {
 
         a {
             color: $heading-color;
-            transition: .8s;
+            transition: 0.8s;
 
             &:hover {
                 color: $red-color;
@@ -3787,7 +3791,7 @@ h3 {
 .page-title {
     &.title-bg13 {
         background-image: url(../img/title-bg/13.jpg);
-    } 
+    }
 }
 
 .signup-form {
@@ -3822,7 +3826,7 @@ h3 {
             border-radius: 30px;
             background: $heading-color;
             color: $white-color;
-            transition: .8s;
+            transition: 0.8s;
             font-size: 16px;
 
             &:hover {
@@ -3870,7 +3874,7 @@ h3 {
 
         a {
             color: $heading-color;
-            transition: .8s;
+            transition: 0.8s;
 
             &:hover {
                 color: $red-color;
@@ -3899,13 +3903,12 @@ h3 {
     }
 }
 
-.reset-form  {
+.reset-form {
     box-shadow: $box-shadow;
     padding: 50px;
     border-radius: 30px;
 
     .form-group {
-
         label {
             font-size: 15px;
             margin-bottom: 10px;
@@ -3928,7 +3931,7 @@ h3 {
             border-radius: 30px;
             background: $heading-color;
             color: $white-color;
-            transition: .8s;
+            transition: 0.8s;
             font-size: 16px;
 
             &:hover {
@@ -3963,7 +3966,6 @@ h3 {
 }
 .faq-section {
     .accordions {
-
         .accordion-item {
             background-color: #f9f9f9;
             margin-bottom: 30px;
@@ -3978,25 +3980,24 @@ h3 {
                 border-radius: 10px 10px 0 0;
 
                 i {
-                    transition:  $transition;
+                    transition: $transition;
                 }
 
                 &.active-title {
                     background-color: $heading-color;
                 }
 
-                &.active-title h2  {
-                    color:$white-color;
+                &.active-title h2 {
+                    color: $white-color;
                 }
 
-                &.active-title h2 i  {
+                &.active-title h2 i {
                     transform: rotate(90deg);
                 }
 
-
                 h2 {
                     margin: 0;
-                    font-size:20px;
+                    font-size: 20px;
                     display: flex;
                     justify-content: space-between;
                     color: $heading-color;
@@ -4007,7 +4008,6 @@ h3 {
                         position: inherit;
                     }
                 }
-
             }
 
             .accordion-content {
@@ -4023,7 +4023,7 @@ h3 {
 
                 p {
                     margin: 0;
-                }   
+                }
             }
         }
     }
@@ -4057,8 +4057,9 @@ h3 {
                 font-size: 17px;
                 box-shadow: $box-shadow;
                 border-radius: 10px;
-                
-                &:hover, &.active {
+
+                &:hover,
+                &.active {
                     background: $heading-color;
                     color: $white-color;
                 }
@@ -4089,7 +4090,6 @@ h3 {
 
 .privacy-section {
     .privacy-text {
-
         h2 {
             font-size: 25px;
             margin-bottom: 15px;
@@ -4103,7 +4103,6 @@ h3 {
                 margin-bottom: 0;
             }
         }
-
     }
 }
 /*----------  Privacy Page CSS End ----------*/
@@ -4167,8 +4166,9 @@ h3 {
                 font-size: 17px;
                 box-shadow: $box-shadow;
                 border-radius: 10px;
-                
-                &:hover, &.active {
+
+                &:hover,
+                &.active {
                     background: $heading-color;
                     color: $white-color;
                 }
@@ -4217,7 +4217,7 @@ h3 {
 
         &::before {
             position: absolute;
-            content: '';
+            content: "";
             background: $heading-color;
             width: 2px;
             height: 20px;
@@ -4281,7 +4281,6 @@ h3 {
                 font-size: 14px;
             }
 
-            
             h4 {
                 line-height: 1;
 
@@ -4374,7 +4373,7 @@ h3 {
                 display: inline-block;
                 margin-right: 20px;
                 font-size: 16px;
-                
+
                 i {
                     color: $red-color;
                     margin-right: 2px;
@@ -4438,10 +4437,10 @@ h3 {
             padding-bottom: 20px;
             border-bottom: 1px dashed #ddd;
             position: relative;
-    
+
             &::before {
                 position: absolute;
-                content: '';
+                content: "";
                 background: $heading-color;
                 width: 2px;
                 height: 20px;
@@ -4474,7 +4473,7 @@ h3 {
             padding: 10px 20px;
             background: $red-color;
             color: $white-color;
-            transition: .8s;
+            transition: 0.8s;
 
             &:hover {
                 background: $heading-color;
@@ -4523,7 +4522,6 @@ h3 {
                     color: $red-color;
                 }
             }
-
         }
     }
 }
@@ -4555,11 +4553,11 @@ h3 {
             }
         }
 
-        .contact-btn{
+        .contact-btn {
             background: $red-color;
             color: $white-color;
             padding: 12px 30px;
-            transition: .8s;
+            transition: 0.8s;
             border-radius: 5px;
 
             &:hover {
@@ -4574,14 +4572,13 @@ h3 {
         }
 
         .text-danger {
-            color: #dc3545!important;
+            color: #dc3545 !important;
             margin-top: 18px;
             font-size: 20px;
         }
     }
 }
 /*----------  Contact Page CSS End ----------*/
-
 
 /* Back To Top CSS Start */
 .top-btn {
@@ -4646,7 +4643,7 @@ h3 {
 }
 
 .sk-circle .sk-child:before {
-    content: '';
+    content: "";
     display: block;
     margin: 0 auto;
     width: 15%;
@@ -4659,73 +4656,75 @@ h3 {
     transform: rotate(30deg);
 }
 .sk-circle .sk-circle3 {
-    transform: rotate(60deg); 
+    transform: rotate(60deg);
 }
 .sk-circle .sk-circle4 {
     transform: rotate(90deg);
 }
 .sk-circle .sk-circle5 {
-    transform: rotate(120deg); 
+    transform: rotate(120deg);
 }
 .sk-circle .sk-circle6 {
-    transform: rotate(150deg); 
+    transform: rotate(150deg);
 }
 .sk-circle .sk-circle7 {
-    transform: rotate(180deg); 
+    transform: rotate(180deg);
 }
 .sk-circle .sk-circle8 {
-    transform: rotate(210deg); 
+    transform: rotate(210deg);
 }
 .sk-circle .sk-circle9 {
-    transform: rotate(240deg); 
+    transform: rotate(240deg);
 }
 .sk-circle .sk-circle10 {
-    transform: rotate(270deg); 
+    transform: rotate(270deg);
 }
 .sk-circle .sk-circle11 {
-    transform: rotate(300deg); 
+    transform: rotate(300deg);
 }
 .sk-circle .sk-circle12 {
-    transform: rotate(330deg); 
+    transform: rotate(330deg);
 }
 .sk-circle .sk-circle2:before {
-    animation-delay: -1.1s; 
+    animation-delay: -1.1s;
 }
 .sk-circle .sk-circle3:before {
-    animation-delay: -1s; 
+    animation-delay: -1s;
 }
 .sk-circle .sk-circle4:before {
-    animation-delay: -0.9s; 
+    animation-delay: -0.9s;
 }
 .sk-circle .sk-circle5:before {
-    animation-delay: -0.8s; 
+    animation-delay: -0.8s;
 }
 .sk-circle .sk-circle6:before {
-    animation-delay: -0.7s; 
+    animation-delay: -0.7s;
 }
 .sk-circle .sk-circle7:before {
-    animation-delay: -0.6s; 
+    animation-delay: -0.6s;
 }
 .sk-circle .sk-circle8:before {
-    animation-delay: -0.5s; 
+    animation-delay: -0.5s;
 }
 .sk-circle .sk-circle9:before {
-    animation-delay: -0.4s; 
+    animation-delay: -0.4s;
 }
 .sk-circle .sk-circle10:before {
-    animation-delay: -0.3s; 
+    animation-delay: -0.3s;
 }
 .sk-circle .sk-circle11:before {
-    animation-delay: -0.2s; 
+    animation-delay: -0.2s;
 }
 .sk-circle .sk-circle12:before {
-    animation-delay: -0.1s; 
+    animation-delay: -0.1s;
 }
-  
+
 @-webkit-keyframes sk-circleBounceDelay {
-    0%, 80%, 100% {
+    0%,
+    80%,
+    100% {
         transform: scale(0);
-    } 
+    }
 
     40% {
         transform: scale(1);
@@ -4733,9 +4732,11 @@ h3 {
 }
 
 @keyframes sk-circleBounceDelay {
-    0%, 80%, 100% {
+    0%,
+    80%,
+    100% {
         transform: scale(0);
-    } 
+    }
 
     40% {
         transform: scale(1);
@@ -4745,13 +4746,12 @@ h3 {
 
 /* Animation CSS Start */
 @keyframes line {
-
     0% {
-        top:0%;
+        top: 0%;
     }
 
     100% {
-        top:100%;
+        top: 100%;
     }
 }
 
@@ -4777,7 +4777,7 @@ h3 {
 
 @keyframes translateY {
     0% {
-       transform: translateY(0);
+        transform: translateY(0);
     }
 
     50% {
@@ -4803,4 +4803,14 @@ h3 {
         opacity: 0;
     }
 }
+
+@media only screen and (max-width: 997px) {
+    .profilepic {
+        display: none;
+    }
+}
+
+
+
+
 /* Animation CSS End */

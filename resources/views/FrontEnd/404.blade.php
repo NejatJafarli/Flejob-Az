@@ -347,7 +347,7 @@
 
 					<div class="col-lg-3 col-sm-6">
 						<div class="footer-widget pl-60">
-							<h3>Quick Links</h3>
+							<h3 class="quick-links-text-mobile">Quick Links</h3>
 							<ul>
 								<li>
 									<a href="index.html">

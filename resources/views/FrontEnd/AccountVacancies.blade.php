@@ -111,15 +111,15 @@
                         <div class="col-lg-12 " style="border: 1px solid black">
                             <div class="job-card-two">
                                 <div class="row align-items-center">
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <div class="company-logo">
                                             <a
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"></a>
-                                            <img style="max-width:87px"
-                                                src="CompanyLogos/{{ $vac->Company->CompanyLogo }}" alt="logo">
+                                            <img style="border-radius:50%;"
+                                                src="/CompanyLogos/{{ $vac->Company->CompanyLogo }}" alt="logo">
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-7">
                                         <div class="job-info">
                                             <h3>
                                                 <a
