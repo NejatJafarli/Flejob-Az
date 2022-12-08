@@ -128,7 +128,7 @@
                                                             <a
                                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"></a>
                                                             <img style="max-width:87px"
-                                                                src="CompanyLogos/{{ $vac->Company->CompanyLogo }}"
+                                                                src="/CompanyLogos/{{ $vac->Company->CompanyLogo }}"
                                                                 alt="logo">
                                                         </div>
                                                     </div>

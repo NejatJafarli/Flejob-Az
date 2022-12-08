@@ -3806,11 +3806,13 @@ fieldset:disabled .btn {
     overflow-y: auto;
 }
 @media (min-width: 576px) {
+  
     .navbar-expand-sm {
         flex-wrap: nowrap;
         justify-content: flex-start;
     }
     .navbar-expand-sm .navbar-nav {
+        
         flex-direction: row;
     }
     .navbar-expand-sm .navbar-nav .dropdown-menu {
@@ -9428,3 +9430,11 @@ fieldset:disabled .btn {
         display: none !important;
     }
 }
+
+
+@media only screen and (max-width: 991px) {
+    .navbar-nav {
+        display: block;
+    }
+  }
+

@@ -79,7 +79,7 @@
                 @foreach ($MyCategories as $cat)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <a href="{{route('FindAJob',app()->getLocale())}}?Category={{$cat->id}}">
-                            <div class="category-card">
+                            <div class="category-card" style="height: 280px" >
                                 @php
                                     echo $cat->StyleClass;
                                 @endphp

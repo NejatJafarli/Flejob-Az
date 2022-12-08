@@ -244,7 +244,7 @@ class AccountController extends Controller
                 $not->save();
             }
 
-            return view('FrontEnd/AppliedCandidates')->with(['myCandidates' => $myCandidates, 'Candidates' => $Candidates, 'vac' => $vac]);
+            return view('FrontEnd/AppliedCandidates')->with(['myCandidates' => $myCandidates, 'Candidates' => $Candidates, 'vac' => $vac,"myIdBool" => true, "myId" => $VacId]);
         } else {
             return redirect()->route('Signin', app()->getLocale());
         }

@@ -48,7 +48,7 @@
             <div class="row">
                 @foreach ($CompanyUsers as $com)
                     <div class="col-lg-3 col-sm-6">
-                        <div class="company-card">
+                        <div class="company-card" style="height: 310px">
                             <div class="company-logo">
                                 <a href="job-list.html">
                                     <img style="width: 100px; height:100px" src="/CompanyLogos/{{ $com->CompanyLogo }}"

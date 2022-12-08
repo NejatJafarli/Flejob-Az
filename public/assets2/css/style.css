@@ -3149,7 +3149,7 @@ h3 {
 .candidate-card {
   -webkit-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 
 .candidate-card .candidate-img img {
@@ -3159,7 +3159,7 @@ h3 {
 .candidate-card .candidate-text {
   text-align: center;
   padding: 15px 10px;
-  border-bottom: 1px dashed #ddd;
+  border-bottom: 1px  #ddd;
   margin-top: -45px;
   z-index: 1;
   background: #ffffff;

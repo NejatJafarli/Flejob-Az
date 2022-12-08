@@ -197,7 +197,7 @@
 
                     <div class="option-item">
                         <img src="/CompanyLogos/{{ session()->get('CompanyUser')->CompanyLogo }}" alt="profile picture"
-                            style="width: 50px; height: 40px; border-radius: 50%; margin-left:10px;">
+                            style="width: 50px; height: 40px; border-radius: 50%; margin-left:10px;" class="navbar-img-mobile">
                     </div>
 
                     <li class="nav-item">
