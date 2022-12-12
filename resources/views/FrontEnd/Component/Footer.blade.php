@@ -24,8 +24,8 @@
 
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget pl-60">
-                    <h3>For Candidate</h3>
-                    <ul>
+                    <h3 class="for-candidate-text-mobil">For Candidate</h3>
+                    <ul class="footer-ul-centre-mobile">
                         <li>
                             <a href="job-grid.html">
                                 <i class='bx bx-chevrons-right bx-tada'></i>
@@ -68,8 +68,8 @@
 
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget pl-60">
-                    <h3>Quick Links</h3>
-                    <ul>
+                    <h3 class="quick-links-text-mobile">Quick Links</h3>
+                    <ul class="footer-ul-centre-mobile">
                         <li>
                             <a href="{{ route('Hom', app()->getLocale()) }}">
                                 <i class='bx bx-chevrons-right bx-tada'></i>
@@ -112,7 +112,7 @@
 
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget footer-info">
-                    <h3>Information</h3>
+                    <h3 class="information-text-mobil">Information</h3>
                     @php
                         use App\Models\Config;
                         
@@ -123,7 +123,7 @@
                         $config = Config::where('key', '=', 'infoAddress')->first();
                         $address = $config->value;
                     @endphp
-                    <ul>
+                    <ul class="footer-ul-centre-mobile">
                         <li>
                             <span>
                                 <i class='bx bxs-phone'></i>

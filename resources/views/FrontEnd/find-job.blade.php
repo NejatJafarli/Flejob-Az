@@ -13,7 +13,7 @@
         
         $Category = request()->get('Category');
         $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
-        if (isset($Category)) {
+        if (isset($Category)&& $Category != 'All') {
             $Category = Category::where('id', $Category)->first();
             //merge with category lang
         
@@ -191,7 +191,7 @@
                 @foreach ($MyCategories as $cat)
                     <div class="col-lg-3 col-sm-6">
                         <a href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">
-                            <div class="category-item">
+                            <div class="category-item" style="height: 150px">
                                 @php
                                     echo $cat->StyleClass;
                                 @endphp

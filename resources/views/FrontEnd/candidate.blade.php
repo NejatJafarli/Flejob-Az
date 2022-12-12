@@ -55,7 +55,7 @@
                 @endphp
                 @foreach ($candidates as $user)
                     <div class="col-lg-3 col-sm-6">
-                        <div class="candidate-card">
+                        <div class="candidate-card" style="height: 320px">
                             <div class="candidate-img">
                                 <img style="padding: 20px" src="/CandidatesPicture/{{ $user->image }}"
                                     alt="candidate image">

@@ -1,5 +1,5 @@
 // Small devices (landscape phones, 576px and up)
-@media (max-width:767px) {
+@media (max-width: 767px) {
     /* Custom CSS */
     p {
         font-size: 16px;
@@ -32,7 +32,6 @@
     /*----- Home Page One CSS Start -----*/
     /* Navbar CSS */
     .navbar-area {
-
         .mobile-nav {
             display: block;
             position: relative;
@@ -82,7 +81,6 @@
         }
 
         .banner-content {
-
             h1 {
                 font-size: 30px;
                 margin-bottom: 35px;
@@ -101,7 +99,7 @@
                     label {
                         padding-left: 5px;
                     }
-                
+
                     .form-control {
                         height: 50px;
                     }
@@ -197,7 +195,7 @@
         &::before {
             width: 250px;
         }
-        
+
         .section-title {
             margin-bottom: 30px;
         }
@@ -256,7 +254,7 @@
 
             .media-body {
                 padding-left: 0;
-                
+
                 h5 {
                     font-size: 20px !important;
                     margin-top: 12px !important;
@@ -273,7 +271,7 @@
 
             .media-body {
                 padding-left: 0;
-                
+
                 h5 {
                     font-size: 20px !important;
                     margin-top: 12px !important;
@@ -316,7 +314,6 @@
             padding: 15px;
 
             .testimonial-items {
-
                 .testimonial-text {
                     padding: 30px;
                     margin-top: 25px;
@@ -330,7 +327,7 @@
             .owl-next {
                 bottom: 20px;
             }
-        }   
+        }
     }
 
     /* Blog CSS */
@@ -396,7 +393,7 @@
             right: 0;
             top: 0;
             position: relative;
-            padding:0 15px;
+            padding: 0 15px;
         }
 
         .theme-btn {
@@ -449,7 +446,6 @@
             width: 60px;
             height: 60px;
             line-height: 60px;
-        
         }
     }
 
@@ -507,7 +503,7 @@
 
         .testimonial-items {
             .testimonial-text {
-                padding: 20px;             
+                padding: 20px;
 
                 p {
                     font-size: 16px;
@@ -534,14 +530,14 @@
         position: relative;
         z-index: 1;
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             left: 0;
             top: 0;
             background-color: #fff;
             height: 100%;
             width: 100%;
-            opacity: .7;
+            opacity: 0.7;
             z-index: -1;
         }
 
@@ -622,7 +618,8 @@
             .app-btn {
                 text-align: center;
 
-                .play-store, .app-store {
+                .play-store,
+                .app-store {
                     margin-right: 0px;
                     padding: 8px 10px;
 
@@ -658,12 +655,11 @@
             margin-bottom: 30px;
 
             h2 {
-                font-size: 20px; 
+                font-size: 20px;
             }
         }
 
         .newsletter-form {
-
             .form-control {
                 margin-bottom: 15px;
                 height: 50px;
@@ -793,7 +789,7 @@
     /*----- About Page CSS Start -----*/
     .page-title {
         h2 {
-            font-size: 30px; 
+            font-size: 30px;
         }
 
         ul {
@@ -825,7 +821,7 @@
 
             .company-logo {
                 margin: 0 auto 20px;
-                max-width: 100px; 
+                max-width: 100px;
             }
 
             .job-info {
@@ -890,12 +886,12 @@
         }
     }
     /*----- Resume Page CSS End -----*/
-    
-    /*----- Signin Page CSS Start -----*/ 
+
+    /*----- Signin Page CSS Start -----*/
     .signin-form {
         padding: 20px;
 
-        .create-btn  {
+        .create-btn {
             p {
                 a {
                     display: block;
@@ -903,13 +899,13 @@
             }
         }
     }
-    /*----- Signin Page CSS End -----*/ 
+    /*----- Signin Page CSS End -----*/
 
-    /*----- Signup Page CSS Start -----*/ 
+    /*----- Signup Page CSS Start -----*/
     .signup-form {
         padding: 20px;
 
-        .create-btn  {
+        .create-btn {
             p {
                 a {
                     display: block;
@@ -917,9 +913,9 @@
             }
         }
     }
-    /*----- Signup Page CSS End -----*/ 
+    /*----- Signup Page CSS End -----*/
 
-    /*----- Reset Password Page CSS Start -----*/ 
+    /*----- Reset Password Page CSS Start -----*/
     .reset-form {
         padding: 15px;
         text-align: center;
@@ -934,9 +930,9 @@
             margin-top: 20px;
         }
     }
-    /*----- Reset Password Page CSS End -----*/ 
+    /*----- Reset Password Page CSS End -----*/
 
-    /*----- FAQ Page CSS Start -----*/ 
+    /*----- FAQ Page CSS Start -----*/
     .faq-section {
         .section-title {
             h2 {
@@ -947,7 +943,7 @@
         .accordions {
             .accordion-item {
                 .accordion-title {
-                    padding: 10px; 
+                    padding: 10px;
 
                     h2 {
                         font-size: 15px;
@@ -956,9 +952,9 @@
             }
         }
     }
-    /*----- FAQ Page CSS End -----*/ 
+    /*----- FAQ Page CSS End -----*/
 
-    /*----- Terms Page CSS Start -----*/ 
+    /*----- Terms Page CSS Start -----*/
     .terms-section {
         .terms-text {
             h2 {
@@ -966,17 +962,17 @@
             }
         }
     }
-    /*----- Terms Page CSS End -----*/ 
+    /*----- Terms Page CSS End -----*/
 
-    /*----- Blog Page CSS Start -----*/ 
+    /*----- Blog Page CSS Start -----*/
     .blog-card {
         .blog-text {
             padding: 20px;
         }
     }
-    /*----- Blog Page CSS End -----*/ 
+    /*----- Blog Page CSS End -----*/
 
-    /*----- Blog Details Page CSS Start -----*/ 
+    /*----- Blog Details Page CSS Start -----*/
     .blog-widget {
         padding: 20px;
     }
@@ -1003,14 +999,14 @@
             }
         }
     }
-    /*----- Blog Details Page CSS End -----*/ 
+    /*----- Blog Details Page CSS End -----*/
 
-    /*----- Contact Page CSS Start -----*/ 
+    /*----- Contact Page CSS Start -----*/
     .contact-area {
         padding: 20px;
         border-radius: 20px;
     }
-    /*----- Contact Page CSS End -----*/ 
+    /*----- Contact Page CSS End -----*/
     .job-card-two .job-info h3 {
         font-size: 19px;
         line-height: 1.4;
@@ -1047,8 +1043,8 @@
 }
 
 // Medium devices (tablets, 768px and up)
-@media (min-width:768px) and (max-width:991px) {
-     /* Custom CSS */
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Custom CSS */
     p {
         font-size: 16px;
     }
@@ -1150,7 +1146,6 @@
         padding-bottom: 100px;
 
         .banner-content {
-
             h1 {
                 font-size: 45px;
                 margin-bottom: 55px;
@@ -1235,7 +1230,7 @@
 
             .media-body {
                 padding-left: 0;
-                
+
                 h5 {
                     font-size: 20px !important;
                     margin-top: 12px !important;
@@ -1252,7 +1247,7 @@
 
             .media-body {
                 padding-left: 0;
-                
+
                 h5 {
                     font-size: 20px !important;
                     margin-top: 12px !important;
@@ -1400,14 +1395,14 @@
         position: relative;
         z-index: 1;
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             left: 0;
             top: 0;
             background-color: #fff;
             height: 100%;
             width: 100%;
-            opacity: .7;
+            opacity: 0.7;
             z-index: -1;
         }
 
@@ -1424,7 +1419,6 @@
 
     /* Apps Section CSS */
     .browse-job {
-
         &::before {
             display: none;
         }
@@ -1443,7 +1437,8 @@
             margin-bottom: 50px;
 
             .app-btn {
-                .app-store, .play-store {
+                .app-store,
+                .play-store {
                     ul {
                         text-align: left;
                     }
@@ -1453,10 +1448,10 @@
     }
 
     /* Grow Business CSS */
-    .grow-business  {
+    .grow-business {
         .section-title {
             h2 {
-                 font-size: 22px;
+                font-size: 22px;
             }
         }
 
@@ -1466,7 +1461,7 @@
     }
 
     /* Counter CSS */
-    .counter-section  {
+    .counter-section {
         .counter-text {
             margin-bottom: 30px;
         }
@@ -1594,7 +1589,7 @@
             h3 {
                 font-size: 20px;
             }
-            
+
             &.basic-info-text {
                 ul {
                     li {
@@ -1615,7 +1610,7 @@
     /*----- Contact Page CSS Start -----*/
     .contact-card {
         padding: 20px;
-    } 
+    }
     /*----- Contact Page CSS End -----*/
 
     .candidate-profile {
@@ -1624,8 +1619,7 @@
 }
 
 //Large devices (landscape ipad, desktops, 992px and up)
-@media (min-width:992px) and (max-width:1199px) {
-
+@media (min-width: 992px) and (max-width: 1199px) {
     /*----- Home Page One CSS Start -----*/
     /* Navbar CSS */
     .navbar-area {
@@ -1643,7 +1637,8 @@
                     top: -2px;
                     position: relative;
 
-                    .signup-btn, .signin-btn {
+                    .signup-btn,
+                    .signin-btn {
                         font-size: 15px;
                     }
                 }
@@ -1723,8 +1718,8 @@
             max-width: 400px;
         }
 
-        .banner-text {         
-            max-width: 465px; 
+        .banner-text {
+            max-width: 465px;
 
             h1 {
                 font-size: 50px;
@@ -1764,7 +1759,6 @@
     /* Counter CSS */
     .counter-area {
         .counter-text {
-
             i {
                 top: 20px;
                 font-size: 40px;
@@ -1858,7 +1852,7 @@
 
             .media-body {
                 padding-left: 0;
-                
+
                 h5 {
                     font-size: 20px !important;
                     margin-top: 12px !important;
@@ -1875,7 +1869,7 @@
 
             .media-body {
                 padding-left: 0;
-                
+
                 h5 {
                     font-size: 20px !important;
                     margin-top: 12px !important;
@@ -1889,7 +1883,7 @@
     /*----- Home Page Five CSS Start -----*/
     .category-card {
         padding: 30px 20px;
-        
+
         h3 {
             font-size: 20px;
         }
@@ -1924,7 +1918,7 @@
 }
 
 //Extra large devices (large desktops, 1200px and up)
-@media (min-width:1800px) {
+@media (min-width: 1800px) {
     .banner-style-four {
         height: 900px;
         .banner-img {
@@ -1954,6 +1948,13 @@
     .banner-style-two .banner-img {
         top: 15%;
         right: 15%;
-    }    
+    }
     /*----- Home Page Two CSS End -----*/
 }
+
+
+@media only screen and (max-width: 997px) {
+    .profilepic {
+      display: none;
+    }
+  }

@@ -138,7 +138,7 @@
                 @foreach ($Categories as $cat)
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <a href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">
-                            <div class="category-card">
+                            <div class="category-card" style="height: 280px">
                                 @php
                                     echo $cat->StyleClass;
                                 @endphp
@@ -254,7 +254,7 @@
                 @endphp
                 @foreach ($MyCompanyUsers as $user)
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="company-card">
+                        <div class="company-card" style="height: 300px">
                             <div class="thumb-img">
                                 <img style="height: 70px; width:70px" src="/CompanyLogos/{{ $user->CompanyLogo }}"
                                     alt="company logo">
@@ -578,9 +578,10 @@
                 @foreach ($blogs as $blog)
                     <div class="col-lg-4 col-sm-6">
                         <div class="blog-card">
-                            <div class="blog-img">
+                            <div class="blog-img" >
                                 <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
-                                    <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image">
+                                    <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image" style="object-fit:cover;
+                                    ">
                                 </a>
                             </div>
                             <div class="blog-text">

@@ -5,6 +5,7 @@
     @include('FrontEnd.Component.cdn')
 </head>
 
+
 <body>
     @include('FrontEnd.Component.Navbar')
     <script>

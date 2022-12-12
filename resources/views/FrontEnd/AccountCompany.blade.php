@@ -138,7 +138,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="CompanyLogo">
-                                            Company Logo If you Want to change upload new image</label>
+                                            Company Logo  </label>
                                         <input type="file" class="form-control"name="CompanyLogo">
                                     </div>
                                 </div>
