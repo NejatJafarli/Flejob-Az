@@ -22,10 +22,10 @@ use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
-class AdminPanelController extends Controller
+class adminPanelController extends Controller
 {
     //Login Logout Checks
-    public function LoginAdminPanel(AdminLoginRequest $req)
+    public function LoginadminPanel(AdminLoginRequest $req)
     {
         $user = $req->username;
         $pass = $req->password;
@@ -77,7 +77,7 @@ class AdminPanelController extends Controller
         $Langs = ModelsLang::all();
         $cat_lang = category_lang::paginate(10);
 
-        return  view('AdminPanel/Category/AdminCategory')->with(['categories' => $cat_lang, 'languages' => $Langs]);
+        return  view('adminPanel/Category/AdminCategory')->with(['categories' => $cat_lang, 'languages' => $Langs]);
     }
 
     public function Languages()
@@ -86,7 +86,7 @@ class AdminPanelController extends Controller
             return redirect()->route('Login', app()->getLocale());
 
         $languages = Language::paginate(10);
-        return view('AdminPanel/Language/AdminLanguage')->with('Languages', $languages);
+        return view('adminPanel/Language/AdminLanguage')->with('Languages', $languages);
     }
     public function City()
     {
@@ -96,7 +96,7 @@ class AdminPanelController extends Controller
         $Langs = ModelsLang::all();
         $city_lang = city_lang::paginate(10);
 
-        return  view('AdminPanel/City/AdminCity')->with(['cities' => $city_lang, 'languages' => $Langs]);
+        return  view('adminPanel/City/AdminCity')->with(['cities' => $city_lang, 'languages' => $Langs]);
     }
     public function EducationLevel()
     {
@@ -106,7 +106,7 @@ class AdminPanelController extends Controller
         $Langs = ModelsLang::all();
         $edl = education_level_langs::paginate(10);
 
-        return  view('AdminPanel/EducationLevel/AdminEducationLevel')->with(['EducationLevels' => $edl, 'languages' => $Langs]);
+        return  view('adminPanel/EducationLevel/AdminEducationLevel')->with(['EducationLevels' => $edl, 'languages' => $Langs]);
     }
     public function MultiLanguage()
     {
@@ -115,7 +115,7 @@ class AdminPanelController extends Controller
 
         $Langs = ModelsLang::paginate(10);
 
-        return  view('AdminPanel/MultiLanguage/AdminMultiLanguage')->with(['Languages' => $Langs]);
+        return  view('adminPanel/MultiLanguage/AdminMultiLanguage')->with(['Languages' => $Langs]);
     }
     public function CompanyUser()
     {
@@ -125,7 +125,7 @@ class AdminPanelController extends Controller
         //get all CompanyUser And Paginate 10
         $CompanyUsers = CompanyUser::paginate(10);
 
-        return  view('AdminPanel/CompanyUser/AdminCompanyUser')->with(['Companies' => $CompanyUsers]);
+        return  view('adminPanel/CompanyUser/AdminCompanyUser')->with(['Companies' => $CompanyUsers]);
     }
     public function User()
     {
@@ -134,7 +134,7 @@ class AdminPanelController extends Controller
 
         $users = User::paginate(10);
 
-        return  view('AdminPanel/User/AdminUser')->with(['Users' => $users]);
+        return  view('adminPanel/User/AdminUser')->with(['Users' => $users]);
     }
     public function Vacancy()
     {
@@ -143,7 +143,7 @@ class AdminPanelController extends Controller
 
         $vacancies = Vacancy::paginate(10);
 
-        return  view('AdminPanel/Vacancy/AdminVacancy')->with(['Vacancies' => $vacancies]);
+        return  view('adminPanel/Vacancy/AdminVacancy')->with(['Vacancies' => $vacancies]);
     }
     public function Blogs($lang)
     {
@@ -152,7 +152,7 @@ class AdminPanelController extends Controller
 
         $blogs = blog::paginate(10);
 
-        return  view('AdminPanel/Blogs/AdminBlog')->with(['Blogs' => $blogs]);
+        return  view('adminPanel/Blogs/AdminBlog')->with(['Blogs' => $blogs]);
     }
     public function AddBlogs(Request $req)
     {
@@ -192,7 +192,7 @@ class AdminPanelController extends Controller
 
         $blog = blog::find($id);
 
-        return view('AdminPanel/Blogs/AdminBlogEdit')->with(["Blog" => $blog]);
+        return view('adminPanel/Blogs/AdminBlogEdit')->with(["Blog" => $blog]);
     }
     public function UpdateBlogs(Request $req)
     {
@@ -229,7 +229,7 @@ class AdminPanelController extends Controller
 
         $vacancies = Vacancy::where("Status", 4)->paginate(10);
 
-        return  view('AdminPanel/VacancyRequest/AdminVacancyRequest')->with(['Vacancies' => $vacancies]);
+        return  view('adminPanel/VacancyRequest/AdminVacancyRequest')->with(['Vacancies' => $vacancies]);
     }
     public function VacancyRequestView($lang, $id)
     {
@@ -257,7 +257,7 @@ class AdminPanelController extends Controller
 
         // dd($Vacancy->Owner->CompanyName);
 
-        return view('AdminPanel/VacancyRequest/AdminVacancyRequestView')->with(['vac' => $Vacancy]);
+        return view('adminPanel/VacancyRequest/AdminVacancyRequestView')->with(['vac' => $Vacancy]);
     }
     public function VacancyRequestAccept($lang, $id)
     {
@@ -347,7 +347,7 @@ class AdminPanelController extends Controller
         ]);
 
         //config create
-        $config = new Config();
+        $config = new config();
         $config->key = $req->key;
         $config->value = $req->value;
         $config->save();
@@ -394,7 +394,7 @@ class AdminPanelController extends Controller
             $configs = config::paginate(5);
 
 
-        return view('AdminPanel/Payment/PaymentValue', compact('configs'));
+        return view('adminPanel/Payment/PaymentValue', compact('configs'));
     }
     public function SetPaymentDataPost(Request $req)
     {
@@ -615,7 +615,7 @@ class AdminPanelController extends Controller
             $arr[$i]['StyleClass'] = $cat->StyleClass;
             $arr[$i]['SortOrder'] = $cat->SortOrder;
         }
-        return  view('AdminPanel/Category/AdminCategoryEdit')->with(['categories' => $arr, 'languages' => $Langs]);
+        return  view('adminPanel/Category/AdminCategoryEdit')->with(['categories' => $arr, 'languages' => $Langs]);
     }
     public function EditLanguage($lang, $id)
     {
@@ -623,7 +623,7 @@ class AdminPanelController extends Controller
             return redirect()->route('Login', app()->getLocale());
 
         $lang = Language::find($id);
-        return view('AdminPanel/Language/AdminLanguageEdit')->with('Language', $lang);
+        return view('adminPanel/Language/AdminLanguageEdit')->with('Language', $lang);
     }
     public function EditCity($lang, $id)
     {
@@ -634,7 +634,7 @@ class AdminPanelController extends Controller
         $city_lang = city_lang::where('city_id', $id)->get();
 
 
-        return view('AdminPanel/City/AdminCityEdit')->with(['cities' => $city_lang, 'languages' => $Langs]);
+        return view('adminPanel/City/AdminCityEdit')->with(['cities' => $city_lang, 'languages' => $Langs]);
     }
     public function EditEducationLevel($lang, $id)
     {
@@ -644,7 +644,7 @@ class AdminPanelController extends Controller
         $Langs = ModelsLang::all();
         $edl_lang = education_level_langs::where('education_level_id', $id)->get();
 
-        return view('AdminPanel/EducationLevel/AdminEducationLevelEdit')->with(['education_levels' => $edl_lang, 'languages' => $Langs]);
+        return view('adminPanel/EducationLevel/AdminEducationLevelEdit')->with(['education_levels' => $edl_lang, 'languages' => $Langs]);
     }
     //edit vacancy
     public function EditVacancy($lang, $id)
@@ -670,7 +670,7 @@ class AdminPanelController extends Controller
         });
 
 
-        return view('AdminPanel/Vacancy/AdminVacancyEdit')->with(['vac' => $vacancy, 'cities' => $allcity]);
+        return view('adminPanel/Vacancy/AdminVacancyEdit')->with(['vac' => $vacancy, 'cities' => $allcity]);
     }
 
 

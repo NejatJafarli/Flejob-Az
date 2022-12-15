@@ -1,5 +1,8 @@
 <!-- Navbar Area Start -->
-<div class="navbar-area">
+<div class="navbar-area" id="navBar-Area">
+    {{-- //create a tag achor header --}}
+
+    
     <!-- Menu For Mobile Device -->
     <div class="mobile-nav">
         <a href="{{ route('Hom', app()->getLocale()) }}" class="logo">
@@ -92,7 +95,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link dropdown-toggle Company Categories term faq Privacy">Pages</a>
+                                class="nav-link dropdown-toggle Company term faq Privacy">Pages</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
                                     <a href="{{ route('Companies', app()->getLocale()) }}"

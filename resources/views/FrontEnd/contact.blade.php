@@ -48,13 +48,13 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="contact-card">
                                 @php
-                                    use App\Models\Config;
+                                    use App\Models\config;
                                     
-                                    $config = Config::where('key', '=', 'infoPhone')->first();
+                                    $config = config::where('key', '=', 'infoPhone')->first();
                                     $phone = $config->value;
-                                    $config = Config::where('key', '=', 'infoEmail')->first();
+                                    $config = config::where('key', '=', 'infoEmail')->first();
                                     $email = $config->value;
-                                    $config = Config::where('key', '=', 'infoAddress')->first();
+                                    $config = config::where('key', '=', 'infoAddress')->first();
                                     $address = $config->value;
                                 @endphp
                                 <i class='bx bx-phone-call'></i>

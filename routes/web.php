@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', function () {
+    return redirect()->route('Hom', 'az');
+});
+
 Route::group(['prefix' => '{language}'], function () {
 
     //check if session

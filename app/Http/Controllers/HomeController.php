@@ -372,12 +372,12 @@ class HomeController extends Controller
         $blogs = blog::orderBy('id', 'desc')->take(5)->get();
 
 
-        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs, 'blogs' => $blogs]);
+        return view('FrontEnd/index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs, 'blogs' => $blogs]);
     }
     public function About($lang)
     {
 
-        return view('Frontend/About');
+        return view('FrontEnd/about');
     }
     public function Companies($lang)
     {
@@ -394,7 +394,7 @@ class HomeController extends Controller
         $CompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
 
 
-        return view('Frontend/Company')->with(['Companies' => $Companies, 'CompanyUsers' => $CompanyUsers]);
+        return view('FrontEnd/company')->with(['Companies' => $Companies, 'CompanyUsers' => $CompanyUsers]);
     }
     public function JobDetails($lang, $id)
     {
@@ -415,6 +415,7 @@ class HomeController extends Controller
         $vac->Category = Category::where('id', $vac->Category_id)->first();
         $vac->Category->Category_lang = $vac->Category->category_langs()->where('lang_id', $lang_id)->first();
 
+        $vac->owner = CompanyUser::where('id', $vac->CompanyUser_id)->first();
         //merge vac with CompanyUser 
         $vac->CompanyUser = CompanyUser::where('id', $vac->CompanyUser_id)->first();
 
@@ -445,6 +446,10 @@ class HomeController extends Controller
             $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
             return $Vacancy;
         });
+
+        $vac->Owner = CompanyUser::where('id', $vac->CompanyUser_id)->first();
+
+
 
         return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs, 'Vacancies' => $Vacancies, "myIdBool" => true, "myId" => $id]);
     }
