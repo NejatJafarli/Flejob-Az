@@ -5,7 +5,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget">
                     <div class="footer-logo">
-                        <a href="index.html">
+                        <a href="{{route("Hom",app()->getLocale())}}">
                             <img src="/assets2/img/logo.png" alt="logo">
                         </a>
                     </div>

@@ -23,7 +23,7 @@
             <div class="d-table-cell">
                 <div class="container">
                     <div class="banner-content text-center">
-                        <p>Find Jobs, Employment & Career Opportunities</p>
+                        <p>{{__("Find Jobs, Employment & Career Opportunities")}}</p>
                         <h1>Drop Resume & Get Your Desire Job!</h1>
                         <div class="find-section pb-100 py-5">
                             <div class="container">
@@ -129,8 +129,6 @@
         <div class="container">
             <div class="section-title text-center">
                 <h2>Choose Your Category</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
             </div>
 
             <div class="row">
@@ -163,8 +161,6 @@
                     <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
                 </div>
                 <h2>Jobs You May Be Interested In</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
             </div>
 
             <div class="row">
@@ -239,10 +235,6 @@
         <div class="container">
             <div class="section-title text-center">
                 <h2>Top Companies</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
-
-
             </div>
 
             <div class="row">
@@ -570,8 +562,6 @@
         <div class="container">
             <div class="section-title text-center">
                 <h2>News, Tips & Articles</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
             </div>
 
             <div class="row">

@@ -44,8 +44,6 @@
         <div class="container">
             <div class="section-title text-center">
                 <h2>Choose Your Category</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
             </div>
 
             <div class="row">

@@ -1,26 +1,4 @@
 <?php 
-// [
-    // 'CompanyName.required' => __('validationCompany.Enter your company name'),
-    // 'CompanyUsername.required' => __('validationCompany.Enter your company username'),
-    // 'CompanyEmail.required' => __('validationCompany.Enter your company email'),
-    // 'CompanyPassword.required' => __('validationCompany.Enter your company password'),
-    // 'CompanyPassword_confirmation.required' => __('validationCompany.Enter your company password confirmation'),
-    // 'CompanyAddress.required' => __('validationCompany.Enter your company address'),
-    // 'CompanyPhone.required' => __('validationCompany.Enter your company phone'),
-    // 'CompanyLogo.required' => __('validationCompany.Enter your company logo'),
-    // 'CompanyDescription.required' => __('validationCompany.Enter your company description'),
-    // 'Categories.required' => __('validationCompany.Enter your company categories'),
-    // 'CompanyLink.required' => __('validationCompany.Enter your company link'),
-    // 'CompanyUsername.unique' => __('validationCompany.This username is already taken'),
-    // 'CompanyEmail.unique' => __('validationCompany.This email is already taken'),
-    // 'CompanyPassword.min' => __('validationCompany.Password must be at least 6 characters'),
-    // 'CompanyPassword_confirmation.same' => __('validationCompany.Password confirmation must be same as password'),
-    // 'CompanyPhone.regex' => __('validationCompany.Enter your company phone in correct format'),
-    // 'CompanyLogo.mimes' => __('validationCompany.Enter your company logo in correct format'),
-    // 'CompanyLogo.max' => __('validationCompany.Enter your company logo in correct size'),
-    // 'Categories.min' => __('validationCompany.Enter your company categories'),
-    // 'Categories.array' => __('validationCompany.Enter your company categories'),
-// ];
 return [
     "Enter your first name" => "Adınızı daxil edin",
     "Enter your last name" => "Soyadınızı daxil edin",

@@ -251,9 +251,6 @@
                 <div class="container">
                     <div class="section-title text-center">
                         <h2>Jobs You May Be Interested In</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore
-                            et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida</p>
                     </div>
 
                     <div class="row">
