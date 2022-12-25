@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CompanyRegisterRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Models\Category;
@@ -124,11 +125,14 @@ class LoginRegisterController extends Controller
             $code = $this->generateRandomNumber();
             $url = "http://gw.soft-line.az/sendsms?user=$Username&password=$Api&gsm=$user->phone&from=$Sendername&text=Your Verification Code is $code";
             //http://api.msm.az/sendsms?user=421group_api&password=eRblKTsO&gsm=558448831&from=4:21 Group&text=Your Verification Code is code
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $output = curl_exec($ch);
-            curl_close($ch);
+            $output = file_get_contents($url);
+            // $ch = curl_init();
+            // curl_setopt($ch, CURLOPT_URL, $url);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            // curl_setopt($ch, CURLOPT_HEADER, 0);
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            // $output = curl_exec($ch);
+            // curl_close($ch);
             // errno=100&errtext=OK&message_id=526973&charge=1&balance=123 
             //get errorno from output
             $errno = explode('&', $output)[0];
@@ -161,7 +165,7 @@ class LoginRegisterController extends Controller
             return redirect()->back();
 
         $email = $request->email;
-        $user = Company::where('email', $email)->first();
+        $user = CompanyUser::where('CompanyEmail', $email)->first();
 
         $forgetPasswordRequest = forgetPasswordRequest::where('Company_id', $user->id)->where('type', 'Company')->orderBy('id', 'desc')->first();
         if ($forgetPasswordRequest)
