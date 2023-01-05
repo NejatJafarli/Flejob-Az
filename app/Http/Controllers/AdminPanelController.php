@@ -347,7 +347,7 @@ class adminPanelController extends Controller
         ]);
 
         //config create
-        $config = new Config();
+        $config = new config();
         $config->key = $req->key;
         $config->value = $req->value;
         $config->save();

@@ -380,7 +380,6 @@ class HomeController extends Controller
         $blogs = blog::orderBy('id', 'desc')->take(5)->get();
 
 
-
         return view('FrontEnd/index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs, 'blogs' => $blogs]);
     }
     public function About($lang)
