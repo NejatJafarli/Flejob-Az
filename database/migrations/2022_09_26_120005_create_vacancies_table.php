@@ -26,8 +26,9 @@ class CreateVacanciesTable extends Migration
             $table->string('PersonPhone');
             $table->string('VacancySalary');
             $table->string('Email');
-            $table->integer('Status')->default(4); // 0 active | 1 inactive | 3 accepted but not payed | 4 moderator waiting  | 5 rejected
+            $table->integer('Status')->default(4); // 0 inactive | 1 active | 3 accepted but not payed | 4 moderator waiting  | 5 rejected
             $table->integer('SortOrder')->default(0);
+            $table->dateTime('PremiumEndDate')->nullable();
             $table->timestamps();
 
             $table->foreign('Category_id')->references('id')->on('categories')->onDelete('cascade');

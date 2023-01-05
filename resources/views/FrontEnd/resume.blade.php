@@ -20,7 +20,7 @@
     @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
     <script>
-          $(document).ready(function() {
+        $(document).ready(function() {
             var Hom = document.getElementsByClassName('MyResume');
             for (let index = 0; index < Hom.length; index++) {
                 Hom[index].classList.add('active');
@@ -35,12 +35,12 @@
     <section class="page-title title-bg11">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Resume</h2>
+                <h2>{{ __('Resume.Resume') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Resume.Home') }}</a>
                     </li>
-                    <li>Resume</li>
+                    <li>{{ __('Resume.Resume') }}</li>
                 </ul>
             </div>
         </div>
@@ -89,7 +89,7 @@
                         <div class="resume-content about-text">
                             <h3>
                                 <i class='bx bx-user-circle'></i>
-                                Description
+                                {{ __('Resume.Description') }}
                             </h3>
                             <p>{{ session()->get('user')->Description }}</p>
                         </div>
@@ -97,11 +97,11 @@
                         <div class="resume-content basic-info-text">
                             <h3>
                                 <i class='bx bx-book-alt'></i>
-                                Basic Info
+                                {{ __('Resume.Basic Info') }}
                             </h3>
                             <ul>
                                 <li>
-                                    <span>Age:</span>
+                                    <span>{{ __('Resume.Age') }}:</span>
                                     {{-- gett Age From Session User BirthDate --}}
                                     @php
                                         // get Age From Session User BirthDate
@@ -113,7 +113,7 @@
                                     {{ $interval->y }}
                                 </li>
                                 <li>
-                                    <span>Experience:</span>
+                                    <span> {{ __('Resume.Experience') }}:</span>
                                     @php
                                         //get Experince Start From User Companies min Date
                                         use Carbon\Carbon;
@@ -147,7 +147,7 @@
                                     <path
                                         d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
                                 </svg>
-                                Categories
+                                {{ __('Resume.Categories') }}
                             </h3>
                             <ul>
                                 @foreach (session()->get('user')->Categories as $category)
@@ -158,7 +158,7 @@
                         <div class="resume-content basic-info-text col-md-6">
                             <h3>
                                 <i class='bx bx-globe'></i>
-                                Languages
+                                {{ __('Resume.Languages') }}
                             </h3>
                             <ul>
                                 @foreach (session()->get('user')->Languages as $language)
@@ -170,7 +170,8 @@
                         <div class="resume-content education-text">
                             <h3>
                                 <i class="flaticon-graduation-cap"></i>
-                                Education Background
+                                {{ __('Resume.Education Background') }}
+
                             </h3>
                             @php
                                 $educations = session()->get('user')->Educations;
@@ -184,7 +185,8 @@
                                 <div class="education-info">
                                     <span>{{ $Education->YearStart . '-' . $Education->YearEnd }}</span>
                                     <h5>{{ $Education->EducationName }}</h5>
-                                    <h5>Education Level:
+                                    <h5> {{ __('Resume.EducationLevel') }}
+                                        :
                                         {{ $Education->EducationLevel->EducationLevelLang->EducationLevelName }}</h5>
                                 </div>
                             @endforeach
@@ -193,7 +195,7 @@
                         <div class="resume-content  experience-text">
                             <h3>
                                 <i class='bx bx-briefcase'></i>
-                                Work Expericence
+                                {{ __('Resume.Work Expericence') }}
                             </h3>
 
                             @php
@@ -248,7 +250,7 @@
 
                         <div class="theme-btn">
                             <a href="#" class="default-btn">
-                                Download
+                                {{ __('Resume.Download') }}
                                 <i class='bx bx-download bx-fade-down'></i>
                             </a>
                         </div>

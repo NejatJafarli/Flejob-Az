@@ -7,6 +7,21 @@
 </head>
 
 <body>
+    <style>
+        .login-password-input {
+            position: relative;
+        }
+
+        .field-icon {
+            position: absolute;
+            right: 10px;
+            top: 16px;
+            z-index: 2;
+            cursor: pointer;
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
+    </style>
 
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
@@ -17,12 +32,12 @@
     <section class="page-title title-bg12">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Sign In</h2>
+                <h2>{{ __('Signin.Sign In') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Signin.Home') }}</a>
                     </li>
-                    <li>Sign In</li>
+                    <li>{{ __('Signin.Sign In') }}</li>
                 </ul>
             </div>
         </div>
@@ -52,12 +67,12 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills nav-justified" role="tablist">
                         <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link active" data-toggle="tab" href="#home-1" role="tab">Sign In With
-                                User</a>
+                            <a class="nav-link active" data-toggle="tab" href="#home-1"
+                                role="tab">{{ __('Signin.Sign In With User') }}</a>
                         </li>
                         <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link" data-toggle="tab" href="#profile-1" role="tab">Sign In With
-                                Company</a>
+                            <a class="nav-link" data-toggle="tab" href="#profile-1"
+                                role="tab">{{ __('Signin.Sign In With Company') }}</a>
                         </li>
                     </ul>
 
@@ -69,22 +84,27 @@
                                 id="SigninForm">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Enter Email & Username</label>
+                                    <label>{{ __('Signin.Enter Email & Username') }}</label>
                                     <input id="username" name="Email" type="text" class="form-control"
-                                        placeholder="Enter Your Email & Username" required>
+                                        placeholder="{{ __('Signin.Enter Your Email & Username') }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Enter Password</label>
-                                    <input id="pass" name="Password" type="password" class="form-control"
-                                        placeholder="Enter Your Password" required>
+                                    <label>{{ __('Signin.Enter Password') }}</label>
+                                    <div class="login-password-input">
+                                        <input id="password-field1" name="Password" type="password"
+                                            class="form-control"
+                                            placeholder="{{ __('Signin.Enter Your Password') }}" required>
+                                        <span toggle="#password-field1"
+                                            class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                    </div>
                                 </div>
                                 <div class="signin-btn text-center">
-                                    <button>Sign In</button>
+                                    <button>{{ __('Signin.Sign In') }}</button>
                                 </div>
                                 <div class="create-btn text-center">
-                                    <p>Not have an account?
+                                    <p>{{ __('Signin.Not have an account?') }}
                                         <a href="{{ route('Signup', app()->getLocale()) }}">
-                                            Create an account
+                                            {{ __('Signin.Create an account') }}
                                             <i class='bx bx-chevrons-right bx-fade-right'>
 
                                             </i>
@@ -92,9 +112,9 @@
                                     </p>
                                 </div>
                                 <div class="create-btn text-center">
-                                    <p>you can't remember your password?
+                                    <p>{{ __("Signin.you can't remember your password?") }}
                                         <a href="{{ route('ResetPasswordUser', app()->getLocale()) }}">
-                                            Forget Password
+                                            {{ __('Signin.Forget Password') }}
                                             <i class='bx bx-chevrons-right bx-fade-right'>
 
                                             </i>
@@ -109,22 +129,29 @@
                                 id="SigninForm">
                                 @csrf
                                 <div class="form-group">
-                                    <label>Enter Company Email & Username</label>
+                                    <label>{{ __('Signin.Enter Company Email & Username') }}</label>
                                     <input id="CompanyUsername" name="CompanyEmail" type="text" class="form-control"
-                                        placeholder="Enter Your Email & Username" required>
+                                        placeholder="{{ __('Signin.Enter Your Email & Username') }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Enter Company Password</label>
-                                    <input id="CompanyPass" name="CompanyPassword" type="password" class="form-control"
-                                        placeholder="Enter Your Password" required>
+
+                                    <label>{{ __('Signin.Enter Company Password') }}</label>
+                                    <div class="login-password-input">
+                                        <input id="password-field2" name="CompanyPassword" type="password"
+                                            class="form-control" placeholder="{{ __('Signin.Enter Your Password') }}"
+                                            required>
+                                        <span toggle="#password-field2"
+                                            class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                    </div>
                                 </div>
                                 <div class="signin-btn text-center">
-                                    <button>Sign In</button>
+                                    <button>{{ __('Signin.Sign In') }}</button>
                                 </div>
                                 <div class="create-btn text-center">
-                                    <p>Not have an account?
+                                    <p>{{ __('Signin.Not have an account?') }}
                                         <a href="{{ route('Signup', app()->getLocale()) }}">
-                                            Create an account
+                                            {{ __('Signin.Create an account') }}
                                             <i class='bx bx-chevrons-right bx-fade-right'>
 
                                             </i>
@@ -132,9 +159,9 @@
                                     </p>
                                 </div>
                                 <div class="create-btn text-center">
-                                    <p>you can't remember your password?
+                                    <p>{{ __("Signin.you can't remember your password?") }}
                                         <a href="{{ route('ResetPasswordCompany', app()->getLocale()) }}">
-                                            Forget Password
+                                            {{ __('Signin.Forget Password') }}
                                             <i class='bx bx-chevrons-right bx-fade-right'>
 
                                             </i>
@@ -178,5 +205,18 @@
         <!-- Subscribe Section End --> --}}
     <script src="/assets2/js/Script.js"></script>
     @include('FrontEnd/Component/Footer')
+
+    <script>
+        $(".toggle-password").click(function() {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $($(this).attr("toggle"));
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+    </script>
 
 </html>

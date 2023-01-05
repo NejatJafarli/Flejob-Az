@@ -41,7 +41,6 @@ class AccountController extends Controller
     }
     public function AccountCompany($lang)
     {
-
         if (!session()->has('CompanyUser'))
             return redirect()->route('Signin', ['language' => $lang]);
 
@@ -162,7 +161,7 @@ class AccountController extends Controller
 
             $langs = lang::all();
 
-            return view('FrontEnd/Resume', ['Langs' => $langs]);
+            return view('FrontEnd/resume', ['Langs' => $langs]);
         } else {
             return redirect()->route('Signin', app()->getLocale());
         }
@@ -621,6 +620,7 @@ class AccountController extends Controller
                 for ($i = 0; $i < count($req->CompanyPhone); $i++) {
                     $companyPhone = CompanyPhones::where('id', $req->PhoneId)->first();
                     $companyPhone->CompanyPhone = $req->CompanyPhone[$i];
+                    $companyPhone->save();
                 }
             if (isset($req->NewCompanyPhone)) {
                 for ($i = 0; $i < count($req->NewCompanyPhone); $i++) {

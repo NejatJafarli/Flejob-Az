@@ -23,12 +23,12 @@
     <section class="page-title title-bg7">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Candidates</h2>
+                <h2>{{__("candidate.Candidates")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("candidate.Home")}}</a>
                     </li>
-                    <li>Candidates</li>
+                    <li>{{__("candidate.Candidates")}}</li>
                 </ul>
             </div>
         </div>
@@ -65,15 +65,6 @@
                                     <a
                                         href="{{ route('CandidateDetails', ['language' => app()->getLocale(), 'id' => $user->id]) }}">{{ $user->FirstName . ' ' . $user->LastName }}</a>
                                 </h3>
-                                <ul>
-                                    @foreach ($user->Categories as $cat)
-                                        <li>
-                                            <a
-                                                href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">{{ $cat->Category_lang->CategoryName }}</a>
-                                        </li>
-                                    @endforeach
-
-                                </ul>
                             </div>
                             {{-- <div class="candidate-social">
                             <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>

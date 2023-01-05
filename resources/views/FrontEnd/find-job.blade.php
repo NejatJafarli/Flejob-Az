@@ -47,12 +47,12 @@
     <section class="page-title title-bg2">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Find a Job</h2>
+                <h2>{{__("FindAJob.Find A Job")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("FindAJob.Home")}}</a>
                     </li>
-                    <li>Find a Job</li>
+                    <li>{{__("FindAJob.Find A Job")}}</li>
                 </ul>
             </div>
         </div>
@@ -71,19 +71,19 @@
                 @csrf
                 <div class="row align-items-center">
                     <div class="col-lg-4">
-                        <label>Job Title <i class="bx bx-search-alt"></i></label>
+                        <label>{{__("FindAJob.Job Title")}}<i class="bx bx-search-alt"></i></label>
                         <div class="form-group">
                             <input name="VacancyName"
                                 value="{{ request()->get('VacancyName') ? request()->get('VacancyName') : '' }}"
                                 type="text" class="form-control" id="exampleInputEmail1"
-                                placeholder="Job Title or Keyword">
+                                placeholder="{{__("FindAJob.Job Title or Keyword")}}">
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <label>Cities <i class="bx bx-location-plus"></i></label>
                         <select name="City" class="form-select" id="City"
                             style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
-                            <option value="All">All Cities</option>
+                            <option value="All">{{__("FindAJob.All Cities")}}</option>
                             @foreach ($Cities as $city)
                                 @php
                                     $selected = '';
@@ -98,14 +98,14 @@
                         </select>
                     </div>
                     <div class="col-lg-4">
-                        <label>Categories <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        <label>{{__("FindAJob.Categories")}} <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                 viewBox="0 0 25 25">
                                 <path
                                     d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
                             </svg></label>
                         <select name="Category" class="category form-select"
                             style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
-                            <option value="All">All Categories</option>
+                            <option value="All">{{__("FindAJob.All Categories")}}</option>
                             @foreach ($Categories as $cat)
                                 @php
                                     $selected = '';
@@ -119,19 +119,19 @@
                         </select>
                     </div>
                     <div class="tofrom col-md-2 my-5">
-                        <span>Min Salary ₼</span>
+                        <span>{{__("FindAJob.Min Salary")}}₼</span>
                         <div class="form-group">
 
                             <label></label>
-                            <input name="MinSalary" type="number" class="form-control" placeholder="Enter Min Salary"
+                            <input name="MinSalary" type="number" class="form-control" placeholder="{{__("FindAJob.Enter Min Salary")}}"
                                 id="flefilter_price_min">
                         </div>
                     </div>
                     <div class="from col-md-2 my-5">
-                        <span>Max Salary ₼</span>
+                        <span>{{__("FindAJob.Max Salary")}}₼</span>
                         <div class="form-group">
                             <label></label>
-                            <input name="MaxSalary" type="number" class="form-control" placeholder="Enter Max Salary"
+                            <input name="MaxSalary" type="number" class="form-control" placeholder="{{__("FindAJob.Enter Max Salary")}}"
                                 {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}} id="flefilter_price_max">
                         </div>
                     </div>
@@ -145,7 +145,7 @@
                         <label> </label>
                         <div class="jobs-btn" style="text-align: right">
                             <button type="submit" class="find-btn" style="width: auto; padding:16px 100px">
-                                Find A Job
+                                {{__("FindAJob.Find A Job")}}
                                 <i class='bx bx-search'></i>
                             </button>
                         </div>
@@ -160,9 +160,7 @@
     <div class="category-style-two pb-70">
         <div class="container">
             <div class="section-title">
-                <h2>Popular Jobs Category</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
+                <h2>{{__("FindAJob.Popular Jobs Category")}}</h2>
             </div>
 
             <div class="row">
@@ -215,9 +213,7 @@
                     <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
                     <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
                 </div>
-                <h2>Jobs You May Be Interested In</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
+                <h2>{{__("FindAJob.Jobs You May Be Interested In")}}</h2>
             </div>
 
             <div class="row">
@@ -309,7 +305,7 @@
                                             <button
                                                 onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
                                                 type="button" class="btn btn-primary" data-toggle="modal">
-                                                {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                                {{ $userApplied ? __('FindAJob.UnApply Now') : __('FindAJob.Apply Now') }}</button>
                                         @endif
                                         <p>
                                             <i class='bx bx-stopwatch'></i>
@@ -344,7 +340,7 @@
                 type: 'GET',
                 success: function(data) {
                     if (data.success == "Applied Successfully") {
-                        event.innerHTML = "UnApply Now";
+                        event.innerHTML = "{{ __('FindAJob.UnApply Now') }}";
                         $('div.Mysuccess').html(data.success)
                         $('div.Mysuccess')
                             .fadeIn(300)
@@ -359,7 +355,7 @@
                         //data have a redirect property
 
                         //change element value to Apply
-                        event.innerHTML = "Apply Now";
+                        event.innerHTML = "{{ __('FindAJob.Apply Now') }}";
                         $('div.Mysuccess').html(data.success)
                         $('div.Mysuccess')
                             .fadeIn(300)

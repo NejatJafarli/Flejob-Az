@@ -11,18 +11,25 @@
     @include('FrontEnd.Component.Preloader')
 
     @include('FrontEnd.Component.Navbar')
-
+    <script>
+        $(document).ready(function() {
+            var Hom = document.getElementsByClassName('Blog');
+            for (let index = 0; index < Hom.length; index++) {
+                Hom[index].classList.add('active');
+            }
+        });
+    </script>
 
     <!-- Page Title Start -->
     <section class="page-title title-bg21">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Blog</h2>
+                <h2>{{__("Blog.Blog")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Blog.Home")}}</a>
                     </li>
-                    <li>Blog</li>
+                    <li>{{__("Blog.Blog")}}</li>
                 </ul>
             </div>
         </div>
@@ -38,9 +45,7 @@
     <section class="blog-section blog-style-two pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>News, Tips & Articles</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
+                <h2>{{__("Blog.News, Tips & Articles")}}</h2>
             </div>
 
             <div class="row">

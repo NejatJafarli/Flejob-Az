@@ -23,8 +23,8 @@
             <div class="d-table-cell">
                 <div class="container">
                     <div class="banner-content text-center">
-                        <p>Find Jobs, Employment & Career Opportunities</p>
-                        <h1>Drop Resume & Get Your Desire Job!</h1>
+                        <p>{{ __('home.Find Jobs, Employment & Career Opportunities') }}</p>
+                        <h1>{{ __('home.Drop Resume & Get Your Desire Job!') }}</h1>
                         <div class="find-section pb-100 py-5">
                             <div class="container">
                                 <form class="find-form" action="{{ route('FindAJob', app()->getLocale()) }}"
@@ -32,19 +32,19 @@
                                     @csrf
                                     <div class="row align-items-center">
                                         <div class="col-lg-4">
-                                            <label>Job Title <i class="bx bx-search-alt"></i></label>
+                                            <label>{{ __('home.Job Title') }}<i class="bx bx-search-alt"></i></label>
                                             <div class="form-group">
                                                 <input name="VacancyName"
                                                     value="{{ request()->get('VacancyName') ? request()->get('VacancyName') : '' }}"
                                                     type="text" class="form-control" id="exampleInputEmail1"
-                                                    placeholder="Job Title or Keyword">
+                                                    placeholder="{{ __('home.Job Title or Keyword') }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
-                                            <label>Cities <i class="bx bx-location-plus"></i></label>
+                                            <label>{{ __('home.Cities') }} <i class="bx bx-location-plus"></i></label>
                                             <select name="City" class="form-select" id="City"
                                                 style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
-                                                <option value="All">All Cities</option>
+                                                <option value="All">{{ __('home.All Cities') }}</option>
                                                 @foreach ($Cities as $city)
                                                     @php
                                                         $selected = '';
@@ -59,14 +59,14 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-4">
-                                            <label>Categories <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                    height="20" viewBox="0 0 25 25">
+                                            <label>{{ __('home.Categories') }} <svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="20" height="20" viewBox="0 0 25 25">
                                                     <path
                                                         d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
                                                 </svg></label>
                                             <select name="Category" class="category form-select"
                                                 style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
-                                                <option value="All">All Categories</option>
+                                                <option value="All">{{ __('home.All Categories') }}</option>
                                                 @foreach ($Categories as $cat)
                                                     @php
                                                         $selected = '';
@@ -80,21 +80,22 @@
                                             </select>
                                         </div>
                                         <div class="tofrom col-md-2 my-5">
-                                            <span>Min Salary ₼</span>
+                                            <span>{{ __('home.Min Salary') }} ₼</span>
                                             <div class="form-group">
 
                                                 <label></label>
                                                 <input name="MinSalary" type="number" class="form-control"
-                                                    placeholder="Enter Min Salary" id="flefilter_price_min">
+                                                    placeholder="{{ __('home.Enter Min Salary') }}"
+                                                    id="flefilter_price_min">
                                             </div>
                                         </div>
                                         <div class="from col-md-2 my-5">
-                                            <span>Max Salary ₼</span>
+                                            <span>{{ __('home.Max Salary') }} ₼</span>
                                             <div class="form-group">
                                                 <label></label>
                                                 <input name="MaxSalary" type="number" class="form-control"
-                                                    placeholder="Enter Max Salary" {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}}
-                                                    id="flefilter_price_max">
+                                                    placeholder="{{ __('home.Enter Max Salary') }}"
+                                                    {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}} id="flefilter_price_max">
                                             </div>
                                         </div>
                                         <div class="price-filter col-md-8 my-5">
@@ -108,7 +109,7 @@
                                             <div class="jobs-btn" style="text-align: right">
                                                 <button type="submit" class="find-btn"
                                                     style="width: auto; padding:16px 100px">
-                                                    Find A Job
+                                                    {{ __('home.Find A Job') }}
                                                     <i class='bx bx-search'></i>
                                                 </button>
                                             </div>
@@ -128,9 +129,7 @@
     <section class="categories-section pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>Choose Your Category</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
+                <h2>{{ __('home.Choose Your Category') }}</h2>
             </div>
 
             <div class="row">
@@ -143,7 +142,7 @@
                                     echo $cat->StyleClass;
                                 @endphp
                                 <h3>{{ $cat->Category_lang->CategoryName }}</h3>
-                                <p>{{ $cat->VacanciesCount }} Open position</p>
+                                <p>{{ $cat->VacanciesCount }} {{ __('home.Open Position') }}</p>
                             </div>
                         </a>
                     </div>
@@ -162,9 +161,7 @@
                     <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
                     <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
                 </div>
-                <h2>Jobs You May Be Interested In</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
+                <h2>{{ __('home.Jobs You May Be Interested In') }}</h2>
             </div>
 
             <div class="row">
@@ -185,10 +182,10 @@
                                     <div class="job-info">
                                         <h3>
                                             <a
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
+                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }} </a>
                                         </h3>
                                         <ul>
-                                            <li>Via <a href="#">{{ $vac->Owner->CompanyName }}</a></li>
+                                            <li>Via <a href="#">{{ $vac->Owner->CompanyName }} @if ($vac->SortOrder==1) Premium @endif</a></li>
                                             <li>
                                                 <i class='bx bx-location-plus'></i>
                                                 {{ $vac->City->CityName }}
@@ -217,7 +214,7 @@
                                             <button
                                                 onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
                                                 type="button" class="btn btn-primary" data-toggle="modal">
-                                                {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                                {{ $userApplied ? __('home.UnApply Now') : __('home.Apply Now') }}</button>
                                         @endif
                                         <p>
                                             <i class='bx bx-stopwatch'></i>
@@ -238,11 +235,7 @@
     <section class="company-section pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>Top Companies</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices.</p>
-
-
+                <h2>{{ __('home.Top Companies') }}</h2>
             </div>
 
             <div class="row">
@@ -269,7 +262,7 @@
                                 </p>
                                 <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $user->id }}"
                                     class="company-btn">
-                                    {{ $user->VacanciesCount }} Open Position
+                                    {{ $user->VacanciesCount }} {{ __('home.Open Position') }}
                                 </a>
                             </div>
                         </div>
@@ -569,18 +562,17 @@
     <section class="blog-section pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>News, Tips & Articles</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus</p>
+                <h2>{{ __('home.News, Tips & Articles') }}</h2>
             </div>
 
             <div class="row">
                 @foreach ($blogs as $blog)
                     <div class="col-lg-4 col-sm-6">
                         <div class="blog-card">
-                            <div class="blog-img" >
-                                <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
-                                    <img src="/BlogsPicture/{{$blog->Image}}" alt="blog image" style="object-fit:cover;
+                            <div class="blog-img">
+                                <a href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $blog->id]) }}">
+                                    <img src="/BlogsPicture/{{ $blog->Image }}" alt="blog image"
+                                        style="object-fit:cover;
                                     ">
                                 </a>
                             </div>
@@ -596,18 +588,20 @@
                                     </li>
                                 </ul>
                                 <h3>
-                                    <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
+                                    <a
+                                        href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $blog->id]) }}">
                                         {{ $blog->Title }}
                                     </a>
                                 </h3>
                                 @php
                                     //get first 30 characters
-                                    $str = substr($blog->Description, 0, 40)."...";
+                                    $str = substr($blog->Description, 0, 40) . '...';
                                 @endphp
                                 <p>{{ $str }}</p>
 
-                                <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}" class="blog-btn">
-                                    Read More
+                                <a href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $blog->id]) }}"
+                                    class="blog-btn">
+                                    {{ __('home.Read More') }}
                                     <i class='bx bx-plus bx-spin'></i>
                                 </a>
                             </div>
@@ -700,7 +694,7 @@
                 type: 'GET',
                 success: function(data) {
                     if (data.success == "Applied Successfully") {
-                        event.innerHTML = "UnApply Now";
+                        event.innerHTML = "{{ __('home.UnApply Now') }}";
                         $('div.Mysuccess').html(data.success)
                         $('div.Mysuccess')
                             .fadeIn(300)
@@ -715,7 +709,7 @@
                         //data have a redirect property
 
                         //change element value to Apply
-                        event.innerHTML = "Apply Now";
+                        event.innerHTML = "{{ __('home.Apply Now') }}";
                         $('div.Mysuccess').html(data.success)
                         $('div.Mysuccess')
                             .fadeIn(300)

@@ -2,33 +2,33 @@
 <html lang="zxx">
 
 <head>
-    @include('Frontend.Component.cdn')
+    @include('FrontEnd.Component.cdn')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"
         integrity="sha512-jTgBq4+dMYh73dquskmUFEgMY5mptcbqSw2rmhOZZSJjZbD2wMt0H5nhqWtleVkyBEjmzid5nyERPSNBafG4GQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
-    @include('Frontend.Component.Preloader')
-    @include('Frontend.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
+    @include('FrontEnd.Component.Navbar')
 
     <!-- Page Title Start -->
     <section class="page-title title-bg14">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Reset
+                <h2>{{ __('resetPass.Reset') }}
                     @if ($Choice == 'Company')
-                        Company
+                        {{ __('resetPass.Company') }}
                     @else
-                        User
+                        {{ __('resetPass.User') }}
                     @endif
-                    Password
+                    {{ __('resetPass.Password') }}
                 </h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('resetPass.Home') }}</a>
                     </li>
-                    <li>Reset Password</li>
+                    <li>{{ __('resetPass.Reset Password') }}</li>
                 </ul>
             </div>
         </div>
@@ -59,12 +59,12 @@
                             class="reset-form">
                             @csrf
                             <div class="form-group">
-                                <label>Enter Phone</label>
+                                <label>{{ __('resetPass.Enter Phone') }}</label>
                                 <input name="phone" type="tel" class="form-control"
-                                    placeholder="Enter Your phone Number" required>
+                                    placeholder="{{ __('resetPass.Enter Your phone Number') }}" required>
                             </div>
                             <div class="reset-btn text-center">
-                                <button type="submit">Reset Password</button>
+                                <button type="submit">{{ __('resetPass.Reset Password') }}</button>
                             </div>
                         </form>
                     @else
@@ -72,12 +72,12 @@
                             class="reset-form">
                             @csrf
                             <div class="form-group">
-                                <label>Enter Company Email</label>
+                                <label>{{ __('resetPass.Enter Company Email') }}</label>
                                 <input type="email" name="email" class="form-control"
-                                    placeholder="Enter Your Company Email" required>
+                                    placeholder="{{ __('resetPass.Enter Your Company Email') }}" required>
                             </div>
                             <div class="reset-btn text-center">
-                                <button type="submit">Reset Password</button>
+                                <button type="submit">{{ __('resetPass.Reset Password') }}</button>
                             </div>
                         </form>
                     @endif

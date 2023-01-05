@@ -2672,7 +2672,7 @@ h3 {
 }
 
 .page-title.title-bg1 {
-  background-image: url(../img/title-bg/1.jpg);
+  background-image: url(../img/title-bg/about-us.png);
 }
 
 .page-title .lines {
@@ -2750,7 +2750,7 @@ h3 {
 /*---------- About Page CSS End ----------*/
 /*---------- Find Jobs Page CSS Start ----------*/
 .page-title.title-bg2 {
-  background-image: url(../img/title-bg/2.jpg);
+  background-image: url(../img/title-bg/find-a-job.png);
 }
 
 /*---------- Find Jobs Page CSS End ----------*/
@@ -3344,7 +3344,7 @@ h3 {
 /*---------- Candidates Details CSS End ----------*/
 /*---------- Company CSS Start ----------*/
 .page-title.title-bg9 {
-  background-image: url(../img/title-bg/9.jpg);
+  background-image: url(../img/title-bg/company.png);
 }
 
 .company-style-two .pagination {
@@ -4147,7 +4147,7 @@ h3 {
 /*----------  Terms Page CSS End ----------*/
 /*----------  Blog Page CSS Start ----------*/
 .page-title.title-bg21 {
-  background-image: url(../img/title-bg/21.jpg);
+  background-image: url(../img/title-bg/blog.png);
 }
 
 .blog-style-two .pagination {
@@ -4478,7 +4478,7 @@ h3 {
 /*----------  Blog Details Page CSS End ----------*/
 /*----------  Contact Page CSS Start ----------*/
 .page-title.title-bg23 {
-  background-image: url(../img/title-bg/23.jpg);
+  background-image: url(../img/title-bg/contact-us.png);
 }
 
 .contact-card {

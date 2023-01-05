@@ -21,7 +21,7 @@
         $langCode = strtoupper($locale);
         
     @endphp
-   
+
     @include('FrontEnd.Component.Navbar')
     @include('FrontEnd.Component.Preloader')
 
@@ -40,12 +40,12 @@
     <section class="page-title title-bg6">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Job Details</h2>
+                <h2>{{ __('Jobdetail.Job Details') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Jobdetail.Home') }}</a>
                     </li>
-                    <li>Job Details</li>
+                    <li>{{ __('Jobdetail.Job Details') }}</li>
                 </ul>
             </div>
         </div>
@@ -69,7 +69,8 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
                                             <div class="company-logo">
-                                                <img src="/VacanciesPicture/{{ $vac->Photo }}" alt="logo">
+                                                <img style="height: 150px; width:150px;"
+                                                    src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                             </div>
                                         </div>
                                         <div class="col-md-10">
@@ -92,10 +93,12 @@
                                                     @endphp
                                                     <span>
                                                         <i class='bx bx-paper-plane'></i>
-                                                        Apply Before: {{ $vac->EndDate }}
+                                                        {{ __('Jobdetail.Apply Before') }}:
+                                                        {{ $vac->EndDate }}
                                                         {{-- write this vacancy has been expired --}}
                                                         @if ($expired)
-                                                            <span class="badge badge-danger">Expired</span>
+                                                            <span
+                                                                class="badge badge-danger">{{ __('Jobdetail.Expired') }}</span>
                                                         @endif
                                                     </span>
                                                     <br>
@@ -106,16 +109,25 @@
                                                                 class="btn btn-primary">Edit</a>
                                                     @endif --}}
 
-                                                    @if ($vac->SortOrder == 0)
+
+                                                    @if ($vac->SortOrder == 0 &&
+                                                        session()->has('CompanyUser') &&
+                                                        $vac->owner->id == session()->get('CompanyUser')->id)
                                                         @php
                                                             $price = config::where('key', 'premium_price')->first()->value;
                                                         @endphp
                                                         <div class="account-details"
                                                             style="padding:0px; box-shadow:0px 0px;">
-                                                            <form>
-                                                                <button type="button"
-                                                                    class="account-btn btn position-relative">Elani
-                                                                    Premium Et
+
+                                                            <form action="{{ route('payment2', app()->getLocale()) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="vacancy_id"
+                                                                    value="{{ $vac->id }}">
+
+                                                                <button type="submit"
+                                                                    class="account-btn btn position-relative">
+                                                                    {{ __('Jobdetail.do premium this job') }}
                                                                     <span
                                                                         style="color: white;font-size: 14px;background-color: #010c29;"
                                                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
@@ -132,37 +144,38 @@
                                     </div>
                                 </div>
                                 <div class="details-text">
-                                    <h3>Description</h3>
+                                    <h3>{{ __('Jobdetail.Description') }}</h3>
                                     @php
                                         $desc = nl2br($vac->VacancyDescription);
                                         echo $desc;
                                     @endphp
                                 </div>
                                 <div class="details-text">
-                                    <h3>Requirements</h3>
+                                    <h3>{{ __('Jobdetail.Requirements') }}</h3>
                                     @php
                                         $req = nl2br($vac->VacancyRequirements);
                                         echo $req;
                                     @endphp
                                 </div>
                                 <div class="details-text">
-                                    <h3>Job Details</h3>
+                                    <h3>{{ __('Jobdetail.Job Details') }}</h3>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <table class="table">
                                                 <tbody>
                                                     <tr>
-                                                        <td><span>Company :</span></td>
+                                                        <td><span>{{ __('Jobdetail.Company') }} :</span></td>
                                                         <td>{{ $vac->CompanyUser->CompanyName }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><span>Email :</span></td>
+                                                        <td><span>{{ __('Jobdetail.Email') }} :</span></td>
                                                         <td><a
                                                                 href="mailto:{{ $vac->Email }}">{{ $vac->Email }}</a>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td><span>Person Name :</span></td>
+                                                        <td><span>{{ __('Jobdetail.Person Name') }} :</span>
+                                                        </td>
                                                         <td>{{ $vac->PersonName }}</td>
                                                     </tr>
                                                 </tbody>
@@ -172,15 +185,16 @@
                                             <table class="table">
                                                 <tbody>
                                                     <tr>
-                                                        <td><span>Location :</span></td>
+                                                        <td><span>{{ __('Jobdetail.Location') }} :</span>
+                                                        </td>
                                                         <td>{{ $vac->City->CityLang->CityName }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><span>Salary :</span></td>
+                                                        <td><span>{{ __('Jobdetail.Salary') }} :</span></td>
                                                         <td>{{ $vac->VacancySalary }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><span>Phone :</span></td>
+                                                        <td><span>{{ __('Jobdetail.Phone') }} :</span></td>
                                                         <td>{{ $vac->PersonPhone }}</td>
                                                     </tr>
                                                 </tbody>
@@ -202,7 +216,7 @@
                                         <button
                                             onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
                                             type="button" class="default-btn" data-toggle="modal">
-                                            {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                            {{ $userApplied ? __('Jobdetail.UnApply Now') : __('Jobdetail.Apply Now') }}</button>
                                     </div>
                                 @endif
                                 <div class="my-5">
@@ -217,197 +231,187 @@
 
                 <div class="col-lg-4">
                     <div class="job-sidebar">
-                        <h3>Posted By</h3>
+                        <h3>{{ __('Jobdetail.Posted By') }}</h3>
                         <div class="posted-by">
                             <img style="height:100px; widht:100px;"
                                 src="/CompanyLogos/{{ $vac->CompanyUser->CompanyLogo }}" alt="client image">
                             <h4>{{ $vac->CompanyUser->CompanyName }}</h4>
                         </div>
                     </div>
-                    @if ($vac->Status == 3)
+                    @if ($vac->Status == 3 || $vac->Status == 0)
                         <div class="job-sidebar">
-                            <h3 style="color:red;font-size:30px;">Aktiv deyil odenis gozlenilir</h3>
-                        </div>
-                    @elseif ($vac->Status == 0)
-                        <div class="job-sidebar">
-                            <h3 style="color:red;font-size:30px;">Elan Muddeti Bitib aktiv deyil</h3>
+                            @if ($vac->Status == 3)
+                                <h3 style="color:red;font-size:30px;">
+                                    {{ __('Jobdetail.Your Vacancy Not Active Waiting For Payment') }}</h3>
+                            @elseif ($vac->Status == 0)
+                                {{-- // add payment form --}}
+                                <h3 style="color:red;font-size:30px;">
+                                    {{ __('Jobdetail.This Vacancy Has Been Expired Not Active') }}</h3>
+                            @endif
+                            @php
+                                $vacancy_price = config::where('key', 'vacancy_price')->first()->value;
+                            @endphp
+                            <div class="account-details">
+                                <form action="{{ route('payment', app()->getLocale()) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="vacancy_id" value="{{ $vac->id }}">
+
+                                    <button type="submit"
+                                        class="account-btn btn position-relative">{{ __('Jobdetail.Pay For 1 Month') }}<span
+                                            style="color: white;font-size: 14px;background-color: #010c29;"
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                                            {{ $vacancy_price }} AZN
+                                            <span class="visually-hidden">Price</span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     @elseif ($vac->Status == 4)
                         <div class="job-sidebar">
-                            <h3 style="color:red;font-size:30px;">Admin Terefinden Testiqlenme gozlenilir</h3>
+                            <h3 style="color:red;font-size:30px;">{{ __('Jobdetail.Waiting Confirm from Admin') }}</h3>
                         </div>
                     @elseif ($vac->Status == 5)
                         <div class="job-sidebar">
-                            <h3 style="color:red;font-size:30px;">Qaydalara Uygun Deyil sizin vakansiyaniz</h3>
+                            <h3 style="color:red;font-size:30px;">{{ __('Jobdetail.Your Vacancy not correct') }}</h3>
                         </div>
                     @endif
-                    {{-- 
-                        <div class="job-sidebar social-share">
-                            <h3>Share In</h3>
-                            <ul>
-                                <li>
-                                    <a href="#" target="_blank">
-                                        <i class="bx bxl-facebook"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank">
-                                        <i class="bx bxl-twitter"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank">
-                                        <i class="bx bxl-pinterest"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" target="_blank">
-                                        <i class="bx bxl-linkedin"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
-    </section>
-    <!-- Job Details Section End -->
 
-    <!-- Job Section End -->
-    <section class="job-style-two pt-100 pb-70">
-        <div class="container">
-            <div class="section-title text-center">
-                <h2>Jobs You May Be Interested In</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida</p>
-            </div>
+            <section class="job-style-two pt-100 pb-70">
+                <div class="container">
+                    <div class="section-title text-center">
+                        <h2>{{ __('Jobdetail.Jobs You May Be Interested In') }}</h2>
+                    </div>
 
-            <div class="row">
-                {{-- Same categoried Vacancies --}}
-                    @foreach ($Vacancies as $vacs)
-                        <div class="col-lg-12">
-                            <div class="job-card-two">
-                                <div class="row align-items-center">
-                                    <div class="col-md-1">
-                                        <div class="company-logo">
-                                            <a
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">
-                                                <img style="height:50px; widht:50px;"
-                                                    src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}"
-                                                    alt="logo">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="job-info">
-                                            <h3>
+                    <div class="row">
+                        {{-- Same categoried Vacancies --}}
+                        @foreach ($Vacancies as $vacs)
+                            <div class="col-lg-12">
+                                <div class="job-card-two">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-1">
+                                            <div class="company-logo">
                                                 <a
-                                                    href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
-                                            </h3>
-                                            <ul>
-                                                <li>
-                                                    <i class='bx bx-briefcase'></i>
-                                                    {{ $vacs->Category->CategoryName }}
-                                                </li>
-                                                <li>
-                                                    <i class='bx bx-briefcase'></i>
-                                                    {{ $vacs->VacansySalary }}
-                                                </li>
-                                                <li>
-                                                    <i class='bx bx-location-plus'></i>
-                                                    {{ $vacs->City->CityName }}
-                                                </li>
-                                                <li>
-                                                    <i class='bx bx-stopwatch'></i>
-                                                    {{ $vacs->created_at->diffForHumans() }}
-                                                </li>
-                                            </ul>
+                                                    href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">
+                                                    <img style="height:50px; widht:50px;"
+                                                        src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}"
+                                                        alt="logo">
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="theme-btn text-end">
-                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}"
-                                                class="default-btn">
-                                                Browse Job
-                                            </a>
+                                        <div class="col-md-8">
+                                            <div class="job-info">
+                                                <h3>
+                                                    <a
+                                                        href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
+                                                </h3>
+                                                <ul>
+                                                    <li>
+                                                        <i class='bx bx-briefcase'></i>
+                                                        {{ $vacs->Category->CategoryName }}
+                                                    </li>
+                                                    <li>
+                                                        <i class='bx bx-briefcase'></i>
+                                                        {{ $vacs->VacancySalary }}
+                                                    </li>
+                                                    <li>
+                                                        <i class='bx bx-location-plus'></i>
+                                                        {{ $vacs->City->CityName }}
+                                                    </li>
+                                                    <li>
+                                                        <i class='bx bx-stopwatch'></i>
+                                                        {{ $vacs->created_at->diffForHumans() }}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="theme-btn text-end">
+                                                <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}"
+                                                    class="default-btn">
+                                                    {{ __('Jobdetail.Browse Job') }}
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-    </section>
-    <!-- Job Section End -->
-    <script>
-        function ApplyVac(event, url) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
+            </section>
+            <!-- Job Section End -->
+            <script>
+                function ApplyVac(event, url) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    })
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(data) {
-                    if (data.success == "Applied Successfully") {
-                        event.innerHTML = "UnApply Now";
-                        $('div.Mysuccess').html(data.success)
-                        $('div.Mysuccess')
-                            .fadeIn(300)
-                            .delay(5000)
-                            .fadeOut(400)
-                        $('html, body').animate({
-                                scrollTop: $('div.Mysuccess').offset().top - 250
-                            },
-                            100
-                        )
-                    } else if (data.success == "UnApplied Successfully") {
-                        //data have a redirect property
-                        //change element value to Apply
-                        event.innerHTML = "Apply Now";
-                        $('div.Mysuccess').html(data.success)
-                        $('div.Mysuccess')
-                            .fadeIn(300)
-                            .delay(5000)
-                            .fadeOut(400)
-                        $('html, body').animate({
-                                scrollTop: $('div.Mysuccess').offset().top - 250
-                            },
-                            100
-                        )
-                    } else if (data.hasOwnProperty("errors")) {
-                        $('div.Myfailure').html(data.errors)
-                        $('div.Myfailure')
-                            .fadeIn(300)
-                            .delay(5000)
-                            .fadeOut(400)
-                        $('html, body').animate({
-                                scrollTop: $('div.Myfailure').offset().top - 250
-                            },
-                            100
-                        )
-                    } else if (data.hasOwnProperty('redirect'))
-                        window.location.href = data.redirect;
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        success: function(data) {
+                            if (data.success == "Applied Successfully") {
+                                event.innerHTML = "{{ __('Jobdetail.Apply Now') }}";
+                                $('div.Mysuccess').html(data.success)
+                                $('div.Mysuccess')
+                                    .fadeIn(300)
+                                    .delay(5000)
+                                    .fadeOut(400)
+                                $('html, body').animate({
+                                        scrollTop: $('div.Mysuccess').offset().top - 250
+                                    },
+                                    100
+                                )
+                            } else if (data.success == "UnApplied Successfully") {
+                                //data have a redirect property
+                                //change element value to Apply
+                                event.innerHTML = "{{ __('Jobdetail.Apply Now') }}";
+                                $('div.Mysuccess').html(data.success)
+                                $('div.Mysuccess')
+                                    .fadeIn(300)
+                                    .delay(5000)
+                                    .fadeOut(400)
+                                $('html, body').animate({
+                                        scrollTop: $('div.Mysuccess').offset().top - 250
+                                    },
+                                    100
+                                )
+                            } else if (data.hasOwnProperty("errors")) {
+                                $('div.Myfailure').html(data.errors)
+                                $('div.Myfailure')
+                                    .fadeIn(300)
+                                    .delay(5000)
+                                    .fadeOut(400)
+                                $('html, body').animate({
+                                        scrollTop: $('div.Myfailure').offset().top - 250
+                                    },
+                                    100
+                                )
+                            } else if (data.hasOwnProperty('redirect'))
+                                window.location.href = data.redirect;
 
-                },
-                error: function(data) {
-                    $('div.Myfailure').html(data.errors)
-                    $('div.Myfailure')
-                        .fadeIn(300)
-                        .delay(5000)
-                        .fadeOut(400)
-                    $('html, body').animate({
-                            scrollTop: $('div.Myfailure').offset().top - 250
                         },
-                        100
-                    )
+                        error: function(data) {
+                            $('div.Myfailure').html(data.errors)
+                            $('div.Myfailure')
+                                .fadeIn(300)
+                                .delay(5000)
+                                .fadeOut(400)
+                            $('html, body').animate({
+                                    scrollTop: $('div.Myfailure').offset().top - 250
+                                },
+                                100
+                            )
+                        }
+                    });
                 }
-            });
-        }
-    </script>
+            </script>
+        </div>
+    </section>
     @include('FrontEnd.Component.Footer')
 
 </html>

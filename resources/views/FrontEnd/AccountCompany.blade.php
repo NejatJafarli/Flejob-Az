@@ -27,12 +27,12 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{ __('AccountCompany.Account') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Account', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Account', app()->getLocale()) }}">{{ __('AccountCompany.Home') }}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{ __('AccountCompany.Account') }}</li>
                 </ul>
             </div>
         </div>
@@ -72,7 +72,7 @@
 
                 <div class="col-md-9">
                     <div class="account-details">
-                        <h3>Information</h3>
+                        <h3>{{ __('AccountCompany.Information') }}</h3>
                         {{-- show errors --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -91,7 +91,7 @@
                                     {{-- CompanyName --}}
                                     <div class="form-group">
                                         <label for="CompanyName">
-                                            Company Name</label>
+                                            {{ __('AccountCompany.Company Name') }}</label>
                                         <input type="text" class="form-control" id="CompanyName" name="CompanyName"
                                             value="{{ session()->get('CompanyUser')->CompanyName }}">
                                     </div>
@@ -100,7 +100,7 @@
 
                                     <div class="form-group">
                                         <label for="CompanyName">
-                                            Company Username</label>
+                                            {{ __('AccountCompany.Company Username') }}</label>
                                         <input type="text" class="form-control" id="CompanyUsername"
                                             name="CompanyUsername"
                                             value="{{ session()->get('CompanyUser')->CompanyUsername }}">
@@ -111,7 +111,7 @@
 
                                     <div class="form-group">
                                         <label for="CompanyEmail">
-                                            Company Email</label>
+                                            {{ __('AccountCompany.Company Email') }}</label>
                                         <input type="text" class="form-control" id="CompanyEmail" name="CompanyEmail"
                                             value="{{ session()->get('CompanyUser')->CompanyEmail }}">
                                     </div>
@@ -120,7 +120,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="CompanyWebSiteLink">
-                                            Company Web Site Link</label>
+                                            {{ __('AccountCompany.Company Web Site Link') }}</label>
                                         <input type="text" class="form-control" id="CompanyWebSiteLink"
                                             name="CompanyWebSiteLink"
                                             value="{{ session()->get('CompanyUser')->CompanyWebSiteLink }}">
@@ -129,7 +129,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="CompanyAddress">
-                                            Company Address</label>
+                                            {{ __('AccountCompany.Company Address') }}</label>
                                         <input type="text" class="form-control" id="CompanyAddress"
                                             name="CompanyAddress"
                                             value="{{ session()->get('CompanyUser')->CompanyAddress }}">
@@ -138,13 +138,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="CompanyLogo">
-                                            Company Logo  </label>
+                                            {{ __('AccountCompany.Company Logo') }} </label>
                                         <input type="file" class="form-control"name="CompanyLogo">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Company Categories</label>
+                                        <label>{{ __('AccountCompany.Company Categories') }}</label>
                                         <br />
                                         <select style="width:100%" class="js-example-basic-multiple form-control"
                                             name="CompanyCategories[]" multiple="multiple">
@@ -159,16 +159,16 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="CompanyDescription">
-                                            Company Description</label>
+                                            {{ __('AccountCompany.Company Description') }}</label>
                                         <textarea style="height: 250px" class="form-control" id="CompanyDescription" name="CompanyDescription" rows="10"
                                             cols="30">{{ session()->get('CompanyUser')->CompanyDescription }}</textarea>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">{{ __('AccountCompany.Update') }}</button>
                         </form>
 
-                        <h3>Company Phones</h3>
+                        <h3>{{ __('AccountCompany.Company Phones') }}</h3>
                         <form method="POST" action="{{ route('UpdateCompanyUserPhones', app()->getLocale()) }}"
                             enctype="multipart/form-data" class="basic-info
                             "
@@ -180,13 +180,13 @@
                                         <input type="hidden" name="PhoneId" value="{{ $phone->id }}">
                                         <div class="col-md-10">
                                             <div class="form-group">
-                                                <label>Phone Number</label>
+                                                <label>{{ __('AccountCompany.Phone Number') }}</label>
                                                 <input type="text" class="form-control" id="Phone"
                                                     name="CompanyPhone[]" value="{{ $phone->CompanyPhone }}">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <label>Delete </label>
+                                            <label>{{ __('AccountCompany.Delete') }} </label>
                                             <br />
                                             <button
                                                 onclick="DeletePhoneNumber('{{ route('DeletePhoneNumber', ['language' => app()->getLocale(), 'id' => $phone->id]) }}')"
@@ -198,9 +198,9 @@
                                 </div>
                                 <div class="col-md-12" id="EducationButtons">
                                     <button onclick="AddNewNumber()" type="button" class="account-btn"
-                                        id="add-education">Add New
-                                        Phone Number</button>
-                                    <button type="submit" class="account-btn">Save</button>
+                                        id="add-education">{{ __('AccountCompany.Add New Phone Number') }}</button>
+                                    <button type="submit"
+                                        class="account-btn">{{ __('AccountCompany.Save') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -228,7 +228,7 @@
             // set div all child elements value linkName , linkUrl
             let isTrue = true
             for (let i = 0; i < CompanyPhone.length; i++) {
-                if (CompanyPhone[i].length != 13) {
+                if (CompanyPhone[i].value.length != 13) {
                     isTrue = false
                     break
                 }
@@ -238,8 +238,10 @@
                 alert('Please fill all fields')
                 return
             }
+            console.log(ComPhone);
             for (let i = 0; i < ComPhone.length; i++) {
-                if (ComPhone[i].length != 13) {
+                console.log(ComPhone[i]);
+                if (ComPhone[i].value.length != 13) {
                     isTrue = false
                     break
                 }
@@ -250,13 +252,13 @@
             }
             let str = `<div class="col-md-10 NewNumber${NumberCounter}">
                         <div class="form-group">
-                            <label>Phone Number</label>
+                            <label>{{ __('AccountCompany.Phone Number') }}</label>
                             <input type="text" class="form-control" id="Phone"
                                 name="NewCompanyPhone[]" value="+994" >
                         </div>
                     </div>
                     <div class="form-group col-md-2 NewNumber${NumberCounter}">
-                        <label>Delete </label>
+                        <label>{{ __('AccountCompany.Delete') }}</label>
                         <br />
                         <button
                             onclick="DeleteElement('NewNumber${NumberCounter}')"

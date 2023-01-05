@@ -1,5 +1,5 @@
 //create function
-function MyFunc1 () {
+function MyFunc1 (translate_arr) {
     //create variable
     let div = document.getElementById('CompanyExp')
     let companyname = document.getElementsByName('companyname[]')
@@ -45,24 +45,24 @@ function MyFunc1 () {
     }
     let str = ` <div class="my-2" style="border: 1px solid black; padding:10px">
     <div class="form-group ">
-        <label>Company Name</label>
+        <label>${translate_arr[0]}</label>
         <input name="companyname[]" type="text" class="form-control"
-            placeholder="Enter Company Name" required>
+            placeholder="${translate_arr[1]}" required>
     </div>
     <div class="form-group">
-        <label>Employer Rank</label>
+        <label>${translate_arr[2]}</label>
         <input name="companyrank[]" type="text" class="form-control"
-            placeholder="Enter Employer Rank" required>
+            placeholder="${translate_arr[3]}" required>
     </div>
     <div class="form-group">
-        <label>Company Start Date</label>
+        <label>${translate_arr[4]}</label>
         <input name="companyStartdate[]" type="date" class="form-control"
-            placeholder="Enter Company End Date" required>
+            required>
     </div>
     <div class="form-group">
-    <label>Company End Date</label>
+    <label>${translate_arr[5]}</label>
     <input name="companyEnddate[]" type="date" class="form-control"
-        placeholder="Enter Company End Date" required>
+        required>
 </div>
 `
     //append variable to div
@@ -79,7 +79,7 @@ function MyFunc1 () {
 }
 
 //create function
-function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
+function MyFunc2 (educationLevelNameArr, educationLevelIdArr,translate_arr) {
     //create variable
     let div = document.getElementById('Education')
     // get educationName ,  educationYear , educationLevel named form elements
@@ -129,24 +129,24 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
     <div class="my-2" style="border: 1px solid black; padding:10px">
 
         <div class="form-group ">
-            <label>Education Name</label>
+            <label>${translate_arr[0]}</label>
             <input name="educationName[]" type="text" class="form-control"
-                placeholder="Enter Education Name" required>
+                placeholder="${translate_arr[1]}" required>
         </div>
         <div class="form-group">
-            <label>Education Year Start</label>
+            <label>${translate_arr[2]}</label>
             <input name="educationYearStart[]" type="number" maxlength="4" class="form-control"
-            placeholder="Enter Education Start Year" required>
+            placeholder="${translate_arr[3]}" required>
         </div>
 
         <div class="form-group">
-            <label>Education Year End</label>
+            <label>${translate_arr[4]}</label>
             <input name="educationYearEnd[]" type="number" maxlength="4" class="form-control"
-            placeholder="Enter Education End Year" required>
+            placeholder="${translate_arr[5]}" required>
         </div>
                 
         <div class="form-group">
-            <label>Education Level</label>
+            <label>${translate_arr[6]}</label>
             <select name="educationLevel[]" class="form-control">
             `
     for (let i = 0; i < educationLevelNameArr.length; i++) {
@@ -171,7 +171,7 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr) {
 }
 
 //create function
-function MyFunc3 () {
+function MyFunc3 (translate_arr) {
     //create variable
     let div = document.getElementById('Links')
     let linkName = document.getElementsByName('LinkName[]')
@@ -201,14 +201,14 @@ function MyFunc3 () {
     let str = `
     <div class="my-2" style="border: 1px solid black; padding:10px">
         <div class="form-group ">
-            <label>Link Name</label>
+            <label>${translate_arr[0]}</label>
             <input name="LinkName[]" type="text" class="form-control"
-                placeholder="Enter Link Name" required>
+                placeholder="${translate_arr[1]}" required>
         </div>
         <div class="form-group">
-            <label>Link URL</label>
+            <label>${translate_arr[2]}</label>
             <input name="Link[]" type="text" class="form-control"
-                placeholder="Enter Link URL" required>
+                placeholder="${translate_arr[3]}" required>
         </div>
     </div>
     `
@@ -223,7 +223,7 @@ function MyFunc3 () {
 }
 
 //create function
-function MyFunc4 () {
+function MyFunc4 (translate_arr) {
     //create variable
     let div = document.getElementById('Phones')
     let CompanyPhone = document.getElementsByName('CompanyPhone[]')
@@ -249,9 +249,9 @@ function MyFunc4 () {
         return
     }
     let str = `<div class="form-group pt-3">
-    <label>Company Phone  Format: +994xxxxxxxxx</label>
+    <label>${translate_arr[0]}: +994xxxxxxxxx</label>
     <input type="text" name="CompanyPhone[]" class="form-control MaskPhone"
-        placeholder="Enter Company Phone" value="+994" >
+        placeholder="${translate_arr[1]}" value="+994" >
 </div>`
     //append variable to div
     div.innerHTML += str

@@ -2,23 +2,23 @@
 <html lang="zxx">
 
 <head>
-    @include('Frontend.Component.cdn')
+    @include('FrontEnd.Component.cdn')
 </head>
 
 <body>
-    @include('Frontend.Component.Preloader')
-    @include('Frontend.Component.Navbar')
+    @include('FrontEnd.Component.Preloader')
+    @include('FrontEnd.Component.Navbar')
 
     <!-- Page Title Start -->
     <section class="page-title title-bg14">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Confirm Password</h2>
+                <h2>{{__("EnterNewPassword.Confirm Password")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("EnterNewPassword.Home")}}</a>
                     </li>
-                    <li>Confirm Password</li>
+                    <li>{{__("EnterNewPassword.Confirm Password")}}</li>
                 </ul>
             </div>
         </div>
@@ -49,18 +49,18 @@
                         class="reset-form">
                         @csrf
                         <div class="form-group">
-                            <label>Enter Code </label>
+                            <label>{{__("EnterNewPassword.Enter Code")}} </label>
                             <input name="Code" type="number" class="form-control" placeholder="Enter Code" required>
-                            <label>Enter New Password</label>
-                            <input name="password" type="password" class="form-control" placeholder="Enter New Password"
+                            <label>{{__("EnterNewPassword.Enter New Password")}}</label>
+                            <input name="password" type="password" class="form-control" placeholder="{{__("EnterNewPassword.Enter New Password")}}"
                                 required>
-                            <label>Confirm New Password</label>
+                            <label>{{__("EnterNewPassword.Confirm New Password")}}</label>
                             <input name="confirmPassword" type="password" class="form-control"
-                                placeholder="Confirm Password" required>
+                                placeholder="{{__("EnterNewPassword.Confirm Password")}}" required>
                             <input type="hidden" name="reqId" value="{{ $id }}">
                         </div>
                         <div class="reset-btn text-center">
-                            <button type="submit">Change Password</button>
+                            <button type="submit">{{__("EnterNewPassword.Change Password")}}</button>
                         </div>
                     </form>
                 </div>

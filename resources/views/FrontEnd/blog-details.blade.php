@@ -11,26 +11,34 @@
     {{-- //meta MetaDescription --}}
     <meta name="description" content="{{ $blog->MetaDescription }}">
 
-    @include('Frontend.Component.cdn')
+    @include('FrontEnd.Component.cdn')
 
 </head>
 
 <body>
-    @include('Frontend.Component.Preloader')
+    @include('FrontEnd.Component.Preloader')
 
-    @include('Frontend.Component.Navbar')
+    @include('FrontEnd.Component.Navbar')
+    <script>
+        $(document).ready(function() {
+            var Hom = document.getElementsByClassName('Blog');
+            for (let index = 0; index < Hom.length; index++) {
+                Hom[index].classList.add('active');
+            }
+        });
+    </script>
 
 
     <!-- Page Title Start -->
     <section class="page-title title-bg22">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Blog Details</h2>
+                <h2>{{__("BlogDetail.Blog Details")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("BlogDetail.Home")}}</a>
                     </li>
-                    <li>Blog Details</li>
+                    <li>{{__("BlogDetail.Blog Details")}}</li>
                 </ul>
             </div>
         </div>
@@ -48,7 +56,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="blog-widget">
-                        <h3>Popular Post</h3>
+                        <h3>{{__("BlogDetail.Popular Post")}}</h3>
                         @foreach ($lastBlogs as $item)
                             <article class="popular-post">
                                 <a href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $item->id]) }}"
@@ -70,7 +78,7 @@
                             @php
                                 $tags = explode(' ', $blog->MetaKeywords);
                             @endphp
-                            <h3>Tags</h3>
+                            <h3>{{__("BlogDetail.Tags")}}</h3>
                             <ul>
                                 @foreach ($tags as $tag)
                                     <li>
@@ -182,4 +190,4 @@
         </section> --}}
 
     <!-- Subscribe Section End -->
-    @include('Frontend.Component.Footer')
+    @include('FrontEnd.Component.Footer')

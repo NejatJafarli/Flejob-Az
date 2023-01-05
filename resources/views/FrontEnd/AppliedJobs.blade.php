@@ -26,12 +26,12 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{__("AppliedJob.Account")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("AppliedJob.Home")}}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{__("AppliedJob.Account")}}</li>
                 </ul>
             </div>
         </div>
@@ -151,7 +151,7 @@
                                             <button
                                                 onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
                                                 type="button" class="btn btn-primary" data-toggle="modal">
-                                                {{ $userApplied ? 'UnApply Now' : 'Apply Now' }}</button>
+                                                {{ $userApplied ? __('AppliedJob.UnApply Now') : __('AppliedJob.Apply Now') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +177,8 @@
                 type: 'GET',
                 success: function(data) {
                     if (data.success == "Applied Successfully") {
-                        event.innerHTML = "UnApply Now";
+                        event.innerHTML = "{{ __('AppliedJob.UnApply Now') }}";
+
                         $('div.Mysuccess').html(data.success)
                         $('div.Mysuccess')
                             .fadeIn(300)
@@ -190,9 +191,8 @@
                         )
                     } else if (data.success == "UnApplied Successfully") {
                         //data have a redirect property
-
                         //change element value to Apply
-                        event.innerHTML = "Apply Now";
+                        event.innerHTML = "{{ __('AppliedJob.Apply Now') }}";
                         $('div.Mysuccess').html(data.success)
                         $('div.Mysuccess')
                             .fadeIn(300)

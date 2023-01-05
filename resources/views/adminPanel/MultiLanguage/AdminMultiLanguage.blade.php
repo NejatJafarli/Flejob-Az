@@ -38,10 +38,6 @@
                                                 <td>{{ $lang->LanguageFlag }}</td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm" style="float: none;">
-                                                        <a href="{{ route('EditMultiLanguage', ['id' => $lang->id, 'language' => app()->getLocale()]) }}" class="tabledit-edit-button btn btn-sm btn-success active"
-                                                            style="float: none; margin: 4px;">
-                                                            <span class="ti-pencil"></span>
-                                                        </a>
                                                         <a href="{{ route('DeleteMultiLanguage', ['id' => $lang->id, 'language' => app()->getLocale()]) }}" class="tabledit-delete-button btn btn-sm btn-danger"
                                                             style="float: none; margin: 4px;"><span
                                                                 class="ti-trash"></span></a>

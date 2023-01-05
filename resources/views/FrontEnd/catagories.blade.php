@@ -22,12 +22,12 @@
     <section class="page-title title-bg18">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Categories</h2>
+                <h2>{{__("Catagories.Categories")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Catagories.Home")}}</a>
                     </li>
-                    <li>Categories</li>
+                    <li>{{__("Catagories.Categories")}}</li>
                 </ul>
             </div>
         </div>
@@ -43,9 +43,7 @@
     <section class="categories-section category-style-two pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>Choose Your Category</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
+                <h2>{{__("Catagories.Choose Your Category")}}</h2>
             </div>
 
             <div class="row">
@@ -84,7 +82,7 @@
                                     echo $cat->StyleClass;
                                 @endphp
                                 <h3>{{ $cat->Category_lang->CategoryName }}</h3>
-                                <p>{{ $cat->VacanciesCount }} Open position</p>
+                                <p>{{ $cat->VacanciesCount }} {{__("Catagories.Open Position")}}</p>
                             </div>
                         </a>
                     </div>

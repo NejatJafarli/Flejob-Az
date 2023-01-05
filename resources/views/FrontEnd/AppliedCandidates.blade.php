@@ -37,12 +37,13 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{__("ShowAppliedUsers.Account")}}
+                </h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("ShowAppliedUsers.Home")}}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{__("ShowAppliedUsers.Account")}}</li>
                 </ul>
             </div>
         </div>
@@ -99,7 +100,7 @@
                                             <button onclick="GetUserIdAndSendModalForm('{{ $can->id }}')"
                                                 type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
-                                                Send Message To Candidate
+                                                {{__("ShowAppliedUsers.Send Message To Candidate")}}
                                             </button>
                                             {{-- <a href="{{ route('SendMessageCandidate', ['language' => app()->getLocale(), 'id' => $can->id]) }}" --}}
                                             {{-- class="btn btn-primary">Send Message</a> --}}

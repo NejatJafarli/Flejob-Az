@@ -20,12 +20,12 @@
     <section class="page-title title-bg9">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Company</h2>
+                <h2>{{__("Companies.Company")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Companies.Home")}}</a>
                     </li>
-                    <li>Company</li>
+                    <li>{{__("Companies.Company")}}</li>
                 </ul>
             </div>
         </div>
@@ -41,9 +41,7 @@
     <section class="company-section company-style-two pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>Top Companies</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
+                <h2>{{__("Companies.Top Companies")}}</h2>
             </div>
             <div class="row">
                 @foreach ($CompanyUsers as $com)
@@ -63,7 +61,7 @@
                                 </p>
                                 <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $com->id }}"
                                     class="company-btn">
-                                    {{ $com->VacanciesCount }} Open Position
+                                    {{ $com->VacanciesCount }}{{__("Companies.Open Position")}}
                                 </a>
                             </div>
                         </div>

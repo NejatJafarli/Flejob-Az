@@ -26,12 +26,12 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{__("Vacancies.Account")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Vacancies.Home")}}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{__("Vacancies.Account")}}</li>
                 </ul>
             </div>
         </div>
@@ -162,10 +162,10 @@
                                             @endphp
                                             <a style="width: max-content"
                                                 href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary">Show Applied Users <span class="badge bg-danger"
+                                                class="btn btn-primary">{{__("Vacancies.Show Applied Users")}} <span class="badge bg-danger"
                                                     style="font-size: 15px;">{{ $msg }}</span></a>
                                             <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary mx-5 my-3">View</a>
+                                                class="btn btn-primary mx-5 my-3">{{__("Vacancies.View")}}</a>
                                         </div>
                                     </div>
 
@@ -179,75 +179,6 @@
         </div>
     </section>
     <!-- Account Area End -->
-    <script>
-        function ApplyVac(event, url) {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            })
-
-            $.ajax({
-                url: url,
-                type: 'GET',
-                success: function(data) {
-                    if (data.success == "Applied Successfully") {
-                        event.innerHTML = "UnApply Now";
-                        $('div.Mysuccess').html(data.success)
-                        $('div.Mysuccess')
-                            .fadeIn(300)
-                            .delay(5000)
-                            .fadeOut(400)
-                        $('html, body').animate({
-                                scrollTop: $('div.Mysuccess').offset().top - 250
-                            },
-                            100
-                        )
-                    } else if (data.success == "UnApplied Successfully") {
-                        //data have a redirect property
-
-                        //change element value to Apply
-                        event.innerHTML = "Apply Now";
-                        $('div.Mysuccess').html(data.success)
-                        $('div.Mysuccess')
-                            .fadeIn(300)
-                            .delay(5000)
-                            .fadeOut(400)
-                        $('html, body').animate({
-                                scrollTop: $('div.Mysuccess').offset().top - 250
-                            },
-                            100
-                        )
-                    } else if (data.hasOwnProperty("errors")) {
-                        $('div.Myfailure').html(data.errors)
-                        $('div.Myfailure')
-                            .fadeIn(300)
-                            .delay(5000)
-                            .fadeOut(400)
-                        $('html, body').animate({
-                                scrollTop: $('div.Myfailure').offset().top - 250
-                            },
-                            100
-                        )
-                    } else if (data.hasOwnProperty('redirect'))
-                        window.location.href = data.redirect;
-
-                },
-                error: function(data) {
-                    $('div.Myfailure').html(data.errors)
-                    $('div.Myfailure')
-                        .fadeIn(300)
-                        .delay(5000)
-                        .fadeOut(400)
-                    $('html, body').animate({
-                            scrollTop: $('div.Myfailure').offset().top - 250
-                        },
-                        100
-                    )
-                }
-            });
-        }
-    </script>
     @include('FrontEnd.Component.Footer')
 
 </html>

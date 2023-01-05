@@ -19,12 +19,12 @@
     <section class="page-title title-bg1">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>About Us</h2>
+                <h2>{{__("About.About Us")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("About.Home")}}</a>
                     </li>
-                    <li>About Us</li>
+                    <li>{{__("About.About Us")}}</li>
                 </ul>
             </div>
         </div>

@@ -26,12 +26,12 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{__("messages.Account")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("messages.Home")}}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{__("messages.Account")}}</li>
                 </ul>
             </div>
         </div>
@@ -96,7 +96,8 @@
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapse{{ $i }}" aria-expanded="false"
                                         aria-controls="collapse{{ $i }}">
-                                        Message From {{ $mes->Vacancy->Company->CompanyName }} Named Company
+                                        {{__("messages.Message From")}}
+                                        {{ $mes->Vacancy->Company->CompanyName }}{{__("messages.Named Company")}} 
                                     </button>
                                 </h2>
                                 <div id="collapse{{ $i }}" class="accordion-collapse collapse"

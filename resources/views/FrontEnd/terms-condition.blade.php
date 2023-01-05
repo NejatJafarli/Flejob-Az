@@ -20,12 +20,12 @@
     <section class="page-title title-bg19">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Terms and Conditions</h2>
+                <h2>{{__("Terms.Terms and Conditions")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Terms.Home")}}</a>
                     </li>
-                    <li>Terms and Conditions</li>
+                    <li>{{__("Terms.Terms and Conditions")}}</li>
                 </ul>
             </div>
         </div>

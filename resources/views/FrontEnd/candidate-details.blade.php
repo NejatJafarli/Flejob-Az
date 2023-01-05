@@ -25,12 +25,12 @@
     <section class="page-title title-bg8">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Candidates Details</h2>
+                <h2>{{__("candidateDetails.Candidates Details")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("candidateDetails.Home")}}</a>
                     </li>
-                    <li>Candidates Details</li>
+                    <li>{{__("candidateDetails.Candidates Details")}}</li>
                 </ul>
             </div>
         </div>
@@ -83,11 +83,11 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="candidate-info-text">
-                        <h3>About Me</h3>
+                        <h3>{{__("candidateDetails.About Me")}}</h3>
                         <p>{{ $can->Description }}</p>
                     </div>
                     <div class="candidate-info-text candidate-education">
-                        <h3>Educations</h3>
+                        <h3>{{__("candidateDetails.Educations")}}</h3>
                         @foreach ($can->Educations as $Education)
                             <div class="education-info">
                                 <h4>{{ $Education->EducationName }}</h4>
@@ -97,7 +97,7 @@
                         @endforeach
                     </div>
                     <div class="candidate-info-text candidate-education">
-                        <h3>Experiance</h3>
+                        <h3>{{__("candidateDetails.Experiance")}}</h3>
                         @foreach ($can->Companies as $Companies)
                             <div class="education-info">
                                 <h4>{{ $Companies->CompanyName }}</h4>
@@ -113,12 +113,12 @@
                         @endforeach
                     </div>
                     <div class="candidate-info-text">
-                        <h3>Skills</h3>
+                        <h3>{{__("candidateDetails.Skills")}}</h3>
                         <p>{{ $can->Skills }}</p>
                     </div>
                     <div class="candidate-info-text text-center">
                         <div class="theme-btn">
-                            <a href="#" class="default-btn">Download CV</a>
+                            <a href="#" class="default-btn">{{__("candidateDetails.Download CV")}}</a>
                         </div>
                     </div>
                 </div>

@@ -19,6 +19,8 @@ use App\Models\contact_message;
 use App\Models\ContactMessage;
 use App\Models\Education;
 use App\Models\lang;
+use App\Models\wallet;
+use App\Models\wallet_transaction;
 use App\Models\Link;
 use App\Models\Message;
 use App\Models\NotificationForCompanyUser;
@@ -35,10 +37,12 @@ use App\QueryFilters\MinSalary as MinSalaryFilter;
 use App\QueryFilters\VacancyName as VacancyNameFilter;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use App\Models\config;
 
 
 class HomeController extends Controller
 {
+    
     public function __invoke(Request $request)
     {
         return "Welcome to our homepage";
@@ -233,6 +237,10 @@ class HomeController extends Controller
     {
         $jobs = Vacancy::where('Status', 1);
 
+        //order by jobs id desc and sortOrder desc
+        $jobs = $jobs->orderBy('SortOrder', 'desc');
+        $jobs = $jobs->orderBy('id', 'desc');
+
         $jobs = app(Pipeline::class)->send($jobs)
             ->through([
                 VacancyNameFilter::class,
@@ -269,14 +277,13 @@ class HomeController extends Controller
     }
     public function Hom($lang)
     {
-
         //check session
         if (session()->has('user')) {
             $user = $this->mergeUsersTable(session()->get('user'));
             session()->put('user', $user);
         }
 
-        $Vacancies = Vacancy::where('status', 1)->orderBy('id', 'desc')->take(20)->get();
+        $Vacancies = Vacancy::where('status', 1)->orderBy('SortOrder', 'desc')->orderBy('id','desc')->take(20)->get();
         //Merge Vacancies with Owner Company User
         $Vacancies = $Vacancies->map(function ($Vacancy) {
             $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
@@ -328,6 +335,7 @@ class HomeController extends Controller
         });
         // get users
         $Users = User::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
+        
         //merge users with categories and users
         $Users = $Users->map(function ($User) use ($lang_id) {
             $User->temp = UsersAndCategories::where('User_id', $User->id)->get();
@@ -372,12 +380,12 @@ class HomeController extends Controller
         $blogs = blog::orderBy('id', 'desc')->take(5)->get();
 
 
-        return view('Frontend/Index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs, 'blogs' => $blogs]);
+
+        return view('FrontEnd/index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs, 'blogs' => $blogs]);
     }
     public function About($lang)
     {
-
-        return view('Frontend/About');
+        return view('FrontEnd/about');
     }
     public function Companies($lang)
     {
@@ -394,7 +402,7 @@ class HomeController extends Controller
         $CompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
 
 
-        return view('Frontend/Company')->with(['Companies' => $Companies, 'CompanyUsers' => $CompanyUsers]);
+        return view('FrontEnd/company')->with(['Companies' => $Companies, 'CompanyUsers' => $CompanyUsers]);
     }
     public function JobDetails($lang, $id)
     {
@@ -415,6 +423,7 @@ class HomeController extends Controller
         $vac->Category = Category::where('id', $vac->Category_id)->first();
         $vac->Category->Category_lang = $vac->Category->category_langs()->where('lang_id', $lang_id)->first();
 
+        $vac->owner = CompanyUser::where('id', $vac->CompanyUser_id)->first();
         //merge vac with CompanyUser 
         $vac->CompanyUser = CompanyUser::where('id', $vac->CompanyUser_id)->first();
 
@@ -445,6 +454,10 @@ class HomeController extends Controller
             $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
             return $Vacancy;
         });
+
+        $vac->Owner = CompanyUser::where('id', $vac->CompanyUser_id)->first();
+
+
 
         return view('FrontEnd/job-Details')->with(['vac' => $vac, 'Langs' => $langs, 'Vacancies' => $Vacancies, "myIdBool" => true, "myId" => $id]);
     }
@@ -548,27 +561,27 @@ class HomeController extends Controller
         if (!session()->has('user'))
             return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
         $user = User::where('id', session()->get('user')->id)->first();
-        $vacancy = Vacancy::where('id', $id)->where('Status', 1)->first();
-        if ($vacancy == null)
+        $vacancy = Vacancy::where('id', $id);
+        if ($vacancy->first() == null)
             return response()->json(['errors' => [__("validationUser.This vacancy is not exist")]]);
 
 
-        $vacUser = subscribe_vacancy::where('user_id', $user->id)->where('vacancy_id', $vacancy->id)->first();
+        $vacUser = subscribe_vacancy::where('user_id', $user->id)->where('vacancy_id', $vacancy->first()->id)->first();
         if ($vacUser != null) {
             $vacUser->delete();
-            $notification = NotificationForCompanyUser::where('user_id', $user->id)->where('vacancy_id', $vacancy->id)->delete();
+            $notification = NotificationForCompanyUser::where('user_id', $user->id)->where('vacancy_id', $vacancy->first()->id)->delete();
             $user = HomeController::MergeUsersTable($user);
             session()->put('user', $user);
             return response()->json(['success' => "UnApplied Successfully"]);
         } else {
+        $vacancy = $vacancy->where('Status', 1)->first();
+            
             //check vacancy end date
             $vacancyEndDate = $vacancy->EndDate;
             $vacancyEndDate = strtotime($vacancyEndDate);
             $today = strtotime(date('Y-m-d'));
             if ($vacancyEndDate < $today)
                 return response()->json(['errors' => [__("validationUser.This vacancy is expired")]]);
-
-
 
             $subscribe = new subscribe_vacancy();
             $subscribe->user_id = $user->id;
@@ -636,4 +649,319 @@ class HomeController extends Controller
 
         return response()->json(['success' => 'Message Sent Successfully']);
     }
+//payment section
+
+    public function payment(Request $req)
+    {
+        if (!session()->has('CompanyUser')) 
+        return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
+        //where status 0 or 3
+        $vacancy = Vacancy::where('id', $req->vacancy_id)->where('Status', 0)->orWhere('Status', 3)->first();
+        if ($vacancy == null)
+            return response()->json(['errors' => [__("validationUser.This vacancy is not exist")]]);
+        if ($vacancy->CompanyUser_id != session()->get('CompanyUser')->id)
+            return response()->json(['errors' => [__("validationUser.You are not owner of this vacancy")]]);
+        
+        // $vacancyEndDate = $vacancy->EndDate;
+        // $vacancyEndDate = strtotime($vacancyEndDate);
+        // $today = strtotime(date('Y-m-d'));
+        // if ($vacancyEndDate > $today)
+        //     return response()->json(['errors' => [__("validationUser.This vacancy is not expired")]]);
+            //get vacancy owner company user
+        
+        $wallet = wallet::where('CompanyUser_id', $vacancy->CompanyUser_id)->first();
+        if ($wallet == null){
+            $wallet = new wallet();
+            $wallet->CompanyUser_id = $vacancy->CompanyUser_id;
+            $wallet->total_spend = 0;
+            $wallet->status = 1;
+            $wallet->save();
+        }
+        if ($wallet->status == 0)
+            return response()->json(['errors' => [__("validationUser.Your wallet is blocked")]]);
+
+        //get config vacancy price
+        $vacancy_price = config::where('key', 'vacancy_price')->first()->value;
+
+        //generate xml request
+        $xml = new \SimpleXMLElement('<TKKPG/>');
+        $xml->addChild('Request');
+        $xml->Request->addChild('Operation', 'CreateOrder');
+        $xml->Request->addChild('Language', app()->getLocale());
+        $xml->Request->addChild('Order');
+        $xml->Request->Order->addChild('OrderType', 'Purchase');    
+        $xml->Request->Order->addChild('Merchant', 'E1000010');
+        $xml->Request->Order->addChild('Amount', $vacancy_price*100);
+        $xml->Request->Order->addChild('Currency', '944');
+        $xml->Request->Order->addChild('Description', 'Vacancy Payment For'.$vacancy->Title);
+        $xml->Request->Order->addChild('ApproveURL', 'https://flejob.az/az/payment/success');
+        $xml->Request->Order->addChild('CancelURL', 'https://flejob.az/az/payment/canceled');
+        $xml->Request->Order->addChild('DeclineURL', 'https://flejob.az/az/payment/decline');
+        $xml = $xml->asXML();
+        
+        $xml = $this->xmlRequest($xml);
+        $SESSION_ID = $xml['Response']['Order']['SessionID'];
+        $ORDER_ID = $xml['Response']['Order']['OrderID'];
+        $URL = $xml['Response']['Order']['URL'];
+
+        // 'id',
+        // 'wallet_id',
+        // 'vacancy_id',
+        // 'session_id',
+        // 'order_id',
+        // 'order_status',
+        // 'amount',
+        // 'currency',
+        // 'transaction_id', null
+        // 'PAN', null
+        wallet_transaction::create([
+            'wallet_id'=>$wallet->id,
+            'vacancy_id'=>$vacancy->id,
+            'session_id'=>$SESSION_ID,
+            'order_id'=>$ORDER_ID,
+            'order_status'=>'pending',
+            'amount'=>$vacancy_price*100,
+            'currency'=>'944',
+        ]);
+        
+        //redirect to kapital bank 
+        // return response()->json(['redirect' => $URL."?ORDERID=".$ORDER_ID."&SESSIONID=".$SESSION_ID]);
+        return redirect()->to($URL.'?ORDERID='.$ORDER_ID.'&SESSIONID='.$SESSION_ID);
+    }
+    
+    function xmlRequest($request)
+    {
+        $path = base_path().'/public';
+
+        $url = "https://tstpg.kapitalbank.az:5443/Exec";
+        $keyFile =  $path."/certs/flegri.key";
+        $certFile =  $path."/certs/flegri.crt";
+        $ch = curl_init();
+        $header = array("Content-Type: text/html; charset=utf-8");
+        $options = array(
+        CURLOPT_HTTPHEADER => $header ,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_USERAGENT => 'Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)',
+        CURLOPT_URL => $url ,
+        CURLOPT_SSLCERT => $certFile ,
+        CURLOPT_SSLKEY => $keyFile ,
+        CURLOPT_POSTFIELDS => $request,
+        CURLOPT_POST => true
+        );
+        curl_setopt_array($ch , $options);
+        $output = curl_exec($ch);
+        $array_data = json_decode(json_encode(simplexml_load_string($output)), true);
+
+        return $array_data;
+    }
+    function paymentCanceled(Request $req){
+
+        $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true);
+        $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
+
+        $wallet_transaction->order_status = $array_data['OrderStatus'];
+        $wallet_transaction->save();
+        //find wallet 
+        $wallet = wallet::find($wallet_transaction->wallet_id);
+        //find CompanyUser 
+        $CompanyUser = CompanyUser::find($wallet->CompanyUser_id);
+        
+        $CompanyUser=$this->MergeCompanyUsersTable($CompanyUser);
+        session()->put('CompanyUser', $CompanyUser);
+
+        return redirect()->route('Hom',app()->getLocale());
+    }
+    function paymentDecline(Request $req){
+        $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
+
+        $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
+
+        $wallet_transaction->order_status = $array_data['OrderStatus'];
+        $wallet_transaction->order_status_code = $array_data['ResponseCode'];
+        $wallet_transaction->order_status_description = $array_data['ResponseDescription'];
+        $wallet_transaction->transaction_id = $array_data['TranId'];
+        $wallet_transaction->PAN = $array_data['PAN'];
+        $wallet_transaction->save();
+
+        $wallet = wallet::find($wallet_transaction->wallet_id);
+        //find CompanyUser 
+        $CompanyUser = CompanyUser::find($wallet->CompanyUser_id);
+        
+        $CompanyUser=$this->MergeCompanyUsersTable($CompanyUser);
+        session()->put('CompanyUser', $CompanyUser);
+
+        return redirect()->route('Hom',app()->getLocale());
+
+    }
+    function paymentSuccess(Request $req){
+        $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
+        
+        //get wallet_transaction
+        $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
+
+        if ($wallet_transaction == null)
+            return response()->json(['errors' => [__("validationUser.You are not owner of this vacancy")]]);
+        if ($wallet_transaction->order_status == 'APPROVED')
+            return response()->json(['errors' => [__("validationUser.You are already paid for this vacancy")]]);
+        if ($array_data['OrderStatus'] != 'APPROVED')
+            return response()->json(['errors' => [__("validationUser.Your payment is not approved")]]);
+        if ($array_data['PurchaseAmount'] != $wallet_transaction->amount)
+            return response()->json(['errors' => [__("validationUser.Your payment amount is not correct")]]);
+        if ($array_data['Currency'] != $wallet_transaction->currency)
+            return response()->json(['errors' => [__("validationUser.Your payment currency is not correct")]]);
+
+            //  $table->string('transaction_id')->nullable();
+            // $table->string('PAN')->nullable();
+        $wallet_transaction->order_status = 'APPROVED';
+        $wallet_transaction->transaction_id = $array_data['TranId'];
+        $wallet_transaction->PAN = $array_data['PAN'];
+        //get wallet
+        $wallet = wallet::find($wallet_transaction->wallet_id);
+        $wallet->total_spend += $wallet_transaction->amount/10;
+        $wallet->save();
+
+        $wallet_transaction->save();
+
+        //get CompanyUser
+        $company_user = CompanyUser::find($wallet->CompanyUser_id);
+        $company_user->Paying = 1;
+        $company_user->save();
+        //get vacancy
+        $vacancy = Vacancy::find($wallet_transaction->vacancy_id);
+        //2022-01-01 date time now add 1 month
+        $vacancy->EndDate = date('Y-m-d H:i:s', strtotime('+1 month'));
+        $vacancy->Status = 1;
+        $vacancy->save();
+
+        $CompanyUser=$this->MergeCompanyUsersTable($company_user);
+        session()->put('CompanyUser', $CompanyUser);
+        
+        // dd(session()->get('CompanyUser'));
+
+        return redirect()->route('Hom',app()->getLocale());
+    }
+
+    function payment2(Request $req){
+        if (!session()->has('CompanyUser')) 
+        return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
+        //where status 0 or 3
+        $vacancy = Vacancy::where('id', $req->vacancy_id)->first();
+        if ($vacancy == null)
+            return response()->json(['errors' => [__("validationUser.This vacancy is not exist")]]);
+        if ($vacancy->CompanyUser_id != session()->get('CompanyUser')->id)
+            return response()->json(['errors' => [__("validationUser.You are not owner of this vacancy")]]);
+        
+        $wallet = wallet::where('CompanyUser_id', $vacancy->CompanyUser_id)->first();
+        if ($wallet == null){
+            $wallet = new wallet();
+            $wallet->CompanyUser_id = $vacancy->CompanyUser_id;
+            $wallet->total_spend = 0;
+            $wallet->status = 1;
+            $wallet->save();
+        }
+        if ($wallet->status == 0)
+            return response()->json(['errors' => [__("validationUser.Your wallet is blocked")]]);
+
+        //get config vacancy price
+        $premium_price = config::where('key', 'premium_price')->first()->value;
+
+        //generate xml request
+        $xml = new \SimpleXMLElement('<TKKPG/>');
+        $xml->addChild('Request');
+        $xml->Request->addChild('Operation', 'CreateOrder');
+        $xml->Request->addChild('Language', app()->getLocale());
+        $xml->Request->addChild('Order');
+        $xml->Request->Order->addChild('OrderType', 'Purchase');    
+        $xml->Request->Order->addChild('Merchant', 'E1000010');
+        $xml->Request->Order->addChild('Amount', $premium_price*100);
+        $xml->Request->Order->addChild('Currency', '944');
+        $xml->Request->Order->addChild('Description', 'Vacancy Payment For'.$vacancy->Title);
+        $xml->Request->Order->addChild('ApproveURL', 'https://flejob.az/az/payment/success/premium');
+        $xml->Request->Order->addChild('CancelURL', 'https://flejob.az/az/payment/canceled');
+        $xml->Request->Order->addChild('DeclineURL', 'https://flejob.az/az/payment/decline');
+        $xml = $xml->asXML();
+        
+        $xml = $this->xmlRequest($xml);
+        $SESSION_ID = $xml['Response']['Order']['SessionID'];
+        $ORDER_ID = $xml['Response']['Order']['OrderID'];
+        $URL = $xml['Response']['Order']['URL'];
+
+        // 'id',
+        // 'wallet_id',
+        // 'vacancy_id',
+        // 'session_id',
+        // 'order_id',
+        // 'order_status',
+        // 'amount',
+        // 'currency',
+        // 'transaction_id', null
+        // 'PAN', null
+        wallet_transaction::create([
+            'wallet_id'=>$wallet->id,
+            'vacancy_id'=>$vacancy->id,
+            'session_id'=>$SESSION_ID,
+            'order_id'=>$ORDER_ID,
+            'order_status'=>'pending',
+            'amount'=>$premium_price*100,
+            'currency'=>'944',
+        ]);
+        
+        //redirect to kapital bank 
+        // return response()->json(['redirect' => $URL."?ORDERID=".$ORDER_ID."&SESSIONID=".$SESSION_ID]);
+        return redirect()->to($URL.'?ORDERID='.$ORDER_ID.'&SESSIONID='.$SESSION_ID);
+    }
+
+    function paymentSuccessForPremium(Request $req){
+        $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
+        
+        //get wallet_transaction
+        $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
+
+        if ($wallet_transaction == null)
+            return response()->json(['errors' => [__("validationUser.You are not owner of this vacancy")]]);
+        if ($wallet_transaction->order_status == 'APPROVED')
+            return response()->json(['errors' => [__("validationUser.You are already paid for this vacancy")]]);
+        if ($array_data['OrderStatus'] != 'APPROVED')
+            return response()->json(['errors' => [__("validationUser.Your payment is not approved")]]);
+        if ($array_data['PurchaseAmount'] != $wallet_transaction->amount)
+            return response()->json(['errors' => [__("validationUser.Your payment amount is not correct")]]);
+        if ($array_data['Currency'] != $wallet_transaction->currency)
+            return response()->json(['errors' => [__("validationUser.Your payment currency is not correct")]]);
+
+            //  $table->string('transaction_id')->nullable();
+            // $table->string('PAN')->nullable();
+        $wallet_transaction->order_status = 'APPROVED';
+        $wallet_transaction->transaction_id = $array_data['TranId'];
+        $wallet_transaction->PAN = $array_data['PAN'];
+        //get wallet
+        $wallet = wallet::find($wallet_transaction->wallet_id);
+        $wallet->total_spend += $wallet_transaction->amount/10;
+        $wallet->save();
+
+        $wallet_transaction->save();
+
+        //get CompanyUser
+        $company_user = CompanyUser::find($wallet->CompanyUser_id);
+        $company_user->Paying = 1;
+        $company_user->save();
+        //get vacancy
+        $vacancy = Vacancy::find($wallet_transaction->vacancy_id);
+        //add premium end date 1 day
+        $vacancy->PremiumEndDate = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $vacancy->sortOrder=1;
+        $vacancy->save();
+
+        $CompanyUser=$this->MergeCompanyUsersTable($company_user);
+        session()->put('CompanyUser', $CompanyUser);
+        
+        // dd(session()->get('CompanyUser'));
+
+        return redirect()->route('Hom',app()->getLocale());
+    }
 }
+
+
+

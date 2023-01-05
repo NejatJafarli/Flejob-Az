@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'Find Jobs, Employment & Career Opportunities' => 'Find Jobs, Employment & Career Opportunities',
+    'Drop Resume & Get Your Desire Job!' => 'Drop Resume & Get Your Desire Job!',
+    'Job Title' => 'Job Title',
+    'Cities' => 'Cities',
+    'Categories' => 'Categories',
+    'Job Title or Keyword' => 'Job Title or Keyword',
+    'All Cities' => 'All Cities',
+    'All Categories' => 'All Categories',
+    'Min Salary' => 'Min Salary',
+    'Max Salary' => 'Max Salary',
+    'Enter Min Salary' => 'Enter Min Salary',
+    'Enter Max Salary' => 'Enter Max Salary',
+    'Find A Job' => 'Find A Job',
+    'Choose Your Category' => 'Choose Your Category',
+    'Open Position' => 'Open Position',
+    'UnApply Now' => 'UnApply Now',
+    'Apply Now' => 'Apply Now',
+    'Jobs You May Be Interested In' => 'Jobs You May Be Interested In',
+    'Top Companies' => 'Top Companies',
+    'News, Tips & Articles' => 'News, Tips & Articles',
+    'Read More' => 'Read More',
+];

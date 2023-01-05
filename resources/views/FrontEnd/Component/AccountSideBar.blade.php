@@ -2,37 +2,38 @@
     <li>
         <a id="account" href="{{ route('Account', app()->getLocale()) }}">
             <i class='bx bx-user'></i>
-            My Profile
+            {{ __('AccountSideBar.My Profile') }}
+            
         </a>
     </li>
     <li>
         <a id="Resume" href="{{ route('MyResume', app()->getLocale()) }}">
             <i class='bx bxs-file-doc'></i>
-            My Resume
+            {{ __('AccountSideBar.My Resume') }}
         </a>
     </li>
     <li>
         <a id="AppliedJobs" href="{{ route('AppliedJobs', app()->getLocale()) }}">
             <i class='bx bx-briefcase'></i>
-            Applied Job
+            {{ __('AccountSideBar.Applied Job') }}
         </a>
     </li>
     <li>
         <a id="Messages" href="{{ route('Messages', app()->getLocale()) }}">
             <i class='bx bx-envelope'></i>
-            Messages
+            {{ __('AccountSideBar.Messages') }}
         </a>
     </li>
     <li>
         <a id="ChangePass" href="{{ route('ChangePass', app()->getLocale()) }}">
             <i class='bx bx-lock-alt'></i>
-            Change Password
+            {{ __('AccountSideBar.Change Password') }}
         </a>
     </li>
     <li>
         <a id="Logout" href="{{ route('Logout', app()->getLocale()) }}">
             <i class='bx bx-log-out'></i>
-            Log Out
+            {{ __('AccountSideBar.Log Out') }}
         </a>
     </li>
 </ul>

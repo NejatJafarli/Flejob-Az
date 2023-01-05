@@ -202,6 +202,20 @@
             color: #8E8E93;
             border: 1px solid #D1D1D6;
         }
+
+        .login-password-input {
+            position: relative;
+        }
+
+        .field-icon {
+            position: absolute;
+            right: 10px;
+            top: 16px;
+            z-index: 2;
+            cursor: pointer;
+            color: #aaa;
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 
@@ -217,12 +231,12 @@
     <section class="page-title title-bg13">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Sign Up</h2>
+                <h2>{{ __('Signup.Sign Up') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Signup.Home') }}</a>
                     </li>
-                    <li>Sign Up</li>
+                    <li>{{ __('Signup.Sign Up') }}Sign Up</li>
                 </ul>
             </div>
         </div>
@@ -242,12 +256,12 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills nav-justified" role="tablist">
                         <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link active" data-toggle="tab" href="#home-1" role="tab">Signup With
-                                User</a>
+                            <a class="nav-link active" data-toggle="tab" href="#home-1"
+                                role="tab">{{ __('Signup.Signup With User') }}</a>
                         </li>
                         <li class="nav-item waves-effect waves-light">
-                            <a class="nav-link" data-toggle="tab" href="#profile-1" role="tab">Signup With
-                                Company</a>
+                            <a class="nav-link" data-toggle="tab" href="#profile-1"
+                                role="tab">{{ __('Signup.Signup With Company') }}</a>
                         </li>
                     </ul>
 
@@ -261,70 +275,82 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>First Name</label>
+                                            <label>{{ __('Signup.First Name') }}</label>
                                             <input type="text" name="FirstName" class="form-control"
-                                                placeholder="Enter First Name" required>
+                                                placeholder="{{ __('Signup.Enter First Name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Last Name</label>
+                                            <label>{{ __('Signup.Last Name') }}</label>
                                             <input type="text" name="LastName" class="form-control"
-                                                placeholder="Enter Last Name" required>
+                                                placeholder="{{ __('Signup.Enter Last Name') }}" required>
                                         </div>
                                     </div>
                                     {{-- father name --}}
                                     <div class="col-md-6">
 
                                         <div class="form-group">
-                                            <label>Father Name</label>
+                                            <label>{{ __('Signup.Father Name') }}</label>
                                             <input type="text" name="FatherName" class="form-control"
-                                                placeholder="Enter Father Name" required>
+                                                placeholder="{{ __('Signup.Enter Father Name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>BirthDate</label>
-                                            <input name="BirthDate" type="date" class="form-control"
-                                                placeholder="Enter BirthDate" required>
+                                            <label>{{ __('Signup.BirthDate') }}</label>
+                                            <input name="BirthDate" type="date" class="form-control" required>
                                         </div>
                                     </div>
                                     {{-- UserName --}}
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Username</label>
+                                            <label>{{ __('Signup.Username') }}</label>
                                             <input name="Username" type="text" class="form-control"
-                                                placeholder="Enter Username" required>
+                                                placeholder="{{ __('Signup.Enter Username') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
 
                                         {{-- Password --}}
                                         <div class="form-group">
-                                            <label>Password</label>
-                                            <input name="Password" type="password" class="form-control"
-                                                placeholder="Enter Password" required>
+                                            <label>{{ __('Signup.Password') }}</label>
+                                            <div class="login-password-input">
+                                                <input id="password-field1" name="Password" type="password"
+                                                    class="form-control"
+                                                    placeholder="{{ __('Signup.Enter Password') }}" required>
+                                                <span toggle="#password-field1"
+                                                    class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                            </div>
                                         </div>
                                     </div>
                                     {{-- Password Confirmation --}}
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Password Confirmation</label>
-                                            <input name="Password_confirmation" type="password" class="form-control"
-                                                placeholder="Enter Password Confirmation" required>
+                                            <label>{{ __('Signup.Password Confirmation') }}</label>
+                                            <div class="login-password-input">
+                                                <input id="password-field2" name="Password_confirmation" type="password"
+                                                    class="form-control"
+                                                    placeholder="{{ __('Signup.Enter Password Confirmation') }}"
+                                                    required>
+                                                <span toggle="#password-field2"
+                                                    class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Email</label>
+                                            <label>{{ __('Signup.Email') }}</label>
                                             <input name="email" type="email" class="form-control"
-                                                placeholder="Enter Email" required>
+                                                placeholder="{{ __('Signup.Enter Email') }}" required>
                                         </div>
 
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Select City</label>
+                                            <label>{{ __('Signup.Select City') }}</label>
                                             <select name="City" class="form-control">
                                                 @foreach ($cities as $City)
                                                     <option value="{{ $City->id }}">
@@ -337,44 +363,46 @@
                                     {{-- Phone --}}
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Phone Format: +994xxxxxxxxx</label>
+                                            <label>{{ __('Signup.Phone Format') }}: +994xxxxxxxxx</label>
                                             <input value="+994" name="phone" type="text"
-                                                class="form-control MaskPhoneUser" placeholder="Enter Phone" required>
+                                                class="form-control MaskPhoneUser"
+                                                placeholder="{{ __('Signup.Enter Phone') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Profile Picture (Types jpeg,png,jpg,gif,svg Max 2Mb) </label>
+                                            <label>{{ __('Signup.Profile Picture (Types jpeg,png,jpg,gif,svg Max 2Mb)') }}
+                                            </label>
                                             <input class="form-control" name="image" type="file"
                                                 style="padding: 5px 20px; height: 50px;"
-                                                placeholder="Enter Profile Picture" required>
+                                                placeholder="{{ __('Signup.Enter Profile Picture') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Married</label>
+                                            <label>{{ __('Signup.Married') }}</label>
                                             <select name="Married" class="form-control">
-                                                <option value="0">Single</option>
-                                                <option value="1">Married</option>
+                                                <option value="0">{{ __('Signup.Single') }}</option>
+                                                <option value="1">{{ __('Signup.Married') }}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Description</label>
+                                            <label>{{ __('Signup.Description') }}</label>
                                             <textarea name="Description" style="height: 250px;" cols="30" rows="10" class="form-control"
-                                                placeholder="Enter Description"></textarea>
+                                                placeholder="{{ __('Signup.Enter Description') }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Skills</label>
+                                            <label>{{ __('Signup.Skills') }}</label>
                                             <textarea name="Skills" style="height: 250px;" cols="30" rows="10" class="form-control"
-                                                placeholder="Enter Skills"></textarea>
+                                                placeholder="{{ __('Signup.Enter Skills') }}"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Languages</label>
+                                        <label>{{ __('Signup.Languages') }}</label>
                                         <select class="js-example-basic-multiple form-control" name="Languages[]"
                                             multiple="multiple" style="width: 100%">
                                             @foreach ($languages as $Language)
@@ -384,7 +412,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Categories</label>
+                                        <label>{{ __('Signup.Categories') }}</label>
                                         <select class="js-example-basic-multiple form-control" name="Categories[]"
                                             multiple="multiple" style="width: 100%">
                                             @foreach ($categories as $Category)
@@ -394,19 +422,21 @@
                                         </select>
                                     </div>
                                     <div class="tofrom col-md-6 my-5">
-                                        <span>Min Salary ₼</span>
+                                        <span>{{ __('Signup.Min Salary') }} ₼</span>
                                         <div class="form-group">
                                             <label></label>
                                             <input name="MinSalary" type="number" class="form-control"
-                                                placeholder="Enter Min Salary" id="flefilter_price_min">
+                                                placeholder="{{ __('Signup.Enter Min Salary') }}"
+                                                id="flefilter_price_min">
                                         </div>
                                     </div>
                                     <div class="from col-md-6 my-5">
-                                        <span>Max Salary ₼</span>
+                                        <span>{{ __('Signup.Max Salary') }} ₼</span>
                                         <div class="form-group">
                                             <label></label>
                                             <input name="MaxSalary" type="number" class="form-control"
-                                                placeholder="Enter Max Salary" id="flefilter_price_max">
+                                                placeholder="{{ __('Signup.Enter Max Salary') }}"
+                                                id="flefilter_price_max">
                                         </div>
                                     </div>
                                     <div class="price-filter">
@@ -414,11 +444,29 @@
                                             current-min-price="1" current-max-price="29999" max-price="29999" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Company Experince</label>
+                                        <label>{{ __('Signup.Company Experince') }}</label>
                                         {{-- add + Button --}}
+                                        @php
+                                            $translate_arr = [];
+                                            
+                                            $value = __('Signup.Company Name');
+                                            $translate_arr[] = '"' . $value . '"';
+                                            $value = __('Signup.Enter Company Name');
+                                            $translate_arr[] = '"' . $value . '"';
+                                            $value = __('Signup.Employer Rank');
+                                            $translate_arr[] = '"' . $value . '"';
+                                            $value = __('Signup.Enter Employer Rank');
+                                            $translate_arr[] = '"' . $value . '"';
+                                            $value = __('Signup.Company Start Date');
+                                            $translate_arr[] = '"' . $value . '"';
+                                            $value = __('Signup.Company End Date');
+                                            $translate_arr[] = '"' . $value . '"';
+                                            
+                                            $translate_arr = implode(',', $translate_arr);
+                                        @endphp
                                         <div class="form-group d-flex justify-content-center">
-                                            <button onclick="MyFunc1()" style="width: 75%" type="button"
-                                                class="btn btn-primary" id="add1">+</button>
+                                            <button onclick="MyFunc1([{{ $translate_arr }}])" style="width: 75%"
+                                                type="button" class="btn btn-primary" id="add1">+</button>
                                         </div>
                                         {{--  add border to div --}}
                                         <div id="CompanyExp">
@@ -426,7 +474,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Education</label>
+                                        <label>{{ __('Signup.Education') }}</label>
                                         {{-- add + Button --}}
                                         <div class="form-group d-flex justify-content-center">
                                             @php
@@ -439,13 +487,33 @@
                                                 }
                                                 
                                                 $name = implode(',', $name);
-                                                // add start and end "
-$name = '"' . str_replace(',', '","', $name) . '"';
-$id = implode(',', $id);
+                                                $name = '"' . str_replace(',', '","', $name) . '"';
+                                                $id = implode(',', $id);
+                                                
+                                                $translate_arr = [];
+                                                
+                                                $value = __('Signup.Education Name');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                $value = __('Signup.Enter Education Name');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                $value = __('Signup.Education Year Start');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                $value = __('Signup.Enter Education Start Year');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                $value = __('Signup.Education Year End');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                $value = __('Signup.Enter Education End Year');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                $value = __('Signup.Education Level');
+                                                $translate_arr[] = '"' . $value . '"';
+                                                
+                                                $translate_arr = implode(',', $translate_arr);
+                                                
                                             @endphp
 
 
-                                            <button onclick="MyFunc2([{{ $name }}],[{{ $id }}])"
+                                            <button
+                                                onclick="MyFunc2([{{ $name }}],[{{ $id }}],[{{ $translate_arr }}])"
                                                 style="width: 75%" type="button" class="btn btn-primary "
                                                 id="add2">+</button>
                                         </div>
@@ -454,27 +522,42 @@ $id = implode(',', $id);
 
                                         </div>
                                     </div>
+                                    @php
+                                        
+                                        $translate_arr = [];
+                                        
+                                        $value = __('Signup.Link Name');
+                                        $translate_arr[] = '"' . $value . '"';
+                                        $value = __('Signup.Enter Link Name');
+                                        $translate_arr[] = '"' . $value . '"';
+                                        $value = __('Signup.Link URL');
+                                        $translate_arr[] = '"' . $value . '"';
+                                        $value = __('Signup.Enter Link URL');
+                                        $translate_arr[] = '"' . $value . '"';
+                                        
+                                        $translate_arr = implode(',', $translate_arr);
+                                        
+                                    @endphp
                                     {{-- // add links with names --}}
                                     <div class="col-md-12">
-                                        <label>Links</label>
+                                        <label>{{ __('Signup.Links') }}</label>
                                         {{-- add + Button --}}
                                         <div class="form-group d-flex justify-content-center">
-                                            <button onclick="MyFunc3()" style="width: 75%" type="button"
-                                                class="btn btn-primary" id="add3">+</button>
+                                            <button onclick="MyFunc3([{{ $translate_arr }}])" style="width: 75%"
+                                                type="button" class="btn btn-primary" id="add3">+</button>
                                         </div>
                                         {{--  add border to div --}}
                                         <div id="Links"></div>
                                         <div class="signup-btn text-center">
                                             <button type="button"
-                                                onclick="Signup('{{ route('SignUpControllerAjax', app()->getLocale()) }}')">Sign
-                                                Up</button>
+                                                onclick="Signup('{{ route('SignUpControllerAjax', app()->getLocale()) }}')">{{ __('Signup.Sign Up') }}</button>
                                         </div>
                                         <div class="other-signup text-center">
                                             <div class="create-btn text-center">
                                                 <p>
-                                                    Have an Account?
+                                                    {{ __('Signup.Have an Account?') }}
                                                     <a href="{{ route('Signin', app()->getLocale()) }}">
-                                                        Sign In
+                                                        {{ __('Signup.Sign In') }}
                                                         <i class='bx bx-chevrons-right bx-fade-right'></i>
                                                     </a>
                                                 </p>
@@ -491,121 +574,137 @@ $id = implode(',', $id);
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Company Name</label>
+                                            <label>{{ __('Signup.Company Name') }}</label>
                                             <input type="text" name="CompanyName" class="form-control"
-                                                placeholder="Enter Company Name" required>
+                                                placeholder="{{ __('Signup.Enter Company Name') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Company Email</label>
+                                            <label>{{ __('Signup.Company Email') }}</label>
                                             <input type="email" name="CompanyEmail" class="form-control"
-                                                placeholder="Enter Company Email" required>
+                                                placeholder="{{ __('Signup.Enter Company Email') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Company Username</label>
+                                            <label>{{ __('Signup.Company Username') }}</label>
                                             <input type="text" name="CompanyUsername" class="form-control"
-                                                placeholder="Enter Company Username" required>
+                                                placeholder="{{ __('Signup.Enter Company Username') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Company Password</label>
-                                            <input type="password" name="CompanyPassword" class="form-control"
-                                                placeholder="Enter Company Password" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Company Logo</label>
-                                            <input type="file" name="CompanyLogo" class="form-control"
-                                                placeholder="Enter Company Logo" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group
-                                            ">
-                                            <label>Company WebSite Link</label>
-                                            <input type="text" name="CompanyWebSiteLink" class="form-control"
-                                                placeholder="Enter Company Web Site Link" required>
-                                        </div>
-                                    </div>
-                                    {{-- description --}}
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Company Description</label>
-                                            <textarea style="height: 250px" rows="10" cols="30" name="CompanyDescription" class="form-control"
-                                                placeholder="Enter Company Description" required></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Company Categories</label>
-                                            <br />
-                                            <select style="width:100%" class="js-example-basic-multiple form-control"
-                                                name="CompanyCategories[]" multiple="multiple">
-                                                @foreach ($categories as $Category)
-                                                    <option value="{{ $Category->id }}">
-                                                        {{ $Category->Category_lang->CategoryName }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Company Address</label>
-                                            <input type="text" name="CompanyAddress" class="form-control"
-                                                placeholder="Enter Company Address" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label>Phones</label>
-                                        {{-- add + Button --}}
-                                        <div class="form-group">
-                                            <button onclick="MyFunc4()" style="width: 100%" type="button"
-                                                class="btn btn-primary" id="add3">+</button>
-
-                                            <div id='Phones'>
-                                                <div class="form-group pt-3">
-                                                    <label>Company Phone Format: +994xxxxxxxxx</label>
-                                                    <input type="text" name="CompanyPhone[]"
-                                                        class="form-control MaskPhone"
-                                                        placeholder="Enter Company Phone" >
-                                                </div>
-                                            </div>
-                                            <div class="signup-btn text-center">
-                                                <button type="button"
-                                                    onclick="SignupCompany('{{ route('SignUpCompanyControllerAjax', app()->getLocale()) }}')">Sign
-                                                    Up</button>
-                                            </div>
-                                            <div class="other-signup text-center">
-                                                <div class="create-btn text-center">
-                                                    <p>
-                                                        Have an Account?
-                                                        <a href="{{ route('Signin', app()->getLocale()) }}">
-                                                            Sign In
-                                                            <i class='bx bx-chevrons-right bx-fade-right'></i>
-                                                        </a>
-                                                    </p>
-                                                </div>
+                                            <label>{{ __('Signup.Company Password') }}</label>
+                                            <div class="login-password-input">
+                                                <input id="password-field3" type="password" name="CompanyPassword"
+                                                    class="form-control"
+                                                    placeholder="{{ __('Signup.Enter Company Password') }}" required>
+                                                <span toggle="#password-field3"
+                                                    class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div>
-                            <div class="MyAlert-box Mysuccess">Successful Alert !!!</div>
-                            <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
-                            <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
-                        </div>
-                    </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ __('Signup.Company Logo') }}</label>
+                                        <input type="file" name="CompanyLogo" class="form-control"
+                                            placeholder="Enter Company Logo" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group
+                                            ">
+                                        <label>{{ __('Signup.Company WebSite Link') }}</label>
+                                        <input type="text" name="CompanyWebSiteLink" class="form-control"
+                                            placeholder="{{ __('Signup.Enter Company Web Site Link') }}" required>
+                                    </div>
+                                </div>
+                                {{-- description --}}
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ __('Signup.Company Description') }}</label>
+                                        <textarea style="height: 250px" rows="10" cols="30" name="CompanyDescription" class="form-control"
+                                            placeholder="{{ __('Signup.Enter Company Description') }}" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ __('Signup.Company Categories') }}</label>
+                                        <br />
+                                        <select style="width:100%" class="js-example-basic-multiple form-control"
+                                            name="CompanyCategories[]" multiple="multiple">
+                                            @foreach ($categories as $Category)
+                                                <option value="{{ $Category->id }}">
+                                                    {{ $Category->Category_lang->CategoryName }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{ __('Signup.Company Address') }}</label>
+                                        <input type="text" name="CompanyAddress" class="form-control"
+                                            placeholder="{{ __('Signup.Enter Company Address') }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>{{ __('Signup.Phones') }}</label>
+                                    {{-- add + Button --}}
+                                    @php
+                                        
+                                        $translate_arr = [];
+                                        
+                                        $value = __('Signup.Company Phone Format');
+                                        $translate_arr[] = '"' . $value . '"';
+                                        $value = __('Signup.Enter Company Phone');
+                                        $translate_arr[] = '"' . $value . '"';
+                                        
+                                        $translate_arr = implode(',', $translate_arr);
+                                    @endphp
+                                    <div class="form-group">
+                                        <button onclick="MyFunc4([{{ $translate_arr }}])" style="width: 100%"
+                                            type="button" class="btn btn-primary" id="add3">+</button>
 
+                                        <div id='Phones'>
+                                            <div class="form-group pt-3">
+                                                <label>{{ __('Signup.Company Phone Format') }}:
+                                                    +994xxxxxxxxx</label>
+                                                <input type="text" name="CompanyPhone[]"
+                                                    class="form-control MaskPhone" placeholder="Enter Company Phone">
+                                            </div>
+                                        </div>
+                                        <div class="signup-btn text-center">
+                                            <button type="button"
+                                                onclick="SignupCompany('{{ route('SignUpCompanyControllerAjax', app()->getLocale()) }}')">{{ __('Signup.Sign Up') }}</button>
+                                        </div>
+                                        <div class="other-signup text-center">
+                                            <div class="create-btn text-center">
+                                                <p>
+                                                    {{ __('Signup.Have an Account?') }}
+                                                    <a href="{{ route('Signin', app()->getLocale()) }}">
+                                                        {{ __('Signup.Sign In') }}
+                                                        <i class='bx bx-chevrons-right bx-fade-right'></i>
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="MyAlert-box Mysuccess">Successful Alert !!!</div>
+                        <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
+                        <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
+                    </div>
                 </div>
+
             </div>
         </div>
+    </div>
     </div>
     <!-- Sign Up Section End -->
     {{-- 
@@ -637,6 +736,16 @@ $id = implode(',', $id);
     <script src="/assets2/js/Script.js"></script>
     <script>
         $(document).ready(function() {
+            $(".toggle-password").click(function() {
+
+                $(this).toggleClass("fa-eye fa-eye-slash");
+                var input = $($(this).attr("toggle"));
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
             //input  mask
             $('.MaskPhoneUser').inputmask("+\\9\\94999999999");
             $('.MaskPhone').inputmask("+\\9\\94999999999");

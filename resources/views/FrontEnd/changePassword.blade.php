@@ -27,12 +27,12 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{__("ChangePassword.Account")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("ChangePassword.Home")}}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{__("ChangePassword.Account")}}</li>
                 </ul>
             </div>
         </div>
@@ -72,7 +72,7 @@
 
                 <div class="col-md-9">
                     <div class="account-details">
-                        <h3>Change Password</h3>
+                        <h3>{{__("ChangePassword.Change Password")}}</h3>
                         {{-- show errors --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -89,27 +89,27 @@
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="form-group">
-                                        <label>Enter Your Current Password</label>
+                                        <label>{{__("ChangePassword.Enter Your Current Password")}}</label>
                                         <input name="password" type="password" class="form-control"
-                                            placeholder="Current Password">
+                                            placeholder="{{__("ChangePassword.Current Password")}}">
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="form-group">
-                                        <label>Enter Your New Password</label>
+                                        <label>{{__("ChangePassword.Enter Your New Password")}}</label>
                                         <input name="newpassword" type="password" class="form-control"
-                                            placeholder="New Password">
+                                            placeholder="{{__("ChangePassword.New Password")}}">
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="form-group">
-                                        <label>Enter Your New Password Again</label>
+                                        <label>{{__("ChangePassword.Enter Your New Password Again")}}</label>
                                         <input name="confirmpassword" type="password" class="form-control"
-                                            placeholder="New Password Again">
+                                            placeholder="{{__("ChangePassword.New Password Again")}}">
                                     </div>
                                 </div>
                                 <div class="col-md-12 py-2">
-                                    <button type="submit" class="account-btn">Save</button>
+                                    <button type="submit" class="account-btn">{{__("ChangePassword.Save")}}</button>
                                 </div>
                         </form>
                     </div>

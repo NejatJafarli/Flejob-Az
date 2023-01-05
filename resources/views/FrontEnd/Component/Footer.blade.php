@@ -5,7 +5,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget">
                     <div class="footer-logo">
-                        <a href="index.html">
+                        <a href="{{route("Hom",app()->getLocale())}}">
                             <img src="/assets2/img/logo.png" alt="logo">
                         </a>
                     </div>
@@ -114,13 +114,13 @@
                 <div class="footer-widget footer-info">
                     <h3 class="information-text-mobil">Information</h3>
                     @php
-                        use App\Models\Config;
+                        use App\Models\config;
                         
-                        $config = Config::where('key', '=', 'infoPhone')->first();
+                        $config = config::where('key', '=', 'infoPhone')->first();
                         $phone = $config->value;
-                        $config = Config::where('key', '=', 'infoEmail')->first();
+                        $config = config::where('key', '=', 'infoEmail')->first();
                         $email = $config->value;
-                        $config = Config::where('key', '=', 'infoAddress')->first();
+                        $config = config::where('key', '=', 'infoAddress')->first();
                         $address = $config->value;
                     @endphp
                     <ul class="footer-ul-centre-mobile">
@@ -158,7 +158,9 @@
     </div>
 </footer>
 <div class="copyright-text text-center">
-    <p>Copyright @2022 Flegri</p>
+        <!-- Developed By Nejat Jafarli -->
+    <p>Developed @2022 Flegri</p>
+    <!-- Developed By Nejat Jafarli -->
 </div>
 <!-- Footer Section End -->
 

@@ -29,12 +29,12 @@
     <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Account</h2>
+                <h2>{{ __('account.Account') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('account.Home') }}</a>
                     </li>
-                    <li>Account</li>
+                    <li>{{ __('account.Account') }}</li>
                 </ul>
             </div>
         </div>
@@ -74,7 +74,7 @@
 
                 <div class="col-md-9">
                     <div class="account-details">
-                        <h3>Information</h3>
+                        <h3>{{ __('account.Information') }}</h3>
                         {{-- show errors --}}
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -91,50 +91,50 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>First Name</label>
+                                        <label>{{ __('account.First Name') }}</label>
                                         <input name="FirstName" type="text"
                                             value="{{ session()->get('user')->FirstName }}" class="form-control"
-                                            placeholder="Enter Your First Name">
+                                            placeholder="{{ __('account.Enter Your First Name') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Last Name</label>
+                                        <label>{{ __('account.Last Name') }}</label>
                                         <input name="LastName" type="text"
                                             value="{{ session()->get('user')->LastName }}" class="form-control"
-                                            placeholder="Enter Your Last Name">
+                                            placeholder="{{ __('account.Enter Your Last Name') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Username</label>
+                                        <label>{{ __('account.Username') }}</label>
                                         <input name="Username" type="text"
                                             value="{{ session()->get('user')->Username }}" class="form-control"
-                                            placeholder="Enter Your Username">
+                                            placeholder="{{ __('account.Enter Your Username') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Father Name</label>
+                                        <label>{{ __('account.Father Name') }}</label>
                                         <input name="FatherName" type="text"
                                             value="{{ session()->get('user')->FatherName }}" class="form-control"
-                                            placeholder="Enter Your Father Name">
+                                            placeholder="{{ __('account.Enter Your Father Name') }}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Email</label>
+                                        <label>{{ __('account.Email') }}</label>
                                         <input name="email" type="email"
                                             value="{{ session()->get('user')->email }}" class="form-control"
-                                            placeholder="Enter Your Email">
+                                            placeholder="{{ __('account.Enter Your Email') }}">
                                     </div>
                                 </div>
 
                                 {{-- add City select --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>City</label>
+                                        <label>{{ __('account.City') }}</label>
                                         <select name="City" class="form-control">
                                             @foreach ($cities as $city)
                                                 <option value="{{ $city->id }}"
@@ -148,55 +148,55 @@
                                 {{-- BirthDate --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Birth Date</label>
+                                        <label>{{ __('account.Birth Date') }}</label>
                                         <input name="BirthDate" type="date"
                                             value="{{ session()->get('user')->BirthDate }}" class="form-control"
-                                            placeholder="Enter Your Birth Date" disabled>
+                                            disabled>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Phone</label>
+                                        <label>{{ __('account.Phone') }}</label>
                                         <input name="phone" type="text"
                                             value="{{ session()->get('user')->phone }}" class="form-control"
-                                            placeholder="Your Phone">
+                                            placeholder="{{ __('account.Your Phone') }}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Maried</label>
+                                        <label>{{ __('account.Maried') }}</label>
                                         <select name="Married" class="form-control">
-                                            <option value="1">Maried</option>
-                                            <option value="0">Not Maried</option>
+                                            <option value="1">{{ __('account.Maried') }}</option>
+                                            <option value="0">{{ __('account.Not Maried') }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 {{-- change image --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>if You Want Change Image Upload New Image</label>
+                                        <label>{{ __('account.if You Want Change Image Upload New Image') }}</label>
                                         <input name="image" type="file" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Description</label>
+                                        <label>{{ __('account.Description') }}</label>
                                         <textarea name="Description" style="height: 250px;" cols="30" rows="10" class="form-control"
-                                            placeholder="Enter Description">{{ session()->get('user')->Description }}</textarea>
+                                            placeholder="{{ __('account.Enter Description') }}">{{ session()->get('user')->Description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Skills</label>
+                                        <label>{{ __('account.Skills') }}</label>
                                         <textarea name="Skills" style="height: 250px;" cols="30" rows="10" class="form-control"
-                                            placeholder="Enter Skills">{{ session()->get('user')->Skills }}</textarea>
+                                            placeholder="{{ __('account.Enter Skills') }}">{{ session()->get('user')->Skills }}</textarea>
                                     </div>
                                 </div>
                                 {{-- add User Know languages and categories --}}
                                 <div class="col-md-6">
-                                    <label>Categories</label>
+                                    <label>{{ __('account.Categories') }}</label>
                                     <select class="js-example-basic-multiple form-control" name="Categories[]"
                                         multiple="multiple">
                                         @foreach ($categories as $Category)
@@ -207,7 +207,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Categories</label>
+                                    <label>{{ __('account.Languages') }}</label>
                                     <select class="js-example-basic-multiple form-control" name="Languages[]"
                                         multiple="multiple">
                                         @foreach ($languages as $language)
@@ -218,20 +218,23 @@
                                     </select>
                                 </div>
                                 <div class="tofrom col-md-6 my-5">
-                                    <span>Min Salary ₼ {{ session()->get('user')->MaxSalary }}</span>
+                                    <span>{{ __('account.Min Salary') }} ₼
+                                        {{ session()->get('user')->MaxSalary }}</span>
                                     <div class="form-group">
                                         <label></label>
                                         <input name="MinSalary" value="{{ session()->get('user')->MinSalary }}"
-                                            type="number" class="form-control" placeholder="Enter Min Salary"
+                                            type="number" class="form-control"
+                                            placeholder="{{ __('account.Enter Min Salary') }}"
                                             id="flefilter_price_min">
                                     </div>
                                 </div>
                                 <div class="from col-md-6 my-5">
-                                    <span>Max Salary ₼</span>
+                                    <span>{{ __('account.Max Salary') }} ₼</span>
                                     <div class="form-group">
                                         <label></label>
                                         <input name="MaxSalary" value="{{ session()->get('user')->MaxSalary }}"
-                                            type="number" class="form-control" placeholder="Enter Max Salary"
+                                            type="number" class="form-control"
+                                            placeholder="{{ __('account.Enter Max Salary') }}"
                                             id="flefilter_price_max">
                                     </div>
                                 </div>
@@ -243,10 +246,10 @@
                                 </div>
                             </div>
                             <div class="col-md-12 py-2">
-                                <button type="submit" class="account-btn">Save</button>
+                                <button type="submit" class="account-btn">{{ __('account.Save') }}</button>
                             </div>
                         </form>
-                        <h3>Educations</h3>
+                        <h3>{{ __('account.Educations') }}</h3>
                         <form method="POST" action="{{ route('UpdateUserEducation', app()->getLocale()) }}"
                             class="cadidate-others">
                             @csrf
@@ -255,30 +258,31 @@
                                     <input type="hidden" name="EducationId[]" value="{{ $Education->id }}">
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Education Name</label>
+                                            <label>{{ __('account.Education Name') }}</label>
                                             <input name="EducationName[]" type="text"
                                                 value="{{ $Education->EducationName }}" class="form-control"
-                                                placeholder="Enter Education Name">
+                                                placeholder="{{ __('account.Enter Education Name') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>Start Date</label>
+                                            <label>{{ __('account.Start Date') }}</label>
                                             <input name="YearStart[]" type="number"
                                                 value="{{ $Education->YearStart }}" class="form-control"
-                                                placeholder="Enter Education Start Date">
+                                                placeholder="{{ __('account.Enter Education Start Date') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label>End Date</label>
+                                            <label>{{ __('account.End Date') }}</label>
                                             <input name="YearEnd[]" type="number" value="{{ $Education->YearEnd }}"
-                                                class="form-control" placeholder="Enter Education End Date">
+                                                class="form-control"
+                                                placeholder="{{ __('account.Enter Education End Date') }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>Education Level</label>
+                                            <label>{{ __('account.Education Level') }}</label>
                                             <select name="EducationLevel[]" class="form-control">
                                                 @foreach ($education_levels as $Level)
                                                     <option value="{{ $Level->id }}"
@@ -289,7 +293,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label>Delete </label>
+                                        <label>{{ __('account.Delete') }} </label>
                                         <br />
                                         <button
                                             onclick="EducationDelete('{{ route('DeleteUserEducation', app()->getLocale()) }}','{{ $Education->id }}')"
@@ -311,18 +315,21 @@
                                         }
                                         
                                         $name = implode(',', $name);
-                                        // add start and end "
-$name = '"' . str_replace(',', '","', $name) . '"';
-$id = implode(',', $id);
+                                        $name = '"' . str_replace(',', '","', $name) . '"';
+                                        $id = implode(',', $id);
+                                        
+
+                                        
                                     @endphp
-                                    <button onclick="AddNewEducation([{{ $name }}],[{{ $id }}])"
-                                        type="button" class="account-btn" id="add-education">Add New
-                                        Education</button>
-                                    <button type="submit" class="account-btn">Save</button>
+                                    <button
+                                        onclick="AddNewEducation([{{ $name }}],[{{ $id }}])"
+                                        type="button" class="account-btn"
+                                        id="add-education">{{ __('account.Add New Education') }}</button>
+                                    <button type="submit" class="account-btn">{{ __('account.Save') }}</button>
                                 </div>
                             </div>
                         </form>
-                        <h3>Worked Companies</h3>
+                        <h3>{{ __('account.Worked Companies') }}</h3>
                         <form method="POST" action="{{ route('UpdateUserCompany', app()->getLocale()) }}"
                             class="cadidate-others">
                             @csrf
@@ -330,30 +337,31 @@ $id = implode(',', $id);
                                 @foreach (session()->get('user')->Companies as $Company)
                                     <input type="hidden" name="CompanyId[]" value="{{ $Company->id }}">
                                     <div class="form-group col-md-3">
-                                        <label>Company Name</label>
+                                        <label>{{ __('account.Company Name') }}</label>
                                         <input name="companyname[]" type="text" class="form-control"
-                                            value="{{ $Company->CompanyName }}" placeholder="Enter Company Name"
-                                            required>
+                                            value="{{ $Company->CompanyName }}"
+                                            placeholder="{{ __('account.Enter Company Name') }}" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label>Employer Rank</label>
+                                        <label>{{ __('account.Employer Rank') }}</label>
                                         <input name="companyrank[]" type="text" class="form-control"
-                                            value="{{ $Company->Rank }}" placeholder="Enter Employee Rank" required>
+                                            value="{{ $Company->Rank }}"
+                                            placeholder="{{ __('account.Enter Employee Rank') }}" required>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label>Start Date</label>
+                                        <label>{{ __('account.Start Date') }}</label>
                                         <input name="companyStartdate[]" style="padding:10px 10px" type="date"
                                             class="form-control" value="{{ $Company->DateStart }}"
-                                            placeholder="Enter Company End Date" required>
+                                            placeholder="{{ __('account.Enter Company Start Date') }}" required>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label>End Date</label>
+                                        <label>{{ __('account.End Date') }}</label>
                                         <input name="companyEnddate[]" style="padding:10px 10px" type="date"
                                             class="form-control" value="{{ $Company->DateEnd }}"
-                                            placeholder="Enter Company End Date" required>
+                                            placeholder="{{ __('account.Enter Company End Date') }}" required>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label>Delete </label>
+                                        <label>{{ __('account.Delete') }} </label>
                                         <br />
                                         <button
                                             onclick="CompanyDelete('{{ route('DeleteUserCompany', app()->getLocale()) }}','{{ $Company->id }}')"
@@ -364,30 +372,31 @@ $id = implode(',', $id);
                                 @endforeach
                                 <div class="col-md-12" id="CompanyButtons">
                                     <button onclick="AddNewCompany()" type="button" class="account-btn"
-                                        id="add-education">Add New
-                                        Company</button>
-                                    <button type="submit" class="account-btn">Save</button>
+                                        id="add-education">{{ __('account.Add New Company') }}</button>
+                                    <button type="submit" class="account-btn">{{ __('account.Save') }}</button>
                                 </div>
                             </div>
                         </form>
 
-                        <h3>Links</h3>
+                        <h3>{{ __('account.Links') }}</h3>
                         <form method="POST" action="{{ route('UpdateUserCompany', app()->getLocale()) }}"
                             class="candidates-sociak">
                             <div class="row " id="LinksRow">
                                 @foreach (session()->get('user')->Links as $Link)
                                     <div class="form-group col-md-5">
-                                        <label>Enter Link Name</label>
+                                        <label>{{ __('account.Enter Link Name') }}</label>
                                         <input name="linkname[]" type="text" class="form-control"
-                                            value="{{ $Link->LinkName }}" placeholder="Enter Your LinkName">
+                                            value="{{ $Link->LinkName }}"
+                                            placeholder="{{ __('account.Enter Your LinkName') }}">
                                     </div>
                                     <div class="form-group col-md-5">
-                                        <label>Enter Link</label>
+                                        <label>{{ __('account.Enter Link') }}</label>
                                         <input name="link[]" type="text" class="form-control"
-                                            value="{{ $Link->Link }}" placeholder="Enter Link">
+                                            value="{{ $Link->Link }}"
+                                            placeholder="{{ __('account.Enter Link') }}">
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label>Delete </label>
+                                        <label>{{ __('account.Delete') }} </label>
                                         <br />
                                         <button
                                             onclick="LinkDelete('{{ route('DeleteUserLink', app()->getLocale()) }}','{{ $Link->id }}')"
@@ -397,12 +406,9 @@ $id = implode(',', $id);
                                     </div>
                                 @endforeach
                                 <div class="col-md-12" id="LinkButtons">
-
                                     <button onclick="AddNewLink()" type="button" class="account-btn"
-                                        id="add-education">Add New
-                                        Link</button>
-
-                                    <button type="submit" class="account-btn">Save</button>
+                                        id="add-education">{{ __('account.Add New Link') }}</button>
+                                    <button type="submit" class="account-btn">{{ __('account.Save') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -513,17 +519,17 @@ $id = implode(',', $id);
             element.removeChild(elementBtn)
             let str = `
             <div class="form-group col-md-5 NewLink${LinkCounter}">
-                <label>Enter Link Name</label>
+                <label>{{ __('account.Enter Link Name') }}</label>
                 <input name="Newlinkname[]" type="text" class="form-control"
-                    placeholder="Enter Your LinkName">
+                    placeholder="{{ __('account.Enter Your LinkName') }}">
             </div>
             <div class="form-group col-md-5 NewLink${LinkCounter}">
-                <label>Enter Link</label>
+                <label>{{ __('account.Enter Link') }}</label>
                 <input name="Newlink[]" type="text" class="form-control"
-                    placeholder="Enter Link">
+                    placeholder="{{ __('account.Enter Link') }}">
             </div>
             <div class="form-group col-md-2 NewLink${LinkCounter}">
-                <label>Delete </label>
+                <label>{{ __('account.Delete') }} </label>
                 <br />
                 <button
                     onclick="DeleteElement('NewLink${LinkCounter}')"
@@ -599,30 +605,30 @@ $id = implode(',', $id);
 
             let str = `
             <div class="form-group col-md-3 NewCompany${CompanyCounter}">
-                <label>Company Name</label>
+                <label>{{ __('account.Company Name') }}</label>
                 <input name="Newcompanyname[]" type="text" class="form-control"
-                    placeholder="Enter Company Name"
+                    placeholder="{{ __('account.Enter Company Name') }}"
                     required>
             </div>
             <div class="form-group col-md-3 NewCompany${CompanyCounter}">
-                <label>Employer Rank</label>
+                <label>{{ __('account.Employer Rank') }}</label>
                 <input name="Newcompanyrank[]" type="text" class="form-control"
-                    placeholder="Enter Employee Rank" required>
+                    placeholder="{{ __('account.Enter Employee Rank') }}" required>
             </div>
             <div class="form-group col-md-2 NewCompany${CompanyCounter}">
-                <label>Start Date</label>
+                <label>{{ __('account.Start Date') }}</label>
                 <input name="NewcompanyStartdate[]" style="padding:10px 10px" type="date" class="form-control"
-                    placeholder="Enter Company End Date"
+                    placeholder="{{ __('account.Enter Company Start Date') }}"
                     required>
             </div>
             <div class="form-group col-md-2 NewCompany${CompanyCounter}">
-                <label>End Date</label>
+                <label>{{ __('account.End Date') }}</label>
                 <input name="NewcompanyEnddate[]" style="padding:10px 10px" type="date" class="form-control"
-                    placeholder="Enter Company End Date"
+                    placeholder="{{ __('account.Enter Company End Date') }}"
                     required>
             </div>
             <div class="form-group col-md-2 NewCompany${CompanyCounter}">
-                <label>Delete </label>
+                <label>{{ __('account.Delete') }} </label>
                 <br />
                 <button
                     onclick="DeleteElement('NewCompany${CompanyCounter}')"
@@ -701,30 +707,30 @@ $id = implode(',', $id);
             let str = `
             <div class="col-md-3 NewEducation${EducationCounter}" >
                 <div class="form-group">
-                    <label>Education Name</label>
+                    <label>{{ __('account.Education Name') }}</label>
                     <input name="NewEducationName[]" type="text"
                     class="form-control"
-                        placeholder="Enter Education Name">
+                        placeholder="{{ __('account.Enter Education Name') }}">
                 </div>
             </div>
             <div class="col-md-2 NewEducation${EducationCounter}">
                 <div class="form-group">
-                    <label>Start Date</label>
+                    <label>{{ __('account.Start Date') }}</label>
                     <input name="NewYearStart[]" type="number"
                     class="form-control"
-                        placeholder="Enter Education Start Date">
+                        placeholder="{{ __('account.Enter Education Start Date') }}">
                 </div>
             </div>
             <div class="col-md-2 NewEducation${EducationCounter}">
                 <div class="form-group">
-                    <label>End Date</label>
+                    <label>{{ __('account.End Date') }}</label>
                     <input name="NewYearEnd[]" type="number" 
-                        class="form-control" placeholder="Enter Education End Date">
+                        class="form-control" placeholder="{{ __('account.Enter Education End Date') }}">
                 </div>
             </div>
             <div class="col-md-3 NewEducation${EducationCounter}">
                 <div class="form-group">
-                    <label>Education Level</label>
+                    <label>{{ __('account.Education Level') }}</label>
                     <select name="NewEducationLevel[]" class="form-control">`
             for (let i = 0; i < educationLevelNameArr.length; i++)
                 str += `<option value="${educationLevelIdArr[i]}">${educationLevelNameArr[i]}</option>`
@@ -733,7 +739,7 @@ $id = implode(',', $id);
                 </div>
             </div>
             <div class="form-group col-md-2 NewEducation${EducationCounter}">
-                <label>Delete</label>
+                <label>{{ __('account.Delete') }}</label>
                 <br/>
                     <button onclick="DeleteElement('NewEducation${EducationCounter}')" type="Button" class="btn btn-danger btn-sm delete-company">
                         <i class="fa fa-trash"></i>

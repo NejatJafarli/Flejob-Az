@@ -33,7 +33,7 @@
 <!-- Responsive CSS -->
 <link rel="stylesheet" href="/assets2/css/responsive.css">
 <!-- Title CSS -->
-<title>Rabota Az</title>
+<title>Flejob Az</title>
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="/assets2/img/favicon.png">
 

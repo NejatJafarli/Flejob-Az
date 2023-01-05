@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', function () {
+    return redirect()->route('Hom', 'az');
+});
+
 Route::group(['prefix' => '{language}'], function () {
 
     //check if session
@@ -26,6 +30,12 @@ Route::group(['prefix' => '{language}'], function () {
     if (session()->has('CompanyUser'))
         HomeController::MergeCompanyUsersTable(session()->get('CompanyUser'));
 
+
+        Route::post('/payment/success/premium', [HomeController::class, 'paymentSuccessForPremium'])->name('paymentSuccessForPremium');
+
+        Route::post('/payment/success', [HomeController::class, 'paymentSuccess'])->name('paymentSuccess');
+        Route::post('/payment/decline', [HomeController::class, 'paymentDecline'])->name('paymentDecline');
+        Route::post('/payment/canceled', [HomeController::class, 'paymentCanceled'])->name('paymentCanceled');
     //Singup and Login Controller
 
     Route::post('/registerUser', [LoginRegisterController::class, 'registerUser'])->name('RegisterUser');
@@ -51,7 +61,9 @@ Route::group(['prefix' => '{language}'], function () {
 
 
     
-    ////
+    //// Payment Section
+    Route::post('payment', [HomeController::class, 'payment'])->name('payment');
+    Route::post('payment2', [HomeController::class, 'payment2'])->name('payment2');
 
 
     //ACCOUNT CONTROLLER

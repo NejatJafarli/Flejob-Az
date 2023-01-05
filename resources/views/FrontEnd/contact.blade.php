@@ -22,12 +22,12 @@
     <section class="page-title title-bg23">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Contact Us</h2>
+                <h2>{{__("Contact.Contact Us")}}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Contact.Home")}}</a>
                     </li>
-                    <li>Contact Us</li>
+                    <li>{{__("Contact.Contact Us")}}</li>
                 </ul>
             </div>
         </div>
@@ -48,13 +48,13 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="contact-card">
                                 @php
-                                    use App\Models\Config;
+                                    use App\Models\config;
                                     
-                                    $config = Config::where('key', '=', 'infoPhone')->first();
+                                    $config = config::where('key', '=', 'infoPhone')->first();
                                     $phone = $config->value;
-                                    $config = Config::where('key', '=', 'infoEmail')->first();
+                                    $config = config::where('key', '=', 'infoEmail')->first();
                                     $email = $config->value;
-                                    $config = Config::where('key', '=', 'infoAddress')->first();
+                                    $config = config::where('key', '=', 'infoAddress')->first();
                                     $address = $config->value;
                                 @endphp
                                 <i class='bx bx-phone-call'></i>
@@ -102,14 +102,14 @@
     <section class="contact-form-section pb-100">
         <div class="container">
             <div class="contact-area">
-                <h3>Lets' Talk With Us</h3>
+                <h3>{{__("Contact.Lets' Talk With Us")}}</h3>
                 <form method="POST" action="{{ route('ContactUs', app()->getLocale()) }}">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" name="name" id="name" class="form-control" required
-                                    data-error="Please enter your name" placeholder="Your Name">
+                                    data-error="Please enter your name" placeholder="{{__("Contact.Your Name")}}">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="email" name="email" id="email" class="form-control" required
-                                    data-error="Please enter your email" placeholder="Your Email">
+                                    data-error="Please enter your email" placeholder="{{__("Contact.Your Email")}}">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" name="phone" id="number" class="form-control" required
-                                    data-error="Please enter your phone number" placeholder="Phone Number">
+                                    data-error="Please enter your phone number" placeholder="{{__("Contact.Phone Number")}}">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <input type="text" name="subject" id="subject" class="form-control" required
-                                    data-error="Please enter your subject" placeholder="Your Subject">
+                                    data-error="Please enter your subject" placeholder="{{__("Contact.Your Subject")}}">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
@@ -141,14 +141,14 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="form-group">
                                 <textarea name="message" class="form-control message-field" id="message" cols="30" rows="7" required
-                                    data-error="Please type your message" placeholder="Write Message"></textarea>
+                                    data-error="Please type your message" placeholder="{{__("Contact.Write Message")}}"></textarea>
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
 
                         <div class="col-lg-12 col-md-12 text-center">
                             <button type="submit" class="default-btn contact-btn">
-                                Send Message
+                                {{__("Contact.Send Message")}}
                             </button>
                             <div id="msgSubmit" class="h3 alert-text text-center hidden"></div>
                             <div class="clearfix"></div>

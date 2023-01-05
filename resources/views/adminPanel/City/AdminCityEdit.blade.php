@@ -5,8 +5,8 @@
 @section('userLogo', 'https://cdn-icons-png.flaticon.com/128/149/149071.png');
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('Panel', app()->getLocale()) }}">AdminPanel</a></li>
-    <li class="breadcrumb-item "><a href="{{ route('Category', app()->getLocale()) }}">Category</a></li>
-    <li class="breadcrumb-item active"><span>Edit Category</span></li>
+    <li class="breadcrumb-item "><a href="{{ route('City', app()->getLocale()) }}">City</a></li>
+    <li class="breadcrumb-item active"><span>Edit City</span></li>
 @endsection
 @section('content')
 
