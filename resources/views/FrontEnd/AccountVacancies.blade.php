@@ -108,7 +108,7 @@
                             $vac = $temp->Vacancy;
                         @endphp
 
-                        <div class="col-lg-12 " style="border: 1px solid black">
+                        <div class="col-lg-12 ">
                             <div class="job-card-two">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
@@ -119,7 +119,7 @@
                                                 src="/CompanyLogos/{{ $vac->Company->CompanyLogo }}" alt="logo">
                                         </div>
                                     </div>
-                                    <div class="col-md-7">
+                                    <div class="col-md-6">
                                         <div class="job-info">
                                             <h3>
                                                 <a
@@ -145,7 +145,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="theme-btn text-end">
                                             @php
                                                 
@@ -160,12 +160,12 @@
                                                     $msg = '';
                                                 }
                                             @endphp
-                                            <a style="width: max-content"
+                                            <a 
                                                 href="{{ route('AppliedCandidates', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary">{{__("Vacancies.Show Applied Users")}} <span class="badge bg-danger"
-                                                    style="font-size: 15px;">{{ $msg }}</span></a>
-                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
-                                                class="btn btn-primary mx-5 my-3">{{__("Vacancies.View")}}</a>
+                                                class="btn btn-danger mb-3">{{__("Vacancies.Show Applied Users")}} <span class="badge bg-danger"
+                                                    style="font-size: 15px; ">{{ $msg }}</span></a>
+                                            <a href="{{ route('EditAJob', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                class="btn btn-danger mb-3">{{__("Vacancies.View")}}</a>
                                         </div>
                                     </div>
 

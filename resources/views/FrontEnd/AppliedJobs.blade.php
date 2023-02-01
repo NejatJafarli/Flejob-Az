@@ -80,6 +80,7 @@
                         use App\Models\lang;
                         use App\Models\Vacancy;
                         use App\Models\Category;
+                        use App\Models\CompanyUser;
                         use App\Models\City;
                         
                         $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
@@ -95,6 +96,8 @@
                                 ->cityLang()
                                 ->where('lang_id', $lang_id)
                                 ->first();
+                                //get owner
+                            $AppliedVacancy->Vacancy->Owner =  CompanyUser::where('id', $AppliedVacancy->Vacancy->CompanyUser_id)->first(); 
                             return $AppliedVacancy;
                         });
                     @endphp
@@ -107,8 +110,10 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-1">
                                         <div class="company-logo">
-                                            <a href="job-details.html"></a>
-                                            <img style="max-width:87px" src="VacanciesPicture/" alt="logo">
+                                           
+                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                            <img style="max-width:87px" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="col-md-8">

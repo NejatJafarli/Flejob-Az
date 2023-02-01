@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="candidate-profile">
-                        <img style="width: 250px;height:250px" src="/CandidatesPicture/{{ $can->image }}"
+                        <img style="width: 250px;height:250px;object-fit:cover;border-radius:100%;" src="/CandidatesPicture/{{ $can->image }}"
                             alt="candidate image">
                         <h3> {{ $can->FirstName . ' ' . $can->LastName }}</h3>
                         @foreach ($can->Categories as $Category)
@@ -116,11 +116,11 @@
                         <h3>{{__("candidateDetails.Skills")}}</h3>
                         <p>{{ $can->Skills }}</p>
                     </div>
-                    <div class="candidate-info-text text-center">
+                    <!--<div class="candidate-info-text text-center">
                         <div class="theme-btn">
                             <a href="#" class="default-btn">{{__("candidateDetails.Download CV")}}</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

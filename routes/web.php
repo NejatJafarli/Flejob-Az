@@ -40,7 +40,6 @@ Route::group(['prefix' => '{language}'], function () {
 
     Route::post('/registerUser', [LoginRegisterController::class, 'registerUser'])->name('RegisterUser');
     Route::post('/registerCompany', [LoginRegisterController::class, 'registerCompany'])->name('RegisterCompany');
-    Route::post('/Signin', [LoginRegisterController::class, 'Signin'])->name('Signin');
     Route::post('/SigninCompany', [LoginRegisterController::class, 'SigninCompany'])->name('SigninCompany');
 
     Route::get('/Signup', [LoginRegisterController::class, 'Signup'])->name('Signup');
@@ -62,6 +61,8 @@ Route::group(['prefix' => '{language}'], function () {
 
     
     //// Payment Section
+    Route::get('ads', [HomeController::class, 'ads'])->name('adsAdd');
+
     Route::post('payment', [HomeController::class, 'payment'])->name('payment');
     Route::post('payment2', [HomeController::class, 'payment2'])->name('payment2');
 
@@ -129,6 +130,9 @@ Route::group(['prefix' => '{language}'], function () {
     Route::get('/Faq', [HomeController::class, 'Faq'])->name('Faq');
     Route::get('/Privacy-Policy', [HomeController::class, 'Privacy'])->name('Privacy');
 
+    Route::get('/EditAJob/{id}', [HomeController::class, 'EditAJob'])->name('EditAJob');
+    Route::post('/EditAJobPost', [HomeController::class, 'EditAJobPost'])->name('EditAJobPost');
+
     Route::get('/PostAJob', [HomeController::class, 'PostAJob'])->name('PostAJob');
     Route::post('/PostAJob', [HomeController::class, 'PostAJobPost'])->name('PostAJobPost');
 
@@ -141,7 +145,7 @@ Route::group(['prefix' => '{language}'], function () {
     //route admin group
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AdminPanelController::class, 'Login'])->name('Login');
-        Route::get('/login', [AdminPanelController::class, 'Login'])->name('Login');
+        //Route::get('/login', [AdminPanelController::class, 'Login'])->name('Login');
         Route::get('/logout', [AdminPanelController::class, 'Logout'])->name('AdminLogout');
 
         Route::get('/index', [AdminPanelController::class, 'index'])->name('Panel');
@@ -176,7 +180,7 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/Config/Set', [AdminPanelController::class, 'SetPaymentDataPost'])->name('SetPaymentDataPost');
         Route::post('/UpdateConfigAjax', [AdminPanelController::class, 'UpdateConfigAjax'])->name('UpdateConfig');
         Route::post('/DeleteConfigAjax', [AdminPanelController::class, 'DeleteConfigAjax'])->name('DeleteConfig');
-        Route::post('/Config/add', [AdminPanelController::class, 'SetPaymentDataAddPost'])->name('SetPaymentDataAddPost');
+        Route::post('/AddConfig', [AdminPanelController::class, 'SetPaymentDataAddPost'])->name('SetPaymentDataAddPost');
 
         Route::get('/Vacancy/Requests', [AdminPanelController::class, 'VacancyRequest'])->name('VacancyRequest');
         Route::get('/Vacancy/View/{id}', [AdminPanelController::class, 'VacancyRequestView'])->name('VacancyRequestView');

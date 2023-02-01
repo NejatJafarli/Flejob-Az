@@ -30,6 +30,7 @@ class CreateVacanciesTable extends Migration
             $table->integer('SortOrder')->default(0);
             $table->dateTime('PremiumEndDate')->nullable();
             $table->timestamps();
+
             $table->foreign('Category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('CompanyUser_id')->references('id')->on('company_users')->onDelete('cascade');
             $table->foreign('City_id')->references('id')->on('cities')->onDelete('cascade');

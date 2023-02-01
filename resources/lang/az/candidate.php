@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'Candidates' => 'Candidates',
-    'Home' => 'Home',
+    'Candidates' => 'Namizədlər',
+    'Home' => 'Əsas səhifə',
 ];

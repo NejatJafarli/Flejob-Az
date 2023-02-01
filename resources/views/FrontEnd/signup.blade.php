@@ -236,7 +236,7 @@
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Signup.Home') }}</a>
                     </li>
-                    <li>{{ __('Signup.Sign Up') }}Sign Up</li>
+                    <li>{{ __('Signup.Sign Up') }}</li>
                 </ul>
             </div>
         </div>
@@ -368,6 +368,11 @@
                                                 class="form-control MaskPhoneUser"
                                                 placeholder="{{ __('Signup.Enter Phone') }}" required>
                                         </div>
+                                        
+                                        <div class="form-check form-switch mb-3">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Nomremi istifadeciler gormesin</label>
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -439,12 +444,13 @@
                                                 id="flefilter_price_max">
                                         </div>
                                     </div>
-                                    <div class="price-filter">
+                                    {{-- <div class="price-filter">
                                         <input type="text" class="js-range-slider" value="" min-price="1"
-                                            current-min-price="1" current-max-price="29999" max-price="29999" />
-                                    </div>
+                                            current-min-price="1" current-max-price="5000" max-price="5000" />
+                                    </div> --}}
                                     <div class="col-md-6">
-                                        <label>{{ __('Signup.Company Experince') }}</label>
+                                        <label style="display:block; text-align: center;">{{ __('Signup.Company Experince') }}</label>
+                                        
                                         {{-- add + Button --}}
                                         @php
                                             $translate_arr = [];
@@ -474,7 +480,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label>{{ __('Signup.Education') }}</label>
+                                        <label style="display:block; text-align: center;">{{ __('Signup.Education') }}</label>
                                         {{-- add + Button --}}
                                         <div class="form-group d-flex justify-content-center">
                                             @php
@@ -540,7 +546,7 @@
                                     @endphp
                                     {{-- // add links with names --}}
                                     <div class="col-md-12">
-                                        <label>{{ __('Signup.Links') }}</label>
+                                        <label style="display:block; text-align: center;">{{ __('Signup.Links') }}</label>
                                         {{-- add + Button --}}
                                         <div class="form-group d-flex justify-content-center">
                                             <button onclick="MyFunc3([{{ $translate_arr }}])" style="width: 75%"

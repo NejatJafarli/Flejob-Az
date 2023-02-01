@@ -1,5 +1,5 @@
 <?php
 return[
-'Terms And Conditions' => 'Terms And Conditions',
-'Home' => 'Home',
+'Terms And Conditions' => 'Şərtlər və Qaydalar',
+'Home' => 'Əsas səhifə',
 ];

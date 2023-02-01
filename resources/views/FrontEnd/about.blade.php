@@ -40,7 +40,7 @@
     <section class="about-section ptb-100">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="about-text">
                         @php
                             use App\Models\config;

@@ -1,7 +1,7 @@
 <?php 
 return [
-    'Account' => 'Account',
-    'Home' => 'Home',
-    'UnApply Now' => 'UnApply Now',
-    'Apply Now' => 'Apply Now',
+    'Account' => 'Hesab',
+    'Home' => 'Əsas səhifə',
+    'UnApply Now' => 'Müraciəti ləğv edin',
+    'Apply Now' => 'İndi müraciət et',
 ];

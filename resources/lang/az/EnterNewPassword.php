@@ -1,10 +1,10 @@
 <?php
 return [
-    'Confirm Password' => 'Confirm Password',
-    'Home' => 'Home',
-    'Enter Code' => 'Enter Code',
-    'Enter New Password' => 'Enter New Password',
-    'Confirm New Password' => 'Confirm New Password',
-    'Confirm Password' => 'Confirm Password',
-    'Change Password' => 'Change Password',
+    'Confirm Password' => 'Şifrəni təsdiqləyin',
+    'Home' => 'Əsas səhifə',
+    'Enter Code' => 'Kodu daxil edin',
+    'Enter New Password' => 'Yeni Parol daxil edin',
+    'Confirm New Password' => 'Yeni Şifrəni təsdiq',
+    'Confirm Password' => 'Şifrəni təsdiqləyin',
+    'Change Password' => 'Parolun dəyişdirilməsi',
 ];

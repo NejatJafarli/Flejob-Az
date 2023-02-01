@@ -20,6 +20,7 @@ use App\Models\ContactMessage;
 use App\Models\Education;
 use App\Models\lang;
 use App\Models\wallet;
+use App\Models\category_lang;
 use App\Models\wallet_transaction;
 use App\Models\Link;
 use App\Models\Message;
@@ -46,6 +47,10 @@ class HomeController extends Controller
     public function __invoke(Request $request)
     {
         return "Welcome to our homepage";
+    }
+    public function ads($lang){
+
+        return view('FrontEnd/addads');
     }
     //STATIC FUNCTIONS
     static function MergeUsersTable($user)
@@ -212,9 +217,6 @@ class HomeController extends Controller
     public function CandidateDetails($lang, $id)
     {
 
-        if (!session()->has('CompanyUser'))
-            return redirect()->back();
-
         $user = User::where('id', $id)->first();
         $user = HomeController::MergeUsersTable($user);
 
@@ -222,24 +224,105 @@ class HomeController extends Controller
     }
     public function Candidates($lang)
     {
+        //get last 8 users and paginate
+        $users = User::orderBy('id', 'desc')->paginate(8);
+        //get first category of each user   
+        return view('FrontEnd/candidate', ['users' => $users]);
+    }
+    public function EditAJob($lang,$id){
         if (!session()->has('CompanyUser'))
             return redirect()->back();
 
         $CompanyUser = session()->get('CompanyUser');
-        if ($CompanyUser->Paying == 0)
+        $CompanyUser = $this->MergeCompanyUsersTable($CompanyUser);
+
+
+
+        //get all cities
+        $Cities = City::all();
+        //get all categories
+        $Categories = Category::all();
+
+        //get lang id
+        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
+
+        //merge categories with category lang
+        $Categories = $Categories->map(function ($Category) use ($lang_id) {
+            $Category->Category_lang = $Category->category_langs()->where('lang_id', $lang_id)->first();
+            return $Category;
+        });
+        //merge cities with city lang
+        $Cities = $Cities->map(function ($City) use ($lang_id) {
+            $City->CityLang = $City->cityLang()->where('lang_id', $lang_id)->first();
+            return $City;
+        });
+
+        $vac = Vacancy::find($id);
+        if($vac == null)
             return redirect()->back();
 
-        //get last 8 users and paginate
-        $users = User::orderBy('id', 'desc')->paginate(8);
-        return view('FrontEnd/candidate', ['users' => $users]);
+        if($vac->CompanyUser_id != $CompanyUser->id)
+            return redirect()->back();
+
+        return view('FrontEnd/edit-job')->with(['Cities' => $Cities,"myIdBool" => true, "myId" => $id,'Categories' => $Categories,'vac'=>$vac]);
+    }
+    public function EditAJobPost(Request $req)
+    {
+        $messages =  [
+            'VacancyName.required' => __('validation.Job Title is required'),
+            'Email.required' => __('validation.Email is required'),
+            'Email.email' => __('validation.Email is not valid'),
+            'PersonPhone.required' => __('validation.Phone is required'),
+            'PersonPhone.regex' => __('validation.Phone is not valid'),
+            'CompanyUser.required' => __('validation.Company User is required'),
+            'Category.required' => __('validation.Category is required'),
+            'City.required' => __('validation.City is required'),
+            'PersonName.required' => __('validation.Person Name is required'),
+
+        ];
+        $req->validate([
+            'VacancyName' => 'required',
+            'Email' => 'required|email',
+            'PersonPhone' => 'required | regex:/^\+994\d{9}$/',
+            'CompanyUser' => 'required',
+            'Category' => 'required | numeric',
+            'City' => 'required | numeric',
+            'PersonName' => 'required',
+            'VacancyDescription' => 'required',
+            'VacancyRequirements' => 'required',
+            'VacancySalary' => 'required'
+        ], $messages);
+
+
+        $vac=Vacancy::find($req->vacId);
+        //create vacancy with $req
+        $data = [];
+        $data['CompanyUser_id'] = $req->CompanyUser;
+        $data['Category_id'] = $req->Category;
+        $data['City_id'] = $req->City;
+        $data['Status'] = $vac->Status;
+        // data['EndDate'] date now + 1 month 
+        $data['EndDate'] = $vac->EndDate;
+
+        $data['VacancyDescription'] = $req->VacancyDescription;
+        $data['VacancyRequirements'] = $req->VacancyRequirements;
+        $data['VacancySalary'] = $req->VacancySalary;
+        $data['VacancyName'] = $req->VacancyName;
+        $data['PersonName'] = $req->PersonName;
+        $data['PersonPhone'] = $req->PersonPhone;
+        $data['Email'] = $req->Email;
+
+        //edit vacancy
+        $vac->fill($data);
+        $vac->save();
+
+        return redirect()->route('AccountCompanyVacancies', ['language' => app()->getLocale()]);
     }
     public function FindAJob($lang)
     {
         $jobs = Vacancy::where('Status', 1);
 
-        //order by jobs id desc and sortOrder desc
-        $jobs = $jobs->orderBy('SortOrder', 'desc');
-        $jobs = $jobs->orderBy('id', 'desc');
+       
 
         $jobs = app(Pipeline::class)->send($jobs)
             ->through([
@@ -251,9 +334,11 @@ class HomeController extends Controller
                 QueryFiltersCompany::class
             ])
             ->thenReturn();
+ //order by jobs id desc and sortOrder desc
+ $jobs = $jobs->orderBy('PremiumEndDate', 'desc');
+ $jobs = $jobs->orderBy('id', 'desc');
 
-
-        $jobs = $jobs->paginate(10);
+        $jobs = $jobs->paginate(90);
 
         //get all cities
         $cities = City::all();
@@ -283,16 +368,16 @@ class HomeController extends Controller
             session()->put('user', $user);
         }
 
-        $Vacancies = Vacancy::where('status', 1)->orderBy('SortOrder', 'desc')->orderBy('id','desc')->take(20)->get();
+        $PreVacancies = Vacancy::where('status', 1)->where("PremiumEndDate",'!=',"null")->orderBy('PremiumEndDate', 'desc')->take(12)->get();
         //Merge Vacancies with Owner Company User
-        $Vacancies = $Vacancies->map(function ($Vacancy) {
+        $PreVacancies = $PreVacancies->map(function ($Vacancy) {
             $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
             return $Vacancy;
         });
         $lang_id = lang::where('LanguageCode', $lang)->first()->id;
 
         //merge vacancies with category
-        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+        $PreVacancies = $PreVacancies->map(function ($Vacancy) use ($lang_id) {
             $cat = Category::where('id', $Vacancy->Category_id)->first();
             $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
             $Vacancy->Category->StyleClass = $cat->StyleClass;
@@ -302,7 +387,7 @@ class HomeController extends Controller
         });
 
         // merge vacancies with city
-        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+        $PreVacancies = $PreVacancies->map(function ($Vacancy) use ($lang_id) {
             $city = City::where('id', $Vacancy->City_id)->first();
             $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
             return $Vacancy;
@@ -311,7 +396,7 @@ class HomeController extends Controller
 
 
         //get top 10 categories
-        $Categories = Category::orderBy('SortOrder', 'desc')->take(10)->get();
+        $Categories = Category::orderBy('SortOrder', 'desc')->take(12)->get();
         //merge categories with category_langs
         $Categories = $Categories->map(function ($Category) use ($lang_id) {
             $Category->Category_lang = $Category->category_langs()->where('lang_id', $lang_id)->first();
@@ -321,11 +406,14 @@ class HomeController extends Controller
         //count vacancies in each category
         $Categories = $Categories->map(function ($Category) {
             $Category->VacanciesCount = Vacancy::where('Category_id', $Category->id)->where('status', 1)->count();
+            //find min and max salary in each category
+            $Category->MinSalary = Vacancy::where('Category_id', $Category->id)->where('status', 1)->get()->min('VacancySalary');
+            $Category->MaxSalary = Vacancy::where('Category_id', $Category->id)->where('status', 1)->get()->max('VacancySalary');
             return $Category;
         });
 
         //get company users
-        $CompanyUsers = CompanyUser::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
+        $CompanyUsers = CompanyUser::where('status', 1)->orderBy('id', 'desc')->get();
         //merge company users with vacancies
         $CompanyUsers = $CompanyUsers->map(function ($CompanyUser) {
             $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('Status', 1)->get();
@@ -333,6 +421,12 @@ class HomeController extends Controller
             $CompanyUser->VacanciesCount = $vac->count();
             return $CompanyUser;
         });
+        // order by COmpanyUsers VacanciesCount desc
+        $CompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
+        //take 10
+        $CompanyUsers = $CompanyUsers->take(8);
+        
+        
         // get users
         $Users = User::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
         
@@ -378,9 +472,33 @@ class HomeController extends Controller
         });
 
         $blogs = blog::orderBy('id', 'desc')->take(5)->get();
+        
+        $Vacancies = Vacancy::where('status', 1)->take(30)->orderBy('id','desc')->get();
+        //Merge Vacancies with Owner Company User
+        $Vacancies = $Vacancies->map(function ($Vacancy) {
+            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+            return $Vacancy;
+        });
+        $lang_id = lang::where('LanguageCode', $lang)->first()->id;
 
+        //merge vacancies with category
+        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+            $cat = Category::where('id', $Vacancy->Category_id)->first();
+            $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
+            $Vacancy->Category->StyleClass = $cat->StyleClass;
+            $Vacancy->Category->SortOrder = $cat->SortOrder;
 
-        return view('FrontEnd/index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories, 'Vacancies' => $Vacancies, "Langs" => $Langs, 'blogs' => $blogs]);
+            return $Vacancy;
+        });
+
+        // merge vacancies with city
+        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+            $city = City::where('id', $Vacancy->City_id)->first();
+            $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
+            return $Vacancy;
+        });
+        
+        return view('FrontEnd/index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories,"Vacancies"=>$Vacancies, 'PremiumVacancies' => $PreVacancies, "Langs" => $Langs, 'blogs' => $blogs]);
     }
     public function About($lang)
     {
@@ -389,7 +507,7 @@ class HomeController extends Controller
     public function Companies($lang)
     {
         //get company users and sort by Vacancies count
-        $Companies = CompanyUser::where('status', 1)->orderBy('id', 'desc')->paginate(4);
+        $Companies = CompanyUser::where('status', 1)->orderBy('id', 'desc')->paginate(32);
         //merge company users with vacancies
         $CompanyUsers = $Companies->map(function ($CompanyUser) {
             $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('status', 1)->get();
@@ -537,7 +655,7 @@ class HomeController extends Controller
         $data['CompanyUser_id'] = $req->CompanyUser;
         $data['Category_id'] = $req->Category;
         $data['City_id'] = $req->City;
-        $data['Status'] = 0;
+        $data['Status'] = 4;
         // data['EndDate'] date now + 1 month 
         $data['EndDate'] = date('Y-m-d', strtotime('+1 month'));
 
@@ -655,7 +773,9 @@ class HomeController extends Controller
         if (!session()->has('CompanyUser')) 
         return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
         //where status 0 or 3
-        $vacancy = Vacancy::where('id', $req->vacancy_id)->where('Status', 0)->orWhere('Status', 3)->first();
+        $vacancy = Vacancy::find($req->vacancy_id);
+        if (!($vacancy->Status == 0 || $vacancy->Status == 3)) 
+            return response()->json(['errors' => [__("validationUser.this vacancy is active or waiting for approval from admin")]]);
         if ($vacancy == null)
             return response()->json(['errors' => [__("validationUser.This vacancy is not exist")]]);
         if ($vacancy->CompanyUser_id != session()->get('CompanyUser')->id)
@@ -757,7 +877,6 @@ class HomeController extends Controller
         return $array_data;
     }
     function paymentCanceled(Request $req){
-
         $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true);
         $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
 
@@ -775,7 +894,6 @@ class HomeController extends Controller
     }
     function paymentDecline(Request $req){
         $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
-
         $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
 
         $wallet_transaction->order_status = $array_data['OrderStatus'];
@@ -797,7 +915,6 @@ class HomeController extends Controller
     }
     function paymentSuccess(Request $req){
         $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
-        
         //get wallet_transaction
         $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
 
@@ -814,9 +931,12 @@ class HomeController extends Controller
 
             //  $table->string('transaction_id')->nullable();
             // $table->string('PAN')->nullable();
-        $wallet_transaction->order_status = 'APPROVED';
+        $wallet_transaction->order_status = $array_data['OrderStatus'];
+        $wallet_transaction->order_status_code = $array_data['ResponseCode'];
+        $wallet_transaction->order_status_description = $array_data['ResponseDescription'];
         $wallet_transaction->transaction_id = $array_data['TranId'];
         $wallet_transaction->PAN = $array_data['PAN'];
+        $wallet_transaction->save();
         //get wallet
         $wallet = wallet::find($wallet_transaction->wallet_id);
         $wallet->total_spend += $wallet_transaction->amount/10;
@@ -844,10 +964,19 @@ class HomeController extends Controller
     }
 
     function payment2(Request $req){
+
+        //count vacancies premium 
+        $vacancies = Vacancy::where('Status', 1)->where("PremiumEndDate",'!=','null')->get()->count();
+        if ($vacancies >= 12)
+            return redirect()->back()->with('message', __("validationUser.You can not add more than 12 vacancies premium"));
+
         if (!session()->has('CompanyUser')) 
         return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
         //where status 0 or 3
-        $vacancy = Vacancy::where('id', $req->vacancy_id)->first();
+        $vacancy = Vacancy::find($req->vacancy_id);
+        //if vacancy sortOrder == 1 or premiumenddate is not null
+        if ($vacancy->sortOrder == 1 || $vacancy->PremiumEndDate != null)
+            return response()->json(['errors' => [__("validationUser.This vacancy is already premium")]]);
         if ($vacancy == null)
             return response()->json(['errors' => [__("validationUser.This vacancy is not exist")]]);
         if ($vacancy->CompanyUser_id != session()->get('CompanyUser')->id)
@@ -914,8 +1043,8 @@ class HomeController extends Controller
     }
 
     function paymentSuccessForPremium(Request $req){
+
         $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
-        
         //get wallet_transaction
         $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
 
@@ -932,9 +1061,12 @@ class HomeController extends Controller
 
             //  $table->string('transaction_id')->nullable();
             // $table->string('PAN')->nullable();
-        $wallet_transaction->order_status = 'APPROVED';
+        $wallet_transaction->order_status = $array_data['OrderStatus'];
+        $wallet_transaction->order_status_code = $array_data['ResponseCode'];
+        $wallet_transaction->order_status_description = $array_data['ResponseDescription'];
         $wallet_transaction->transaction_id = $array_data['TranId'];
         $wallet_transaction->PAN = $array_data['PAN'];
+        $wallet_transaction->save();
         //get wallet
         $wallet = wallet::find($wallet_transaction->wallet_id);
         $wallet->total_spend += $wallet_transaction->amount/10;

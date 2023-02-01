@@ -5,114 +5,12 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget">
                     <div class="footer-logo">
-                        <a href="{{route("Hom",app()->getLocale())}}">
+                        <a href="{{ route('Hom', app()->getLocale()) }}">
                             <img src="/assets2/img/logo.png" alt="logo">
                         </a>
                     </div>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incididunt ut
-                        labore et dolore magna. Sed eiusmod tempor incididunt ut.</p>
-
-                    <div class="footer-social">
-                        <a href="#" target="_blank"><i class='bx bxl-facebook'></i></a>
-                        <a href="#" target="_blank"><i class='bx bxl-twitter'></i></a>
-                        <a href="#" target="_blank"><i class='bx bxl-pinterest-alt'></i></a>
-                        <a href="#" target="_blank"><i class='bx bxl-linkedin'></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="footer-widget pl-60">
-                    <h3 class="for-candidate-text-mobil">For Candidate</h3>
-                    <ul class="footer-ul-centre-mobile">
-                        <li>
-                            <a href="job-grid.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Browse Jobs
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('Account', app()->getLocale()) }}">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Account
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('Categories', app()->getLocale()) }}">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Browse Categories
-                            </a>
-                        </li>
-                        <li>
-                            <a href="resume.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Resume
-                            </a>
-                        </li>
-                        <li>
-                            <a href="job-list.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Job List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('Signup', app()->getLocale()) }}">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Sign Up
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="footer-widget pl-60">
-                    <h3 class="quick-links-text-mobile">Quick Links</h3>
-                    <ul class="footer-ul-centre-mobile">
-                        <li>
-                            <a href="{{ route('Hom', app()->getLocale()) }}">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="about.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                About
-                            </a>
-                        </li>
-                        <li>
-                            <a href="faq.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                FAQ
-                            </a>
-                        </li>
-                        <li>
-                            <a href="pricing.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Pricing
-                            </a>
-                        </li>
-                        <li>
-                            <a href="privacy.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Privacy
-                            </a>
-                        </li>
-                        <li>
-                            <a href="contact.html">
-                                <i class='bx bx-chevrons-right bx-tada'></i>
-                                Contact
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="footer-widget footer-info">
-                    <h3 class="information-text-mobil">Information</h3>
+                    <p>{{ __('Footer.content') }}</p>
                     @php
                         use App\Models\config;
                         
@@ -122,32 +20,103 @@
                         $email = $config->value;
                         $config = config::where('key', '=', 'infoAddress')->first();
                         $address = $config->value;
+                        $instagram = config::where('key', '=', 'instagram')->first()->value;
+                        $facebook = config::where('key', '=', 'facebook')->first()->value;
+                        $linkedin = config::where('key', '=', 'linkedin')->first()->value;
+                        $telegram = config::where('key', '=', 'telegram')->first()->value;
                     @endphp
+                    <div class="footer-social">
+                         <a href="{{$telegram}}" target="_blank"><i class='bx bxl-telegram'></i></a>
+                        <a href="{{$instagram}}" target="_blank"><i class='bx bxl-instagram'></i></a>
+                        <a href="{{$facebook}}" target="_blank"><i class='bx bxl-facebook'></i></a>
+                        <a href="{{$linkedin}}" target="_blank"><i class='bx bxl-linkedin'></i></a>
+                
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget pl-60">
+                    <h3 class="for-candidate-text-mobil">{{ __('Footer.ForCandidate') }}</h3>
+                    <ul class="footer-ul-centre-mobile">
+                        <li>
+                            <a href="{{ route('FindAJob', app()->getLocale()) }}">
+                                <i class='bx bx-chevrons-right bx-tada'></i>
+                                {{ __('Footer.BrowseJobs') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('Categories', app()->getLocale()) }}">
+                                <i class='bx bx-chevrons-right bx-tada'></i>
+                                {{ __('Footer.BrowseCategories') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('Companies', app()->getLocale()) }}">
+                                <i class='bx bx-chevrons-right bx-tada'></i>
+                                {{ __('Footer.BrowseCompany') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget pl-60">
+                    <h3 class="quick-links-text-mobile">{{__("Footer.QuickLinks")}}</h3>
+                    <ul class="footer-ul-centre-mobile">
+                        <li>
+                            <a href="{{ route('About', app()->getLocale()) }}">
+                                <i class='bx bx-chevrons-right bx-tada'></i>
+                                {{__("Footer.About")}}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('terms', app()->getLocale()) }}">
+                                <i class='bx bx-chevrons-right bx-tada'></i>
+                                {{__("Footer.terms")}}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('Contact', app()->getLocale()) }}">
+                                <i class='bx bx-chevrons-right bx-tada'></i>
+                                {{__("Footer.ContactUs")}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <div class="footer-widget footer-info">
+                    <h3 class="information-text-mobil">{{__("Footer.Information")}}</h3>
+                   
                     <ul class="footer-ul-centre-mobile">
                         <li>
                             <span>
                                 <i class='bx bxs-phone'></i>
-                                Phone:
+                                {{__("Footer.Phone")}}
+                                :
                             </span>
                             <a href="tel:{{ $phone }}">
                                 {{ $phone }}
                             </a>
                         </li>
-
                         <li>
                             <span>
                                 <i class='bx bxs-envelope'></i>
-                                Email:
+                                {{__("Footer.Email")}}
+                                :
                             </span>
                             <a href="mailto:{{ $email }}">
                                 {{ $email }}
                             </a>
                         </li>
-
                         <li>
                             <span>
                                 <i class='bx bx-location-plus'></i>
-                                Address:
+                                {{__("Footer.Address")}}
+                                :
                             </span>
                             {{ $address }}
                         </li>
@@ -156,11 +125,13 @@
             </div>
         </div>
     </div>
+    
+{{-- Hacizade Farid --}}
 </footer>
 <div class="copyright-text text-center">
-        <!-- Developed By Nejat Jafarli -->
-    <p>Developed @2022 Flegri</p>
-    <!-- Developed By Nejat Jafarli -->
+    <!-- Developed By Hacizade Farid -->
+    <p>Developed @2022 <a class="devText" href="https://flegri.com/">Flegri</a></p>
+    <!-- Developed By Hacizade Farid-->
 </div>
 <!-- Footer Section End -->
 

@@ -13,7 +13,7 @@ return [
     'Blog' => 'Blog',
     'Contact Us' => 'Contact Us',
     'Sign In' => 'Sign In',
-    'Sign Up' => 'Sign Up',
+    'Sign Up' => 'Post A Job',
     'Profile' => 'Profile',
     'Vacancies' => 'Vacancies',
     'Change Password' => 'Change Password',
@@ -23,4 +23,8 @@ return [
     "Messages" => "Messages",
     'unread messages' => 'unread messages',
     'Candidates' => 'Candidates',
+    'Vakansiyalar'=>"Vacancies",
+    "CV-ler"=>"CV",
+    "Sirketler"=>"Companies",
+    "Saytda Reklam"=>"Advertising on the site"
 ];

@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'Home' => 'Главная',
+    'Jobs' => 'Работа',
+    'Find A Job' => 'Найти работу',
+    'Post A Job' => 'Разместить вакансию',
+    'Catagories' => 'Категории',
+    'Pages' => 'Страницы',
+    'Company' => 'Компания',
+    'Terms & Conditions' => 'Условия',
+    'About' => 'О нас',
+    'Blog' => 'Блог',
+    'Contact Us' => 'Контакт',
+    'Sign In' => 'Войти',
+    'Sign Up' => 'Разместить вакансию',
+    'Profile' => 'Профиль',
+    'Vacancies' => 'Вакансии',
+    'Change Password' => 'Изменить пароль',
+    'Logout' => 'Выйти',
+    'My Resume' => 'Мое резюме',
+    "Applied Jobs" => "Прикладные вакансии",
+    "Messages" => "Сообщения",
+    'unread messages' => 'непрочитанные сообщения',
+    'Candidates' => 'Кандидаты',
+    'Vakansiyalar'=>"Вакансии",
+    "CV-ler"=>"Резюме",
+    "Sirketler"=>"Компании",
+    "Saytda Reklam"=>"Реклама на сайте"
+];

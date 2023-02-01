@@ -60,47 +60,64 @@
     <!-- Job Details Section Start -->
     <section class="job-details ptb-100">
         <div class="container">
+            {{-- //get message from redirect back with message --}}
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-8">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 mb-3">
                             <div class="job-details-text">
-                                <div class="job-card">
+                                @php
+                                $class = $vac->SortOrder == 1 ? 'premium-job-card' : '';
+                            @endphp
+                                <div class="job-card {{$class}}">
                                     <div class="row align-items-center">
-                                        <div class="col-md-2">
+                                        <div class="col-md-3 mb-3">
                                             <div class="company-logo">
-                                                <img style="height: 150px; width:150px;"
+                                                <img class="img-fluid"
                                                     src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                             </div>
                                         </div>
-                                        <div class="col-md-10">
+                                        <div class="col-md-9 mb-3">
                                             <div class="job-info">
                                                 <h3>{{ $vac->VacancyName }}</h3>
                                                 <ul>
                                                     <li>
-                                                        <i class='bx bx-location-plus'></i>
+                                                        {{-- <i class='bx bx-location-plus'></i> --}}
                                                         {{ $vac->City->CityLang->CityName }}
                                                     </li>
                                                     <li>
-                                                        <i class='bx bx-filter-alt'></i>
+                                                        {{-- <i class='bx bx-filter-alt'></i> --}}
                                                         {{ $vac->Category->Category_lang->CategoryName }}
                                                     </li>
+                                                    {{-- price --}}
                                                     @php
                                                         $expired = false;
                                                         if ($vac->EndDate < date('Y-m-d')) {
                                                             $expired = true;
                                                         }
                                                     @endphp
-                                                    <span>
+                                                    <li>
+                                                        {{-- <i class="fa-solid fa-hand-holding-dollar"></i> --}}
+                                                        {{ $vac->VacancySalary }} ₼
+                                                    </li>
+                                                    <li>
+                                                        {{-- <i class="fa-solid fa-phone"></i> --}}
+                                                        {{ $vac->PersonPhone }}
+                                                    </li>
+                                                    {{-- <span>
                                                         <i class='bx bx-paper-plane'></i>
                                                         {{ __('Jobdetail.Apply Before') }}:
                                                         {{ $vac->EndDate }}
-                                                        {{-- write this vacancy has been expired --}}
                                                         @if ($expired)
                                                             <span
                                                                 class="badge badge-danger">{{ __('Jobdetail.Expired') }}</span>
                                                         @endif
-                                                    </span>
+                                                    </span> --}}
                                                     <br>
 
                                                     {{-- @if (session()->has('User'))
@@ -110,9 +127,11 @@
                                                     @endif --}}
 
 
-                                                    @if ($vac->SortOrder == 0 &&
-                                                        session()->has('CompanyUser') &&
-                                                        $vac->owner->id == session()->get('CompanyUser')->id)
+                                                    @if (
+                                                        $vac->SortOrder == 0 &&
+                                                            session()->has('CompanyUser') &&
+                                                            $vac->owner->id == session()->get('CompanyUser')->id &&
+                                                            $vac->Status == 1)
                                                         @php
                                                             $price = config::where('key', 'premium_price')->first()->value;
                                                         @endphp
@@ -229,11 +248,11 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="job-sidebar">
+                <div class="col-lg-4 mb-3">
+                    <div class="job-sidebar {{$class}}">
                         <h3>{{ __('Jobdetail.Posted By') }}</h3>
                         <div class="posted-by">
-                            <img style="height:100px; widht:100px;"
+                            <img style="height:100px; width:100px;"
                                 src="/CompanyLogos/{{ $vac->CompanyUser->CompanyLogo }}" alt="client image">
                             <h4>{{ $vac->CompanyUser->CompanyName }}</h4>
                         </div>
@@ -275,6 +294,11 @@
                             <h3 style="color:red;font-size:30px;">{{ __('Jobdetail.Your Vacancy not correct') }}</h3>
                         </div>
                     @endif
+                    <div class="ads-banner-vacancy ">
+                        <img class="img-fluid"
+                        src="/assets2/img/banner.png"
+                            alt="">
+                    </div>
                 </div>
             </div>
 

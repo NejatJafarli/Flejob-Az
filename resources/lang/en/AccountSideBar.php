@@ -7,4 +7,8 @@ return [
     'Change Password' => 'Change Password',
     'Log Out' => 'Log Out',
     'Vacancies' => 'Vacancies',
+    'Premium' => 'VIP the account',
+
+
+
 ];

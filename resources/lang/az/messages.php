@@ -1,7 +1,7 @@
 <?php
 return [
-    'Account' => 'Account',
-    'Home' => 'Home',
-    'Message From'=>'Message From',
-    "Named Company"=>"Named Company",
+    'Account' => 'Hesab',
+    'Home' => 'Əsas',
+    'Message From'=>'Kimdən Mesaj',
+    "Named Company"=>"Adlandırılmış Şirkət",
 ];

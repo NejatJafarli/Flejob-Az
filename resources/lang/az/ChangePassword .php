@@ -1,16 +1,16 @@
 <?php
 
 return [
-'Account' => 'Account',
-'Home' => 'Home',
-'Change Password' => 'Change Password',
-'Enter Your Current Password' => 'Enter Your Current Password',
-'Current Password' => 'Current Password',
-'Enter Your New Password' => 'Enter Your New Password',
-'New Password' => 'New Password',
-'Enter Your New Password Again' => 'Enter Your New Password Again',
-'New Password Again' => 'New Password Again',
-'Save' => 'Save',
+'Account' => 'Hesab',
+'Home' => 'Ev',
+'Change Password' => 'Parolun dəyişdirilməsi',
+'Enter Your Current Password' => 'Cari Parolunuzu daxil edin',
+'Current Password' => 'Hazırkı şifrə',
+'Enter Your New Password' => 'Yeni Parolunuzu daxil edin',
+'New Password' => 'yeni şifrə',
+'Enter Your New Password Again' => 'Yeni Şifrənizi Yenidən Daxil Edin',
+'New Password Again' => 'Yeni Şifrə',
+'Save' => 'Yadda saxla',
 
 
 ];

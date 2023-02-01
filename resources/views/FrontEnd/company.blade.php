@@ -45,20 +45,18 @@
             </div>
             <div class="row">
                 @foreach ($CompanyUsers as $com)
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="company-card" style="height: 310px">
-                            <div class="company-logo">
-                                <a href="job-list.html">
+                    <div class="col-lg-3 col-sm-6 mb-3">
+                        <div class="company-card premium-company-card" style="height: 100%">
+                            <div class="company-logo" style="height: 100%">
                                     <img style="width: 100px; height:100px" src="/CompanyLogos/{{ $com->CompanyLogo }}"
                                         alt="company logo">
-                                </a>
                             </div>
                             <div class="company-text">
-                                <h3>{{ $com->CompanyName }}</h3>
-                                <p>
+                                <h3 style="word-break: break-word;">{{ $com->CompanyName }}</h3>
+                                {{-- <p>
                                     <i class="bx bx-location-plus"></i>
                                     {{ $com->CompanyAddress }}
-                                </p>
+                                </p> --}}
                                 <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $com->id }}"
                                     class="company-btn">
                                     {{ $com->VacanciesCount }}{{__("Companies.Open Position")}}
@@ -68,7 +66,7 @@
                     </div>
                 @endforeach
                 <div class="d-flex justify-content-center">
-                    {{ $Companies->links() }}
+                    {{ $Companies->onEachSide(1)->links() }}
                 </div>
             </div>
     </section>

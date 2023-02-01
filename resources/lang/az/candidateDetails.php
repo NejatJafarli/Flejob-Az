@@ -1,11 +1,11 @@
 <?php
 
 return [
-    'Candidates Details' => 'Candidates Details',
-    'Home' => 'Home',
-    'About Me' => 'About Me',
-    'Educations' => 'Educations',
-    'Experiances' => 'Experiances',
-    'Skills' => 'Skills',
-    'Dowload CV' => 'Dowload CV',
+    'Candidates Details' => 'Namizədlərin təfərrüatları',
+    'Home' => 'Əsas səhifə',
+    'About Me' => 'Mənim haqqımda',
+    'Educations' => 'Təhsillər',
+    'Experiances' => 'Təcrübələr',
+    'Skills' => 'bacarıqlar',
+    'Dowload CV' => 'CV yükləyin',
 ];

@@ -60,7 +60,7 @@
                                                 <input type="text" class="form-control col-4" id="value"
                                                     name="value" placeholder="Enter value" required>
                                                 {{-- //block buton update configs --}}
-                                                <button class="btn btn-primary">Add</button>
+                                                <button type="submit" class="btn btn-primary">Add</button>
                                             </form>
                                             <div class="col-12">
                                             </div>
@@ -94,7 +94,8 @@
                                             @endforeach
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            {{ $configs->links() }}</div>
+                                            {{ $configs->links() }}
+                                        </div>
                                     </div>
                                     <!--end card-body-->
                                 </div>

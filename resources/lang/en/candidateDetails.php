@@ -5,7 +5,7 @@ return [
     'Home' => 'Home',
     'About Me' => 'About Me',
     'Educations' => 'Educations',
-    'Experiances' => 'Experiances',
+    'Experiance' => 'Experiances',
     'Skills' => 'Skills',
     'Dowload CV' => 'Dowload CV',
 ];

@@ -78,7 +78,7 @@
                 <div class="col-md-9 account-details">
                     @php
                         
-                        $Messages = Message::where('UserId', session()->get('user')->id)->paginate(10);
+                        $Messages = Message::where('UserId', session()->get('user')->id)->orderBy('id', 'desc')->paginate(10);
                         $i = 1;
                         
                         $MyMessages = $Messages;
@@ -97,7 +97,7 @@
                                         data-bs-target="#collapse{{ $i }}" aria-expanded="false"
                                         aria-controls="collapse{{ $i }}">
                                         {{__("messages.Message From")}}
-                                        {{ $mes->Vacancy->Company->CompanyName }}{{__("messages.Named Company")}} 
+                                        {{ $mes->Vacancy->Company->CompanyName }} {{__("messages.Named Company")}} 
                                     </button>
                                 </h2>
                                 <div id="collapse{{ $i }}" class="accordion-collapse collapse"

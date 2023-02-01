@@ -32,7 +32,7 @@
     <!-- Navbar Area End -->
 
     <!-- Page Title Start -->
-    <section class="page-title title-bg11">
+    <section class="page-title title-bg10">
         <div class="d-table">
             <div class="d-table-cell">
                 <h2>{{ __('Resume.Resume') }}</h2>
@@ -248,12 +248,12 @@
                             </div>
                         </div> --}}
 
-                        <div class="theme-btn">
+                        {{-- <div class="theme-btn">
                             <a href="#" class="default-btn">
                                 {{ __('Resume.Download') }}
                                 <i class='bx bx-download bx-fade-down'></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

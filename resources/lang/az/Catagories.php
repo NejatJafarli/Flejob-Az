@@ -1,8 +1,8 @@
 <?php 
 
 return [
-'Categories' =>"Catagories",
-'Home' =>"Home",
-'Choose Your Category' =>"Choose Your Category",
-'Open Position' =>"Open Position",
+'Categories' =>"Kateqoriyalar",
+'Home' =>"Əsas səhifə",
+'Choose Your Category' =>"Kateqoriyanızı seçin",
+'Open Position' =>"Aktiv vakansiyalar",
 ];

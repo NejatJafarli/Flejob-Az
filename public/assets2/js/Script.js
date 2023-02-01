@@ -44,6 +44,9 @@ function MyFunc1 (translate_arr) {
         return
     }
     let str = ` <div class="my-2" style="border: 1px solid black; padding:10px">
+    <div class="close-btn"  style="text-align:end;">
+        <button type="button" class="btn btn-danger" onclick="this.parentNode.parentNode.remove()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
     <div class="form-group ">
         <label>${translate_arr[0]}</label>
         <input name="companyname[]" type="text" class="form-control"
@@ -60,9 +63,10 @@ function MyFunc1 (translate_arr) {
             required>
     </div>
     <div class="form-group">
-    <label>${translate_arr[5]}</label>
-    <input name="companyEnddate[]" type="date" class="form-control"
+        <label>${translate_arr[5]}</label>
+        <input name="companyEnddate[]" type="date" class="form-control"
         required>
+    </div>
 </div>
 `
     //append variable to div
@@ -127,7 +131,9 @@ function MyFunc2 (educationLevelNameArr, educationLevelIdArr,translate_arr) {
 
     let str = `
     <div class="my-2" style="border: 1px solid black; padding:10px">
-
+        <div class="close-btn"  style="text-align:end;">
+            <button type="button" class="btn btn-danger" onclick="this.parentNode.parentNode.remove()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <div class="form-group ">
             <label>${translate_arr[0]}</label>
             <input name="educationName[]" type="text" class="form-control"
@@ -200,6 +206,9 @@ function MyFunc3 (translate_arr) {
     }
     let str = `
     <div class="my-2" style="border: 1px solid black; padding:10px">
+        <div class="close-btn"  style="text-align:end;">
+            <button type="button" class="btn btn-danger" onclick="this.parentNode.parentNode.remove()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <div class="form-group ">
             <label>${translate_arr[0]}</label>
             <input name="LinkName[]" type="text" class="form-control"
@@ -344,7 +353,6 @@ function SignupCompany (url) {
         contentType: false,
         processData: false,
         success: function (data) {
-            console.log(data)
             if (data.hasOwnProperty('errors')) {
                 let errValues = Object.values(data.errors)
                 let errStr = ''
@@ -374,7 +382,6 @@ function SignupCompany (url) {
             }
         },
         error: function (data) {
-            console.log(data)
             let errKeys = Object.keys(data.responseJSON.errors)
             let errValues = Object.values(data.responseJSON.errors)
             let errStr = ''

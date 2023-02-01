@@ -29,7 +29,7 @@ class adminPanelController extends Controller
     {
         $user = $req->username;
         $pass = $req->password;
-        if ($user == 'admin' && $pass == 'admin') {
+        if ($user == 'ilkin' && $pass == 'aslan@5555') {
             session()->put('AdminUser', $user);
             return redirect()->route('Panel', app()->getLocale());
         } else
@@ -269,7 +269,7 @@ class adminPanelController extends Controller
         if ($vacancy->Status != 4)
             return redirect()->back()->withErrors(['fail' => 'Invalid Vacancy']);
 
-        $compUser = CompanyUser::find($vacancy->CompanyUser_id)->first();
+        $compUser = CompanyUser::find($vacancy->CompanyUser_id);
         if ($compUser->FreeVacancy == 0) {
             $vacancy->Status = 3;
         } else {
@@ -344,14 +344,24 @@ class adminPanelController extends Controller
         $req->validate([
             'key' => 'required',
             'value' => 'required',
+        ], [
+            'key.required' => 'Key is required',
+            'value.required' => 'Value is required',
         ]);
 
-        //config create
-        $config = new config();
-        $config->key = $req->key;
-        $config->value = $req->value;
-        $config->save();
+        $data=$req->all();
 
+        $config = config::where('key', $data['key'])->first();
+        if ($config == null) {
+           $newConfig = config::create([
+                'key' => $data['key'],
+                'value' => $data['value'],
+            ]);
+            $newConfig->save();
+        } else {
+            $config->value = $data['value'];
+            $config->save();
+        }
 
         return redirect()->back();
     }
@@ -389,9 +399,9 @@ class adminPanelController extends Controller
 
         $keys = request()->get('SearchKey');
         if ($keys != null)
-            $configs = config::where('key', 'like', '%' . $keys . '%')->paginate(10);
+            $configs = config::where('key', 'like', '%' . $keys . '%')->orderBy('id', 'desc')->paginate(10);
         else
-            $configs = config::paginate(5);
+            $configs = config::orderBy('id', 'desc')->paginate(5);
 
 
         return view('adminPanel/Payment/PaymentValue', compact('configs'));
@@ -439,7 +449,7 @@ class adminPanelController extends Controller
 
         // dd($req);
         $cat = new Category();
-        $cat->StyleClass = $req->StyleClass;
+        $cat->StyleClass = $req->styleClass;
         $cat->SortOrder = $req->SortOrder;
         $cat->save();
         $i = 0;
@@ -802,6 +812,7 @@ class adminPanelController extends Controller
         $vac->CompanyUser_id = $req->CompanyUser_id;
         $vac->VacancyName = $req->VacancyName;
         $vac->VacancyDescription = $req->VacancyDescription;
+        $vac->VacancyRequirements = $req->VacancyRequirements;
         $vac->PersonPhone = $req->PersonPhone;
         $vac->PersonName = $req->PersonName;
         $vac->Email = $req->Email;

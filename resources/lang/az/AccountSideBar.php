@@ -1,10 +1,11 @@
 <?php
 return [
-    'My Profile' => 'My Profile',
-    'My Resume' => 'My Resume',
-    'Applied Job' => 'Applied Job',
-    'Messages' => 'Messages',
-    'Change Password' => 'Change Password',
-    'Log Out' => 'Log Out',
-    'Vacancies' => 'Vacancies',
+    'My Profile' => 'Mənim Hesabım',
+    'My Resume' => ' Mənim CV',
+    'Applied Job' => 'Tətbiq olunan İşlər',
+    'Messages' => 'Mesajlar',
+    'Change Password' => 'Parolun dəyişdirilməsi',
+    'Log Out' => 'Çıxış',
+    'Vacancies' => 'Vakansiyalar',
+    'Premium' => 'Hesabı VİP et',
 ];

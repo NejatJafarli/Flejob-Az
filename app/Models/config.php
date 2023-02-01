@@ -9,5 +9,5 @@ class config extends Model
 {
     public $timestamps = false;
     use HasFactory;
-    protected $fillable = ['id','key', 'value'];
+    protected $fillable = ['id','key','value'];
 }

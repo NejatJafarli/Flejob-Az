@@ -13,7 +13,7 @@
         
         $Category = request()->get('Category');
         $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
-        if (isset($Category)&& $Category != 'All') {
+        if (isset($Category) && $Category != 'All') {
             $Category = Category::where('id', $Category)->first();
             //merge with category lang
         
@@ -44,15 +44,15 @@
         });
     </script>
     <!-- Page Title Start -->
-    <section class="page-title title-bg2">
+    <section class="page-title custom-bnr title-bg2">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{__("FindAJob.Find A Job")}}</h2>
+                <h2>{{ __('FindAJob.Find A Job') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("FindAJob.Home")}}</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('FindAJob.Home') }}</a>
                     </li>
-                    <li>{{__("FindAJob.Find A Job")}}</li>
+                    <li>{{ __('FindAJob.Find A Job') }}</li>
                 </ul>
             </div>
         </div>
@@ -63,145 +63,120 @@
         </div>
     </section>
     <!-- Page Title End -->
+    {{-- {{ $cat->CategoryLang->CategoryName }}</option> --}}
 
     <!-- Find Section Start -->
-    <div class="find-section pb-100 py-5">
-        <div class="container">
-            <form class="find-form" action="{{ route('FindAJob', app()->getLocale()) }}" method="GET">
-                @csrf
-                <div class="row align-items-center">
-                    <div class="col-lg-4">
-                        <label>{{__("FindAJob.Job Title")}}<i class="bx bx-search-alt"></i></label>
-                        <div class="form-group">
-                            <input name="VacancyName"
-                                value="{{ request()->get('VacancyName') ? request()->get('VacancyName') : '' }}"
-                                type="text" class="form-control" id="exampleInputEmail1"
-                                placeholder="{{__("FindAJob.Job Title or Keyword")}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <label>Cities <i class="bx bx-location-plus"></i></label>
-                        <select name="City" class="form-select" id="City"
-                            style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
-                            <option value="All">{{__("FindAJob.All Cities")}}</option>
-                            @foreach ($Cities as $city)
-                                @php
-                                    $selected = '';
-                                    if ($city->id == request()->get('City')) {
-                                        $selected = 'selected';
-                                    }
-                                @endphp
-                                <option value="{{ $city->id }}" {{ $selected }}>
-                                    {{ $city->CityLang->CityName }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-lg-4">
-                        <label>{{__("FindAJob.Categories")}} <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                viewBox="0 0 25 25">
-                                <path
-                                    d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
-                            </svg></label>
-                        <select name="Category" class="category form-select"
-                            style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
-                            <option value="All">{{__("FindAJob.All Categories")}}</option>
-                            @foreach ($Categories as $cat)
-                                @php
-                                    $selected = '';
-                                    if ($cat->id == request()->get('Category')) {
-                                        $selected = 'selected';
-                                    }
-                                @endphp
-                                <option value="{{ $cat->id }}" {{ $selected }}>
-                                    {{ $cat->CategoryLang->CategoryName }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="tofrom col-md-2 my-5">
-                        <span>{{__("FindAJob.Min Salary")}}₼</span>
-                        <div class="form-group">
+    <div class="container">
 
-                            <label></label>
-                            <input name="MinSalary" type="number" class="form-control" placeholder="{{__("FindAJob.Enter Min Salary")}}"
-                                id="flefilter_price_min">
-                        </div>
-                    </div>
-                    <div class="from col-md-2 my-5">
-                        <span>{{__("FindAJob.Max Salary")}}₼</span>
-                        <div class="form-group">
-                            <label></label>
-                            <input name="MaxSalary" type="number" class="form-control" placeholder="{{__("FindAJob.Enter Max Salary")}}"
-                                {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}} id="flefilter_price_max">
-                        </div>
-                    </div>
-                    <div class="price-filter col-md-8 my-5">
-                        <input type="text" class="js-range-slider" value="" min-price="1"
-                            current-min-price="{{ request()->get('MinSalary') ? request()->get('MinSalary') : 1 }}"
-                            current-max-price="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : 29999 }}"
-                            max-price="29999" />
-                    </div>
-                    <div class="col-lg-12">
-                        <label> </label>
-                        <div class="jobs-btn" style="text-align: right">
-                            <button type="submit" class="find-btn" style="width: auto; padding:16px 100px">
-                                {{__("FindAJob.Find A Job")}}
-                                <i class='bx bx-search'></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <!-- Find Section End -->
+        <div class="row" >
+            <div class="find-section custom-sections pb-100 py-5 col-md-8">
+                <form class="find-form" style="margin: 0; box-shadow:0;-webkit-box-shadow:0 !important;"
+                    action="{{ route('FindAJob', app()->getLocale()) }}" method="GET">
+                    @csrf
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6 mb-5">
+                                    <label>{{ __('home.Job Title') }}<i class="bx bx-search-alt"></i></label>
+                                    <div class="form-group">
+                                        <input name="VacancyName"
+                                            value="{{ request()->get('VacancyName') ? request()->get('VacancyName') : '' }}"
+                                            type="text" class="form-control" id="exampleInputEmail1"
+                                            placeholder="{{ __('home.Job Title or Keyword') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label>{{ __('home.Categories') }} <svg
+                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 25 25">
+                                            <path
+                                                d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
+                                        </svg></label>
+                                    <select name="Category" class="category form-select"
+                                        style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
+                                        <option value="All">{{ __('home.All Categories') }}
+                                        </option>
+                                        @foreach ($Categories as $cat)
+                                            @php
+                                                $selected = '';
+                                                if ($cat->id == request()->get('Category')) {
+                                                    $selected = 'selected';
+                                                }
+                                            @endphp
+                                            <option value="{{ $cat->id }}" {{ $selected }}>
+                                                {{ $cat->CategoryLang->CategoryName }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <label>{{ __('home.Cities') }} <i class="bx bx-location-plus"></i></label>
+                                    <select name="City" class="form-select" id="City"
+                                        style="height: 60px;border-radius: 10px; padding: 5px 20px 10px;">
+                                        <option value="All">{{ __('home.All Cities') }}</option>
+                                        @foreach ($Cities as $city)
+                                            @php
+                                                $selected = '';
+                                                if ($city->id == request()->get('City')) {
+                                                    $selected = 'selected';
+                                                }
+                                            @endphp
+                                            <option value="{{ $city->id }}" {{ $selected }}>
+                                                {{ $city->CityLang->CityName }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-6 mb-5">
+                                    <div class="row">
+                                        <div class="tofrom col-md-6">
+                                            <span> {{ __('home.Min Salary') }}</span>
+                                            <div class="form-group">
+        
+                                        
+                                                <input name="MinSalary" type="number" class="form-control"
+                                                    placeholder="{{ __('home.Enter Min Salary') }}" id="flefilter_price_min">
+                                            </div>
+                                        </div>
+                                        <div class="from col-md-6">
+                                            <span>{{ __('home.Max Salary') }} </span>
+                                            <div class="form-group">
+                                    
+                                                <input name="MaxSalary" type="number" class="form-control"
+                                                    placeholder="{{ __('home.Enter Max Salary') }}" {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}}
+                                                    id="flefilter_price_max">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-    <!-- Job Category Section Start -->
-    <div class="category-style-two pb-70">
-        <div class="container">
-            <div class="section-title">
-                <h2>{{__("FindAJob.Popular Jobs Category")}}</h2>
-            </div>
-
-            <div class="row">
-                @php
-                    
-                    $MyCategories = Category::orderBy('SortOrder', 'desc')
-                        ->take(10)
-                        ->get();
-                    //merge categories with category_langs
-                    $MyCategories = $MyCategories->map(function ($Category) use ($lang_id) {
-                        $Category->Category_lang = $Category
-                            ->category_langs()
-                            ->where('lang_id', $lang_id)
-                            ->first();
-                        return $Category;
-                    });
-                    
-                    //count vacancies in each category
-                    $MyCategories = $MyCategories->map(function ($Category) {
-                        $Category->VacanciesCount = Vacancy::where('Category_id', $Category->id)
-                            ->where('status', 1)
-                            ->count();
-                        return $Category;
-                    });
-                @endphp
-                @foreach ($MyCategories as $cat)
-                    <div class="col-lg-3 col-sm-6">
-                        <a href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">
-                            <div class="category-item" style="height: 150px">
-                                @php
-                                    echo $cat->StyleClass;
-                                @endphp
-                                <h3>{{ $cat->Category_lang->CategoryName }}</h3>
-                                <p>{{ $cat->VacanciesCount }} Active Job</p>
+                                <div class="col-md-12">
+                                    <label> </label>
+                                    <div class="jobs-btn" style="text-align: right; display:grid; width:100%">
+                                        <button type="submit" class="find-btn" style="width: auto; padding:16px 100px">
+                                            {{ __('home.Find A Job') }}
+                                            <i class='bx bx-search'></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </a>
+                        </div>
+                        {{-- <div class="col-md-4"></div> --}}
                     </div>
-                @endforeach
+                </form>
             </div>
+
+            <div class="text-center col-md-4 py-5 pb-90 pr-0 " style="background: white;border-radius:0px">
+
+                <div class="ads-banner">
+                    <img class="img-fluid"  src="/assets2/img/banner.png" alt="">
+                </div>
+
+            </div>
+
         </div>
     </div>
+    
     <!-- Job Category Section End -->
 
     <!-- Jobs Section Start -->
@@ -213,7 +188,7 @@
                     <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
                     <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
                 </div>
-                <h2>{{__("FindAJob.Jobs You May Be Interested In")}}</h2>
+                <h2>{{ __('FindAJob.Jobs You May Be Interested In') }}</h2>
             </div>
 
             <div class="row">
@@ -252,34 +227,34 @@
                     
                 @endphp
                 @foreach ($MyJobs as $vac)
-                    <div class="col-sm-6">
+                    <div class="col-sm-4 mb-3">
                         <div class="job-card">
                             <div class="row align-items-center">
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
-                                        <a
+                                        <a class="d-block"
                                             href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
-                                            <img style="height: 50px; width:50px;"
+                                            <img class="img-fluid" style="max-height: 75px"
                                                 src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-9">
                                     <div class="job-info">
                                         <h3>
                                             <a
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
                                         </h3>
                                         <ul>
-                                            <li>Via <a href="#">{{ $vac->Owner->CompanyName }}</a></li>
-                                            <li>
+                                            <li><a href="#">{{ $vac->Owner->CompanyName }}</a></li>
+                                            {{-- <li>
                                                 <i class='bx bx-location-plus'></i>
                                                 {{ $vac->City->CityName }}
-                                            </li>
-                                            <li>
+                                            </li> --}}
+                                            {{-- <li>
                                                 <i class='bx bx-filter-alt'></i>
                                                 {{ $vac->Category->CategoryName }}
-                                            </li>
+                                            </li> --}}
                                             <li>
                                                 <i class='bx bx-briefcase'></i>
                                                 {{ $vac->VacancySalary }}
@@ -287,7 +262,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                {{-- <div class="col-lg-3">
                                     <div class="job-save">
                                         @if (session()->get('user'))
                                             @php
@@ -312,12 +287,12 @@
                                             {{ $vac->created_at->diffForHumans() }}
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
                 @endforeach
-                {{ $Jobs->links() }}
+                {{ $Jobs->onEachSide(0)->links() }}
             </div>
         </div>
     </section>

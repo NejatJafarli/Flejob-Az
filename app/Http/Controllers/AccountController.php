@@ -33,8 +33,11 @@ class AccountController extends Controller
         $user = HomeController::MergeCompanyUsersTable($user);
         session()->put('CompanyUser', $user);
 
+        //orderby id desc 
+        $Vacancies = $user->Vacancies()->orderBy('id', 'desc');
         // get User Vacancies with pagination
-        $Vacancies = $user->Vacancies()->paginate(4);
+        $Vacancies=$Vacancies->paginate(4);
+        
 
 
         return view('FrontEnd/AccountVacancies')->with(['Vacancies' => $Vacancies]);

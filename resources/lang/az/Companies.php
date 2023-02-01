@@ -1,8 +1,8 @@
 <?php
 return
 [
-'Company' =>"Company",
-'Home' =>"Home",
-'Top Companies' =>"Top Companies",
-'Open Position' =>"Open Position",
+'Company' =>"Şirkət",
+'Home' =>"Əsas səhifə",
+'Top Companies' =>"Ən yaxşı şirkətlər",
+'Open Position' =>"Açıq pozisalar",
 ];

@@ -27,7 +27,7 @@ return [
     'Enter your company password confirmation' => 'Şirkətinizin şifrəsini təsdiqləyin',
     'Enter your company address' => 'Şirkətinizin ünvanını daxil edin',
     'Enter your company phone' => 'Şirkətinizin telefon nömrəsini daxil edin',
-    'Enter your company logo' => 'Şirkətinizin logo-nu daxil edin',
+    'Enter your company logo' => 'Şirkətinizin logosunu daxil edin',
     'Enter your company description' => 'Şirkətinizin təsvirini daxil edin',
     'Enter your company categories' => 'Şirkətinizin kateqoriyalarını daxil edin',
     'Enter your company link' => 'Şirkətinizin linkini daxil edin',

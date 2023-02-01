@@ -25,7 +25,7 @@ class CompanyRegisterRequest extends FormRequest
     {
         return [
             'CompanyName' => 'required',
-            'CompanyUsername' => 'required | min:6 | unique:company_users ', //unique for users
+            'CompanyUsername' => 'required | min:6 | unique:company_users', //unique for users
             'CompanyEmail' => 'required | email | unique:company_users',
             'CompanyPassword' => 'required | min:6',
             'CompanyAddress' => 'required',

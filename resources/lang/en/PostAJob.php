@@ -1,0 +1,20 @@
+<?php
+return [
+    'Post a Job' => 'Post A Job',
+    'Home' => 'Home',
+    'Fill Up Your Job information' => 'Fill Up Your Job information',
+    'Job Title' => 'Job Title',
+    'Job Title or Keyword' => 'Job Title or Keyword',
+    'Email' => 'Email',
+    'Job Category' => 'Job Category',
+    'Job City' => 'Job City',
+    'Person Name' => 'Person Name',
+    'Enter Your Name' => 'Enter Your Name',
+    'Person Phone' => 'Person Phone',
+    'Enter Your Phone' => 'Enter Your Phone',
+    'Job Description' => 'Job Description',
+    'Job Requirement' => 'Job Requirement',
+    'Vacancy Salary' => 'Vacancy Salary',
+    'Salary' => 'Salary',
+    'Salary Negotiated' => 'Salary Negotiated',
+];

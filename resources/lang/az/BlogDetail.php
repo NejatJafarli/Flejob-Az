@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'Blog Details' => 'Blog Details',
-    'Home' => 'Home',
-    'Popular Post' => 'Popular Post',
-    'Tags' => 'Tags',
+    'Blog Details' => 'Bloq Təfərrüatları',
+    'Home' => 'Əsas səhifə',
+    'Popular Post' => 'Populyar məqalələlər',
+    'Tags' => 'Teqlər',
 ];

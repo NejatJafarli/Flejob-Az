@@ -1,13 +1,13 @@
 <?php 
 
 return[
-'Contact Us' => 'Contact Us',
-'Home' => 'Home',
-'Lets\' Talk With Us' => 'Lets\' Talk With Us',
-'Your Name' => 'Your Name',
-'Your Email' => 'Your Email',
-'Phone Number' => 'Phone Number',
-'Your Subject' => 'Your Subject',
-'Write Message' => 'Write Message',
-'Send Message' => 'Send Message',
+'Contact Us' => 'Bizimlə əlaqə saxlayın',
+'Home' => 'Əsas səhifə',
+'Lets\' Talk With Us' => 'Bizimlə əlaqə saxlayın',
+'Your Name' => 'Adınız',
+'Your Email' => 'E-poçtunuz',
+'Phone Number' => 'Telefon nömrəsi',
+'Your Subject' => 'Mövzunuz',
+'Write Message' => 'Mesaj Yaz',
+'Send Message' => 'Mesaj Göndər',
 ];

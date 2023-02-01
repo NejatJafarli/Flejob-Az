@@ -1,14 +1,14 @@
 <?php
 
 return[
-    'Reset' => 'Reset',
-    'User' => 'User',
-    'Company' => 'Company',
-    'Password' => 'Password',
-    'Home' => 'Home',
-    'Reset Password' => 'Reset Password',
-    'Enter Phone' => 'Enter Phone',
-    'Enter Your phone Number' => 'Enter Your phone Number',
-    'Enter Company Email' => 'Enter Company Email',
-    'Enter Your Company Email' => 'Enter Your Company Email',
+    'Reset' => 'Sıfırlayın',
+    'User' => 'İstifadəçi',
+    'Company' => 'Şirkət',
+    'Password' => 'parol',
+    'Home' => 'Əsas',
+    'Reset Password' => 'Parolu sıfırlamak',
+    'Enter Phone' => 'Telefonu daxil edin',
+    'Enter Your phone Number' => 'Telefon nömrənizi daxil edin',
+    'Enter Company Email' => 'Şirkət E-poçtunu daxil edin',
+    'Enter Your Company Email' => 'Şirkətinizin E-poçt ünvanını daxil edin',
 ];

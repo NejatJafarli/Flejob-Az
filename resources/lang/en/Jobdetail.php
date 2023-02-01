@@ -22,5 +22,6 @@ return [
 'This Vacancy Has Been Expired Not Active' => 'This Vacancy Has Been Expired Not Active',
 'Waiting Confirm from Admin' => 'Waiting Confirm from Admin',
 'Your Vacancy not correct' => 'Your Vacancy not correct',
+'Your Vacancy Not Active Waiting For Payment' => 'Your Vacancy Not Active Waiting For Payment',
 'Expired' => 'Expired',
 ];

@@ -36,6 +36,18 @@
         </a>
     </li>
     <li>
+        <a href="" class="premium-sidebarlist">
+            <i class="fa-solid fa-crown"></i>
+            {{ __('AccountSideBar.Premium') }}
+        </a>
+    </li>
+    <li>
+        <a id="Profile" href="{{ route('PostAJob', app()->getLocale()) }}">
+            <i class="fa-regular fa-file"></i>
+            {{ __('PostAJob.Post a Job') }}
+        </a>
+    </li>
+    <li>
         <a style="display: flex;
         align-items: center;
         justify-content: space-between;" id="Vacancies"

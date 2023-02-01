@@ -1,6 +1,6 @@
 <?php 
 
 return [
-    'About Us' => 'About Us',
-    'Home' => 'Home',
+    'About Us' => 'Haqqımızda',
+    'Home' => 'Ev',
 ];

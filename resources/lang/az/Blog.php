@@ -1,7 +1,7 @@
 <?php
 return [
-    'Blog' => 'Blog',
-    'Home' => 'Home',
-    'News, Tips & Articles' => 'News, Tips & Articles',
-    'Read More' => 'Read ddMore',
+    'Blog' => 'Bloq',
+    'Home' => 'Əsas səhifə',
+    'News, Tips & Articles' => 'Xəbərlər, Məsləhətlər və Məqalələr',
+    'Read More' => 'Daha çox oxuyun',
 ];

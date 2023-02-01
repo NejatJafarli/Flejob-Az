@@ -6,6 +6,11 @@
     @include('FrontEnd.Component.cdn')
 </head>
 
+@php
+    use App\Models\Category;
+    use App\Models\lang;
+@endphp
+
 <body>
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
@@ -23,12 +28,12 @@
     <section class="page-title title-bg7">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{__("candidate.Candidates")}}</h2>
+                <h2>{{ __('candidate.Candidates') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("candidate.Home")}}</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('candidate.Home') }}</a>
                     </li>
-                    <li>{{__("candidate.Candidates")}}</li>
+                    <li>{{ __('candidate.Candidates') }}</li>
                 </ul>
             </div>
         </div>
@@ -54,17 +59,62 @@
                     }
                 @endphp
                 @foreach ($candidates as $user)
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="candidate-card" style="height: 320px">
+                    <div class="col-lg-3 col-sm-6 mb-3">
+                        <div class="candidate-card premium-cv-card">
                             <div class="candidate-img">
-                                <img style="padding: 20px" src="/CandidatesPicture/{{ $user->image }}"
-                                    alt="candidate image">
+                                <a
+                                    href="{{ route('CandidateDetails', ['language' => app()->getLocale(), 'id' => $user->id]) }}">
+                                    <img style="padding: 20px" src="/CandidatesPicture/{{ $user->image }}"
+                                        alt="candidate image">
+                                </a>
+
                             </div>
                             <div class="candidate-text">
                                 <h3>
                                     <a
                                         href="{{ route('CandidateDetails', ['language' => app()->getLocale(), 'id' => $user->id]) }}">{{ $user->FirstName . ' ' . $user->LastName }}</a>
                                 </h3>
+                                @php
+                                    $cat = $user->Categories;
+                                    
+                                    $first = $cat->first()->category_langs();
+                                    
+                                    $lang = lang::where('LanguageCode', app()->getLocale())->first();
+                                    $cat = $first->where('lang_id', $lang->id)->first();
+                                @endphp
+                                <p>{{ $cat->CategoryName }}</p>
+                            </div>
+                            {{-- <div class="candidate-social">
+                            <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" target="_blank"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="bx bxl-linkedin"></i></a>
+                        </div> --}}
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mb-3">
+                        <div class="candidate-card">
+                            <div class="candidate-img">
+                                <a
+                                    href="{{ route('CandidateDetails', ['language' => app()->getLocale(), 'id' => $user->id]) }}">
+                                    <img style="padding: 20px" src="/CandidatesPicture/{{ $user->image }}"
+                                        alt="candidate image">
+                                </a>
+
+                            </div>
+                            <div class="candidate-text">
+                                <h3>
+                                    <a
+                                        href="{{ route('CandidateDetails', ['language' => app()->getLocale(), 'id' => $user->id]) }}">{{ $user->FirstName . ' ' . $user->LastName }}</a>
+                                </h3>
+                                @php
+                                    $cat = $user->Categories;
+                                    
+                                    $first = $cat->first()->category_langs();
+                                    
+                                    $lang = lang::where('LanguageCode', app()->getLocale())->first();
+                                    $cat = $first->where('lang_id', $lang->id)->first();
+                                @endphp
+                                <p>{{ $cat->CategoryName }}</p>
                             </div>
                             {{-- <div class="candidate-social">
                             <a href="#" target="_blank"><i class="bx bxl-facebook"></i></a>

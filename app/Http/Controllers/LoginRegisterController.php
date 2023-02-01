@@ -22,8 +22,6 @@ use Illuminate\Support\Facades\Mail;
 
 class LoginRegisterController extends Controller
 {
-
-
     // generate random 4 digit number
     public function generateRandomNumber()
     {
@@ -151,11 +149,11 @@ class LoginRegisterController extends Controller
                 ]);
                 return redirect()->route('EnterNewPassword', ['language' => app()->getLocale(), 'id' => $request->id]);
             } else {
-                return redirect()->back()->with('error', 'Error in sending sms');
+                return redirect()->back()->withErrors('Error in sending sms');
             }
             return redirect()->route('EnterNewPassword', ['language' => app()->getLocale(), 'id' => $request->id]);
         } else {
-            return redirect()->back()->with('error', 'User not found');
+            return redirect()->back()->withErrors('User not found');
         }
     }
     public function ResetPasswordPostCompany(Request $request)
@@ -178,7 +176,7 @@ class LoginRegisterController extends Controller
             $code = $this->generateRandomNumber();
             //send mail to user
             Mail::send('emails.forgetPassword', ['code' => $code], function ($m) use ($email) {
-                $m->from(env('MAIL_USERNAME'), 'Roboto Az');
+                $m->from(env('MAIL_USERNAME'), 'Flejob Az');
                 $m->to($email)->subject('Reset Your Password');
             });
             $now = date("Y-m-d H:i:s");
@@ -258,7 +256,7 @@ class LoginRegisterController extends Controller
     }
 
     //LOGIN REGISTER
-    public function Signin($lang, Request $req)
+    public function SigninPost($lang, Request $req)
     {
         if (session()->has('user') || session()->has('CompanyUser'))
             return redirect()->route('Hom', ['language' => $lang]);
@@ -656,6 +654,6 @@ class LoginRegisterController extends Controller
                 return response()->json(['errors' => [__("validationUser.Enter your phone correctly")]]);
         }
 
-        return response()->json(['success' => 'Success ']);
+        return response()->json(['success' => 'Success']);
     }
 }

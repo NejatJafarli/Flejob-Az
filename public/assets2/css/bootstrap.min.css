@@ -109,11 +109,13 @@ h2 {
 .h3,
 h3 {
     font-size: calc(1.3rem + 0.6vw);
+    word-break: break-all;
 }
 @media (min-width: 1200px) {
     .h3,
     h3 {
         font-size: 1.75rem;
+
     }
 }
 .h4,
@@ -2150,6 +2152,7 @@ textarea.form-control-lg {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+
 }
 .form-range:focus {
     outline: 0;
@@ -6442,9 +6445,15 @@ fieldset:disabled .btn {
     margin-bottom: 1.5rem !important;
 }
 .my-5 {
-    margin-top: 3rem !important;
-    margin-bottom: 3rem !important;
+    margin-top: 3rem ;
+    margin-bottom: 3rem ;
 }
+@media only screen and (max-width: 484px) {
+    .my-5 {
+        margin-top: 0rem;
+        margin-bottom: 0;
+    }
+  }
 .my-auto {
     margin-top: auto !important;
     margin-bottom: auto !important;
@@ -6596,9 +6605,15 @@ fieldset:disabled .btn {
     padding-bottom: 1.5rem !important;
 }
 .py-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+    padding-top: 3rem ;
+    padding-bottom: 1rem !important;
 }
+@media only screen and (max-width: 484px) {
+    .py-5 {
+      padding-top: 0rem;
+    }
+  }
+
 .pt-0 {
     padding-top: 0 !important;
 }
@@ -9437,4 +9452,6 @@ fieldset:disabled .btn {
         display: block;
     }
   }
+
+
 

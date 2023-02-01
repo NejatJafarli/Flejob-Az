@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'Account' => 'Account',
-    'Home' => 'Home',
-    'View' => 'View',
-    'Show Applied Users' => 'Show Applied Users',
+    'Account' => 'Hesab',
+    'Home' => 'Əsas səhifə',
+    'View' => 'Duzelis Et',
+    'Show Applied Users' => 'Cv\' lere bax',
 ];

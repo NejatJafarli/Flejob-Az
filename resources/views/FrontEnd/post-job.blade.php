@@ -8,22 +8,20 @@
 </head>
 
 <body>
-
     <!-- Navbar Area Start -->
     @include('FrontEnd.Component.Navbar')
     <!-- Navbar Area End -->
     @include('FrontEnd.Component.Preloader')
-
     <!-- Page Title Start -->
     <section class="page-title title-bg3">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>Post a Job</h2>
+                <h2>{{ __('PostAJob.Post a Job') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">Home</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('PostAJob.Home') }}</a>
                     </li>
-                    <li>Post a Job</li>
+                    <li>{{ __('PostAJob.Post a Job') }}</li>
                 </ul>
             </div>
         </div>
@@ -50,25 +48,25 @@
             @endif
             <form class="job-post-from" action="{{ route('PostAJobPost', app()->getLocale()) }}" method="POST">
                 @csrf
-                <h2>Fill Up Your Job information</h2>
+                <h2>{{ __('PostAJob.Fill Up Your Job information') }}</h2>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Job Title</label>
+                            <label>{{ __('PostAJob.Job Title') }}</label>
                             <input name="VacancyName" type="text" class="form-control" id="exampleInput1"
-                                placeholder="Job Title or Keyword" required>
+                                placeholder="{{ __('PostAJob.Job Title or Keyword') }}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>{{ __('PostAJob.Email') }}</label>
                             <input name="Email" type="text" class="form-control" id="exampleInput1"
-                                placeholder="Email" required>
+                                placeholder="{{ __('PostAJob.Email') }}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Job Category</label>
+                            <label>{{ __('PostAJob.Job Category') }}</label>
                             <select name="Category" class="form-control">
                                 @foreach ($Categories as $Category)
                                     <option value="{{ $Category->id }}">{{ $Category->Category_lang->CategoryName }}
@@ -80,7 +78,7 @@
                     <input type="hidden" value="{{ session()->get('CompanyUser')->id }}" name="CompanyUser">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Job City </label>
+                            <label>{{ __('PostAJob.Job City') }} </label>
                             <select name="City" class="form-control">
                                 @foreach ($Cities as $City)
                                     <option value="{{ $City->id }}">{{ $City->CityLang->CityName }}</option>
@@ -90,42 +88,52 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Person Name</label>
+                            <label>{{ __('PostAJob.Person Name') }}</label>
                             <input name="PersonName" type="text" class="form-control" id="exampleInput1"
-                                placeholder="Enter Your Name" required>
+                                placeholder="{{ __('PostAJob.Enter Your Name') }}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Person Phone</label>
+                            <label>{{ __('PostAJob.Person Phone') }}</label>
                             <input name="PersonPhone" type="text" class="form-control" id="exampleInput1"
-                                placeholder="Enter Your Phone" required>
+                                placeholder="{{ __('PostAJob.Enter Your Phone') }}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Job Description</label>
+                            <label for="exampleFormControlTextarea1">{{ __('PostAJob.Job Description') }}</label>
                             <textarea class="form-control description-area" id="exampleFormControlTextarea1" rows="6"
-                                placeholder="Job Description" required name="VacancyDescription"></textarea>
+                                placeholder="{{ __('PostAJob.Job Description') }}" required name="VacancyDescription"></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Job Requirement</label>
+                            <label for="exampleFormControlTextarea1">{{ __('PostAJob.Job Requirement') }}</label>
                             <textarea class="form-control description-area" id="exampleFormControlTextarea1" rows="6"
-                                placeholder="Job Requirement" name="VacancyRequirements" required></textarea>
+                                placeholder="{{ __('PostAJob.Job Requirement') }}" name="VacancyRequirements" required></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Vacancy Salary</label>
-                            <input name="VacancySalary" type="number" class="form-control" id="exampleInput1"
-                                placeholder="Salary" required>
+                        <div class="row align-items-center">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>{{ __('PostAJob.Vacancy Salary') }}</label>
+                                    <input name="VacancySalary" type="number" class="form-control" id="exampleInput1"
+                                        placeholder="{{ __('PostAJob.Salary') }}" min="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="salaryPostJob">
+                                    <label class="form-check-label" for="salaryPostJob">{{ __('PostAJob.Salary Negotiated') }}</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <button type="submit" style="float: right; margin-right:50px;" class="post-btn">
-                            Post A Job
+                            {{ __('PostAJob.Post a Job') }}
                         </button>
                     </div>
                     {{-- <div class="col-md-6">
@@ -228,7 +236,17 @@
     </div>
     <!-- Post Job Section End -->
 
-
+    <script>
+        $(document).ready(function () {
+            $('#salaryPostJob').click(function () {
+                if ($(this).is(':checked')) {
+                    $('input[name="VacancySalary"]').attr('disabled', 'disabled');
+                } else {
+                    $('input[name="VacancySalary"]').removeAttr('disabled');
+                }
+            });
+        });
+    </script>
     <!-- Footer Area Start -->
     @include('FrontEnd.Component.Footer')
 
