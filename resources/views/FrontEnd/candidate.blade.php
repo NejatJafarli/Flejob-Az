@@ -51,14 +51,14 @@
             <div class="row">
                 @php
                     
-                    $candidates = [];
-                    foreach ($users as $candidate) {
+                    $PreCandidates = [];
+                    foreach ($preUsers as $candidate) {
                         $candidate = App\Http\Controllers\HomeController::MergeUsersTable($candidate);
                         //push candidate to array
-                        array_push($candidates, $candidate);
+                        array_push($PreCandidates, $candidate);
                     }
                 @endphp
-                @foreach ($candidates as $user)
+                @foreach ($PreCandidates as $user)
                     <div class="col-lg-3 col-sm-6 mb-3">
                         <div class="candidate-card premium-cv-card">
                             <div class="candidate-img">
@@ -91,8 +91,21 @@
                         </div> --}}
                         </div>
                     </div>
+                @endforeach
+            </div>
+            <div class="row">
+                @php
+                    
+                    $candidates = [];
+                    foreach ($users as $candidate) {
+                        $candidate = App\Http\Controllers\HomeController::MergeUsersTable($candidate);
+                        //push candidate to array
+                        array_push($candidates, $candidate);
+                    }
+                @endphp
+                @foreach ($candidates as $user)
                     <div class="col-lg-3 col-sm-6 mb-3">
-                        <div class="candidate-card">
+                        <div class="candidate-card @if($user->PremiumEndDate!=null) premium-cv-card @endif">
                             <div class="candidate-img">
                                 <a
                                     href="{{ route('CandidateDetails', ['language' => app()->getLocale(), 'id' => $user->id]) }}">

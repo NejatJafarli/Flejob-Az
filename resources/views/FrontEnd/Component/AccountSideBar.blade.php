@@ -1,10 +1,32 @@
+@php
+    use App\Models\config;
+    $price = config::where('key', 'CvPremium_price')->first()->value;
+    
+@endphp
 <ul>
     <li>
         <a id="account" href="{{ route('Account', app()->getLocale()) }}">
             <i class='bx bx-user'></i>
             {{ __('AccountSideBar.My Profile') }}
-            
+
         </a>
+    </li>
+    <li>
+        @if (session('user')->PremiumEndDate != null)
+            <a href="" class="premium-sidebarlist">
+                <i class="fa-solid fa-crown"></i>
+                {{ __('AccountSideBar.Already Premium User') }}
+            </a>
+        @else
+            <a href="{{ route('paymentForPremiumUser', app()->getLocale()) }}" class="premium-sidebarlist">
+                <i class="fa-solid fa-crown"></i>
+                {{ __('AccountSideBar.PremiumUser') }}
+                <span class="badge-price badge rounded-pill bg-danger">
+                    {{ $price }}₼
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+            </a>
+        @endif
     </li>
     <li>
         <a id="Resume" href="{{ route('MyResume', app()->getLocale()) }}">

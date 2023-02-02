@@ -22,6 +22,8 @@ class wallet_transaction extends Model
         'id',
         'wallet_id',
         'vacancy_id',
+        'UserId',
+        'CompanyUser_id',
         'session_id',
         'order_id',
         'order_status',

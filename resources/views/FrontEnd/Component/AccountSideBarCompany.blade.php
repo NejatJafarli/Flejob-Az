@@ -28,8 +28,6 @@
     }
     
 @endphp
-
-
 <ul>
     <li>
         <a id="Profile" href="{{ route('AccountCompany', app()->getLocale()) }}">
@@ -42,10 +40,6 @@
             <a href="" class="premium-sidebarlist">
                 <i class="fa-solid fa-crown"></i>
                 {{ __('AccountSideBar.Already Premium') }}
-                <span class="badge-price badge rounded-pill bg-danger">
-                    {{ $price }}₼
-                    <span class="visually-hidden">unread messages</span>
-                </span>
             </a>
         @else
             <a href="{{ route('paymentForPremiumCompanyUser', app()->getLocale()) }}" class="premium-sidebarlist">

@@ -226,8 +226,10 @@ class HomeController extends Controller
     {
         //get last 8 users and paginate
         $users = User::orderBy('id', 'desc')->paginate(8);
+        $preUsers = User::where('PremiumEndDate', '!=', 'null')->take(4)->get();
+
         //get first category of each user   
-        return view('FrontEnd/candidate', ['users' => $users]);
+        return view('FrontEnd/candidate', ['users' => $users,'preUsers'=>$preUsers]);
     }
     public function EditAJob($lang,$id){
         if (!session()->has('CompanyUser'))
@@ -1106,6 +1108,129 @@ class HomeController extends Controller
 
         $CompanyUser=$this->MergeCompanyUsersTable($company_user);
         session()->put('CompanyUser', $CompanyUser);
+        
+        // dd(session()->get('CompanyUser'));
+
+        return redirect()->route('Hom',app()->getLocale());
+    }
+    public function paymentForPremiumUser(Request $req){
+        if (!session()->has('user')) 
+            return response()->json(['redirect' => route('Signin', ['language' => app()->getLocale()])]);
+
+        //count company users who PremiumEndDate is not null 
+        $premium_count = User::where('PremiumEndDate', '!=', null)->count();
+        //if greater than 10 return error
+        if ($premium_count >= 4)
+            return response()->json(['errors' => [__("validationUser.There is no more premium vacancy")]]);
+        
+        
+        $User = session()->get('user');
+        // $vacancyEndDate = $vacancy->EndDate;
+        // $vacancyEndDate = strtotime($vacancyEndDate);
+        // $today = strtotime(date('Y-m-d'));
+        // if ($vacancyEndDate > $today)
+        //     return response()->json(['errors' => [__("validationUser.This vacancy is not expired")]]);
+            //get vacancy owner company user
+        
+        $wallet = wallet::where('UserId', $User->id)->first();
+        if ($wallet == null){
+            $wallet = new wallet();
+            $wallet->UserId = $User->id;
+            $wallet->total_spend = 0;
+            $wallet->status = 1;
+            $wallet->save();
+        }
+        if ($wallet->status == 0)
+            return response()->json(['errors' => [__("validationUser.Your wallet is blocked")]]);
+
+        //get config vacancy price
+        $UserPrice = config::where('key', 'CvPremium_price')->first()->value;
+
+        //generate xml request
+        $xml = new \SimpleXMLElement('<TKKPG/>');
+        $xml->addChild('Request');
+        $xml->Request->addChild('Operation', 'CreateOrder');
+        $xml->Request->addChild('Language', app()->getLocale());
+        $xml->Request->addChild('Order');
+        $xml->Request->Order->addChild('OrderType', 'Purchase');    
+        $xml->Request->Order->addChild('Merchant', 'E1000010');
+        $xml->Request->Order->addChild('Amount', $UserPrice*100);
+        $xml->Request->Order->addChild('Currency', '944');
+        $xml->Request->Order->addChild('Description', 'Account Premium Payment For '.$User->Username);
+        $xml->Request->Order->addChild('ApproveURL', 'https://flejob.az/az/payment/success/User');
+        $xml->Request->Order->addChild('CancelURL', 'https://flejob.az/az/payment/canceled');
+        $xml->Request->Order->addChild('DeclineURL', 'https://flejob.az/az/payment/decline');
+        $xml = $xml->asXML();
+        
+        $xml = $this->xmlRequest($xml);
+        $SESSION_ID = $xml['Response']['Order']['SessionID'];
+        $ORDER_ID = $xml['Response']['Order']['OrderID'];
+        $URL = $xml['Response']['Order']['URL'];
+
+        // 'id',
+        // 'wallet_id',
+        // 'vacancy_id',
+        // 'session_id',
+        // 'order_id',
+        // 'order_status',
+        // 'amount',
+        // 'currency',
+        // 'transaction_id', null
+        // 'PAN', null
+        wallet_transaction::create([
+            'wallet_id'=>$wallet->id,
+            'UserId'=>$User->id,
+            'session_id'=>$SESSION_ID,
+            'order_id'=>$ORDER_ID,
+            'order_status'=>'pending',
+            'amount'=>$UserPrice*100,
+            'currency'=>'944',
+        ]);
+        
+        //redirect to kapital bank 
+        // return response()->json(['redirect' => $URL."?ORDERID=".$ORDER_ID."&SESSIONID=".$SESSION_ID]);
+        return redirect()->to($URL.'?ORDERID='.$ORDER_ID.'&SESSIONID='.$SESSION_ID);
+    }
+    public function paymentSuccessForPremiumUser(Request $req){
+        
+        $array_data = json_decode(json_encode(simplexml_load_string($req->all()['xmlmsg'])), true)['Message'];
+        //get wallet_transaction
+        $wallet_transaction = wallet_transaction::where('session_id', $array_data['SessionID'])->where('order_id', $array_data['OrderID'])->first();
+
+        if ($wallet_transaction->order_status == 'APPROVED')
+            return response()->json(['errors' => [__("validationUser.You are already paid for this vacancy")]]);
+        if ($array_data['OrderStatus'] != 'APPROVED')
+            return response()->json(['errors' => [__("validationUser.Your payment is not approved")]]);
+        if ($array_data['PurchaseAmount'] != $wallet_transaction->amount)
+            return response()->json(['errors' => [__("validationUser.Your payment amount is not correct")]]);
+        if ($array_data['Currency'] != $wallet_transaction->currency)
+            return response()->json(['errors' => [__("validationUser.Your payment currency is not correct")]]);
+
+            //  $table->string('transaction_id')->nullable();
+            // $table->string('PAN')->nullable();
+        $wallet_transaction->order_status = $array_data['OrderStatus'];
+        $wallet_transaction->order_status_code = $array_data['ResponseCode'];
+        $wallet_transaction->order_status_description = $array_data['ResponseDescription'];
+        $wallet_transaction->transaction_id = $array_data['TranId'];
+        $wallet_transaction->PAN = $array_data['PAN'];
+        $wallet_transaction->save();
+        //get wallet
+        $wallet = wallet::find($wallet_transaction->wallet_id);
+        $wallet->total_spend += $wallet_transaction->amount/10;
+        $wallet->save();
+
+        $wallet_transaction->save();
+
+        //get CompanyUser
+        $User = User::find($wallet->UserId);
+        //get vacancy
+        //add premium end date 1 month
+        // $CompanyUser->PremiumEndDate = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $User->PremiumEndDate = date('Y-m-d H:i:s', strtotime('+1 month'));
+        $User->save();
+
+        $User=$this->MergeUsersTable($User);
+        session()->put('user', $User);
         
         // dd(session()->get('CompanyUser'));
 

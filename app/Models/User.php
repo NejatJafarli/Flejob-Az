@@ -26,6 +26,7 @@ class User extends Model
         'MinSalary',
         'MaxSalary',
         'City_id',
+        'PremiumEndDate'
     ];
 
     public function education()

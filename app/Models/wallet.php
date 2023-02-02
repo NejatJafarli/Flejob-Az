@@ -14,11 +14,17 @@ class wallet extends Model
         'CompanyUser_id',
         'total_spend',
         'status',
+        'UserId'
     ];
 
     public function company_user()
     {
         return $this->belongsTo(CompanyUser::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 }
