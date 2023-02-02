@@ -80,7 +80,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="home-1" role="tabpanel">
                             <form id="signin" class="signin-form" method="POST"
-                                action="{{ route('Signin', app()->getLocale()) }}" enctype="multipart/form-data"
+                                action="{{ route('SigninPost', app()->getLocale()) }}" enctype="multipart/form-data"
                                 id="SigninForm">
                                 @csrf
                                 <div class="form-group">

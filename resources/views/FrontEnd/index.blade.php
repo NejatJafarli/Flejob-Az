@@ -327,7 +327,7 @@
                     <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
                     <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
                 </div>
-                <h2>{{ __('home.Jobs You May Be Interested In') }}</h2>
+                <h2>{{ __('home.Jobs You May Be Interested In2') }}</h2>
             </div>
 
             <div class="row">

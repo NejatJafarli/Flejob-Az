@@ -256,8 +256,9 @@ class LoginRegisterController extends Controller
     }
 
     //LOGIN REGISTER
-    public function SigninPost($lang, Request $req)
+    public function SigninPost(Request $req)
     {
+        $lang=app()->getLocale();
         if (session()->has('user') || session()->has('CompanyUser'))
             return redirect()->route('Hom', ['language' => $lang]);
         //check if user exist

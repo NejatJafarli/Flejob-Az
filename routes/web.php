@@ -44,6 +44,7 @@ Route::group(['prefix' => '{language}'], function () {
 
     Route::get('/Signup', [LoginRegisterController::class, 'Signup'])->name('Signup');
     Route::get('/Signin', [LoginRegisterController::class, 'SigninPage'])->name('Signin');
+    Route::post('/SigninPost', [LoginRegisterController::class, 'SigninPost'])->name('SigninPost');
     Route::get('/LogoutCompany', [LoginRegisterController::class, 'LogoutCompany'])->name('LogoutCompany');
     Route::get('/Logout', [LoginRegisterController::class, 'Logout'])->name('Logout');
     Route::get('/ResetPasswordUser', [LoginRegisterController::class, 'ResetPasswordUser'])->name('ResetPasswordUser');
