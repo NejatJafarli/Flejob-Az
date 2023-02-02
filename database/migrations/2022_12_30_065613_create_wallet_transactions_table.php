@@ -16,7 +16,7 @@ class CreateWalletTransactionsTable extends Migration
         Schema::create('wallet_transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('wallet_id');
-            $table->unsignedBigInteger('vacancy_id');
+            $table->unsignedBigInteger('vacancy_id')->nullable();
             $table->string('session_id');
             $table->string('order_id');
             $table->string('order_status');  //Approved Canceled Declined
@@ -27,6 +27,9 @@ class CreateWalletTransactionsTable extends Migration
             $table->string('transaction_id')->nullable();
             $table->string('PAN')->nullable();
             $table->timestamps();
+
+            $table->foreign('wallet_id')->references('id')->on('wallets')->onDelete('cascade');
+            $table->foreign('vacancy_id')->references('id')->on('vacancies')->onDelete('cascade');
         });
     }
 

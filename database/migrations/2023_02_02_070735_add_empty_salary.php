@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigsTable extends Migration
+class AddEmptySalary extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
-            $table->id();
-            $table->string('key')->unique();
-            $table->text('value');
+        Schema::table('vacancies', function (Blueprint $table) {
+            //add column
+            $table->integer('WithAgreement')->default(0);
+            //
         });
     }
 
@@ -27,6 +27,8 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configs');
+        Schema::table('vacancies', function (Blueprint $table) {
+            //
+        });
     }
 }

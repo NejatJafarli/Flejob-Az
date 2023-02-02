@@ -125,7 +125,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="salaryPostJob">
+                                    <input name="WithAgreement" type="checkbox" class="form-check-input" id="salaryPostJob">
                                     <label class="form-check-label" for="salaryPostJob">{{ __('PostAJob.Salary Negotiated') }}</label>
                                 </div>
                             </div>
@@ -241,6 +241,7 @@
             $('#salaryPostJob').click(function () {
                 if ($(this).is(':checked')) {
                     $('input[name="VacancySalary"]').attr('disabled', 'disabled');
+                    $('input[name="VacancySalary"]').val('');
                 } else {
                     $('input[name="VacancySalary"]').removeAttr('disabled');
                 }

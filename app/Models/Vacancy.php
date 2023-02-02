@@ -17,6 +17,7 @@ class Vacancy extends Model
         'City_id',
         'Photo',
         'Status',
+        'withAgreement',
         "CompanyUser_id",
         "PersonName",
         "PersonPhone",

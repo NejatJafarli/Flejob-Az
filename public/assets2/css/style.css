@@ -457,6 +457,16 @@ h3 {
 }
 .premium-sidebarlist{
   background: linear-gradient(#cfa659, #FDE08D, #e6b251)!important;
+  position: relative;
+}
+.premium-sidebarlist .badge-price{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e6840f;
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 15px;
 }
 .premium-job-card .icons-crown{
   position: absolute;

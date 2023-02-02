@@ -24,7 +24,7 @@ class CreateVacanciesTable extends Migration
             $table->date('EndDate');
             $table->string('PersonName');
             $table->string('PersonPhone');
-            $table->string('VacancySalary');
+            $table->string('VacancySalary')->nullable();
             $table->string('Email');
             $table->integer('Status')->default(4); // 0 inactive | 1 active | 3 accepted but not payed | 4 moderator waiting  | 5 rejected
             $table->integer('SortOrder')->default(0);

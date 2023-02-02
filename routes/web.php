@@ -32,6 +32,7 @@ Route::group(['prefix' => '{language}'], function () {
 
 
         Route::post('/payment/success/premium', [HomeController::class, 'paymentSuccessForPremium'])->name('paymentSuccessForPremium');
+        Route::post('/payment/success/CompanyUser', [HomeController::class, 'paymentSuccessForCompanyPremium'])->name('paymentSuccessForCompanyPremium');
 
         Route::post('/payment/success', [HomeController::class, 'paymentSuccess'])->name('paymentSuccess');
         Route::post('/payment/decline', [HomeController::class, 'paymentDecline'])->name('paymentDecline');
@@ -66,6 +67,7 @@ Route::group(['prefix' => '{language}'], function () {
 
     Route::post('payment', [HomeController::class, 'payment'])->name('payment');
     Route::post('payment2', [HomeController::class, 'payment2'])->name('payment2');
+    Route::get('payment3', [HomeController::class, 'paymentForPremiumCompanyUser'])->name('paymentForPremiumCompanyUser');
 
 
     //ACCOUNT CONTROLLER

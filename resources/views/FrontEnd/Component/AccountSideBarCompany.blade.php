@@ -2,6 +2,7 @@
     
     use App\Models\NotificationForCompanyUser;
     use App\Models\Vacancy;
+    use App\Models\config;
     if (session()->has('CompanyUser')) {
         // NotificationForCompanyUser count
     
@@ -11,6 +12,7 @@
         $CompanyUserVacancy = Vacancy::where('CompanyUser_id', session()->get('CompanyUser')->id)->get();
     
         $count = 0;
+        $price = config::where('key', 'companyPremium_price')->first()->value;
     
         foreach ($NotificationForCompanyUser as $value) {
             foreach ($CompanyUserVacancy as $value2) {
@@ -36,10 +38,25 @@
         </a>
     </li>
     <li>
-        <a href="" class="premium-sidebarlist">
-            <i class="fa-solid fa-crown"></i>
-            {{ __('AccountSideBar.Premium') }}
-        </a>
+        @if (session()->get('CompanyUser')->PremiumEndDate != null)
+            <a href="" class="premium-sidebarlist">
+                <i class="fa-solid fa-crown"></i>
+                {{ __('AccountSideBar.Already Premium') }}
+                <span class="badge-price badge rounded-pill bg-danger">
+                    {{ $price }}₼
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+            </a>
+        @else
+            <a href="{{ route('paymentForPremiumCompanyUser', app()->getLocale()) }}" class="premium-sidebarlist">
+                <i class="fa-solid fa-crown"></i>
+                {{ __('AccountSideBar.Premium') }}
+                <span class="badge-price badge rounded-pill bg-danger">
+                    {{ $price }}₼
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+            </a>
+        @endif
     </li>
     <li>
         <a id="Profile" href="{{ route('PostAJob', app()->getLocale()) }}">

@@ -72,9 +72,9 @@
                         <div class="col-lg-12 mb-3">
                             <div class="job-details-text">
                                 @php
-                                $class = $vac->SortOrder == 1 ? 'premium-job-card' : '';
-                            @endphp
-                                <div class="job-card {{$class}}">
+                                    $class = $vac->SortOrder == 1 ? 'premium-job-card' : '';
+                                @endphp
+                                <div class="job-card {{ $class }}">
                                     <div class="row align-items-center">
                                         <div class="col-md-3 mb-3">
                                             <div class="company-logo">
@@ -249,7 +249,7 @@
                 </div>
 
                 <div class="col-lg-4 mb-3">
-                    <div class="job-sidebar {{$class}}">
+                    <div class="job-sidebar {{ $class }}">
                         <h3>{{ __('Jobdetail.Posted By') }}</h3>
                         <div class="posted-by">
                             <img style="height:100px; width:100px;"
@@ -295,9 +295,7 @@
                         </div>
                     @endif
                     <div class="ads-banner-vacancy ">
-                        <img class="img-fluid"
-                        src="/assets2/img/banner.png"
-                            alt="">
+                        <img class="img-fluid" src="/assets2/img/banner.png" alt="">
                     </div>
                 </div>
             </div>
@@ -337,7 +335,11 @@
                                                     </li>
                                                     <li>
                                                         <i class='bx bx-briefcase'></i>
-                                                        {{ $vacs->VacancySalary }}
+                                                        @if ($vacs->WithAgreement == 1)
+                                                            {{ __('home.With Agreement') }}
+                                                        @else
+                                                            {{ $vacs->VacancySalary }}
+                                                        @endif
                                                     </li>
                                                     <li>
                                                         <i class='bx bx-location-plus'></i>

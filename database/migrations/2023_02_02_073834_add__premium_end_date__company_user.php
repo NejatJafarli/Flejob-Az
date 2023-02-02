@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigsTable extends Migration
+class AddPremiumEndDateCompanyUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateConfigsTable extends Migration
      */
     public function up()
     {
-        Schema::create('configs', function (Blueprint $table) {
-            $table->id();
-            $table->string('key')->unique();
-            $table->text('value');
+        Schema::table('company_users', function (Blueprint $table) {
+            $table->dateTime('PremiumEndDate')->nullable();
         });
     }
 
@@ -27,6 +25,8 @@ class CreateConfigsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configs');
+        Schema::table('company_users', function (Blueprint $table) {
+            //
+        });
     }
 }

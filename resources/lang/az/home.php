@@ -22,5 +22,6 @@ return [
     'Jobs You May Be Interested In2' => 'İşlər',
     'Top Companies' => 'Ən yaxşı şirkətlər',
     'News, Tips & Articles' => 'Xəbərlər və Məqalələr',
+    'With Agreement' => 'Qəbul edilən əmək haqqı',
     'Read More' => 'Daha çox oxu',
 ];

@@ -23,4 +23,5 @@ return [
     'Top Companies' => 'Top Companies',
     'News, Tips & Articles' => 'News, Tips & Articles',
     'Read More' => 'Read More',
+    'With Agreement' => 'With Agreement',
 ];
