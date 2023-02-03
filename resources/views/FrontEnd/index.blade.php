@@ -14,7 +14,6 @@
     @include('FrontEnd.Component.Navbar')
     @include('FrontEnd.Component.Preloader')
     <!-- Navbar Area End -->
-    {{-- Hacizade Ferid --}}
     <script>
         $(document).ready(function() {
             var Hom = document.getElementById('Hom');
@@ -194,6 +193,30 @@
     </section>
     <!-- Category Section End -->
 
+    {{-- Ads Section Start --}}
+    <section class="ads-banner-sections">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
+                    <div class="ads-img-block">
+                        <img class="img-fluid" src="/assets2/img/flegriads.gif" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
+                    <div class="ads-img-block">
+                        <img class="img-fluid" src="/assets2/img/rahatGETsonn.gif" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
+                    <div class="ads-img-block">
+                        <img class="img-fluid" src="/assets2/img/KIDMAPAson.gif" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{-- Ads Section End --}}
+
     <!-- Jobs Section Start -->
     <section class="job-section pb-70">
         <div class="container">
@@ -318,6 +341,32 @@
             </div>
         </div>
     </section>
+    <!-- Companies Section End -->
+
+    {{-- Ads Section Start --}}
+    <section class="ads-banner-sections">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
+                    <div class="ads-img-block">
+                        <img class="img-fluid" src="/assets2/img/flegriads.gif" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
+                    <div class="ads-img-block">
+                        <img class="img-fluid" src="/assets2/img/rahatGETsonn.gif" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
+                    <div class="ads-img-block">
+                        <img class="img-fluid" src="/assets2/img/KIDMAPAson.gif" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{-- Ads Section End --}}
+
     <!-- Jobs Section Start -->
     <section class="job-section pb-70">
         <div class="container">

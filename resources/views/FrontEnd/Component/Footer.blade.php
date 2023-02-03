@@ -129,7 +129,7 @@
 {{-- Hacizade Farid --}}
 </footer>
 <div class="copyright-text text-center">
-    <!-- Developed By Hacizade Farid -->
+    <!-- Front end By Sahib Akbarov-->
     <p>Developed @2022 <a class="devText" href="https://flegri.com/">Flegri</a></p>
     <!-- Developed By Hacizade Farid-->
 </div>

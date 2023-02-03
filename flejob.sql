@@ -33,7 +33,7 @@ CREATE TABLE `blogs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `category_langs` (
   KEY `category_langs_lang_id_foreign` (`lang_id`),
   CONSTRAINT `category_langs_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   CONSTRAINT `category_langs_lang_id_foreign` FOREIGN KEY (`lang_id`) REFERENCES `langs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `cities` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +151,7 @@ CREATE TABLE `city_langs` (
   KEY `city_langs_lang_id_foreign` (`lang_id`),
   CONSTRAINT `city_langs_city_id_foreign` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
   CONSTRAINT `city_langs_lang_id_foreign` FOREIGN KEY (`lang_id`) REFERENCES `langs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +182,7 @@ CREATE TABLE `companies` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `companies_user_id_foreign` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `company_and_categories` (
   KEY `company_and_categories_companyuser_id_foreign` (`CompanyUser_Id`),
   CONSTRAINT `company_and_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   CONSTRAINT `company_and_categories_companyuser_id_foreign` FOREIGN KEY (`CompanyUser_Id`) REFERENCES `company_users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +242,7 @@ CREATE TABLE `company_phones` (
   PRIMARY KEY (`id`),
   KEY `company_phones_companyuser_id_foreign` (`CompanyUser_Id`),
   CONSTRAINT `company_phones_companyuser_id_foreign` FOREIGN KEY (`CompanyUser_Id`) REFERENCES `company_users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=284 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -279,7 +279,7 @@ CREATE TABLE `company_users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `PremiumEndDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +304,7 @@ CREATE TABLE `configs` (
   `key` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `value` longtext COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +313,7 @@ CREATE TABLE `configs` (
 
 LOCK TABLES `configs` WRITE;
 /*!40000 ALTER TABLE `configs` DISABLE KEYS */;
-INSERT INTO `configs` VALUES (2,'infoEmail','info@flejob.az'),(3,'infoAddress','İzzət həmidov 18'),(4,'terms_description_az','<p>Qaydalar və şərtlər:<br />&nbsp; &nbsp;Flejob.az sizə iş və iş&ccedil;i tapmaqda k&ouml;məklik edəcək platformadır. Saytımızda şirkət olaraq qeydiyyatdan ke&ccedil;ib, vakansiyalarınızı paylaşa, fərdi şəxs olaraq CV-lərinizi yerləşdirə bilərsiniz. Yerləşdirəcəyiniz ilk elan &ouml;dənişsiz olaraq paylaşılacaq. <br />&nbsp; &nbsp;Sayta elan və ya CV y&uuml;kləmək &uuml;&ccedil;&uuml;n qeydiyyatdan ke&ccedil;mək lazımdır. Elan və CV yerləşdirərkən b&uuml;t&uuml;n xanaları doldurmaq zəruridir. <br />Diqqət: Saytda yerləşdirilən vakansiyalar moderator tərəfindən yoxlanılacaq. Ş&uuml;bhəli g&ouml;r&uuml;nən elanlar qəbul edilmir və email vasitəsilə xəbərdarlıq edilir.<br />&nbsp; &nbsp;Şirkət və iş axtaran arasında yazışma sistemi m&ouml;vcuddur. İş axtaranlar vakansiyaya onlayn şəkildə m&uuml;raciət edə bilərlər. <br />Qiymətlər: Hər bir şirkətin 1 &ouml;dənişsiz vakansiya paylaşmaq haqqı var. İlk vakansiyadan sonra paylaşılacaq hər bir vakansiya &uuml;&ccedil;&uuml;n əlavə olaraq 5₼ &ouml;dəniş edilməlidir. Bir g&uuml;nl&uuml;k premium (vip) elan 1₼ və vakansiya siyahısında bir g&uuml;n &ouml;nə &ccedil;ıxmaq 1₼ təşkil edir. Əsas səhifədə bir aylıq &ldquo; Ən yaxşı şirkətlər&rdquo; siyahısında olmaq &uuml;&ccedil;&uuml;n 50₼ &ouml;dəniş etməlisiniz. Bir ay ərzində yalnız 8 şirkət bu siyahıya daxil ola bilər. <br />&nbsp; &nbsp;CV yerləşdirmək tamamilə &ouml;dənişsizdir. CV &uuml;&ccedil;&uuml;n bir g&uuml;nl&uuml;k premium xidmət haqqı 1₼ təşkil edir. CV siyahısında bir g&uuml;nl&uuml;k &ouml;nə &ccedil;ıxmaq &uuml;&ccedil;&uuml;n 1₼ &ouml;dəniş edilməlidir.<br />&nbsp; &nbsp;Premium (vip) elanlar digər elanlardan fərqlənir. Ayrı b&ouml;lmədə &ouml;nə &ccedil;ıxır. <br />Qeyd: Flejob.az- işəd&uuml;zəltmə saytı deyil. Məqsədimiz işə g&ouml;t&uuml;rən və iş&ccedil;i arasında vasitə&ccedil;i olmaqdır.</p>'),(5,'terms_title_az','Qaydalar və şərtlər'),(6,'infoPhone','+994508330122'),(7,'premium_price','5'),(8,'about_title_az','Haqqımızda'),(9,'about_description_az','Flejob.az doğru iş üçün doğru insan fəlsəfəsinə əsaslanır. Buna görə də şirkətləri və iş axtaranları ən doğru şəkildə bir araya gətirməyi hədəfləyir. İşə götürən və işçi arasında vasitəçisiz əlaqə yaratma imkanı yaradır. Bu platformada axtardığınız, sizə uyğun olan işi və ya işçini ən qısa zamanda tapa bilərsiniz. Saytımız vasitəsilə siz şirkətinizin ixtisaslı işçilər qazanmasını təmin edə, uğurunuza uğur əlavə etməyə davam edə bilərsiniz. Azərbaycan daxilində iş axtaran, xəyal etdiyiniz karyeraya çatmağı Flejob.az daha asan və sürətli şəkildə reallaşdırmağınıza yardım edir. Siz də üzv olaraq, iş elanlarına, axtardığınız kadrlara qısa zamanda çata bilərsiniz.'),(10,'vacancy_price','10'),(11,'about_title_ru','О нас'),(12,'about_description_ru','Фледжоб. az стремится объединить компании и соискателей наиболее подходящим образом, основываясь на философии правильного человека для правильной работы. Flejob — одна из ведущих отраслевых платформ по поиску работы, где вы можете получить доступ к большому количеству объявлений о вакансиях и найти сотрудника, которого ищете, в кратчайшие сроки. С помощью нашего сайта вы можете убедиться, что ваша компания получает квалифицированных сотрудников и продолжает прибавлять успех к вашему успеху. Flejob позволяет соискателям в Азербайджане достичь желаемой карьеры с текущими объявлениями о вакансиях. Зарегистрировавшись немедленно, за короткое время вы сможете получить доступ к объявлениям о вакансиях и персоналу, которого вы ищете.'),(13,'about_title_en','About us'),(14,'about_description_en','Flejob. az aims to bring together companies and job seekers in the most appropriate way, based on the philosophy of the right person for the right job. Flejob is one of the industry\'s leading job-searching platforms where you can access a large number of job postings and find the employee you are looking for in no time. Through our site, you can ensure that your company gains qualified employees and continue to add success to your success. Flejob enables job seekers in Azerbaijan to reach their desired careers with current job announcements. By registering immediately, in a short time, you can reach the job announcements and the personnel you are looking for.'),(15,'terms_description_en','Flejob.az - enables companies to post a free ad. Job seekers can also post their CVs on the site for free. To upload an advertisement and CV to the site, registration is required. When posting a job advertisement and CV, it is necessary to fill it correctly and completely. Vacancies posted on the site will be checked by the moderator. Ads that look suspicious will not be accepted and will be warned by email. Companies can view the information of job seekers and find a suitable candidate on the platform. Job seekers can apply for the vacancy online. There is a correspondence system between the company and the job seeker. Companies will have to pay extra if they want to post more than one ad. Companies can make their ads premium for one day.'),(16,'terms_title_en','Terms and conditions'),(17,'terms_title_ru','Условия и правила'),(18,'terms_description_ru','Flejob.az - позволяет компаниям разместить бесплатное объявление. Соискатели также могут бесплатно размещать свои резюме на сайте. Для загрузки объявления и резюме на сайт необходима регистрация. При размещении объявления о работе и резюме необходимо правильно и полностью заполнить его. Размещенные на сайте вакансии будут проверены модератором. Объявления, которые выглядят подозрительно, не будут приняты и будут предупреждены по электронной почте. Компании могут просматривать информацию о соискателях и находить подходящего кандидата на платформе. Соискатели могут подать заявку на вакансию онлайн. Существует система переписки между компанией и соискателем. Компаниям придется доплатить, если они захотят разместить более одного объявления. Компании могут сделать свою рекламу премиальной на один день.'),(19,'instagram','https://www.instagram.com/flejob.az/?next=%2Funitedsport.uz%2Freels%2F'),(20,'facebook','https://www.facebook.com/profile.php?id=100089505305132'),(21,'linkedin','temp'),(22,'telegram','temp'),(24,'ads_description_az','<p><a href=\"https://flejob.az\" target=\"_blank\" rel=\"noopener\">Flejob.az</a> saytında reklam yerləşdirmək sizin markanızı, məhsullarınızı, şirkətinizi, xidmətlərinizi daha &ccedil;ox cəmiyyətə &ccedil;atdırmağa imkan yaradır. Bu sayədə sizin brendiniz k&uuml;tləvi formada yayımlanır. Markanızın tanınması &uuml;&ccedil;&uuml;n əhəmiyyətli rol oynayan saytda reklam b&ouml;lməsi məhsulllarınızı daha geniş auditoriyaya n&uuml;mayiş etdirir.<br />Əlaqə &uuml;&ccedil;&uuml;n: <a href=\"mailto:reklam@flejob.az\" target=\"_blank\" rel=\"noopener\">reklam@flejob.az</a></p>'),(25,'ads_title_az','Flejobda Reklam'),(26,'ads_title_en','Advertising on Flejob'),(27,'ads_description_en','<p>Placing an advertisement on the <a href=\"https://flejob.az\" target=\"_blank\" rel=\"noopener\">Flejob.az</a> site allows you to convey your brand, products, company, and services to more people. Thanks to this, your brand is broadcast in a massive form. The advertising section of the site plays an important role in the recognition of your brand, showing your products to a wider audience.<br />For contact: <a href=\"mailto:reklam@flejob.az\" target=\"_blank\" rel=\"noopener\">reklam@flejob.az</a></p>'),(28,'ads_title_ru','Реклама на Flejob'),(29,'ads_description_ru','<p>Размещение рекламы на сайте <a href=\"../../\" target=\"_blank\" rel=\"noopener\">Flejob.az</a> позволяет донести информацию о вашем бренде, товарах, компании и услугах до большего количества людей. Благодаря этому ваш бренд транслируется в массовом виде. Рекламный раздел сайта играет важную роль в узнаваемости вашего бренда, показывая вашу продукцию более широкой аудитории.<br />Для связи: <a href=\"mailto:reklam@flejob.az\" target=\"_blank\" rel=\"noopener\">reklam@flejob.az</a></p>');
+INSERT INTO `configs` VALUES (2,'infoEmail','info@flejob.az'),(3,'infoAddress','İzzət həmidov 18'),(4,'terms_description_az','<p>Qaydalar və şərtlər:<br />&nbsp; &nbsp;Flejob.az sizə iş və iş&ccedil;i tapmaqda k&ouml;məklik edəcək platformadır. Saytımızda şirkət olaraq qeydiyyatdan ke&ccedil;ib, vakansiyalarınızı paylaşa, fərdi şəxs olaraq CV-lərinizi yerləşdirə bilərsiniz. Yerləşdirəcəyiniz ilk elan &ouml;dənişsiz olaraq paylaşılacaq. <br />&nbsp; &nbsp;Sayta elan və ya CV y&uuml;kləmək &uuml;&ccedil;&uuml;n qeydiyyatdan ke&ccedil;mək lazımdır. Elan və CV yerləşdirərkən b&uuml;t&uuml;n xanaları doldurmaq zəruridir. <br />Diqqət: Saytda yerləşdirilən vakansiyalar moderator tərəfindən yoxlanılacaq. Ş&uuml;bhəli g&ouml;r&uuml;nən elanlar qəbul edilmir və email vasitəsilə xəbərdarlıq edilir.<br />&nbsp; &nbsp;Şirkət və iş axtaran arasında yazışma sistemi m&ouml;vcuddur. İş axtaranlar vakansiyaya onlayn şəkildə m&uuml;raciət edə bilərlər. <br />Qiymətlər: Hər bir şirkətin 1 &ouml;dənişsiz vakansiya paylaşmaq haqqı var. İlk vakansiyadan sonra paylaşılacaq hər bir vakansiya &uuml;&ccedil;&uuml;n əlavə olaraq 5₼ &ouml;dəniş edilməlidir. Bir g&uuml;nl&uuml;k premium (vip) elan 1₼ və vakansiya siyahısında bir g&uuml;n &ouml;nə &ccedil;ıxmaq 1₼ təşkil edir. Əsas səhifədə bir aylıq &ldquo; Ən yaxşı şirkətlər&rdquo; siyahısında olmaq &uuml;&ccedil;&uuml;n 50₼ &ouml;dəniş etməlisiniz. Bir ay ərzində yalnız 8 şirkət bu siyahıya daxil ola bilər. <br />&nbsp; &nbsp;CV yerləşdirmək tamamilə &ouml;dənişsizdir. CV &uuml;&ccedil;&uuml;n bir g&uuml;nl&uuml;k premium xidmət haqqı 1₼ təşkil edir. CV siyahısında bir g&uuml;nl&uuml;k &ouml;nə &ccedil;ıxmaq &uuml;&ccedil;&uuml;n 1₼ &ouml;dəniş edilməlidir.<br />&nbsp; &nbsp;Premium (vip) elanlar digər elanlardan fərqlənir. Ayrı b&ouml;lmədə &ouml;nə &ccedil;ıxır. <br />Qeyd: Flejob.az- işəd&uuml;zəltmə saytı deyil. Məqsədimiz işə g&ouml;t&uuml;rən və iş&ccedil;i arasında vasitə&ccedil;i olmaqdır.</p>'),(5,'terms_title_az','Qaydalar və şərtlər'),(6,'infoPhone','+994508330122'),(7,'premium_price','5'),(8,'about_title_az','Haqqımızda'),(9,'about_description_az','Flejob.az doğru iş üçün doğru insan fəlsəfəsinə əsaslanır. Buna görə də şirkətləri və iş axtaranları ən doğru şəkildə bir araya gətirməyi hədəfləyir. İşə götürən və işçi arasında vasitəçisiz əlaqə yaratma imkanı yaradır. Bu platformada axtardığınız, sizə uyğun olan işi və ya işçini ən qısa zamanda tapa bilərsiniz. Saytımız vasitəsilə siz şirkətinizin ixtisaslı işçilər qazanmasını təmin edə, uğurunuza uğur əlavə etməyə davam edə bilərsiniz. Azərbaycan daxilində iş axtaran, xəyal etdiyiniz karyeraya çatmağı Flejob.az daha asan və sürətli şəkildə reallaşdırmağınıza yardım edir. Siz də üzv olaraq, iş elanlarına, axtardığınız kadrlara qısa zamanda çata bilərsiniz.'),(10,'vacancy_price','10'),(11,'about_title_ru','О нас'),(12,'about_description_ru','Фледжоб. az стремится объединить компании и соискателей наиболее подходящим образом, основываясь на философии правильного человека для правильной работы. Flejob — одна из ведущих отраслевых платформ по поиску работы, где вы можете получить доступ к большому количеству объявлений о вакансиях и найти сотрудника, которого ищете, в кратчайшие сроки. С помощью нашего сайта вы можете убедиться, что ваша компания получает квалифицированных сотрудников и продолжает прибавлять успех к вашему успеху. Flejob позволяет соискателям в Азербайджане достичь желаемой карьеры с текущими объявлениями о вакансиях. Зарегистрировавшись немедленно, за короткое время вы сможете получить доступ к объявлениям о вакансиях и персоналу, которого вы ищете.'),(13,'about_title_en','About us'),(14,'about_description_en','Flejob. az aims to bring together companies and job seekers in the most appropriate way, based on the philosophy of the right person for the right job. Flejob is one of the industry\s leading job-searching platforms where you can access a large number of job postings and find the employee you are looking for in no time. Through our site, you can ensure that your company gains qualified employees and continue to add success to your success. Flejob enables job seekers in Azerbaijan to reach their desired careers with current job announcements. By registering immediately, in a short time, you can reach the job announcements and the personnel you are looking for.'),(15,'terms_description_en','Flejob.az - enables companies to post a free ad. Job seekers can also post their CVs on the site for free. To upload an advertisement and CV to the site, registration is required. When posting a job advertisement and CV, it is necessary to fill it correctly and completely. Vacancies posted on the site will be checked by the moderator. Ads that look suspicious will not be accepted and will be warned by email. Companies can view the information of job seekers and find a suitable candidate on the platform. Job seekers can apply for the vacancy online. There is a correspondence system between the company and the job seeker. Companies will have to pay extra if they want to post more than one ad. Companies can make their ads premium for one day.'),(16,'terms_title_en','Terms and conditions'),(17,'terms_title_ru','Условия и правила'),(18,'terms_description_ru','Flejob.az - позволяет компаниям разместить бесплатное объявление. Соискатели также могут бесплатно размещать свои резюме на сайте. Для загрузки объявления и резюме на сайт необходима регистрация. При размещении объявления о работе и резюме необходимо правильно и полностью заполнить его. Размещенные на сайте вакансии будут проверены модератором. Объявления, которые выглядят подозрительно, не будут приняты и будут предупреждены по электронной почте. Компании могут просматривать информацию о соискателях и находить подходящего кандидата на платформе. Соискатели могут подать заявку на вакансию онлайн. Существует система переписки между компанией и соискателем. Компаниям придется доплатить, если они захотят разместить более одного объявления. Компании могут сделать свою рекламу премиальной на один день.'),(19,'instagram','https://www.instagram.com/flejob.az/?next=%2Funitedsport.uz%2Freels%2F'),(20,'facebook','https://www.facebook.com/profile.php?id=100089505305132'),(21,'linkedin','temp'),(22,'telegram','temp'),(24,'ads_description_az','<p><a href=\"https://flejob.az\" target=\"_blank\" rel=\"noopener\">Flejob.az</a> saytında reklam yerləşdirmək sizin markanızı, məhsullarınızı, şirkətinizi, xidmətlərinizi daha &ccedil;ox cəmiyyətə &ccedil;atdırmağa imkan yaradır. Bu sayədə sizin brendiniz k&uuml;tləvi formada yayımlanır. Markanızın tanınması &uuml;&ccedil;&uuml;n əhəmiyyətli rol oynayan saytda reklam b&ouml;lməsi məhsulllarınızı daha geniş auditoriyaya n&uuml;mayiş etdirir.<br />Əlaqə &uuml;&ccedil;&uuml;n: <a href=\"mailto:reklam@flejob.az\" target=\"_blank\" rel=\"noopener\">reklam@flejob.az</a></p>'),(25,'ads_title_az','Flejobda Reklam'),(26,'ads_title_en','Advertising on Flejob'),(27,'ads_description_en','<p>Placing an advertisement on the <a href=\"https://flejob.az\" target=\"_blank\" rel=\"noopener\">Flejob.az</a> site allows you to convey your brand, products, company, and services to more people. Thanks to this, your brand is broadcast in a massive form. The advertising section of the site plays an important role in the recognition of your brand, showing your products to a wider audience.<br />For contact: <a href=\"mailto:reklam@flejob.az\" target=\"_blank\" rel=\"noopener\">reklam@flejob.az</a></p>'),(28,'ads_title_ru','Реклама на Flejob'),(29,'ads_description_ru','<p>Размещение рекламы на сайте <a href=\"../../\" target=\"_blank\" rel=\"noopener\">Flejob.az</a> позволяет донести информацию о вашем бренде, товарах, компании и услугах до большего количества людей. Благодаря этому ваш бренд транслируется в массовом виде. Рекламный раздел сайта играет важную роль в узнаваемости вашего бренда, показывая вашу продукцию более широкой аудитории.<br />Для связи: <a href=\"mailto:reklam@flejob.az\" target=\"_blank\" rel=\"noopener\">reklam@flejob.az</a></p>');
 /*!40000 ALTER TABLE `configs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +334,7 @@ CREATE TABLE `contact_messages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -366,7 +366,7 @@ CREATE TABLE `education` (
   PRIMARY KEY (`id`),
   KEY `education_user_id_foreign` (`user_id`),
   KEY `education_educationlevel_id_foreign` (`EducationLevel_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -398,7 +398,7 @@ CREATE TABLE `education_level_langs` (
   KEY `education_level_langs_lang_id_foreign` (`lang_id`),
   CONSTRAINT `education_level_langs_education_level_id_foreign` FOREIGN KEY (`education_level_id`) REFERENCES `education_levels` (`id`),
   CONSTRAINT `education_level_langs_lang_id_foreign` FOREIGN KEY (`lang_id`) REFERENCES `langs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,7 +423,7 @@ CREATE TABLE `education_levels` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,7 +453,7 @@ CREATE TABLE `forget_password_requests` (
   PRIMARY KEY (`id`),
   KEY `forget_password_requests_user_id_foreign` (`user_id`),
   KEY `forget_password_requests_company_id_foreign` (`Company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +481,7 @@ CREATE TABLE `langs` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -507,7 +507,7 @@ CREATE TABLE `languages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -536,7 +536,7 @@ CREATE TABLE `links` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `links_user_id_foreign` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -566,7 +566,7 @@ CREATE TABLE `messages` (
   PRIMARY KEY (`id`),
   KEY `messages_userid_foreign` (`UserId`),
   KEY `messages_vacancy_id_foreign` (`Vacancy_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -591,7 +591,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8_general_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -622,7 +622,7 @@ CREATE TABLE `notification_for_company_users` (
   PRIMARY KEY (`id`),
   KEY `notification_for_company_users_user_id_foreign` (`user_id`),
   KEY `notification_for_company_users_vacancy_id_foreign` (`vacancy_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -655,7 +655,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`(191),`tokenable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -683,7 +683,7 @@ CREATE TABLE `subscribe_vacancies` (
   PRIMARY KEY (`id`),
   KEY `subscribe_vacancies_vacancy_id_foreign` (`Vacancy_id`),
   KEY `subscribe_vacancies_user_id_foreign` (`User_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -725,7 +725,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   KEY `users_city_id_foreign` (`City_id`),
   CONSTRAINT `users_city_id_foreign` FOREIGN KEY (`City_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -754,7 +754,7 @@ CREATE TABLE `users_and_categories` (
   PRIMARY KEY (`id`),
   KEY `users_and_categories_user_id_foreign` (`user_id`),
   KEY `users_and_categories_category_id_foreign` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -783,7 +783,7 @@ CREATE TABLE `users_and_languages` (
   PRIMARY KEY (`id`),
   KEY `users_and_languages_user_id_foreign` (`user_id`),
   KEY `users_and_languages_language_id_foreign` (`language_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -829,7 +829,7 @@ CREATE TABLE `vacancies` (
   CONSTRAINT `vacancies_category_id_foreign` FOREIGN KEY (`Category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
   CONSTRAINT `vacancies_city_id_foreign` FOREIGN KEY (`City_id`) REFERENCES `cities` (`id`) ON DELETE CASCADE,
   CONSTRAINT `vacancies_companyuser_id_foreign` FOREIGN KEY (`CompanyUser_id`) REFERENCES `company_users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -868,7 +868,7 @@ CREATE TABLE `wallet_transactions` (
   PRIMARY KEY (`id`),
   KEY `wallet_transactions_companyuser_id_foreign` (`CompanyUser_id`),
   CONSTRAINT `wallet_transactions_companyuser_id_foreign` FOREIGN KEY (`CompanyUser_id`) REFERENCES `company_users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -898,7 +898,7 @@ CREATE TABLE `wallets` (
   PRIMARY KEY (`id`),
   KEY `wallets_companyuser_id_foreign` (`CompanyUser_id`),
   CONSTRAINT `wallets_companyuser_id_foreign` FOREIGN KEY (`CompanyUser_id`) REFERENCES `company_users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

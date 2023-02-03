@@ -20,7 +20,7 @@ return [
     'Apply Now' => 'Применить сейчас',
     'Jobs You May Be Interested In' => 'Премиум вакансии',
     'Jobs You May Be Interested In2' => 'Вакансии',
-    'Top Companies' => 'Лучшие компании',
+    'Top Companies' => 'Премиальные компании',
     'News, Tips & Articles' => 'Новости, советы и статьи',
     'With Agreement' => 'С соглашением',
     'Read More' => 'Прочитайте больше',

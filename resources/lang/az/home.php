@@ -20,7 +20,7 @@ return [
     'Apply Now' => 'İndi müraciət et',
     'Jobs You May Be Interested In' => 'Premium İşlər',
     'Jobs You May Be Interested In2' => 'İşlər',
-    'Top Companies' => 'Ən yaxşı şirkətlər',
+    'Top Companies' => 'Premium Şirkətlər',
     'News, Tips & Articles' => 'Xəbərlər və Məqalələr',
     'With Agreement' => 'Qəbul edilən əmək haqqı',
     'Read More' => 'Daha çox oxu',

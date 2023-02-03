@@ -20,7 +20,7 @@ return [
     'Apply Now' => 'Apply Now',
     'Jobs You May Be Interested In' => 'Premium Jobs',
     'Jobs You May Be Interested In2' => 'Jobs',
-    'Top Companies' => 'Top Companies',
+    'Top Companies' => 'Premium Companies',
     'News, Tips & Articles' => 'News, Tips & Articles',
     'Read More' => 'Read More',
     'With Agreement' => 'With Agreement',
