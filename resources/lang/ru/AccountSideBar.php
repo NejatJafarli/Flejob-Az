@@ -7,8 +7,8 @@ return [
     'Change Password' => 'Изменить пароль',
     'Log Out' => 'Выйти',
     'Vacancies' => 'Вакансии',
-    'Premium' => 'VIP-аккаунт',
-    'Already Premium User' => 'Ваш аккаунт VIP',
-    'PremiumUser' => 'Сделайте аккаунт VIP',
-    'Already Premium' => 'Ваш аккаунт VIP',
+    'Premium' => 'Премиум-аккаунт',
+    'Already Premium User' => 'Ваш аккаунт Премиум',
+    'PremiumUser' => 'Ваш аккаунт Премиум',
+    'Already Premium' => 'Ваш аккаунт Премиум',
 ];

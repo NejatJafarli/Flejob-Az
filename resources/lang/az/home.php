@@ -18,10 +18,10 @@ return [
     'Open Position' => 'Açıq Mövqe',
     'UnApply Now' => 'İndi müraciəti ləğv edin',
     'Apply Now' => 'İndi müraciət et',
-    'Jobs You May Be Interested In' => 'Premium İşlər',
-    'Jobs You May Be Interested In2' => 'İşlər',
+    'Jobs You May Be Interested In' => 'Premium Vakansiyalar',
+    'Jobs You May Be Interested In2' => 'Vacansiyalar',
     'Top Companies' => 'Premium Şirkətlər',
     'News, Tips & Articles' => 'Xəbərlər və Məqalələr',
-    'With Agreement' => 'Qəbul edilən əmək haqqı',
+    'With Agreement' => 'Əmək haqqı razılaşma yolu ilə',
     'Read More' => 'Daha çox oxu',
 ];

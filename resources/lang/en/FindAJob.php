@@ -15,7 +15,7 @@ return [
     'Find A Job' => 'Find A Job',
     'Popular Jobs Category' => 'Popular Jobs Category',
     'Active Job' => 'Active Job',
-    'Jobs You May Be Interested In' => 'Jobs You May Be Interested In',
+    'Jobs You May Be Interested In' => 'Vacancies',
     'Apply Now' => 'Apply Now',
     'UnApply Now' => 'UnApply Now',
     'Home' => 'Home',

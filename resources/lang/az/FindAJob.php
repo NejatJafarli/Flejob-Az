@@ -15,7 +15,7 @@ return [
     'Find A Job' => 'İş axtar',
     'Popular Jobs Category' => 'Populyar İş Kateqoriya',
     'Active Job' => 'Aktiv İş',
-    'Jobs You May Be Interested In' => 'Maraqlanacağınız İşlər',
+    'Jobs You May Be Interested In' => 'Vakansiyalar',
     'Apply Now' => 'Müraciət et',
     'UnApply Now' => 'Ləğv et',
     'Home' => 'Əsas səhifə',

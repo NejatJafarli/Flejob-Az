@@ -337,10 +337,18 @@ class HomeController extends Controller
             ])
             ->thenReturn();
  //order by jobs id desc and sortOrder desc
- $jobs = $jobs->orderBy('PremiumEndDate', 'desc');
  $jobs = $jobs->orderBy('id', 'desc');
 
+ 
+
         $jobs = $jobs->paginate(90);
+
+        $PreVacancies = Vacancy::where('status', 1)->where("PremiumEndDate",'!=',"null")->orderBy('PremiumEndDate', 'desc')->take(12)->get();
+        //Merge Vacancies with Owner Company User
+        $PreVacancies = $PreVacancies->map(function ($Vacancy) {
+            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+            return $Vacancy;
+        });
 
         //get all cities
         $cities = City::all();
@@ -360,7 +368,7 @@ class HomeController extends Controller
         });
 
 
-        return view('FrontEnd/find-job', ['Jobs' => $jobs, 'Cities' => $cities, 'Categories' => $categories]);
+        return view('FrontEnd/find-job', ['PremiumVacancies'=>$PreVacancies,'Jobs' => $jobs, 'Cities' => $cities, 'Categories' => $categories]);
     }
     public function Hom($lang)
     {
@@ -388,12 +396,12 @@ class HomeController extends Controller
             return $Vacancy;
         });
 
-        // merge vacancies with city
-        $PreVacancies = $PreVacancies->map(function ($Vacancy) use ($lang_id) {
-            $city = City::where('id', $Vacancy->City_id)->first();
-            $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
-            return $Vacancy;
-        });
+        // // merge vacancies with city
+        // $PreVacancies = $PreVacancies->map(function ($Vacancy) use ($lang_id) {
+        //     $city = City::where('id', $Vacancy->City_id)->first();
+        //     $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
+        //     return $Vacancy;
+        // });
 
 
 
@@ -656,7 +664,6 @@ class HomeController extends Controller
             'VacancyRequirements' => 'required',
             'VacancySalary' => 'numeric',
         ], $messages);
-        
         if($req->WithAgreement=='on'){
             $req->WithAgreement = 1;
             $req->VacancySalary = null;
@@ -667,8 +674,6 @@ class HomeController extends Controller
                 'VacancySalary' => 'required | numeric',
             ], $messages);
         }
-
-
 
         //create vacancy with $req
         $data = $req->all();

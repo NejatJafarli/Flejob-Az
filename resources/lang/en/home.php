@@ -18,10 +18,10 @@ return [
     'Open Position' => 'Open Position',
     'UnApply Now' => 'UnApply Now',
     'Apply Now' => 'Apply Now',
-    'Jobs You May Be Interested In' => 'Premium Jobs',
-    'Jobs You May Be Interested In2' => 'Jobs',
+    'Jobs You May Be Interested In' => 'Premium Vacancies',
+    'Jobs You May Be Interested In2' => 'Vacancies',
     'Top Companies' => 'Premium Companies',
     'News, Tips & Articles' => 'News, Tips & Articles',
     'Read More' => 'Read More',
-    'With Agreement' => 'With Agreement',
+    'With Agreement' => 'Salary is negotiable',
 ];

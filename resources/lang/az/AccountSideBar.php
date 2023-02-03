@@ -7,8 +7,8 @@ return [
     'Change Password' => 'Parolun dəyişdirilməsi',
     'Log Out' => 'Çıxış',
     'Vacancies' => 'Vakansiyalar',
-    'Premium' => 'Hesabı VİP et',
-    'Already Premium User' => 'Hesabınız VIP-dir',
-    'PremiumUser' => 'Hesabınız VİP edin',
-    'Already Premium' => 'Hesabınız VIP-dir',
+    'Premium' => 'Hesabı Premium et',
+    'Already Premium User' => 'Hesabınız Premiumdur',
+    'PremiumUser' => 'Hesabınızı Premium edin',
+    'Already Premium' => 'Hesabınız Premiumdur',
 ];

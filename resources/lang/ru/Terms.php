@@ -1,5 +1,5 @@
 <?php
 return[
-    'Terms And Conditions' => 'Условия и положения',
+    'Terms and Conditions' => 'Условия и положения',
     'Home' => 'Дом',
 ];

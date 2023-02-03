@@ -22,6 +22,6 @@ return [
     'Jobs You May Be Interested In2' => 'Вакансии',
     'Top Companies' => 'Премиальные компании',
     'News, Tips & Articles' => 'Новости, советы и статьи',
-    'With Agreement' => 'С соглашением',
+    'With Agreement' => 'Заработная плата договорная',
     'Read More' => 'Прочитайте больше',
 ];

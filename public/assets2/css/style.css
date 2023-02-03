@@ -2901,8 +2901,8 @@ job-card-two .job-info ul li:last-child {
 .page-title.title-bg1 {
   background-image: url(../img/title-bg/about-us.png);
 }
-.page-title .title-bg876{
-  background-image: url(../img/title-bg/about-us.png);
+.page-title.title-bg876{
+  background-image: url(../img/title-bg/adsbannners.png);
 }
 
 .page-title .lines {
@@ -3387,6 +3387,19 @@ job-card-two .job-info ul li:last-child {
 }
 .premium-company-card{
   background: linear-gradient(#cfa659, #FDE08D, #e6b251)!important;
+}
+.premium-company-card .thumb-img, .company-logo{
+  position: relative;
+}
+.premium-company-card .badge-pro{
+  background: red;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 10px;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 10px;
 }
 .job-sidebar.social-share ul li a i:hover {
   color: #ffffff;

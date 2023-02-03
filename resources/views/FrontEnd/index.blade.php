@@ -4,8 +4,6 @@
 <head>
 
     @include('FrontEnd.Component.cdn')
-    <meta name="keywords" content="213383 SIRAB SPARKLING WATER 0.5 LT 4760023500012" />
-    <meta name="description" content="213383 SIRAB SPARKLING WATER 0.5 LT 4760023500012" />
 
 </head>
 
@@ -221,11 +219,6 @@
     <section class="job-section pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <div>
-                    <div class="MyAlert-box Mysuccess">Successful Alert !!!</div>
-                    <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
-                    <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
-                </div>
                 <h2>{{ __('home.Jobs You May Be Interested In') }}</h2>
             </div>
 
@@ -313,14 +306,15 @@
                 @php
                     
                     //sort companyUsers With Vacancy Count
-                    $MyCompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
+                    // $MyCompanyUsers = $CompanyUsers->sortByDesc('VacanciesCount');
                 @endphp
-                @foreach ($MyCompanyUsers as $user)
+                @foreach ($CompanyUsers as $user)
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
                         <div class="company-card premium-company-card" style="height: 100%;">
                             <div class="thumb-img">
                                 <img style="height: 70px; width:70px" src="/CompanyLogos/{{ $user->CompanyLogo }}"
                                     alt="company logo">
+                                    <span>Premium</span>
                             </div>
                             <div class="company-text">
                                 <h3 style="word-break: break-word">

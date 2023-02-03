@@ -103,7 +103,11 @@
                                                     @endphp
                                                     <li>
                                                         {{-- <i class="fa-solid fa-hand-holding-dollar"></i> --}}
-                                                        {{ $vac->VacancySalary }} ₼
+                                                        @if ($vac->WithAgreement == 1)
+                                                            {{ __('home.With Agreement') }}
+                                                        @else
+                                                            {{ $vac->VacancySalary }} ₼
+                                                        @endif
                                                     </li>
                                                     <li>
                                                         {{-- <i class="fa-solid fa-phone"></i> --}}
@@ -210,7 +214,14 @@
                                                     </tr>
                                                     <tr>
                                                         <td><span>{{ __('Jobdetail.Salary') }} :</span></td>
-                                                        <td>{{ $vac->VacancySalary }}</td>
+
+                                                        <td>
+                                                            @if ($vac->WithAgreement == 1)
+                                                                {{ __('home.With Agreement') }}
+                                                            @else
+                                                                {{ $vac->VacancySalary }}
+                                                            @endif
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td><span>{{ __('Jobdetail.Phone') }} :</span></td>

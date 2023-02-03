@@ -28,6 +28,40 @@
         }
         
     @endphp
+    @php
+        
+        $MyJobs = $Jobs;
+        
+        //Merge Vacancies with Owner Company User
+        $MyJobs = $MyJobs->map(function ($Vacancy) {
+            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+            return $Vacancy;
+        });
+        
+        //merge vacancies with category
+        $MyJobs = $MyJobs->map(function ($Vacancy) use ($lang_id) {
+            $cat = Category::where('id', $Vacancy->Category_id)->first();
+            $Vacancy->Category = $cat
+                ->category_langs()
+                ->where('lang_id', $lang_id)
+                ->first();
+            $Vacancy->Category->StyleClass = $cat->StyleClass;
+            $Vacancy->Category->SortOrder = $cat->SortOrder;
+        
+            return $Vacancy;
+        });
+        
+        // merge vacancies with city
+        $MyJobs = $MyJobs->map(function ($Vacancy) use ($lang_id) {
+            $city = City::where('id', $Vacancy->City_id)->first();
+            $Vacancy->City = $city
+                ->cityLang()
+                ->where('lang_id', $lang_id)
+                ->first();
+            return $Vacancy;
+        });
+        
+    @endphp
     @include('FrontEnd.Component.cdn')
 </head>
 
@@ -68,7 +102,7 @@
     <!-- Find Section Start -->
     <div class="container">
 
-        <div class="row" >
+        <div class="row">
             <div class="find-section custom-sections pb-100 py-5 col-md-8">
                 <form class="find-form" style="margin: 0; box-shadow:0;-webkit-box-shadow:0 !important;"
                     action="{{ route('FindAJob', app()->getLocale()) }}" method="GET">
@@ -86,9 +120,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-5">
-                                    <label>{{ __('home.Categories') }} <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 25 25">
+                                    <label>{{ __('home.Categories') }} <svg xmlns="http://www.w3.org/2000/svg"
+                                            width="20" height="20" viewBox="0 0 25 25">
                                             <path
                                                 d="M10 3H4C3.447 3 3 3.447 3 4v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C11 3.447 10.553 3 10 3zM9 9H5V5h4V9zM20 3h-6c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1V4C21 3.447 20.553 3 20 3zM19 9h-4V5h4V9zM10 13H4c-.553 0-1 .447-1 1v6c0 .553.447 1 1 1h6c.553 0 1-.447 1-1v-6C11 13.447 10.553 13 10 13zM9 19H5v-4h4V19zM17 13c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4S19.206 13 17 13zM17 19c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2S18.103 19 17 19z" />
                                         </svg></label>
@@ -126,25 +159,26 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-md-6 mb-5">
                                     <div class="row">
                                         <div class="tofrom col-md-6">
                                             <span> {{ __('home.Min Salary') }}</span>
                                             <div class="form-group">
-        
-                                        
+
+
                                                 <input name="MinSalary" type="number" class="form-control"
-                                                    placeholder="{{ __('home.Enter Min Salary') }}" id="flefilter_price_min">
+                                                    placeholder="{{ __('home.Enter Min Salary') }}"
+                                                    id="flefilter_price_min">
                                             </div>
                                         </div>
                                         <div class="from col-md-6">
                                             <span>{{ __('home.Max Salary') }} </span>
                                             <div class="form-group">
-                                    
+
                                                 <input name="MaxSalary" type="number" class="form-control"
-                                                    placeholder="{{ __('home.Enter Max Salary') }}" {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}}
-                                                    id="flefilter_price_max">
+                                                    placeholder="{{ __('home.Enter Max Salary') }}"
+                                                    {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}} id="flefilter_price_max">
                                             </div>
                                         </div>
                                     </div>
@@ -169,16 +203,98 @@
             <div class="text-center col-md-4 py-5 pb-90 pr-0 " style="background: white;border-radius:0px">
 
                 <div class="ads-banner">
-                    <img class="img-fluid"  src="/assets2/img/banner.png" alt="">
+                    <img class="img-fluid" src="/assets2/img/banner.png" alt="">
                 </div>
 
             </div>
 
         </div>
     </div>
-    
+
     <!-- Job Category Section End -->
 
+    <!-- Jobs Section Start -->
+    <section class="job-section pb-70">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>{{ __('home.Jobs You May Be Interested In') }}</h2>
+            </div>
+
+            <div class="row">
+                @foreach ($PremiumVacancies as $vac)
+                    <div class="col-sm-4 mb-3">
+                        <div class="job-card premium-job-card">
+                            <div class="row align-items-center">
+                                <div class="col-lg-3">
+                                    <div class="thumb-img">
+                                        <a
+                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                            <img class="img-fluid" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}"
+                                                alt="logo">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="job-info">
+                                        <h3 class="word-break: break-word">
+                                            <a class="word-break: normal !important;"
+                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
+                                            </a>
+                                        </h3>
+                                        <ul>
+                                            <li> <a href="#">{{ $vac->Owner->CompanyName }}
+                                                </a></li>
+                                            {{-- <li>
+                                                <i class='bx bx-location-plus'></i>
+                                                {{ $vac->City->CityName }}
+                                            </li> --}}
+                                            <li>
+                                                {{-- <i class='bx bx-filter-alt'></i> --}}
+                                                  @if ($vac->WithAgreement == 1)
+                                                    {{ __('home.With Agreement') }}
+                                                @else
+                                                    {{ $vac->VacancySalary }}
+                                                @endif
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-3">
+                                    <div class="job-save">
+                                        @if (session()->get('user'))
+                                            @php
+                                                $userApplied = false;
+                                                if (session()->get('user')) {
+                                                    foreach (session()->get('user')->AppliedVacancies as $UserVac) {
+                                                        if ($UserVac->Vacancy_id == $vac->id) {
+                                                            $userApplied = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            @endphp
+                                            <button
+                                                onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
+                                                type="button" class="btn btn-primary" data-toggle="modal">
+                                                {{ $userApplied ? __('home.UnApply Now') : __('home.Apply Now') }}</button>
+                                        @endif
+                                        <p>
+                                            <i class='bx bx-stopwatch'></i>
+                                            {{ $vac->created_at->diffForHumans() }}
+                                        </p>
+                                    </div>
+                                </div> --}}
+                            </div>
+                            <div class="icons-crown">
+                                <i class="fa-solid fa-crown"></i>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <!-- Jobs Section End -->
     <!-- Jobs Section Start -->
     <section class="job-section pb-70">
         <div class="container">
@@ -192,40 +308,7 @@
             </div>
 
             <div class="row">
-                @php
-                    
-                    $MyJobs = $Jobs;
-                    
-                    //Merge Vacancies with Owner Company User
-                    $MyJobs = $MyJobs->map(function ($Vacancy) {
-                        $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
-                        return $Vacancy;
-                    });
-                    
-                    //merge vacancies with category
-                    $MyJobs = $MyJobs->map(function ($Vacancy) use ($lang_id) {
-                        $cat = Category::where('id', $Vacancy->Category_id)->first();
-                        $Vacancy->Category = $cat
-                            ->category_langs()
-                            ->where('lang_id', $lang_id)
-                            ->first();
-                        $Vacancy->Category->StyleClass = $cat->StyleClass;
-                        $Vacancy->Category->SortOrder = $cat->SortOrder;
-                    
-                        return $Vacancy;
-                    });
-                    
-                    // merge vacancies with city
-                    $MyJobs = $MyJobs->map(function ($Vacancy) use ($lang_id) {
-                        $city = City::where('id', $Vacancy->City_id)->first();
-                        $Vacancy->City = $city
-                            ->cityLang()
-                            ->where('lang_id', $lang_id)
-                            ->first();
-                        return $Vacancy;
-                    });
-                    
-                @endphp
+
                 @foreach ($MyJobs as $vac)
                     <div class="col-sm-4 mb-3">
                         <div class="job-card">
@@ -257,7 +340,12 @@
                                             </li> --}}
                                             <li>
                                                 <i class='bx bx-briefcase'></i>
-                                                {{ $vac->VacancySalary }}
+                                                @if ($vac->WithAgreement == 1)
+                                                    {{ __('home.With Agreement') }}
+                                                @else
+                                                    {{ $vac->VacancySalary }}
+                                                @endif
+
                                             </li>
                                         </ul>
                                     </div>

@@ -15,7 +15,7 @@ return [
     'Find A Job' => 'Найти работу',
     'Popular Jobs Category' => 'Популярная категория вакансий',
     'Active Job' => 'Активная работа',
-    'Jobs You May Be Interested In' => 'Вакансии, которые могут вас заинтересовать',
+    'Jobs You May Be Interested In' => 'Вакансии',
     'Apply Now' => 'Применить сейчас',
     'UnApply Now' => 'Отменить сейчас',
     'Home' => 'Дом',
