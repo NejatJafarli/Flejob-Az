@@ -82,5 +82,6 @@ return [
 'Enter Employer Rank' => 'İşəgötürən dərəcəsini daxil edin',
 'Company Start Date' => 'Şirkətin Başlama Tarixi',
 'Company Start End' => 'Şirkət Başlanğıc Sonu',
+'Nomremi istifadeciler gormesin' => 'Nömrəmi istifadəçilər görməsin',
 
 ];

@@ -82,6 +82,6 @@ return [
     'Enter Employer Rank' => 'Введите ранг работодателя',
     'Company Start Date' => 'Дата основания компании',
     'Company Start End' => 'Компания Начало Конец',
-    
+    'Nomremi istifadeciler gormesin' => 'Запретить пользователям видеть мой номер',
 
 ];

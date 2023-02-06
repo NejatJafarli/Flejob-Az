@@ -82,5 +82,6 @@ return [
 'Enter Employer Rank' => 'Enter Employer Rank',
 'Company Start Date' => 'Company Start Date',
 'Company Start End' => 'Company Start End',
+'Nomremi istifadeciler gormesin' => 'Do not let users see my number',
 
 ];

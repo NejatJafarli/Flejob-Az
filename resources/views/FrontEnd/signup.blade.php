@@ -370,8 +370,8 @@
                                         </div>
                                         
                                         <div class="form-check form-switch mb-3">
-                                            <label class="form-check-label" for="flexSwitchCheckDefault">Nomremi istifadeciler gormesin</label>
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">{{__("Signup.Nomremi istifadeciler gormesin")}}</label>
+                                            <input name="HideDetails" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

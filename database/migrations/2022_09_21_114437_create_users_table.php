@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('image');
             $table->string('Description')->nullable();
             $table->string('Skills')->nullable();
-            $table->boolean('Married');
+            $table->integer('Married')->defualt(0);
             $table->string('Username')->unique();
             $table->string('Password');
             $table->unsignedBigInteger('City_id');

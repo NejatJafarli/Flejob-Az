@@ -397,16 +397,22 @@ class LoginRegisterController extends Controller
         $data['YearEnd'] = isset($data['educationYearEnd']) ? $data['educationYearEnd'] : null;
         $data['EducationLevel_Id'] = isset($data['educationLevel']) ? $data['educationLevel'] : null;
 
+        if($req->HideDetails=='on')
+            $data['HideMyDetails']=1;
+        else
+            $data['HideMyDetails']=0;
 
         $data['Skills'] = isset($req->Skills) ? $req->Skills : null;
         $data['Description'] = isset($req->Description) ? $req->Description : null;
         $data['MinSalary'] = isset($req->MinSalary) ? $req->MinSalary : null;
         $data['MaxSalary'] = isset($req->MaxSalary) ? $req->MaxSalary : null;
+        $data['Married'] = isset($req->Married) ? $req->Married : null;
 
         $image = $req->file('image');
         $imageName = time() . '.' . $image->extension();
         $image->move(public_path('CandidatesPicture'), $imageName);
         $data['image'] = $imageName;
+        
 
         $user = User::create($data);
         unset($data['educationName']);

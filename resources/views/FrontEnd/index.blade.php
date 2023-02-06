@@ -314,7 +314,7 @@
                             <div class="thumb-img">
                                 <img style="height: 70px; width:70px" src="/CompanyLogos/{{ $user->CompanyLogo }}"
                                     alt="company logo">
-                                    <span>Premium</span>
+                                    <span class="badge-pro">Premium</span>
                             </div>
                             <div class="company-text">
                                 <h3 style="word-break: break-word">

@@ -168,8 +168,10 @@
                                     <div class="form-group">
                                         <label>{{ __('account.Maried') }}</label>
                                         <select name="Married" class="form-control">
-                                            <option value="1">{{ __('account.Maried') }}</option>
-                                            <option value="0">{{ __('account.Not Maried') }}</option>
+                                            <option @if (session()->get('user')->Married == 1) Selected @endif value="1">
+                                                {{ __('account.Maried') }}</option>
+                                            <option @if (session()->get('user')->Married == 0) Selected @endif value="0">
+                                                {{ __('account.Not Maried') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -245,6 +247,12 @@
                                         max-price="29999" />
                                 </div>
                             </div>
+                            <div class="form-check form-switch mb-3 mt-3">
+                                <label class="form-check-label"
+                                    for="flexSwitchCheckDefault">{{ __('Signup.Nomremi istifadeciler gormesin') }}</label>
+                                <input name="HideDetails" class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckDefault" @if(session()->get('user')->HideMyDetails==1) checked @endif >
+                            </div>
                             <div class="col-md-12 py-2">
                                 <button type="submit" class="account-btn">{{ __('account.Save') }}</button>
                             </div>
@@ -318,11 +326,8 @@
                                         $name = '"' . str_replace(',', '","', $name) . '"';
                                         $id = implode(',', $id);
                                         
-
-                                        
                                     @endphp
-                                    <button
-                                        onclick="AddNewEducation([{{ $name }}],[{{ $id }}])"
+                                    <button onclick="AddNewEducation([{{ $name }}],[{{ $id }}])"
                                         type="button" class="account-btn"
                                         id="add-education">{{ __('account.Add New Education') }}</button>
                                     <button type="submit" class="account-btn">{{ __('account.Save') }}</button>

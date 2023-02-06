@@ -297,8 +297,6 @@ class AccountController extends Controller
             }
     
     
-            //get req->GetAll
-    
     
             // FirstName LastName FatherName Username email City phone maried Description Skills MinSalary MaxSalary
             $user->FirstName = $data['FirstName'];
@@ -314,6 +312,7 @@ class AccountController extends Controller
             $user->Skills = $data['Skills'];
             $user->MinSalary = $data['MinSalary'];
             $user->MaxSalary = $data['MaxSalary'];
+            $user->HideMyDetails = isset($data['HideDetails']) ? 1 : 0;
     
     
             $user->save();
