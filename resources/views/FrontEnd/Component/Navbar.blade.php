@@ -125,7 +125,7 @@
                             </div>
                             <div class="option-item ">
                                 <img src="/CandidatesPicture/{{ session()->get('user')->image }}" alt="profile picture"
-                                    style="width: 40px; height: 40px; margin:10px; " class="navbar-img-mobile">
+                                    style="width: 40px; height: 40px; margin:10px; border-radius:7px; " class="navbar-img-mobile">
                             </div>
 
                             <li class="nav-item">

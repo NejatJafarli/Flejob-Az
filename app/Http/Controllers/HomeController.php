@@ -372,6 +372,12 @@ class HomeController extends Controller
     }
     public function Hom($lang)
     {
+
+        if(app()->getLocale()=='az'){
+            app()->setLocale(null);
+            return redirect()->route('Hom2');
+        }
+
         //check session
         if (session()->has('user')) {
             $user = $this->mergeUsersTable(session()->get('user'));
@@ -487,6 +493,151 @@ class HomeController extends Controller
             return $Vacancy;
         });
         $lang_id = lang::where('LanguageCode', $lang)->first()->id;
+
+        //merge vacancies with category
+        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+            $cat = Category::where('id', $Vacancy->Category_id)->first();
+            $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
+            $Vacancy->Category->StyleClass = $cat->StyleClass;
+            $Vacancy->Category->SortOrder = $cat->SortOrder;
+
+            return $Vacancy;
+        });
+
+        // merge vacancies with city
+        $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {
+            $city = City::where('id', $Vacancy->City_id)->first();
+            $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
+            return $Vacancy;
+        });
+        
+        return view('FrontEnd/index')->with(['Users' => $Users, 'CompanyUsers' => $CompanyUsers, 'Cities' => $Cities, 'Categories' => $Categories,"Vacancies"=>$Vacancies, 'PremiumVacancies' => $PreVacancies, "Langs" => $Langs, 'blogs' => $blogs]);
+    }
+    public function Hom2()
+    {
+        if(request()->has('language')){
+            $lang = request()->get('language');
+            app()->setLocale($lang);
+            return redirect()->route('Hom', ['language' => $lang]);
+        }else{
+            app()->setLocale('az');
+        }
+      
+
+        //check session
+        if (session()->has('user')) {
+            $user = $this->mergeUsersTable(session()->get('user'));
+            session()->put('user', $user);
+        }
+
+        $PreVacancies = Vacancy::where('status', 1)->where("PremiumEndDate",'!=',"null")->orderBy('PremiumEndDate', 'desc')->take(12)->get();
+        //Merge Vacancies with Owner Company User
+        $PreVacancies = $PreVacancies->map(function ($Vacancy) {
+            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+            return $Vacancy;
+        });
+        $lang_id = lang::where('LanguageCode', app()->getLocale())->first()->id;
+
+        //merge vacancies with category
+        $PreVacancies = $PreVacancies->map(function ($Vacancy) use ($lang_id) {
+            $cat = Category::where('id', $Vacancy->Category_id)->first();
+            $Vacancy->Category = $cat->category_langs()->where('lang_id', $lang_id)->first();
+            $Vacancy->Category->StyleClass = $cat->StyleClass;
+            $Vacancy->Category->SortOrder = $cat->SortOrder;
+
+            return $Vacancy;
+        });
+
+        // // merge vacancies with city
+        // $PreVacancies = $PreVacancies->map(function ($Vacancy) use ($lang_id) {
+        //     $city = City::where('id', $Vacancy->City_id)->first();
+        //     $Vacancy->City = $city->cityLang()->where('lang_id', $lang_id)->first();
+        //     return $Vacancy;
+        // });
+
+
+
+        //get top 10 categories
+        $Categories = Category::orderBy('SortOrder', 'desc')->take(12)->get();
+        //merge categories with category_langs
+        $Categories = $Categories->map(function ($Category) use ($lang_id) {
+            $Category->Category_lang = $Category->category_langs()->where('lang_id', $lang_id)->first();
+            return $Category;
+        });
+
+        //count vacancies in each category
+        $Categories = $Categories->map(function ($Category) {
+            $Category->VacanciesCount = Vacancy::where('Category_id', $Category->id)->where('status', 1)->count();
+            //find min and max salary in each category
+            $Category->MinSalary = Vacancy::where('Category_id', $Category->id)->where('status', 1)->where('withAgreement','0')->get()->min('VacancySalary');
+            $Category->MaxSalary = Vacancy::where('Category_id', $Category->id)->where('status', 1)->where('withAgreement','0')->get()->max('VacancySalary');
+            return $Category;
+        });
+
+        //get company users PremiumEndDate not null
+        $CompanyUsers = CompanyUser::where('status', 1)->where('PremiumEndDate', '!=', 'null')->get();
+        // $CompanyUsers = CompanyUser::where('status', 1)->where(->get();
+        //merge company users with vacancies
+        $CompanyUsers = $CompanyUsers->map(function ($CompanyUser) {
+            $vac = Vacancy::where('CompanyUser_id', $CompanyUser->id)->where('Status', 1)->get();
+            $CompanyUser->Vacancies = $vac;
+            $CompanyUser->VacanciesCount = $vac->count();
+            return $CompanyUser;
+        });
+        $CompanyUsers = $CompanyUsers->sortByDesc('PremiumEndDate')->take(8);
+        
+        // get users
+        $Users = User::where('status', 1)->orderBy('id', 'desc')->take(30)->get();
+        
+        //merge users with categories and users
+        $Users = $Users->map(function ($User) use ($lang_id) {
+            $User->temp = UsersAndCategories::where('User_id', $User->id)->get();
+
+            $User->temp = $User->temp->map(function ($UserCategory) use ($lang_id) {
+                $UserCategory->Category = Category::where('id', $UserCategory->category_id)->first();
+                $UserCategory->Category->Category_lang = $UserCategory->Category->category_langs()->where('lang_id', $lang_id)->first();
+                return $UserCategory;
+            });
+
+            $User->Categories = $User->temp->Pluck('Category');
+
+            $User->Languages = UsersAndLanguages::where('User_id', $User->id)->get();
+            $User->Languages = $User->Languages->map(function ($UserLanguage) use ($lang_id) {
+                $UserLanguage->Language = Language::where('id', $UserLanguage->language_id)->first();
+                return $UserLanguage;
+            });
+            $User->Languages = $User->Languages->Pluck('Language');
+            return $User;
+        });
+
+        //merge Users With City
+        $Users = $Users->map(function ($User) use ($lang_id) {
+            $User->City = City::where('id', $User->City_id)->first();
+            $User->City->CityLang = $User->City->cityLang()->where('lang_id', $lang_id)->first();
+            return $User;
+        });
+
+
+
+        //get all langs
+        $Langs = lang::all();
+
+        //get all cities 
+        $Cities = City::all();
+        //merge cities with city_langs
+        $Cities = $Cities->map(function ($City) use ($lang_id) {
+            $City->CityLang = $City->cityLang()->where('lang_id', $lang_id)->first();
+            return $City;
+        });
+
+        $blogs = blog::orderBy('id', 'desc')->take(5)->get();
+        
+        $Vacancies = Vacancy::where('status', 1)->take(30)->orderBy('id','desc')->get();
+        //Merge Vacancies with Owner Company User
+        $Vacancies = $Vacancies->map(function ($Vacancy) {
+            $Vacancy->Owner = CompanyUser::where('id', $Vacancy->CompanyUser_id)->first();
+            return $Vacancy;
+        });
 
         //merge vacancies with category
         $Vacancies = $Vacancies->map(function ($Vacancy) use ($lang_id) {

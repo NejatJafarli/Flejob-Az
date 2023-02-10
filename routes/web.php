@@ -18,12 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return redirect()->route('Hom', 'az');
-});
+// Route::get('/', function () {
+//     return redirect()->route('Hom', 'az');
+// });
+Route::get('/', [HomeController::class, 'Hom2'])->name('Hom2');
+
 
 Route::group(['prefix' => '{language}'], function () {
-
     //check if session
     if (session()->has('user'))
         HomeController::MergeUsersTable(session()->get('user'));
@@ -62,7 +63,6 @@ Route::group(['prefix' => '{language}'], function () {
     Route::post('/SignUpCompanyControllerAjax', [LoginRegisterController::class, 'SignUpCompanyControllerAjax'])->name('SignUpCompanyControllerAjax');
 
 
-    
     //// Payment Section
     Route::get('ads', [HomeController::class, 'ads'])->name('adsAdd');
 

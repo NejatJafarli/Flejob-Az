@@ -2,7 +2,7 @@
 
 return [
     'Find Jobs, Employment & Career Opportunities' => 'Найти работу, трудоустройство и карьерные возможности',
-    'Drop Resume & Get Your Desire Job!' => 'получите желаемую работу!',
+    'Drop Resume & Get Your Desire Job!' => 'Объявления о вакансиях!',
     'Job Title' => 'Ключевое слово',
     'Cities' => 'Города',
     'Categories' => 'Категории',

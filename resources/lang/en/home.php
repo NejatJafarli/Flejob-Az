@@ -2,7 +2,7 @@
 
 return [
     'Find Jobs, Employment & Career Opportunities' => 'Find Jobs, Employment & Career Opportunities',
-    'Drop Resume & Get Your Desire Job!' => 'Get Your Desire Job!',
+    'Drop Resume & Get Your Desire Job!' => 'Vacancies!',
     'Job Title' => 'Keyword',
     'Cities' => 'Cities',
     'Categories' => 'Categories',

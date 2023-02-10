@@ -37,7 +37,7 @@
 
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget pl-60">
-                    <h3 class="for-candidate-text-mobil">{{ __('Footer.ForCandidate') }}</h3>
+                    <p class="for-candidate-text-mobil">{{ __('Footer.ForCandidate') }}</p>
                     <ul class="footer-ul-centre-mobile">
                         <li>
                             <a href="{{ route('FindAJob', app()->getLocale()) }}">
@@ -63,7 +63,7 @@
 
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget pl-60">
-                    <h3 class="quick-links-text-mobile">{{__("Footer.QuickLinks")}}</h3>
+                    <p class="for-candidate-text-mobil">{{__("Footer.QuickLinks")}}</p>
                     <ul class="footer-ul-centre-mobile">
                         <li>
                             <a href="{{ route('About', app()->getLocale()) }}">
@@ -89,7 +89,7 @@
 
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-widget footer-info">
-                    <h3 class="information-text-mobil">{{__("Footer.Information")}}</h3>
+                    <p class="for-candidate-text-mobil">{{__("Footer.Information")}}</p>
                    
                     <ul class="footer-ul-centre-mobile">
                         <li>
@@ -125,13 +125,11 @@
             </div>
         </div>
     </div>
-    
-{{-- Hacizade Farid --}}
+    <style>
+    </style>
 </footer>
 <div class="copyright-text text-center">
-    <!-- Front end By Sahib Akbarov-->
     <p>Developed @2022 <a class="devText" href="https://flegri.com/">Flegri</a></p>
-    <!-- Developed By Hacizade Farid-->
 </div>
 <!-- Footer Section End -->
 
@@ -140,6 +138,30 @@
     <i class='bx bx-chevrons-up bx-fade-up'></i>
 </div>
 <!-- Back To Top End -->
+
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if
+    (document.scripts[j].src === r) { return; }}
+        
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js",
+    "ym");
+
+        ym(92419586, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/92419586"
+style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 <!-- jQuery first, then Bootstrap JS -->
 <script src="/assets2/js/bootstrap.bundle.min.js"></script>

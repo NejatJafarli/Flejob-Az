@@ -1,7 +1,7 @@
 <!-- Required meta tags -->
 <meta charset="utf-8">
 
-
+<meta name="google-site-verification" content="i-gGSRetO2FkhVRgz58ApUUPcUw8VY9luAVbu9R6jt0" />
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,21 +22,20 @@
 <!-- Flaticon CSS-->
 <link rel="stylesheet" href="/assets2/fonts/flaticon/flaticon.css">
 <!-- Magnific CSS -->
-<link rel="stylesheet" href="/assets2/css/magnific-popup.css">
+<link rel="stylesheet" href="/assets2/css/magnific-popup.min.css">
 <!-- Meanmenu CSS -->
-<link rel="stylesheet" href="/assets2/css/meanmenu.css">
+<link rel="stylesheet" href="/assets2/css/meanmenu.min.css">
 <!-- Nice Select CSS -->
 {{-- <link rel="stylesheet" href="/assets2/css/nice-select.css"> --}}
 <link rel="stylesheet" href="/assets2/js/vendor/ion.rangeSlider.min.css">
 <!-- Style CSS -->
-<link rel="stylesheet" href="/assets2/css/style.css">
+<link rel="stylesheet" href="/assets2/css/style_min.min.css">
 <!-- Responsive CSS -->
-<link rel="stylesheet" href="/assets2/css/responsive.css">
+<link rel="stylesheet" href="/assets2/css/responsive.min.css">
 <!-- Title CSS -->
-<title>Flejob Az</title>
+<title>İş elanları saytı-Bakıda iş tapmaq.</title>
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="/assets2/img/favicon.png">
-
 {{-- add font awesome version 6.2 cdn --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
     integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="

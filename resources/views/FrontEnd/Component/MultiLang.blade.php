@@ -14,7 +14,6 @@
             $langCode = strtoupper($locale);
             
         @endphp
-        <h1>{{ $route }}</h1>
         @if (!isset($id))
             @foreach ($Langs as $lang)
                 <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}

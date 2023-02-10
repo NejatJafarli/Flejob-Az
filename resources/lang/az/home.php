@@ -2,7 +2,7 @@
 
 return [
     'Find Jobs, Employment & Career Opportunities' => 'İş, Məşğulluq və Karyera İmkanları Tapın',
-    'Drop Resume & Get Your Desire Job!' =>   'İstədiyiniz İşi Tapın!',
+    'Drop Resume & Get Your Desire Job!' =>   'İş elanları!',
     'Job Title' => 'Açar söz',
     'Cities' => 'Şəhərlər',
     'Categories' => 'Kateqoriyalar',

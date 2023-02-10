@@ -238,11 +238,11 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="job-info">
-                                        <h3 class="word-break: break-word">
-                                            <a class="word-break: normal !important;"
+                                        <p class="textone">
+                                            <a
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
                                             </a>
-                                        </h3>
+                                        </p>
                                         <ul>
                                             <li> <a href="#">{{ $vac->Owner->CompanyName }} 
                                                 </a></li>
@@ -317,9 +317,9 @@
                                     <span class="badge-pro">Premium</span>
                             </div>
                             <div class="company-text">
-                                <h3 style="word-break: break-word">
+                                <p style="textone">
                                     <span>{{ $user->CompanyName }}</span>
-                                </h3>
+                                </p>
                                 {{-- <p>
                                     <i class="bx bx-location-plus"></i>
                                     {{ $user->CompanyAddress }}
@@ -389,11 +389,11 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="job-info">
-                                        <h3 class="word-break: break-word">
-                                            <a class="word-break: normal !important;"
+                                        <p class="textone">
+                                            <a 
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
                                             </a>
-                                        </h3>
+                                        </p>
                                         <ul>
                                             <li> <a href="#">{{ $vac->Owner->CompanyName }} 
                                                 </a></li>
@@ -441,6 +441,22 @@
         </div>
     </section>
 
+
+    <style>
+        .job-info> .textone{
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .job-info> .textone a{
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        .job-info> .textone a:hover{
+            color: #fd1616;
+        }
+    </style>
+    
     <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
