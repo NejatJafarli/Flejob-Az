@@ -21,6 +21,7 @@ use App\Models\User;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 
 class adminPanelController extends Controller
 {
@@ -392,6 +393,59 @@ class adminPanelController extends Controller
 
         return response()->json(['success' => 'success']);
     }
+    public function EditAds ($lang,$id){
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $config=config::find($id);
+
+        return view('adminPanel/AdManager/AdminAdManagerEdit',['ad'=>$config]);
+    }
+    public function UpdateAds(Request $request){
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $request->validate([
+            //image is gif
+            'image' => 'max:10000',
+        ], [
+            'image.max' => 'Image size must be less than 10MB',
+        ]);
+        $config = config::find($request->id);
+
+        if ($request->hasFile('image')) {
+            $oldImage = public_path('AdsImages/' . $config->value);
+            if (file_exists($oldImage))
+                unlink($oldImage);
+
+            $image = $request->file('image');
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('AdsImages/');
+            $image->move($destinationPath, $name);
+            $config->value = $name;
+            $config->save();
+        }
+
+        return redirect()->route('GetAds',app()->getLocale());
+    }
+    public function DeleteConfig(Request $request)
+    {
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $req = $request->all();
+
+        $config = config::find($req['id']);
+        //if config name start with site-ads
+        if (strpos($config->key, 'site-ads') !== false) {
+            $oldImage = public_path('AdsImages/' . $config->value);
+            if (file_exists($oldImage))
+                unlink($oldImage);
+        }
+        $config->delete();
+
+        return redirect()->back();
+    }
     public function SetPaymentData($lang)
     {
         if (!session()->has('AdminUser'))
@@ -405,6 +459,44 @@ class adminPanelController extends Controller
 
 
         return view('adminPanel/Payment/PaymentValue', compact('configs'));
+    }
+    public function GetAds(){
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        //get config who has key start with ads
+        $Ads = config::where('key', 'like', 'site-ads%')->orderBy('id', 'desc')->paginate(5);
+
+
+        return view('adminPanel/AdManager/AdminAdManager', ['Ads' => $Ads]);
+    }
+    public function AddAdsPost(Request $req){
+        if (!session()->has('AdminUser'))
+            return redirect()->route('Login', app()->getLocale());
+
+        $req->validate([
+            'image' => 'required | max:10000',
+        ], [
+            'image.required' => 'Image is required',
+            'image.mimes' => 'Image must be jpeg,jpg,png,gif',
+            'image.max' => 'Image must be less than 10MB',
+        ]);
+
+        //save image in assets2/img/AdsImages
+        $image = $req->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('AdsImages/'), $imageName);
+        
+        $time=time();
+        //save image name in config table
+        $config = config::create([
+            'key' => 'site-ads-dynamic-' .$time,
+            'value' => $imageName,
+        ]);
+        $config->save();
+
+        return redirect()->back();
+        // maybe in feature we need to add more config for ads exapmle: site-ads-link-time()
     }
     public function SetPaymentDataPost(Request $req)
     {

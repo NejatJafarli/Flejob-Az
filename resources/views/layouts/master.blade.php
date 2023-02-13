@@ -213,6 +213,10 @@
                                 class="mdi mdi-format-list-bulleted-type"></i><span>Config</span></a>
                     </li>
                     <li>
+                        <a href="{{ route('GetAds', app()->getLocale()) }}"><i
+                                class="mdi mdi-format-list-bulleted-type"></i><span>Ads Manager</span></a>
+                    </li>
+                    <li>
                         <a href="{{ route('Blogs', app()->getLocale()) }}"><i
                                 class="mdi mdi-format-list-bulleted-type"></i><span>Blogs</span></a>
                     </li>

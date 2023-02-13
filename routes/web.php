@@ -152,7 +152,12 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/', [AdminPanelController::class, 'Login'])->name('Login');
         //Route::get('/login', [AdminPanelController::class, 'Login'])->name('Login');
         Route::get('/logout', [AdminPanelController::class, 'Logout'])->name('AdminLogout');
-
+        
+        Route::get('/AdsManager', [AdminPanelController::class, 'GetAds'])->name('GetAds');
+        Route::post('/AdsManager/add', [AdminPanelController::class, 'AddAdsPost'])->name('AddAdsPost');
+        Route::get('/AdsManager/edit/{id}', [AdminPanelController::class, 'EditAds'])->name('EditAds');
+        Route::post('/AdsManager/UpdateAds', [AdminPanelController::class, 'UpdateAds'])->name('UpdateAds');
+        
         Route::get('/index', [AdminPanelController::class, 'index'])->name('Panel');
 
         Route::get('/category', [AdminPanelController::class, 'category'])->name('Category');
@@ -185,6 +190,7 @@ Route::group(['prefix' => '{language}'], function () {
         Route::get('/Config/Set', [AdminPanelController::class, 'SetPaymentDataPost'])->name('SetPaymentDataPost');
         Route::post('/UpdateConfigAjax', [AdminPanelController::class, 'UpdateConfigAjax'])->name('UpdateConfig');
         Route::post('/DeleteConfigAjax', [AdminPanelController::class, 'DeleteConfigAjax'])->name('DeleteConfig');
+        Route::post('/DeleteConfig', [AdminPanelController::class, 'DeleteConfig'])->name('DeleteConfigNormal');
         Route::post('/AddConfig', [AdminPanelController::class, 'SetPaymentDataAddPost'])->name('SetPaymentDataAddPost');
 
         Route::get('/Vacancy/Requests', [AdminPanelController::class, 'VacancyRequest'])->name('VacancyRequest');

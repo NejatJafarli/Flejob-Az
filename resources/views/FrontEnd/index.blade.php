@@ -137,10 +137,16 @@
 
                             <div class="col-md-4 py-5 pb-100 " style="background: white;border-radius:0px">
 
+                                @php
+                                    
+                                    //use models config
+                                    use App\Models\config;
+                                    // site-ads-static-1
+                                    $site_ads_static_1 = config::where('key', 'site-ads-static-1')->first()->value;
+                                    
+                                @endphp
                                 <div class="ads-banner">
-                                    <img class="img-fluid"
-                                        src="/assets2/img/banner.png"
-                                        alt="">
+                                    <img class="img-fluid" src="/AdsImages/{{ $site_ads_static_1 }}" alt="">
                                 </div>
 
                             </div>
@@ -190,24 +196,38 @@
         </div>
     </section>
     <!-- Category Section End -->
-
+    @php
+        $Ads = config::where('key', 'like', 'site-ads-dynamic%');
+        //get count of ads
+        $AdsCount = $Ads->count();
+        //conver to array
+        $Ads = $Ads->get()->toArray();
+        //get random ads
+        $AdsOne = $Ads[rand(0, $AdsCount - 1)]['value'];
+        $AdsTwo = $Ads[rand(0, $AdsCount - 1)]['value'];
+        $AdsThree = $Ads[rand(0, $AdsCount - 1)]['value'];
+        $AdsFour = $Ads[rand(0, $AdsCount - 1)]['value'];
+        $AdsFive = $Ads[rand(0, $AdsCount - 1)]['value'];
+        $AdsFix = $Ads[rand(0, $AdsCount - 1)]['value'];
+        
+    @endphp
     {{-- Ads Section Start --}}
     <section class="ads-banner-sections">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
                     <div class="ads-img-block">
-                        <img class="img-fluid" src="/assets2/img/flegriads.gif" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{ $AdsOne }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
                     <div class="ads-img-block">
-                        <img class="img-fluid" src="/assets2/img/rahatGETsonn.gif" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{ $AdsTwo }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
                     <div class="ads-img-block">
-                        <img class="img-fluid" src="/assets2/img/KIDMAPAson.gif" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{ $AdsThree }}" alt="">
                     </div>
                 </div>
             </div>
@@ -244,7 +264,7 @@
                                             </a>
                                         </p>
                                         <ul>
-                                            <li> <a href="#">{{ $vac->Owner->CompanyName }} 
+                                            <li> <a href="#">{{ $vac->Owner->CompanyName }}
                                                 </a></li>
                                             {{-- <li>
                                                 <i class='bx bx-location-plus'></i>
@@ -314,7 +334,7 @@
                             <div class="thumb-img">
                                 <img style="height: 70px; width:70px" src="/CompanyLogos/{{ $user->CompanyLogo }}"
                                     alt="company logo">
-                                    <span class="badge-pro">Premium</span>
+                                <span class="badge-pro">Premium</span>
                             </div>
                             <div class="company-text">
                                 <p style="textone">
@@ -340,20 +360,21 @@
     {{-- Ads Section Start --}}
     <section class="ads-banner-sections">
         <div class="container">
+
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
                     <div class="ads-img-block">
-                        <img class="img-fluid" src="/assets2/img/flegriads.gif" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{ $AdsFour }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
                     <div class="ads-img-block">
-                        <img class="img-fluid" src="/assets2/img/rahatGETsonn.gif" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{ $AdsFive }}" alt="">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
                     <div class="ads-img-block">
-                        <img class="img-fluid" src="/assets2/img/KIDMAPAson.gif" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{ $AdsFix }}" alt="">
                     </div>
                 </div>
             </div>
@@ -390,12 +411,12 @@
                                 <div class="col-lg-9">
                                     <div class="job-info">
                                         <p class="textone">
-                                            <a 
+                                            <a
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
                                             </a>
                                         </p>
                                         <ul>
-                                            <li> <a href="#">{{ $vac->Owner->CompanyName }} 
+                                            <li> <a href="#">{{ $vac->Owner->CompanyName }}
                                                 </a></li>
                                             {{-- <li>
                                                 <i class='bx bx-location-plus'></i>
@@ -443,20 +464,22 @@
 
 
     <style>
-        .job-info> .textone{
+        .job-info>.textone {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 10px;
         }
-        .job-info> .textone a{
+
+        .job-info>.textone a {
             color: #000;
             transition: all 0.3s ease;
         }
-        .job-info> .textone a:hover{
+
+        .job-info>.textone a:hover {
             color: #fd1616;
         }
     </style>
-    
+
     <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();

@@ -202,8 +202,16 @@
 
             <div class="text-center col-md-4 py-5 pb-90 pr-0 " style="background: white;border-radius:0px">
 
+                @php
+                                    
+                //use models config
+                use App\Models\config;
+                // site-ads-static-1
+                $site_ads_static_1 = config::where('key', 'site-ads-static-2')->first()->value;
+                
+            @endphp
                 <div class="ads-banner">
-                    <img class="img-fluid" src="/assets2/img/banner.png" alt="">
+                    <img class="img-fluid" src="/AdsImages/{{$site_ads_static_1}}" alt="">
                 </div>
 
             </div>
