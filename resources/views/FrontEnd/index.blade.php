@@ -184,7 +184,7 @@
 
                     <div class="col-lg-3 col-md-4 col-sm-6" style="padding:10px;">
                         <div class="category-items-home" style="height: 100%;">
-                            <a href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">
+                            <a href="{{ route('vacancyCategories', ["language"=>app()->getLocale(),"categorySlug"=>$cat->slug]) }}">
                                 <h3>{{ $cat->Category_lang->CategoryName }}</h3>
                                 <p>{{ $cat->MinSalary }} - {{ $cat->MaxSalary }} Azn </p>
                                 <p class="mt-3">{{ $cat->VacanciesCount }} {{ __('home.Open Position') }}</p>
@@ -250,7 +250,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a
-                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                        href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">
                                             <img class="img-fluid" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}"
                                                 alt="logo">
                                         </a>
@@ -260,7 +260,7 @@
                                     <div class="job-info">
                                         <p class="textone">
                                             <a
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}
                                             </a>
                                         </p>
                                         <ul>
@@ -402,7 +402,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a
-                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">
                                             <img class="img-fluid" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}"
                                                 alt="logo">
                                         </a>
@@ -412,48 +412,18 @@
                                     <div class="job-info">
                                         <p class="textone">
                                             <a
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}
                                             </a>
                                         </p>
                                         <ul>
                                             <li> <a href="#">{{ $vac->Owner->CompanyName }}
                                                 </a></li>
-                                            {{-- <li>
-                                                <i class='bx bx-location-plus'></i>
-                                                {{ $vac->City->CityName }}
-                                            </li> --}}
                                             <li>
-                                                {{-- <i class='bx bx-filter-alt'></i> --}}
                                                 {{ $vac->Category->CategoryName }}
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-3">
-                                    <div class="job-save">
-                                        @if (session()->get('user'))
-                                            @php
-                                                $userApplied = false;
-                                                if (session()->get('user')) {
-                                                    foreach (session()->get('user')->AppliedVacancies as $UserVac) {
-                                                        if ($UserVac->Vacancy_id == $vac->id) {
-                                                            $userApplied = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                            @endphp
-                                            <button
-                                                onclick="ApplyVac(this,'{{ route('ApplyVacancy', ['language' => app()->getLocale(), 'id' => $vac->id]) }}')"
-                                                type="button" class="btn btn-primary" data-toggle="modal">
-                                                {{ $userApplied ? __('home.UnApply Now') : __('home.Apply Now') }}</button>
-                                        @endif
-                                        <p>
-                                            <i class='bx bx-stopwatch'></i>
-                                            {{ $vac->created_at->diffForHumans() }}
-                                        </p>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>

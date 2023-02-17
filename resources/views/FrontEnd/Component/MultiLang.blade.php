@@ -1,6 +1,5 @@
 <div class="other-option">
-    <select class="form-control nice-select" onchange="window.location.href=this.value" 
-  >
+    <select class="form-control nice-select" onchange="window.location.href=this.value">
         @php
             use App\Models\lang;
             
@@ -14,7 +13,19 @@
             $langCode = strtoupper($locale);
             
         @endphp
-        @if (!isset($id))
+        @if (isset($ItIsCategory))
+            @foreach ($Langs as $lang)
+                <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
+                    value="{{ route($route, ['language' => $lang->LanguageCode, 'categorySlug' => $catSlug]) }}">
+                    {{ strtoupper($lang->LanguageCode) }}</a>
+            @endforeach
+        @elseif (isset($ItIsAVacancy))
+            @foreach ($Langs as $lang)
+                <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
+                    value="{{ route($route, ['language' => $lang->LanguageCode, 'categorySlug' => $catSlug, 'slug' => $VacSlug]) }}">
+                    {{ strtoupper($lang->LanguageCode) }}</a>
+            @endforeach
+        @elseif (!isset($id))
             @foreach ($Langs as $lang)
                 <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
                     value="{{ route($route, ['language' => $lang->LanguageCode]) }}">

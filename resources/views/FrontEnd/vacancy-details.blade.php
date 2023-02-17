@@ -338,7 +338,7 @@
                                         <div class="col-md-1">
                                             <div class="company-logo">
                                                 <a
-                                                    href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">
+                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug,'categorySlug'=>$vacs->Category->slug]) }}">
                                                     <img style="height:50px; widht:50px;"
                                                         src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}"
                                                         alt="logo">
@@ -349,7 +349,7 @@
                                             <div class="job-info">
                                                 <p>
                                                     <a
-                                                        href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
+                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug,'categorySlug'=>$vacs->Category->slug]) }}">{{ $vacs->VacancyName }}</a>
                                                 </p>
                                                 <ul>
                                                     <li>
@@ -377,7 +377,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="theme-btn text-end">
-                                                <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}"
+                                                <a href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug,'categorySlug'=>$vacs->Category->slug]) }}"
                                                     class="default-btn">
                                                     {{ __('Jobdetail.Browse Job') }}
                                                 </a>

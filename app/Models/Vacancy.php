@@ -24,7 +24,27 @@ class Vacancy extends Model
         "VacancySalary",
         "Email",
         "EndDate",
+        "slug"
     ];
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($vac) {
+            $vac->slug = str_replace(' ', '-', strtolower($vac->VacancyName)).'-'.$vac->id;
+        });
+
+        // static::saving(function ($cat) {
+            
+        //     $cat->slug = str_replace(' ', '-', strtolower($cat->VacancyName).'-'.$cat->id);
+        //     //remove the slash from the slug /
+        //     $cat->slug = str_replace('/', '-', strtolower($cat->slug));
+        // });
+    }
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = str_replace(' ', '-', strtolower($value));
+    }
     public function category()
     {
         return $this->belongsTo(Category::class);

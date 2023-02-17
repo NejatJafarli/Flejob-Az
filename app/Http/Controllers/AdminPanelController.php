@@ -195,6 +195,7 @@ class adminPanelController extends Controller
 
         return view('adminPanel/Blogs/AdminBlogEdit')->with(["Blog" => $blog]);
     }
+  
     public function UpdateBlogs(Request $req)
     {
         if (!session()->has('AdminUser'))

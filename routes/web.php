@@ -45,22 +45,22 @@ Route::group(['prefix' => '{language}'], function () {
     Route::post('/registerCompany', [LoginRegisterController::class, 'registerCompany'])->name('RegisterCompany');
     Route::post('/SigninCompany', [LoginRegisterController::class, 'SigninCompany'])->name('SigninCompany');
 
-    Route::get('/Signup', [LoginRegisterController::class, 'Signup'])->name('Signup');
-    Route::get('/Signin', [LoginRegisterController::class, 'SigninPage'])->name('Signin');
-    Route::post('/SigninPost', [LoginRegisterController::class, 'SigninPost'])->name('SigninPost');
-    Route::get('/LogoutCompany', [LoginRegisterController::class, 'LogoutCompany'])->name('LogoutCompany');
-    Route::get('/Logout', [LoginRegisterController::class, 'Logout'])->name('Logout');
-    Route::get('/ResetPasswordUser', [LoginRegisterController::class, 'ResetPasswordUser'])->name('ResetPasswordUser');
-    Route::get('/ResetPasswordCompany', [LoginRegisterController::class, 'ResetPasswordCompany'])->name('ResetPasswordCompany');
+    Route::get('/sign-up', [LoginRegisterController::class, 'Signup'])->name('Signup');
+    Route::get('/sign-in', [LoginRegisterController::class, 'SigninPage'])->name('Signin');
+    Route::post('/signinPost', [LoginRegisterController::class, 'SigninPost'])->name('SigninPost');
+    Route::get('/logout-company', [LoginRegisterController::class, 'LogoutCompany'])->name('LogoutCompany');
+    Route::get('/logout', [LoginRegisterController::class, 'Logout'])->name('Logout');
+    Route::get('/reset-password-user', [LoginRegisterController::class, 'ResetPasswordUser'])->name('ResetPasswordUser');
+    Route::get('/reset-password-company', [LoginRegisterController::class, 'ResetPasswordCompany'])->name('ResetPasswordCompany');
 
-    Route::post('/ResetPasswordUserPost', [LoginRegisterController::class, 'ResetPasswordPostUser'])->name('ResetPasswordPostUser');
-    Route::post('/ResetPasswordCompanyPost', [LoginRegisterController::class, 'ResetPasswordPostCompany'])->name('ResetPasswordPostCompany');
+    Route::post('/reset-password-userPost', [LoginRegisterController::class, 'ResetPasswordPostUser'])->name('ResetPasswordPostUser');
+    Route::post('/reset-password-companyPost', [LoginRegisterController::class, 'ResetPasswordPostCompany'])->name('ResetPasswordPostCompany');
 
-    Route::get('/EnterNewPassword/{id}', [LoginRegisterController::class, 'EnterNewPassword'])->name('EnterNewPassword');
-    Route::post('/EnterNewPasswordPost', [LoginRegisterController::class, 'EnterNewPasswordPost'])->name('EnterNewPasswordPost');
+    Route::get('/enter-new-password/{id}', [LoginRegisterController::class, 'EnterNewPassword'])->name('EnterNewPassword');
+    Route::post('/enter-new-passwordPost', [LoginRegisterController::class, 'EnterNewPasswordPost'])->name('EnterNewPasswordPost');
 
-    Route::post('/SignUpControllerAjax', [LoginRegisterController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');
-    Route::post('/SignUpCompanyControllerAjax', [LoginRegisterController::class, 'SignUpCompanyControllerAjax'])->name('SignUpCompanyControllerAjax');
+    Route::post('/sign-up-controller-ajax', [LoginRegisterController::class, 'SignUpControllerAjax'])->name('SignUpControllerAjax');
+    Route::post('/sign-up-company-controller-ajax', [LoginRegisterController::class, 'SignUpCompanyControllerAjax'])->name('SignUpCompanyControllerAjax');
 
 
     //// Payment Section
@@ -73,79 +73,82 @@ Route::group(['prefix' => '{language}'], function () {
 
 
     //ACCOUNT CONTROLLER
-    Route::group(['prefix' => 'Account'], function () {
+    Route::group(['prefix' => 'account'], function () {
 
-        Route::post('/Edit/User', [AccountController::class, 'UpdateUser'])->name('UpdateUser');
-        Route::post('/Edit/Educations', [AccountController::class, 'UpdateUserEducation'])->name('UpdateUserEducation');
-        Route::post('/Edit/Companies', [AccountController::class, 'UpdateUserCompany'])->name('UpdateUserCompany');
-        Route::post('/Edit/Link', [AccountController::class, 'UpdateUserlink'])->name('UpdateUserlink');
-        Route::post('/Edit/User/Password', [AccountController::class, 'UpdateUserPassword'])->name('UpdateUserPassword');
+        Route::post('/edit/user', [AccountController::class, 'UpdateUser'])->name('UpdateUser');
+        Route::post('/edit/educations', [AccountController::class, 'UpdateUserEducation'])->name('UpdateUserEducation');
+        Route::post('/edit/companies', [AccountController::class, 'UpdateUserCompany'])->name('UpdateUserCompany');
+        Route::post('/edit/link', [AccountController::class, 'UpdateUserlink'])->name('UpdateUserlink');
+        Route::post('/edit/user/password', [AccountController::class, 'UpdateUserPassword'])->name('UpdateUserPassword');
 
 
-        Route::post('/Delete/Educations', [AccountController::class, 'DeleteUserEducation'])->name('DeleteUserEducation');
-        Route::post('/Delete/Companies', [AccountController::class, 'DeleteUserCompany'])->name('DeleteUserCompany');
-        Route::post('/Delete/Link', [AccountController::class, 'DeleteUserLink'])->name('DeleteUserLink');
+        Route::post('/delete/educations', [AccountController::class, 'DeleteUserEducation'])->name('DeleteUserEducation');
+        Route::post('/delete/companies', [AccountController::class, 'DeleteUserCompany'])->name('DeleteUserCompany');
+        Route::post('/delete/link', [AccountController::class, 'DeleteUserLink'])->name('DeleteUserLink');
 
         Route::get('', [AccountController::class, 'Account'])->name('Account');
-        Route::get('/Change/Password', [AccountController::class, 'ChangePass'])->name('ChangePass');
-        Route::get('/MyResume', [AccountController::class, 'MyResume'])->name('MyResume');
-        Route::get('/AppliedJobs', [AccountController::class, 'AppliedJobs'])->name('AppliedJobs');
+        Route::get('/change/password', [AccountController::class, 'ChangePass'])->name('ChangePass');
+        Route::get('/my-resume', [AccountController::class, 'MyResume'])->name('MyResume');
+        Route::get('/applied-jobs', [AccountController::class, 'AppliedJobs'])->name('AppliedJobs');
 
-        Route::get('/Messages', [AccountController::class, 'Messages'])->name('Messages');
+        Route::get('/messages', [AccountController::class, 'Messages'])->name('Messages');
     });
-    Route::group(['prefix' => 'AccountCompany'], function () {
+    Route::group(['prefix' => 'account-company'], function () {
 
-        Route::post('/Edit/User', [AccountController::class, 'UpdateCompanyUser'])->name('UpdateCompanyUser');
-        Route::post('/Edit/Phones', [AccountController::class, 'UpdateCompanyUserPhones'])->name('UpdateCompanyUserPhones');
+        Route::post('/edit/user', [AccountController::class, 'UpdateCompanyUser'])->name('UpdateCompanyUser');
+        Route::post('/edit/phones', [AccountController::class, 'UpdateCompanyUserPhones'])->name('UpdateCompanyUserPhones');
 
-        Route::get('/Delete/Phones/{id}', [AccountController::class, 'DeletePhoneNumber'])->name('DeletePhoneNumber');
-        Route::get('/Edit/Password', [AccountController::class, 'UpdateCompanyUserPassword'])->name('UpdateCompanyUserPassword');
+        Route::get('/delete/phones/{id}', [AccountController::class, 'DeletePhoneNumber'])->name('DeletePhoneNumber');
+        Route::get('/edit/password', [AccountController::class, 'UpdateCompanyUserPassword'])->name('UpdateCompanyUserPassword');
 
 
-        Route::get('/Change/Password', [AccountController::class, 'ChangePassCompany'])->name('ChangePassCompany');
+        Route::get('/change/password', [AccountController::class, 'ChangePassCompany'])->name('ChangePassCompany');
         Route::get('', [AccountController::class, 'AccountCompany'])->name('AccountCompany');
-        Route::get('/Vacancies', [AccountController::class, 'AccountCompanyVacancies'])->name('AccountCompanyVacancies');
+        Route::get('/vacancies', [AccountController::class, 'AccountCompanyVacancies'])->name('AccountCompanyVacancies');
 
 
-        Route::get('/AppliedCandidates/{id}', [AccountController::class, 'AppliedCandidates'])->name('AppliedCandidates');
+        Route::get('/applied-candidates/{id}', [AccountController::class, 'AppliedCandidates'])->name('AppliedCandidates');
     });
     ////
 
     //HOME CONTROLLER
     Route::get('/', [HomeController::class, 'Hom'])->name('Hom');
-    Route::get('/ApplyVacancy/{id}', [HomeController::class, 'ApplyVacancy'])->name('ApplyVacancy');
-    Route::get('/CandidateDetails/{id}', [HomeController::class, 'CandidateDetails'])->name('CandidateDetails');
+    Route::get('/apply-vacancy/{id}', [HomeController::class, 'ApplyVacancy'])->name('ApplyVacancy');
+    Route::get('/candidate-details/{id}', [HomeController::class, 'CandidateDetails'])->name('CandidateDetails');
 
-    Route::get('/Companies', [HomeController::class, 'Companies'])->name('Companies');
+    Route::get('/companies', [HomeController::class, 'Companies'])->name('Companies');
 
-    Route::get('/Candidates', [HomeController::class, 'Candidates'])->name('Candidates');
+    Route::get('/candidates', [HomeController::class, 'Candidates'])->name('Candidates');
 
-    Route::get('/Categories', [HomeController::class, 'Categories'])->name('Categories');
-    Route::get('/Blogs', [HomeController::class, 'Blogs'])->name('Blog');
-    Route::get('/BlogDetails/{id}', [HomeController::class, 'BlogDetail'])->name('BlogDetail');
+    Route::get('/categories', [HomeController::class, 'Categories'])->name('Categories');
+    Route::get('/blogs', [HomeController::class, 'Blogs'])->name('Blog');
+    Route::get('/blog-details/{id}', [HomeController::class, 'BlogDetail'])->name('BlogDetail');
 
-    Route::get('/Contact', [HomeController::class, 'Contact'])->name('Contact');
-    Route::post('/ContactUs', [HomeController::class, 'ContactUs'])->name('ContactUs');
+    Route::get('/contact', [HomeController::class, 'Contact'])->name('Contact');
+    Route::post('/contact-us', [HomeController::class, 'ContactUs'])->name('ContactUs');
 
-    Route::get('/FindAJob', [HomeController::class, 'FindAJob'])->name('FindAJob');
+    Route::get('/find-a-job', [HomeController::class, 'FindAJob'])->name('FindAJob');
 
-    Route::get('/About', [HomeController::class, 'About'])->name('About');
+    Route::get('/about', [HomeController::class, 'About'])->name('About');
 
     Route::get('/terms-condition', [HomeController::class, 'terms'])->name('terms');
-    Route::get('/Faq', [HomeController::class, 'Faq'])->name('Faq');
-    Route::get('/Privacy-Policy', [HomeController::class, 'Privacy'])->name('Privacy');
+    Route::get('/faq', [HomeController::class, 'Faq'])->name('Faq');
+    Route::get('/privacy-policy', [HomeController::class, 'Privacy'])->name('Privacy');
 
-    Route::get('/EditAJob/{id}', [HomeController::class, 'EditAJob'])->name('EditAJob');
-    Route::post('/EditAJobPost', [HomeController::class, 'EditAJobPost'])->name('EditAJobPost');
+    Route::get('/edit-a-job/{id}', [HomeController::class, 'EditAJob'])->name('EditAJob');
+    Route::post('/edit-a-jobPost', [HomeController::class, 'EditAJobPost'])->name('EditAJobPost');
 
-    Route::get('/PostAJob', [HomeController::class, 'PostAJob'])->name('PostAJob');
-    Route::post('/PostAJob', [HomeController::class, 'PostAJobPost'])->name('PostAJobPost');
+    Route::get('/post-a-job', [HomeController::class, 'PostAJob'])->name('PostAJob');
+    Route::post('/post-a-job', [HomeController::class, 'PostAJobPost'])->name('PostAJobPost');
 
     Route::get('/404', [HomeController::class, 'NotFound'])->name('NotFound');
-    Route::get('/SendMessage/{id}', [HomeController::class, 'SendMessage'])->name('SendMessage');
-    Route::post('/SendMessage', [HomeController::class, 'SendMessagePost'])->name('SendMessagePost');
+    Route::get('/send-message/{id}', [HomeController::class, 'SendMessage'])->name('SendMessage');
+    Route::post('/send-message', [HomeController::class, 'SendMessagePost'])->name('SendMessagePost');
 
-    Route::get('/Job-Details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');
+    Route::get('/vacancies', [HomeController::class, 'vacancies'])->name('vacancies');
+    // Route::get('/job-details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');
+    Route::get('/vacancies/{categorySlug}', [HomeController::class, 'vacancyCategories'])->name('vacancyCategories');
+    Route::get('/vacancies/{categorySlug}/{slug}', [HomeController::class, 'vacancyDetails'])->name('vacancyDetails');
 
     //route admin group
     Route::group(['prefix' => 'admin'], function () {

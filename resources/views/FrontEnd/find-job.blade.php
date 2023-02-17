@@ -47,6 +47,7 @@
                 ->first();
             $Vacancy->Category->StyleClass = $cat->StyleClass;
             $Vacancy->Category->SortOrder = $cat->SortOrder;
+            $Vacancy->Category->slug = $cat->slug;
         
             return $Vacancy;
         });
@@ -203,15 +204,15 @@
             <div class="text-center col-md-4 py-5 pb-90 pr-0 " style="background: white;border-radius:0px">
 
                 @php
-                                    
-                //use models config
-                use App\Models\config;
-                // site-ads-static-1
-                $site_ads_static_1 = config::where('key', 'site-ads-static-2')->first()->value;
-                
-            @endphp
+                    
+                    //use models config
+                    use App\Models\config;
+                    // site-ads-static-1
+                    $site_ads_static_1 = config::where('key', 'site-ads-static-2')->first()->value;
+                    
+                @endphp
                 <div class="ads-banner">
-                    <img class="img-fluid" src="/AdsImages/{{$site_ads_static_1}}" alt="">
+                    <img class="img-fluid" src="/AdsImages/{{ $site_ads_static_1 }}" alt="">
                 </div>
 
             </div>
@@ -236,7 +237,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a
-                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug, 'categorySlug' => $vac->Category->slug]) }}">
                                             <img class="img-fluid" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}"
                                                 alt="logo">
                                         </a>
@@ -246,7 +247,7 @@
                                     <div class="job-info">
                                         <p class="word-break: break-word">
                                             <a class="word-break: normal !important;"
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
+                                                href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug, 'categorySlug' => $vac->Category->slug]) }}">{{ $vac->VacancyName }}
                                             </a>
                                         </p>
                                         <ul>
@@ -258,7 +259,7 @@
                                             </li> --}}
                                             <li>
                                                 {{-- <i class='bx bx-filter-alt'></i> --}}
-                                                  @if ($vac->WithAgreement == 1)
+                                                @if ($vac->WithAgreement == 1)
                                                     {{ __('home.With Agreement') }}
                                                 @else
                                                     {{ $vac->VacancySalary }}
@@ -324,7 +325,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a class="d-block"
-                                            href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                        href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug,'categorySlug'=>$vac->Category->slug]) }}">
                                             <img class="img-fluid" style="max-height: 75px"
                                                 src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                         </a>
@@ -334,7 +335,7 @@
                                     <div class="job-info">
                                         <p>
                                             <a
-                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug,'categorySlug'=>$vac->Category->slug]) }}">{{ $vac->VacancyName }}</a>
                                         </p>
                                         <ul>
                                             <li><a href="#">{{ $vac->Owner->CompanyName }}</a></li>
