@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'Candidates' => 'Candidates',
+    'Candidates' => 'Resumes',
     'Home' => 'Home',
+    'Users' => 'Candidates',
 ];

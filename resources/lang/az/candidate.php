@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'Candidates' => 'Namizədlər',
+    'Candidates' => 'CV-lər',
     'Home' => 'Əsas səhifə',
+    'Users' => 'Namizədlər',
 ];

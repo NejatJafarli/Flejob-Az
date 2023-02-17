@@ -10,16 +10,16 @@
         use App\Models\lang;
         use App\Models\CompanyUser;
         use App\Models\config;
-        
+
         $Langs = lang::all();
-        
+
         $route = Route::current()->getName();
-        
+
         $locale = app()->getLocale();
-        
+
         //UpperCase First Char of LangCode
         $langCode = strtoupper($locale);
-        
+
     @endphp
 
     @include('FrontEnd.Component.Navbar')
@@ -40,12 +40,14 @@
     <section class="page-title title-bg6">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{ __('Jobdetail.Job Details') }}</h2>
+                {{-- <h2>{{ __('Jobdetail.Job Details') }}</h2> --}}
+                <h1 class="banner-title"> {{ $vac->VacancyName }} ({{ $vac->CompanyUser->CompanyName }}) </h1>
                 <ul>
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Jobdetail.Home') }}</a>
                     </li>
-                    <li>{{ __('Jobdetail.Job Details') }}</li>
+                    {{-- <li>{{ __('Jobdetail.Job Details') }}</li> --}}
+                    <li >{{ $vac->VacancyName }} ({{ $vac->CompanyUser->CompanyName }}) </li>
                 </ul>
             </div>
         </div>
@@ -84,7 +86,7 @@
                                         </div>
                                         <div class="col-md-9 mb-3">
                                             <div class="job-info">
-                                                <h3>{{ $vac->VacancyName }}</h3>
+                                                <h2>{{ $vac->VacancyName }}</h2>
                                                 <ul>
                                                     <li>
                                                         {{-- <i class='bx bx-location-plus'></i> --}}
@@ -167,21 +169,21 @@
                                     </div>
                                 </div>
                                 <div class="details-text">
-                                    <h3>{{ __('Jobdetail.Description') }}</h3>
+                                    <h2>{{ __('Jobdetail.Description') }}</h2>
                                     @php
                                         $desc = nl2br($vac->VacancyDescription);
                                         echo $desc;
                                     @endphp
                                 </div>
                                 <div class="details-text">
-                                    <h3>{{ __('Jobdetail.Requirements') }}</h3>
+                                    <h2>{{ __('Jobdetail.Requirements') }}</h2>
                                     @php
                                         $req = nl2br($vac->VacancyRequirements);
                                         echo $req;
                                     @endphp
                                 </div>
                                 <div class="details-text">
-                                    <h3>{{ __('Jobdetail.Job Details') }}</h3>
+                                    <h2>{{ __('Jobdetail.Job Details') }}</h2>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <table class="table">
@@ -235,11 +237,11 @@
                                 @if (session()->has('user'))
                                     @php
                                         $userApplied = false;
-                                        
+
                                         $userApplied = session()
                                             ->get('user')
                                             ->AppliedVacancies->contains($vac->id);
-                                        
+
                                     @endphp
 
                                     <div class="theme-btn">
@@ -261,11 +263,11 @@
 
                 <div class="col-lg-4 mb-3">
                     <div class="job-sidebar {{ $class }}">
-                        <h3>{{ __('Jobdetail.Posted By') }}</h3>
+                        <p class="sidebar-name">{{ __('Jobdetail.Posted By') }}</p>
                         <div class="posted-by">
                             <img style="height:100px; width:100px;"
                                 src="/CompanyLogos/{{ $vac->CompanyUser->CompanyLogo }}" alt="client image">
-                            <h4>{{ $vac->CompanyUser->CompanyName }}</h4>
+                            <p>{{ $vac->CompanyUser->CompanyName }}</p>
                         </div>
                     </div>
                     @if ($vac->Status == 3 || $vac->Status == 0)
@@ -305,8 +307,18 @@
                             <h3 style="color:red;font-size:30px;">{{ __('Jobdetail.Your Vacancy not correct') }}</h3>
                         </div>
                     @endif
+                    @php
+                    $Ads = config::where('key', 'like', 'site-ads-dynamic%');
+                    //get count of ads
+                    $AdsCount = $Ads->count();
+                    //conver to array
+                    $Ads = $Ads->get()->toArray();
+                    //get random ads
+                    $AdsOne = $Ads[rand(0, $AdsCount - 1)]['value'];
+
+                @endphp
                     <div class="ads-banner-vacancy ">
-                        <img class="img-fluid" src="/assets2/img/banner.png" alt="">
+                        <img class="img-fluid" src="/AdsImages/{{$AdsOne}}" alt="">
                     </div>
                 </div>
             </div>
@@ -335,10 +347,10 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="job-info">
-                                                <h3>
+                                                <p>
                                                     <a
                                                         href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vacs->id]) }}">{{ $vacs->VacancyName }}</a>
-                                                </h3>
+                                                </p>
                                                 <ul>
                                                     <li>
                                                         <i class='bx bx-briefcase'></i>

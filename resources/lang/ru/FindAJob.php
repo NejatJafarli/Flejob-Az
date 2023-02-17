@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Find A Job' => 'Найти работу',
+    'Find A Job' => 'Вакансии',
     'Job Title' => 'Название работы',
     'Cities' => 'Города',
     'Categories' => 'Категории',
@@ -12,7 +12,6 @@ return [
     'Max Salary' => 'Максимальная зарплата',
     'Enter Min Salary' => 'Введите минимальную зарплату',
     'Enter Max Salary' => 'Введите максимальную зарплату',
-    'Find A Job' => 'Найти работу',
     'Popular Jobs Category' => 'Популярная категория вакансий',
     'Active Job' => 'Активная работа',
     'Jobs You May Be Interested In' => 'Вакансии',

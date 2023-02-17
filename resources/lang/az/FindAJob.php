@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Find A Job' => 'İş axtar',
+    'Find A Job' => 'Vakansiyalar',
     'Job Title' => 'Vəzifə',
     'Cities' => 'Şəhərlər',
     'Categories' => 'Kateqoriyalar',
@@ -12,7 +12,6 @@ return [
     'Max Salary' => 'Maksimum Əmək haqqı',
     'Enter Min Salary' => 'Min Əmək haqqını daxil edin',
     'Enter Max Salary' => 'Maksimum maaşı daxil edin',
-    'Find A Job' => 'İş axtar',
     'Popular Jobs Category' => 'Populyar İş Kateqoriya',
     'Active Job' => 'Aktiv İş',
     'Jobs You May Be Interested In' => 'Vakansiyalar',

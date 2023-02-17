@@ -185,7 +185,7 @@
                     <div class="col-lg-3 col-md-4 col-sm-6" style="padding:10px;">
                         <div class="category-items-home" style="height: 100%;">
                             <a href="{{ route('FindAJob', app()->getLocale()) }}?Category={{ $cat->id }}">
-                                <h5>{{ $cat->Category_lang->CategoryName }}</h5>
+                                <h3>{{ $cat->Category_lang->CategoryName }}</h3>
                                 <p>{{ $cat->MinSalary }} - {{ $cat->MaxSalary }} Azn </p>
                                 <p class="mt-3">{{ $cat->VacanciesCount }} {{ __('home.Open Position') }}</p>
                             </a>
@@ -239,7 +239,7 @@
     <section class="job-section pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>{{ __('home.Jobs You May Be Interested In') }}</h2>
+                <p>{{ __('home.Jobs You May Be Interested In') }}</p>
             </div>
 
             <div class="row">
@@ -318,7 +318,7 @@
     <section class="company-section pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>{{ __('home.Top Companies') }}</h2>
+                <p>{{ __('home.Top Companies') }}</p>
             </div>
 
             <div class="row">
@@ -391,7 +391,7 @@
                     <div class="MyAlert-box Myfailure">Failure Alert !!!</div>
                     <div class="MyAlert-box Mywarning">Warning Alert !!!</div>
                 </div>
-                <h2>{{ __('home.Jobs You May Be Interested In2') }}</h2>
+                <p>{{ __('home.Jobs You May Be Interested In2') }}</p>
             </div>
 
             <div class="row">

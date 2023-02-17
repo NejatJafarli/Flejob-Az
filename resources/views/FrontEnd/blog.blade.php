@@ -24,12 +24,12 @@
     <section class="page-title title-bg21">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{__("Blog.Blog")}}</h2>
+                <h2>{{ __('Blog.Blog') }}</h2>
                 <ul>
                     <li>
-                        <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Blog.Home")}}</a>
+                        <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Blog.Home') }}</a>
                     </li>
-                    <li>{{__("Blog.Blog")}}</li>
+                    <li>{{ __('Blog.Blog') }}</li>
                 </ul>
             </div>
         </div>
@@ -45,7 +45,7 @@
     <section class="blog-section blog-style-two pt-100 pb-70">
         <div class="container">
             <div class="section-title text-center">
-                <h2>{{__("Blog.News, Tips & Articles")}}</h2>
+                <h2>{{ __('Blog.News, Tips & Articles') }}</h2>
             </div>
 
             <div class="row">
@@ -53,8 +53,9 @@
                     <div class="col-lg-4 col-sm-6">
                         <div class="blog-card">
                             <div class="blog-img">
-                                <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
-                                    <img style="width: 510px; height:410px; object-fit:cover;" src="/BlogsPicture/{{ $blog->Image }}" alt="blog image">
+                                <a href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $blog->id]) }}">
+                                    <img style="width: 510px; height:410px; object-fit:cover;"
+                                        src="/BlogsPicture/{{ $blog->Image }}" alt="blog image">
                                 </a>
                             </div>
                             <div class="blog-text">
@@ -69,17 +70,13 @@
                                     </li>
                                 </ul>
                                 <h3>
-                                    <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}">
+                                    <a
+                                        href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $blog->id]) }}">
                                         {{ $blog->Title }}
                                     </a>
                                 </h3>
-                                @php
-                                    //get first 30 characters
-                                    $str = substr($blog->Description, 0, 40) . '...';
-                                @endphp
-                                <p>{{ $str }}</p>
-
-                                <a href="{{route('BlogDetail',['language'=>app()->getLocale(),'id'=> $blog->id])}}" class="blog-btn">
+                                <a href="{{ route('BlogDetail', ['language' => app()->getLocale(), 'id' => $blog->id]) }}"
+                                    class="blog-btn">
                                     Read More
                                     <i class='bx bx-plus bx-spin'></i>
                                 </a>

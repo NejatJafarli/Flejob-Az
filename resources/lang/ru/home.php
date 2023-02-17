@@ -14,7 +14,7 @@ return [
     'Enter Min Salary' => 'Введите минимальную зарплату',
     'Enter Max Salary' => 'Введите максимальную зарплату',
     'Find A Job' => 'Найти работу',
-    'Choose Your Category' => 'Выберите свою категорию',
+    'Choose Your Category' => 'Pабочая категория',
     'Open Position' => 'Открытая позиция',
     'UnApply Now' => 'Отменить сейчас',
     'Apply Now' => 'Применить сейчас',

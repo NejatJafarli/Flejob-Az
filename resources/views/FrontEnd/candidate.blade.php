@@ -28,7 +28,7 @@
     <section class="page-title title-bg7">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{ __('candidate.Candidates') }}</h2>
+                <h1 class="banner-title">{{ __('candidate.Candidates') }}</h1>
                 <ul>
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('candidate.Home') }}</a>
@@ -48,6 +48,9 @@
     <!-- Candidates Section Start -->
     <section class="candidate-style-two pt-100 pb-70">
         <div class="container">
+            <div class="section-title text-center">
+                <h2>{{ __('candidate.Users') }}</h2>
+            </div>
             <div class="row">
                 @php
                     

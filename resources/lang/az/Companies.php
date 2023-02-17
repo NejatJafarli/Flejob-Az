@@ -1,9 +1,9 @@
 <?php
 return
 [
-'Company' =>"Şirkət",
+'Company' =>"Şirkətlər",
 'Home' =>"Əsas səhifə",
-'Top Companies' =>"Ən yaxşı şirkətlər",
+'Top Companies' =>"Şirkətlər",
 'Open Position' =>"Açıq pozisalar",
 'Premium Companies' =>"Premium Şirkətlər",
 ];

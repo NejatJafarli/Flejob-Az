@@ -206,12 +206,11 @@ class adminPanelController extends Controller
             $image = $req->file('image');
             $imageName = time() . '.' . $image->extension();
             $image->move(public_path('BlogsPicture'), $imageName);
-            $data['image'] = $imageName;
-
             //renive old image
             $oldImage = public_path('BlogsPicture/' . $blog->Image);
             if (file_exists($oldImage))
                 unlink($oldImage);
+            $blog->Image = $imageName;
         }
         $blog->Title = $req->Title;
         $blog->Description = $req->Description;

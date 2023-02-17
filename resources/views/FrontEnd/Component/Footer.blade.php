@@ -129,7 +129,9 @@
     </style>
 </footer>
 <div class="copyright-text text-center">
+    <!-- Developed By Nejat Jafarli -->
     <p>Developed @2022 <a class="devText" href="https://flegri.com/">Flegri</a></p>
+    <!-- Developed By Nejat Jafarli -->
 </div>
 <!-- Footer Section End -->
 

@@ -81,7 +81,7 @@
     <section class="page-title custom-bnr title-bg2">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{ __('FindAJob.Find A Job') }}</h2>
+                <h1 class="banner-title">{{ __('FindAJob.Find A Job') }}</h1>
                 <ul>
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('FindAJob.Home') }}</a>
@@ -244,11 +244,11 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="job-info">
-                                        <h3 class="word-break: break-word">
+                                        <p class="word-break: break-word">
                                             <a class="word-break: normal !important;"
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}
                                             </a>
-                                        </h3>
+                                        </p>
                                         <ul>
                                             <li> <a href="#">{{ $vac->Owner->CompanyName }}
                                                 </a></li>
@@ -332,10 +332,10 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="job-info">
-                                        <h3>
+                                        <p>
                                             <a
                                                 href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
-                                        </h3>
+                                        </p>
                                         <ul>
                                             <li><a href="#">{{ $vac->Owner->CompanyName }}</a></li>
                                             {{-- <li>

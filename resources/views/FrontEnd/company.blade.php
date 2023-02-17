@@ -20,7 +20,7 @@
     <section class="page-title title-bg9">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{__("Companies.Company")}}</h2>
+                <h1 class="banner-title">{{__("Companies.Company")}}</h1>
                 <ul>
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{__("Companies.Home")}}</a>
@@ -53,7 +53,7 @@
                                 <span class="badge-pro">Premium</span>
                             </div>
                             <div class="company-text">
-                                <h3 style="word-break: break-word;">{{ $com->CompanyName }}</h3>
+                                <p class="company-name" style="word-break: break-word;">{{ $com->CompanyName }}</p>
                                 {{-- <p>
                                     <i class="bx bx-location-plus"></i>
                                     {{ $com->CompanyAddress }}
@@ -83,7 +83,7 @@
                                         @endif
                             </div>
                             <div class="company-text">
-                                <h3 style="word-break: break-word;">{{ $com->CompanyName }}</h3>
+                                <p class="company-name" style="word-break: break-word;">{{ $com->CompanyName }}</p>
                                 {{-- <p>
                                     <i class="bx bx-location-plus"></i>
                                     {{ $com->CompanyAddress }}

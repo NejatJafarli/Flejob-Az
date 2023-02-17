@@ -1,9 +1,9 @@
 <?php
 return
 [
-'Company' =>"Компания",
+'Company' =>"Компании",
 'Home' =>"Дом",
-'Top Companies' =>"Лучшие компании",
+'Top Companies' =>"Компании",
 'Open Position' =>"Открытая позиция",
 'Premium Companies' =>"Премиум Kомпании",
 ];

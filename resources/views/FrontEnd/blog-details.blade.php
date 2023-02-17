@@ -38,7 +38,7 @@
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{__("BlogDetail.Home")}}</a>
                     </li>
-                    <li>{{__("BlogDetail.Blog Details")}}</li>
+                    <li>{{ $blog->Title }}</li>
                 </ul>
             </div>
         </div>
@@ -112,7 +112,10 @@
 
                         <h3 class="post-title">{{ $blog->Title }}</h3>
 
-                        <p style="word-break: break-word;">{{ $blog->Description }}</p>
+                        {{-- <p style="word-break: break-word;">{{ $blog->Description }}</p> --}}
+                        @php 
+                        echo $blog->Description;
+                        @endphp 
                         @if ($blog->MetaKeywords != null)
                             <div class="details-tag">
                                 <ul>

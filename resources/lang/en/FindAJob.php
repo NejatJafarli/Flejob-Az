@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Find A Job' => 'Find A Job',
+    'Find A Job' => 'Vacancies',
     'Job Title' => 'Job Title',
     'Cities' => 'Cities',
     'Categories' => 'Categories',
@@ -12,7 +12,6 @@ return [
     'Max Salary' => 'Max Salary',
     'Enter Min Salary' => 'Enter Min Salary',
     'Enter Max Salary' => 'Enter Max Salary',
-    'Find A Job' => 'Find A Job',
     'Popular Jobs Category' => 'Popular Jobs Category',
     'Active Job' => 'Active Job',
     'Jobs You May Be Interested In' => 'Vacancies',

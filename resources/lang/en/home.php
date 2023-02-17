@@ -14,7 +14,7 @@ return [
     'Enter Min Salary' => 'Enter Min Salary',
     'Enter Max Salary' => 'Enter Max Salary',
     'Find A Job' => 'Find A Job',
-    'Choose Your Category' => 'Choose Your Category',
+    'Choose Your Category' => 'Job Category',
     'Open Position' => 'Open Position',
     'UnApply Now' => 'UnApply Now',
     'Apply Now' => 'Apply Now',

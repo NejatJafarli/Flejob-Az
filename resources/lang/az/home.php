@@ -14,7 +14,7 @@ return [
     'Enter Min Salary' => 'Min:',
     'Enter Max Salary' => 'Maks:',
     'Find A Job' => 'Axtar',
-    'Choose Your Category' => 'Kateqoriyanızı seçin',
+    'Choose Your Category' => 'İş Kateqoriyası',
     'Open Position' => 'Açıq Mövqe',
     'UnApply Now' => 'İndi müraciəti ləğv edin',
     'Apply Now' => 'İndi müraciət et',

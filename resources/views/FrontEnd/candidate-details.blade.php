@@ -25,7 +25,7 @@
     <section class="page-title title-bg8">
         <div class="d-table">
             <div class="d-table-cell">
-                <h2>{{ __('candidateDetails.Candidates Details') }}</h2>
+                <h2 class="banner-title">{{ __('candidateDetails.Candidates Details') }}</h2>
                 <ul>
                     <li>
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('candidateDetails.Home') }}</a>
