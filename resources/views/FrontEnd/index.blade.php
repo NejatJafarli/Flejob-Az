@@ -98,7 +98,7 @@
                                                             <div class="form-group">
 
                                                                 {{-- <label></label> --}}
-                                                                <input name="MinSalary" type="number"
+                                                                <input min="0" name="MinSalary" type="number"
                                                                     class="form-control"
                                                                     placeholder="{{ __('home.Enter Min Salary') }}"
                                                                     id="flefilter_price_min">
@@ -108,7 +108,7 @@
                                                             <span>{{ __('home.Max Salary') }} </span>
                                                             <div class="form-group">
                                                                 {{-- <label></label> --}}
-                                                                <input name="MaxSalary" type="number"
+                                                                <input min="0" name="MaxSalary" type="number"
                                                                     class="form-control"
                                                                     placeholder="{{ __('home.Enter Max Salary') }}"
                                                                     {{-- value="{{ request()->get('MaxSalary') ? request()->get('MaxSalary') : '' }}" --}} id="flefilter_price_max">
@@ -264,7 +264,7 @@
                                             </a>
                                         </p>
                                         <ul>
-                                            <li> <a href="#">{{ $vac->Owner->CompanyName }}
+                                            <li> <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $vac->Owner->slug]) }}">{{ $vac->Owner->CompanyName }}
                                                 </a></li>
                                             {{-- <li>
                                                 <i class='bx bx-location-plus'></i>
@@ -344,7 +344,7 @@
                                     <i class="bx bx-location-plus"></i>
                                     {{ $user->CompanyAddress }}
                                 </p> --}}
-                                <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $user->id }}"
+                                <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $user->slug]) }}"
                                     class="company-btn">
                                     {{ $user->VacanciesCount }} {{ __('home.Open Position') }}
                                 </a>
@@ -416,8 +416,8 @@
                                             </a>
                                         </p>
                                         <ul>
-                                            <li> <a href="#">{{ $vac->Owner->CompanyName }}
-                                                </a></li>
+                                            <li> <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $vac->Owner->slug]) }}">{{ $vac->Owner->CompanyName }}
+                                            </a></li>
                                             <li>
                                                 {{ $vac->Category->CategoryName }}
                                             </li>

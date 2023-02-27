@@ -19,6 +19,12 @@
                     value="{{ route($route, ['language' => $lang->LanguageCode, 'categorySlug' => $catSlug]) }}">
                     {{ strtoupper($lang->LanguageCode) }}</a>
             @endforeach
+        @elseif (isset($ItIsCompanySlug))
+            @foreach ($Langs as $lang)
+                <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}
+                    value="{{ route($route, ['language' => $lang->LanguageCode, 'CompanySlug' => $CompanySlug]) }}">
+                    {{ strtoupper($lang->LanguageCode) }}</a>
+            @endforeach
         @elseif (isset($ItIsAVacancy))
             @foreach ($Langs as $lang)
                 <option {{ $locale == $lang->LanguageCode ? 'Selected' : '' }}

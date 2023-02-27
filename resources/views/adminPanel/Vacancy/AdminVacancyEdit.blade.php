@@ -50,6 +50,18 @@
                                     <input type="text" class="form-control" id="VacancySalary" name="VacancySalary"
                                         placeholder="Enter VacancySalary" required value="{{ $vac->VacancySalary }}">
                                 </div>
+                                @php
+                                // php-developer-9 make it php-developer remove last dash and number
+                                $slug = $vac->slug;
+                                $slug = explode('-', $slug);
+                                $slug = implode('-', array_slice($slug, 0, -1));
+                                
+                                @endphp
+                                <div class="form-group">
+                                    <label for="slug">Vacancy SLUG URL</label>
+                                    <input type="text" class="form-control" id="slug" name="slug"
+                                        placeholder="Enter slug" required value="{{ $slug }}">
+                                </div>
                                 <div class="form-group">
                                     <label for="VacancyDescription">Vacancy Description</label>
                                     <textarea class="form-control" name="VacancyDescription" id="VacancyDescription" cols="30" rows="10">{{ $vac->VacancyDescription }}</textarea>

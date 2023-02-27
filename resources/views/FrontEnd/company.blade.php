@@ -58,7 +58,7 @@
                                     <i class="bx bx-location-plus"></i>
                                     {{ $com->CompanyAddress }}
                                 </p> --}}
-                                <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $com->id }}"
+                                <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $com->slug]) }}"
                                     class="company-btn">
                                     {{ $com->VacanciesCount }}{{__("Companies.Open Position")}}
                                 </a>
@@ -88,7 +88,7 @@
                                     <i class="bx bx-location-plus"></i>
                                     {{ $com->CompanyAddress }}
                                 </p> --}}
-                                <a href="{{ route('FindAJob', app()->getLocale()) }}?Company={{ $com->id }}"
+                                <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $com->slug]) }}"
                                     class="company-btn">
                                     {{ $com->VacanciesCount }}{{__("Companies.Open Position")}}
                                 </a>

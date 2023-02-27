@@ -716,6 +716,7 @@ class adminPanelController extends Controller
         for ($i = 0; $i < count($arr); $i++) {
             $arr[$i]['StyleClass'] = $cat->StyleClass;
             $arr[$i]['SortOrder'] = $cat->SortOrder;
+            $arr[$i]['slug'] = $cat->slug;
         }
         return  view('adminPanel/Category/AdminCategoryEdit')->with(['categories' => $arr, 'languages' => $Langs]);
     }
@@ -788,6 +789,7 @@ class adminPanelController extends Controller
         $cat = Category::find($req->CatId);
         $cat->StyleClass = $req->styleClass;
         $cat->SortOrder = $req->SortOrder;
+        $cat->slug = $req->slug;
         $cat->save();
 
         //get category lang id from $cat
@@ -899,7 +901,17 @@ class adminPanelController extends Controller
         if (!session()->has('AdminUser'))
             return redirect()->route('Login', app()->getLocale());
 
+
+            //replace all space with dash and make it lowercase slug
+            $req->slug = str_replace(' ', '-', strtolower($req->slug));
+
+            //add -and vac id to slug
+            
+            
         $vac = Vacancy::find($req->id);
+
+            $req->slug = $req->slug . '-' . $vac->id;
+            
         $vac->Category_id = $req->Category_id;
         $vac->CompanyUser_id = $req->CompanyUser_id;
         $vac->VacancyName = $req->VacancyName;
@@ -908,6 +920,7 @@ class adminPanelController extends Controller
         $vac->PersonPhone = $req->PersonPhone;
         $vac->PersonName = $req->PersonName;
         $vac->Email = $req->Email;
+        $vac->slug = $req->slug;
         $vac->PersonPhone = $req->PersonPhone;
         $vac->VacancySalary = $req->VacancySalary;
         $vac->Status = $req->Status;

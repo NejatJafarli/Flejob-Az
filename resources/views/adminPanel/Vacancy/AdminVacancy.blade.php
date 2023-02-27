@@ -28,6 +28,7 @@
                                             <th>Vacancy Person Phone</th>
                                             <th>Vacancy Salary</th>
                                             <th>Vacancy Email</th>
+                                            <th>Vacancy slug</th>
                                             <th>Vacancy Status</th>
                                             <th>Vacancy Action</th>
                                         </tr>
@@ -41,6 +42,7 @@
                                                 <td>{{ $vac->PersonPhone }}</td>
                                                 <td>{{ $vac->VacancySalary }}</td>
                                                 <td>{{ $vac->Email }}</td>
+                                                <td>{{ $vac->slug }}</td>
                                                 <td>
                                                     <form>
                                                         <input type="hidden" name="id" value="{{ $vac->id }}">

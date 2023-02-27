@@ -35,6 +35,9 @@ class CreateVacanciesTable extends Migration
             $table->foreign('CompanyUser_id')->references('id')->on('company_users')->onDelete('cascade');
             $table->foreign('City_id')->references('id')->on('cities')->onDelete('cascade');
         });
+
+        //when saving
+        
     }
 
     /**

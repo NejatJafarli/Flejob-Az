@@ -53,6 +53,13 @@
                                     value="{{ $categories[0]['SortOrder'] }}">
                             </div>
                         </div>
+                        <div class="form-group row mb-5">
+                            <label for="example-text-input" class="col-md-2 col-form-label">{{ __('slug') }}</label>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="slug" id="example-text-input"
+                                    value="{{ $categories[0]['slug'] }}">
+                            </div>
+                        </div>
                         <!-- Tab panes -->
                         <div class="tab-content">
                             @foreach ($languages as $language)

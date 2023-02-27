@@ -147,6 +147,7 @@ Route::group(['prefix' => '{language}'], function () {
 
     Route::get('/vacancies', [HomeController::class, 'vacancies'])->name('vacancies');
     // Route::get('/job-details/{id}', [HomeController::class, 'JobDetails'])->name('JobDetails');
+    Route::get('/{CompanySlug}/vacancies/', [HomeController::class, 'CompanyVacancies'])->name('CompanyVacancies');
     Route::get('/vacancies/{categorySlug}', [HomeController::class, 'vacancyCategories'])->name('vacancyCategories');
     Route::get('/vacancies/{categorySlug}/{slug}', [HomeController::class, 'vacancyDetails'])->name('vacancyDetails');
 

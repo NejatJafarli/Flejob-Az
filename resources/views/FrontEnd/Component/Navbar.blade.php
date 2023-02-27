@@ -119,6 +119,8 @@
                             <div class="px-5">
                                 @if (isset($ItIsCategory))
                                     @include('FrontEnd.Component.MultiLang', ['catSlug' => $catSlug])
+                                @elseif (isset($ItIsCompanySlug))
+                                    @include('FrontEnd.Component.MultiLang', ['CompanySlug' => $CompanySlug])
                                 @elseif (isset($ItIsAVacancy))
                                     @include('FrontEnd.Component.MultiLang', [
                                         'VacSlug' => $VacSlug,

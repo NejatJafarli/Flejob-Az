@@ -127,7 +127,7 @@
                                                     <div class="col-md-1">
                                                         <div class="company-logo">
                                                             <a
-                                                                href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"></a>
+                                                                href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug,'slug' => $vac->slug]) }}"></a>
                                                             <img style="max-width:87px"
                                                                 src="/CompanyLogos/{{ $vac->Company->CompanyLogo }}"
                                                                 alt="logo">
@@ -137,7 +137,7 @@
                                                         <div class="job-info">
                                                             <h3>
                                                                 <a
-                                                                    href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
+                                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug,'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}</a>
                                                             </h3>
                                                             <ul>
                                                                 <li>
@@ -179,7 +179,7 @@
                                                             class="btn btn-primary">Show Applied Users <span
                                                                 class="badge bg-danger"
                                                                 style="font-size: 15px;">{{ $msg }}</span></a> --}}
-                                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}"
+                                                            <a href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug,'slug' => $vac->slug]) }}"
                                                                 class="btn btn-primary mx-5 my-3">View</a>
                                                         </div>
                                                     </div>

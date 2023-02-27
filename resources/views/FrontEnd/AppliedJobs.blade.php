@@ -111,7 +111,7 @@
                                     <div class="col-md-1">
                                         <div class="company-logo">
                                            
-                                            <a href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">
+                                            <a href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug,'slug' => $vac->slug]) }}">
                                             <img style="max-width:87px" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                             </a>
                                         </div>
@@ -120,7 +120,7 @@
                                         <div class="job-info">
                                             <h3>
                                                 <a
-                                                    href="{{ route('JobDetails', ['language' => app()->getLocale(), 'id' => $vac->id]) }}">{{ $vac->VacancyName }}</a>
+                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug,'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}</a>
                                             </h3>
                                             <ul>
                                                 <li>
