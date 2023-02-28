@@ -39,10 +39,12 @@
                                 <div class="form-group">
                                     <label for="image">Ads Image or Gif</label>
                                     <input type="file" class="form-control" name="image"
-                                        placeholder="Enter Blog Image">
+                                    placeholder="Enter Blog Image">
+                                    <label for="image">Ads Link </label>
+                                    <input class="form-control" type="text" name="link" value="{{$link->value}}">
                                 </div>
                                 <input type="hidden" value="{{ $ad->id }}" name="id">
-                                <button type="submit" class="btn btn-primary">Edit Blog</button>
+                                <button type="submit" class="btn btn-primary">Edit Ads</button>
                             </form>
                         </div>
                         <!--end card-body-->

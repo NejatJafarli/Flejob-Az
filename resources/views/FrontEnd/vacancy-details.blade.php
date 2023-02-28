@@ -10,16 +10,16 @@
         use App\Models\lang;
         use App\Models\CompanyUser;
         use App\Models\config;
-
+        
         $Langs = lang::all();
-
+        
         $route = Route::current()->getName();
-
+        
         $locale = app()->getLocale();
-
+        
         //UpperCase First Char of LangCode
         $langCode = strtoupper($locale);
-
+        
     @endphp
 
     @include('FrontEnd.Component.Navbar')
@@ -47,7 +47,7 @@
                         <a href="{{ route('Hom', app()->getLocale()) }}">{{ __('Jobdetail.Home') }}</a>
                     </li>
                     {{-- <li>{{ __('Jobdetail.Job Details') }}</li> --}}
-                    <li >{{ $vac->VacancyName }} ({{ $vac->CompanyUser->CompanyName }}) </li>
+                    <li>{{ $vac->VacancyName }} ({{ $vac->CompanyUser->CompanyName }}) </li>
                 </ul>
             </div>
         </div>
@@ -237,11 +237,11 @@
                                 @if (session()->has('user'))
                                     @php
                                         $userApplied = false;
-
+                                        
                                         $userApplied = session()
                                             ->get('user')
                                             ->AppliedVacancies->contains($vac->id);
-
+                                        
                                     @endphp
 
                                     <div class="theme-btn">
@@ -308,18 +308,28 @@
                         </div>
                     @endif
                     @php
-                    $Ads = config::where('key', 'like', 'site-ads-dynamic%');
-                    //get count of ads
-                    $AdsCount = $Ads->count();
-                    //conver to array
-                    $Ads = $Ads->get()->toArray();
-                    //get random ads
-                    $AdsOne = $Ads[rand(0, $AdsCount - 1)]['value'];
-
-                @endphp
-                    <div class="ads-banner-vacancy ">
-                        <img class="img-fluid" src="/AdsImages/{{$AdsOne}}" alt="">
-                    </div>
+                        
+                        $Ads = config::where('key', 'like', 'site-ads-dynamic%');
+                        //get count of ads
+                        $AdsCount = $Ads->count();
+                        //conver to array
+                        $Ads = $Ads->get()->toArray();
+                        $random = rand(0, $AdsCount - 1);
+                        $AdsOne = $Ads[$random]['value'];
+                        
+                        $word = $Ads[$random]['key'];
+                        //split -
+                        $word = explode('-', $word);
+                        //get last word
+                        $word = $word[count($word) - 1];
+                        //get site-links-$word
+                        $AdsOneLink = config::where('key', 'site-links-' . $word)->first()->value;
+                    @endphp
+                    <a href="{{ $AdsOneLink }}" target="_blank">
+                        <div class="ads-banner-vacancy ">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsOne }}" alt="">
+                        </div>
+                    </a>
                 </div>
             </div>
 
@@ -338,7 +348,7 @@
                                         <div class="col-md-1">
                                             <div class="company-logo">
                                                 <a
-                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug,'categorySlug'=>$vacs->Category->slug]) }}">
+                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug, 'categorySlug' => $vacs->Category->slug]) }}">
                                                     <img style="height:50px; widht:50px;"
                                                         src="/CompanyLogos/{{ $vacs->Owner->CompanyLogo }}"
                                                         alt="logo">
@@ -349,7 +359,7 @@
                                             <div class="job-info">
                                                 <p>
                                                     <a
-                                                    href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug,'categorySlug'=>$vacs->Category->slug]) }}">{{ $vacs->VacancyName }}</a>
+                                                        href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug, 'categorySlug' => $vacs->Category->slug]) }}">{{ $vacs->VacancyName }}</a>
                                                 </p>
                                                 <ul>
                                                     <li>
@@ -377,7 +387,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="theme-btn text-end">
-                                                <a href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug,'categorySlug'=>$vacs->Category->slug]) }}"
+                                                <a href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vacs->slug, 'categorySlug' => $vacs->Category->slug]) }}"
                                                     class="default-btn">
                                                     {{ __('Jobdetail.Browse Job') }}
                                                 </a>

@@ -143,12 +143,15 @@
                                     use App\Models\config;
                                     // site-ads-static-1
                                     $site_ads_static_1 = config::where('key', 'site-ads-static-1')->first()->value;
+                                    $SiteOneLink = config::where('key', 'site-links-1')->first()->value;
                                     
                                 @endphp
-                                <div class="ads-banner">
-                                    <img class="img-fluid" src="/AdsImages/{{ $site_ads_static_1 }}" alt="">
-                                </div>
-
+                                <a href="{{ $SiteOneLink }}" target="_blank">
+                                    <div class="ads-banner">
+                                        <img class="img-fluid" src="/AdsImages/{{ $site_ads_static_1 }}"
+                                            alt="">
+                                    </div>
+                                </a>
                             </div>
 
                         </div>
@@ -184,7 +187,8 @@
 
                     <div class="col-lg-3 col-md-4 col-sm-6" style="padding:10px;">
                         <div class="category-items-home" style="height: 100%;">
-                            <a href="{{ route('vacancyCategories', ["language"=>app()->getLocale(),"categorySlug"=>$cat->slug]) }}">
+                            <a
+                                href="{{ route('vacancyCategories', ['language' => app()->getLocale(), 'categorySlug' => $cat->slug]) }}">
                                 <h3>{{ $cat->Category_lang->CategoryName }}</h3>
                                 <p>{{ $cat->MinSalary }} - {{ $cat->MaxSalary }} Azn </p>
                                 <p class="mt-3">{{ $cat->VacanciesCount }} {{ __('home.Open Position') }}</p>
@@ -203,12 +207,55 @@
         //conver to array
         $Ads = $Ads->get()->toArray();
         //get random ads
-        $AdsOne = $Ads[rand(0, $AdsCount - 1)]['value'];
-        $AdsTwo = $Ads[rand(0, $AdsCount - 1)]['value'];
-        $AdsThree = $Ads[rand(0, $AdsCount - 1)]['value'];
-        $AdsFour = $Ads[rand(0, $AdsCount - 1)]['value'];
-        $AdsFive = $Ads[rand(0, $AdsCount - 1)]['value'];
-        $AdsFix = $Ads[rand(0, $AdsCount - 1)]['value'];
+        $random = rand(0, $AdsCount - 1);
+        $AdsOne = $Ads[$random]['value'];
+        //split -
+        $word = explode('-', $Ads[$random]['key']);
+        //get last word
+        $word = $word[count($word) - 1];
+        //get site-links-$word
+        $AdsOneLink = config::where('key', 'site-links-' . $word)->first()->value;
+        
+        $random = rand(0, $AdsCount - 1);
+        $AdsTwo = $Ads[$random]['value'];
+        
+        $word = explode('-', $Ads[$random]['key']);
+        //get last word
+        $word = $word[count($word) - 1];
+        //get site-links-$word
+        $AdsTwoLink = config::where('key', 'site-links-' . $word)->first()->value;
+        
+        $random = rand(0, $AdsCount - 1);
+        $AdsThree = $Ads[$random]['value'];
+        $word = explode('-', $Ads[$random]['key']);
+        //get last word
+        $word = $word[count($word) - 1];
+        //get site-links-$word
+        $AdsThreeLink = config::where('key', 'site-links-' . $word)->first()->value;
+        
+        $random = rand(0, $AdsCount - 1);
+        $AdsFour = $Ads[$random]['value'];
+        $word = explode('-', $Ads[$random]['key']);
+        //get last word
+        $word = $word[count($word) - 1];
+        //get site-links-$word
+        $AdsFourLink = config::where('key', 'site-links-' . $word)->first()->value;
+        
+        $random = rand(0, $AdsCount - 1);
+        $AdsFive = $Ads[$random]['value'];
+        $word = explode('-', $Ads[$random]['key']);
+        //get last word
+        $word = $word[count($word) - 1];
+        //get site-links-$word
+        $AdsFiveLink = config::where('key', 'site-links-' . $word)->first()->value;
+        
+        $random = rand(0, $AdsCount - 1);
+        $AdsFix = $Ads[$random]['value'];
+        $word = explode('-', $Ads[$random]['key']);
+        //get last word
+        $word = $word[count($word) - 1];
+        //get site-links-$word
+        $AdsFixLink = config::where('key', 'site-links-' . $word)->first()->value;
         
     @endphp
     {{-- Ads Section Start --}}
@@ -216,19 +263,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
-                    <div class="ads-img-block">
-                        <img class="img-fluid" src="/AdsImages/{{ $AdsOne }}" alt="">
-                    </div>
+                    <a href="{{ $AdsOneLink }}" target="_blank">
+                        <div class="ads-img-block">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsOne }}" alt="">
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
-                    <div class="ads-img-block">
-                        <img class="img-fluid" src="/AdsImages/{{ $AdsTwo }}" alt="">
-                    </div>
+                    <a href="{{ $AdsTwoLink }}" target="_blank">
+
+                        <div class="ads-img-block">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsTwo }}" alt="">
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
-                    <div class="ads-img-block">
-                        <img class="img-fluid" src="/AdsImages/{{ $AdsThree }}" alt="">
-                    </div>
+                    <a href="{{ $AdsThreeLink }}" target="_blank">
+                        <div class="ads-img-block">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsThree }}" alt="">
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -250,7 +304,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a
-                                        href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'categorySlug' => $vac->Category->slug, 'slug' => $vac->slug]) }}">
                                             <img class="img-fluid" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}"
                                                 alt="logo">
                                         </a>
@@ -260,11 +314,12 @@
                                     <div class="job-info">
                                         <p class="textone">
                                             <a
-                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}
+                                                href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'categorySlug' => $vac->Category->slug, 'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}
                                             </a>
                                         </p>
                                         <ul>
-                                            <li> <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $vac->Owner->slug]) }}">{{ $vac->Owner->CompanyName }}
+                                            <li> <a
+                                                    href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $vac->Owner->slug]) }}">{{ $vac->Owner->CompanyName }}
                                                 </a></li>
                                             {{-- <li>
                                                 <i class='bx bx-location-plus'></i>
@@ -363,19 +418,25 @@
 
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
-                    <div class="ads-img-block">
-                        <img class="img-fluid" src="/AdsImages/{{ $AdsFour }}" alt="">
-                    </div>
+                    <a href="{{ $AdsFourLink }}" target="_blank">
+                        <div class="ads-img-block">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsFour }}" alt="">
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
-                    <div class="ads-img-block">
-                        <img class="img-fluid" src="/AdsImages/{{ $AdsFive }}" alt="">
-                    </div>
+                    <a href="{{ $AdsFiveLink }}" target="_blank">
+                        <div class="ads-img-block">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsFive }}" alt="">
+                        </div>
+                    </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12 mb-lg-0 mb-md-0 mb-3">
-                    <div class="ads-img-block">
-                        <img class="img-fluid" src="/AdsImages/{{ $AdsFix }}" alt="">
-                    </div>
+                    <a href="{{ $AdsFixLink }}" target="_blank">
+                        <div class="ads-img-block">
+                            <img class="img-fluid" src="/AdsImages/{{ $AdsFix }}" alt="">
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -402,7 +463,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a
-                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'categorySlug' => $vac->Category->slug, 'slug' => $vac->slug]) }}">
                                             <img class="img-fluid" src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}"
                                                 alt="logo">
                                         </a>
@@ -412,12 +473,13 @@
                                     <div class="job-info">
                                         <p class="textone">
                                             <a
-                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(),"categorySlug"=>$vac->Category->slug, 'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}
+                                                href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'categorySlug' => $vac->Category->slug, 'slug' => $vac->slug]) }}">{{ $vac->VacancyName }}
                                             </a>
                                         </p>
                                         <ul>
-                                            <li> <a href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $vac->Owner->slug]) }}">{{ $vac->Owner->CompanyName }}
-                                            </a></li>
+                                            <li> <a
+                                                    href="{{ route('CompanyVacancies', ['language' => app()->getLocale(), 'CompanySlug' => $vac->Owner->slug]) }}">{{ $vac->Owner->CompanyName }}
+                                                </a></li>
                                             <li>
                                                 {{ $vac->Category->CategoryName }}
                                             </li>

@@ -399,7 +399,16 @@ class adminPanelController extends Controller
 
         $config=config::find($id);
 
-        return view('adminPanel/AdManager/AdminAdManagerEdit',['ad'=>$config]);
+        $word=$config->key;
+        //split - 
+        $word=explode('-',$word);
+        //get last word
+        $word=$word[count($word)-1];
+        //find config site-links-$word
+        $configSiteLinks=config::where('key','site-links-'.$word)->first();
+
+
+        return view('adminPanel/AdManager/AdminAdManagerEdit',['ad'=>$config,'link'=>$configSiteLinks]);
     }
     public function UpdateAds(Request $request){
         if (!session()->has('AdminUser'))
@@ -408,11 +417,20 @@ class adminPanelController extends Controller
         $request->validate([
             //image is gif
             'image' => 'max:10000',
+            'link'=>'required',
         ], [
             'image.max' => 'Image size must be less than 10MB',
         ]);
         $config = config::find($request->id);
-
+        //get config key split -
+        $word=$config->key;
+        $word=explode('-',$word);
+        $word=$word[count($word)-1];
+        //find config site-links-$word
+        $configSiteLinks=config::where('key','site-links-'.$word)->first();
+        //update link
+        $configSiteLinks->value=$request->link;
+        $configSiteLinks->save();
         if ($request->hasFile('image')) {
             $oldImage = public_path('AdsImages/' . $config->value);
             if (file_exists($oldImage))
@@ -441,6 +459,13 @@ class adminPanelController extends Controller
             $oldImage = public_path('AdsImages/' . $config->value);
             if (file_exists($oldImage))
                 unlink($oldImage);
+            
+            $word=$config->key;
+            $word=explode('-',$word);
+            $word=$word[count($word)-1];
+            //find config site-links-$word
+            $configSiteLinks=config::where('key','site-links-'.$word)->first();
+            $configSiteLinks->delete();
         }
         $config->delete();
 
@@ -453,10 +478,10 @@ class adminPanelController extends Controller
 
         $keys = request()->get('SearchKey');
         if ($keys != null)
-            $configs = config::where('key', 'like', '%' . $keys . '%')->orderBy('id', 'desc')->paginate(10);
-        else
-            $configs = config::orderBy('id', 'desc')->paginate(5);
-
+            $configs = config::where('key', 'not like', 'site-ads-dynamic%')->where('key', 'not like', 'site-links%')->where('key', 'like', '%' . $keys . '%')->orderBy('id', 'desc')->paginate(10);
+        else{
+            $configs = config::where('key', 'not like', 'site-ads-dynamic%')->where('key', 'not like', 'site-links%')->orderBy('id', 'desc')->paginate(5);
+        }
 
         return view('adminPanel/Payment/PaymentValue', compact('configs'));
     }
@@ -476,10 +501,12 @@ class adminPanelController extends Controller
 
         $req->validate([
             'image' => 'required | max:10000',
+            "link" => "required",
         ], [
             'image.required' => 'Image is required',
             'image.mimes' => 'Image must be jpeg,jpg,png,gif',
             'image.max' => 'Image must be less than 10MB',
+            'link.required' => 'Link is required',
         ]);
 
         //save image in assets2/img/AdsImages
@@ -493,6 +520,12 @@ class adminPanelController extends Controller
             'key' => 'site-ads-dynamic-' .$time,
             'value' => $imageName,
         ]);
+
+        $config = config::create([
+            'key' => 'site-links-' .$time,
+            'value' => $req->link,
+        ]);
+
         $config->save();
 
         return redirect()->back();

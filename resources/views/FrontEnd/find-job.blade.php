@@ -209,12 +209,14 @@
                     use App\Models\config;
                     // site-ads-static-1
                     $site_ads_static_1 = config::where('key', 'site-ads-static-2')->first()->value;
+                    $Link = config::where('key', 'site-links-2')->first()->value;
                     
                 @endphp
-                <div class="ads-banner">
-                    <img class="img-fluid" src="/AdsImages/{{ $site_ads_static_1 }}" alt="">
-                </div>
-
+                <a href="{{ $Link }}" target="_blank">
+                    <div class="ads-banner">
+                        <img class="img-fluid" src="/AdsImages/{{ $site_ads_static_1 }}" alt="">
+                    </div>
+                </a>
             </div>
 
         </div>
@@ -325,7 +327,7 @@
                                 <div class="col-lg-3">
                                     <div class="thumb-img">
                                         <a class="d-block"
-                                        href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug,'categorySlug'=>$vac->Category->slug]) }}">
+                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug, 'categorySlug' => $vac->Category->slug]) }}">
                                             <img class="img-fluid" style="max-height: 75px"
                                                 src="/CompanyLogos/{{ $vac->Owner->CompanyLogo }}" alt="logo">
                                         </a>
@@ -335,7 +337,7 @@
                                     <div class="job-info">
                                         <p>
                                             <a
-                                            href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug,'categorySlug'=>$vac->Category->slug]) }}">{{ $vac->VacancyName }}</a>
+                                                href="{{ route('vacancyDetails', ['language' => app()->getLocale(), 'slug' => $vac->slug, 'categorySlug' => $vac->Category->slug]) }}">{{ $vac->VacancyName }}</a>
                                         </p>
                                         <ul>
                                             <li><a href="#">{{ $vac->Owner->CompanyName }}</a></li>
