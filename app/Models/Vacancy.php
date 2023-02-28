@@ -31,7 +31,11 @@ class Vacancy extends Model
         parent::boot();
 
         static::creating(function ($vac) {
-            $vac->slug = str_replace(' ', '-', strtolower($vac->VacancyName)).'-'.$vac->id;
+
+            $last_id = Vacancy::latest()->first()->id;
+            //convert to int
+            $last_id = (int)$last_id+1;
+            $vac->slug = str_replace(' ', '-', strtolower($vac->VacancyName)).'-'.$last_id;
         });
 
         // static::saving(function ($cat) {
@@ -43,7 +47,7 @@ class Vacancy extends Model
     }
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = str_replace(' ', '-', strtolower($value));
+        $this->attributes['slug'] = str_replace(' ', '-', strtolower($value)).'-'.$this->id;
     }
     public function category()
     {
