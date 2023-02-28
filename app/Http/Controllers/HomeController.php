@@ -1311,10 +1311,11 @@ class HomeController extends Controller
     function xmlRequest($request)
     {
         $path = base_path().'/public';
-
+        // IN THE FEATURE replace the URL to real payment
         $url = "https://tstpg.kapitalbank.az:5443/Exec";
-        $keyFile =  $path."/certs/flegri.key";
-        $certFile =  $path."/certs/flegri.crt";
+        $keyFile =  $path."/certs/flegri.key";// replace key and Crt real files
+        $certFile =  $path."/certs/flegri.crt";// replace key and Crt real files
+
         $ch = curl_init();
         $header = array("Content-Type: text/html; charset=utf-8");
         $options = array(
